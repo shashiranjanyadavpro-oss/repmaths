@@ -1,0 +1,48 @@
+---
+import toolsData from '../data/tools.json';
+
+export interface Props {
+  currentToolId: string;
+}
+const { currentToolId } = Astro.props;
+
+const current = toolsData.find((t) => t.id === currentToolId);
+const related = current?.related
+  ?.map((id) => toolsData.find((t) => t.id === id))
+  .filter(Boolean) || [];
+---
+
+{related.length > 0 && (
+  <section class="related-tools">
+    <h2>Related Tools</h2>
+    <div class="related-grid">
+      {related.map((tool) => (
+        <a class="tool-card" href={tool!.url}>
+          <span class="icon">{tool!.icon}</span>
+          <span class="name">{tool!.name}</span>
+        </a>
+      ))}
+    </div>
+  </section>
+)}
+
+<style>
+  .related-tools { margin: 32px 0 48px; }
+  .related-tools h2 { font-size: 1.1rem; margin-bottom: 12px; }
+  .related-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: 10px;
+  }
+  .tool-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 16px 12px;
+    text-align: center;
+    transition: border-color 0.15s ease;
+  }
+  .tool-card:hover { border-color: var(--accent); }
+  .tool-card .icon { font-size: 1.6rem; display: block; margin-bottom: 6px; }
+  .tool-card .name { color: var(--text); font-weight: 600; font-size: 0.88rem; }
+</style>
