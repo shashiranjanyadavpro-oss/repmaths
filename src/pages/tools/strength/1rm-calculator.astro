@@ -3,17 +3,17 @@ import Base from '../../../layouts/Base.astro';
 import RelatedTools from '../../../components/RelatedTools.astro';
 ---
 <Base
-  title="1RM Calculator — Calculate Your One Rep Max Instantly"
-  description="Free 1RM calculator using the Epley and Brzycki formulas. Enter your weight and reps to estimate your one-rep max for squat, bench, or deadlift."
+  title="Bench Press 1RM Calculator — Max Bench Press Estimator"
+  description="Free bench press 1RM calculator using the Epley and Brzycki formulas. Enter your weight and reps to estimate your max bench press."
 >
   <script type="application/ld+json" set:html={JSON.stringify({
     "@context": "https://schema.org",
     "@type": "SoftwareApplication",
-    "name": "1RM Calculator",
+    "name": "Bench Press 1RM Calculator",
     "applicationCategory": "HealthApplication",
     "operatingSystem": "Any",
     "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
-    "description": "Free online calculator that estimates a lifter's one-rep max (1RM) from a submaximal weight and rep count."
+    "description": "Free online calculator that estimates a lifter's one-rep max bench press from a submaximal weight and rep count."
   })} />
 
   <script type="application/ld+json" set:html={JSON.stringify({
@@ -22,42 +22,34 @@ import RelatedTools from '../../../components/RelatedTools.astro';
     "mainEntity": [
       {
         "@type": "Question",
-        "name": "What is a 1RM calculator?",
+        "name": "How accurate is this bench press 1RM calculator?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "A 1RM calculator estimates the maximum weight you could lift for a single repetition, based on a lighter weight you lifted for multiple reps. It uses formulas like Epley or Brzycki to predict this number without requiring you to actually test a true max."
+          "text": "It is typically accurate within 5-10% for sets of 1 to 10 reps. Bar speed, fatigue, and technique can all affect the real number, so treat the result as a strong estimate rather than an exact figure."
         }
       },
       {
         "@type": "Question",
-        "name": "How accurate is a 1RM calculator?",
+        "name": "What is a good bench press 1RM?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "1RM calculators are typically accurate within 5-10% for sets of 1 to 10 reps. Accuracy decreases for higher rep ranges because rep-max formulas are calibrated on lower rep counts."
+          "text": "This depends heavily on bodyweight, sex, and training experience. Rather than comparing to general standards, most lifters get more value from tracking their own estimated 1RM over time."
         }
       },
       {
         "@type": "Question",
-        "name": "Which 1RM formula is most accurate: Epley or Brzycki?",
+        "name": "Should I test my actual bench press max instead of estimating it?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Epley tends to estimate slightly higher for sets above 5 reps, while Brzycki is often considered more precise for sets under 10 reps. Most lifters use Epley as a simple, reliable default."
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "Should I test my true 1RM instead of estimating it?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "Testing a true 1RM carries injury risk, especially without a spotter or coach. Most lifters only need an estimated 1RM to calculate training percentages, making a calculator the safer choice for regular programming."
+          "text": "Only with a spotter, a proper warm-up, and good technique. Most lifters get more practical value from an estimated 1RM, which is safer and still accurate enough to plan training percentages."
         }
       }
     ]
   })} />
 
   <section class="hero">
-    <h1>1RM Calculator</h1>
-    <p>Enter the weight and reps you just lifted to estimate your one-rep max.</p>
+    <h1>Bench Press 1RM Calculator</h1>
+    <p>Enter the weight and reps you benched to estimate your max bench press.</p>
   </section>
 
   <section class="ad-slot">Ad Slot (Top)</section>
@@ -78,18 +70,18 @@ import RelatedTools from '../../../components/RelatedTools.astro';
       </div>
     </div>
     <div class="field">
-      <label for="weight">Weight Lifted</label>
-      <input type="number" id="weight" placeholder="e.g. 185" inputmode="decimal" />
+      <label for="weight">Weight Benched</label>
+      <input type="number" id="weight" placeholder="e.g. 135" inputmode="decimal" />
     </div>
     <div class="field">
       <label for="reps">Reps Completed</label>
-      <input type="number" id="reps" placeholder="e.g. 5" inputmode="numeric" />
+      <input type="number" id="reps" placeholder="e.g. 8" inputmode="numeric" />
     </div>
-    <button class="btn-primary" id="calc-btn">Calculate 1RM</button>
+    <button class="btn-primary" id="calc-btn">Calculate Max Bench</button>
 
     <div class="result-box" id="result-box">
       <div class="big-number" id="result-1rm">–</div>
-      <div class="label" id="result-label">Estimated One-Rep Max</div>
+      <div class="label" id="result-label">Estimated Max Bench Press</div>
       <table class="result-table" id="result-table"></table>
     </div>
   </section>
@@ -97,59 +89,45 @@ import RelatedTools from '../../../components/RelatedTools.astro';
   <section class="ad-slot">Ad Slot (Bottom)</section>
 
   <article class="article-section">
-    <h2>What Is a 1RM Calculator?</h2>
+    <h2>How This Calculator Works</h2>
     <p>
-      Your one-rep max (1RM) is the heaviest weight you can lift for a single
-      full repetition of an exercise with correct form. Testing it directly is
-      risky and fatiguing, so most lifters and coaches estimate it instead using
-      a rep-max formula. This calculator supports two of the most widely used
-      formulas:
-    </p>
-    <p>
-      <strong>Epley formula:</strong> 1RM = weight × (1 + reps ÷ 30)<br />
-      <strong>Brzycki formula:</strong> 1RM = weight × 36 ÷ (37 − reps)
-    </p>
-    <p>
-      Both formulas assume a fairly direct relationship between the weight you
-      move and how many clean reps you can complete with it. They work best for
-      sets of 1 to 10 reps on compound barbell lifts such as the squat, bench
-      press, and deadlift.
+      This tool estimates your one-rep max bench press using two established
+      formulas: <strong>Epley</strong> (1RM = weight × (1 + reps ÷ 30)) and
+      <strong>Brzycki</strong> (1RM = weight × 36 ÷ (37 − reps)). Both work
+      best for sets of 1 to 10 reps performed close to failure with good
+      form. The bench press responds particularly well to these formulas
+      since bar speed stays fairly consistent across reps compared to lifts
+      like the deadlift.
     </p>
   </article>
 
   <article class="article-section">
     <h2>How to Use This Calculator</h2>
     <p>
-      Enter the heaviest weight you lifted for a clean set, along with how many
-      reps you completed before reaching failure. For the most reliable
-      estimate, use a set of 10 reps or fewer — accuracy drops for higher-rep
-      sets. The calculator also shows common training percentages (70%, 85%,
-      and more) so you can plan your next session's working weights directly
-      from the result.
+      Enter the heaviest weight you benched for a clean set, along with the
+      number of reps completed. Choose your preferred formula and unit, then
+      calculate. The result table shows common training percentages so you
+      can plan your next bench session's working weights directly.
     </p>
   </article>
 
   <article class="article-section">
     <h2>Frequently Asked Questions</h2>
     <div class="faq-item">
-      <h3>What is a 1RM calculator?</h3>
-      <p>It estimates the maximum weight you could lift once, based on a lighter weight lifted for multiple reps.</p>
+      <h3>How accurate is this bench press 1RM calculator?</h3>
+      <p>Typically accurate within 5-10% for sets of 1-10 reps. Bar speed and fatigue can affect the real number.</p>
     </div>
     <div class="faq-item">
-      <h3>How accurate is a 1RM calculator?</h3>
-      <p>Typically accurate within 5-10% for sets of 1-10 reps. Accuracy drops for higher rep counts.</p>
+      <h3>What is a good bench press 1RM?</h3>
+      <p>It depends on bodyweight, sex, and experience — tracking your own progress matters more than comparing to others.</p>
     </div>
     <div class="faq-item">
-      <h3>Which formula is most accurate: Epley or Brzycki?</h3>
-      <p>Epley runs slightly higher above 5 reps; Brzycki is often more precise under 10 reps.</p>
-    </div>
-    <div class="faq-item">
-      <h3>Should I test my true 1RM instead?</h3>
-      <p>Only with a spotter and proper warm-up — most lifters get more value from an estimate for planning training percentages.</p>
+      <h3>Should I test my actual max instead?</h3>
+      <p>Only with a spotter and proper warm-up. An estimate is safer and usually accurate enough for training purposes.</p>
     </div>
   </article>
 
-  <RelatedTools currentToolId="1rm-calculator" />
+  <RelatedTools currentToolId="bench-press-1rm-calculator" />
 
   <script>
     let unit = "lb";
@@ -191,7 +169,7 @@ import RelatedTools from '../../../components/RelatedTools.astro';
       const rounded = Math.round(oneRM * 10) / 10;
       const formulaName = formula === "epley" ? "Epley" : "Brzycki";
       document.getElementById("result-1rm")!.textContent = `${rounded} ${unit}`;
-      document.getElementById("result-label")!.textContent = `Estimated One-Rep Max (${formulaName} formula)`;
+      document.getElementById("result-label")!.textContent = `Estimated Max Bench Press (${formulaName} formula)`;
 
       const percentages = [95, 90, 85, 80, 75, 70, 65, 60];
       const rows = percentages.map(p => {
