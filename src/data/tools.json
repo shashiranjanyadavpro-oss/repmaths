@@ -1,0 +1,11 @@
+[
+  {
+    "id": "1rm-calculator",
+    "name": "1RM Calculator",
+    "url": "/tools/strength/1rm-calculator",
+    "shortDesc": "Estimate your one-rep max from any weight and rep count.",
+    "icon": "🏋️",
+    "cluster": "strength",
+    "related": ["plate-calculator", "rep-max-percent"]
+  }
+]
