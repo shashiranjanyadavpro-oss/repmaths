@@ -1,0 +1,51 @@
+---
+import Base from '../layouts/Base.astro';
+import toolsData from '../data/tools.json';
+---
+<Base
+  title="Free Fitness Calculators — 1RM, Macros, Plates & More | RepMaths"
+  description="Fast, free fitness and strength-training calculators. No sign-up, instant results."
+>
+  <section class="hero">
+    <h1>Free Fitness &amp; Strength Calculators</h1>
+    <p>Instant, accurate tools for lifters — no sign-up, no clutter.</p>
+  </section>
+
+  <section class="ad-slot">Ad Slot (Top)</section>
+
+  <section class="tool-grid">
+    {toolsData.map((tool) => (
+      <a class="tool-card" href={tool.url}>
+        <span class="icon">{tool.icon}</span>
+        <span class="name">{tool.name}</span>
+        <span class="desc">{tool.shortDesc}</span>
+      </a>
+    ))}
+  </section>
+
+  <section class="ad-slot">Ad Slot (Bottom)</section>
+
+  <style>
+    .hero { padding: 40px 0 24px; text-align: center; }
+    .hero h1 { font-size: 1.8rem; margin: 0 0 8px; }
+    .hero p { color: var(--text-muted); margin: 0; }
+    .tool-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+      gap: 12px;
+      padding: 24px 0 48px;
+    }
+    .tool-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 18px 14px;
+      text-align: center;
+      transition: border-color 0.15s ease, transform 0.15s ease;
+    }
+    .tool-card:hover { border-color: var(--accent); transform: translateY(-2px); }
+    .tool-card .icon { font-size: 1.8rem; display: block; margin-bottom: 8px; }
+    .tool-card .name { color: var(--text); font-weight: 600; font-size: 0.92rem; display: block; margin-bottom: 4px; }
+    .tool-card .desc { color: var(--text-muted); font-size: 0.78rem; }
+  </style>
+</Base>
