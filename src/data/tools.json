@@ -6,6 +6,15 @@
     "shortDesc": "Estimate your one-rep max from any weight and rep count.",
     "icon": "🏋️",
     "cluster": "strength",
-    "related": ["plate-calculator", "rep-max-percent"]
+    "related": ["bench-press-1rm-calculator", "squat-1rm-calculator", "deadlift-1rm-calculator"]
+  },
+  {
+    "id": "bench-press-1rm-calculator",
+    "name": "Bench Press 1RM Calculator",
+    "url": "/tools/strength/bench-press-1rm-calculator",
+    "shortDesc": "Estimate your max bench press from weight and reps.",
+    "icon": "🏋️",
+    "cluster": "strength",
+    "related": ["1rm-calculator", "squat-1rm-calculator"]
   }
 ]
