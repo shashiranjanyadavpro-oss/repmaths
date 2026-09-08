@@ -10,8 +10,12 @@ const { title, description } = Astro.props;
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0f1115" />
   <title>{title}</title>
   <meta name="description" content={description} />
+  <meta property="og:title" content={title} />
+  <meta property="og:description" content={description} />
+  <meta property="og:type" content="website" />
   <meta property="og:locale" content="en_US" />
   <style>
     :root {
@@ -65,8 +69,6 @@ const { title, description } = Astro.props;
     }
 
     /* ===== SHARED CALCULATOR COMPONENTS ===== */
-    /* Used by every tool page - do not duplicate in individual tool files */
-
     .hero { padding: 28px 0 24px; text-align: center; }
     .hero h1 { font-size: 1.8rem; margin: 0 0 8px; }
     .hero p { color: var(--text-muted); margin: 0; }
@@ -83,9 +85,9 @@ const { title, description } = Astro.props;
     }
     .field input:focus, .field select:focus { outline: none; border-color: var(--accent); }
 
-    .unit-toggle { display: flex; gap: 8px; }
+    .unit-toggle { display: flex; gap: 8px; flex-wrap: wrap; }
     .unit-toggle button {
-      flex: 1; padding: 10px; background: var(--surface-2);
+      flex: 1; min-width: 70px; padding: 10px; background: var(--surface-2);
       border: 1px solid var(--border); border-radius: 10px; color: var(--text-muted); cursor: pointer;
     }
     .unit-toggle button.active {
