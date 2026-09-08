@@ -16,5 +16,14 @@
     "icon": "🏋️",
     "cluster": "strength",
     "related": ["1rm-calculator", "squat-1rm-calculator"]
+  },
+  {
+    "id": "squat-1rm-calculator",
+    "name": "Squat 1RM Calculator",
+    "url": "/tools/strength/squat-1rm-calculator",
+    "shortDesc": "Estimate your max squat from weight and reps.",
+    "icon": "🏋️",
+    "cluster": "strength",
+    "related": ["1rm-calculator", "deadlift-1rm-calculator"]
   }
 ]
