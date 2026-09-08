@@ -1,183 +1,241 @@
 ---
 import Base from '../../../layouts/Base.astro';
 import RelatedTools from '../../../components/RelatedTools.astro';
----
 <Base
-  title="Bench Press 1RM Calculator — Max Bench Press Estimator"
-  description="Free bench press 1RM calculator using the Epley and Brzycki formulas. Enter your weight and reps to estimate your max bench press."
->
-  <script type="application/ld+json" set:html={JSON.stringify({
-    "@context": "https://schema.org",
-    "@type": "SoftwareApplication",
-    "name": "Bench Press 1RM Calculator",
-    "applicationCategory": "HealthApplication",
-    "operatingSystem": "Any",
-    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
-    "description": "Free online calculator that estimates a lifter's one-rep max bench press from a submaximal weight and rep count."
-  })} />
+title="Bench Press Max Calculator — Estimate Your 1RM Safely"
+description="Free bench press one rep max calculator. Estimate your max bench safely using the Brzycki, Epley, Lander, or Lombardi formula without needing a spotter."
 
-  <script type="application/ld+json" set:html={JSON.stringify({
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    "mainEntity": [
-      {
-        "@type": "Question",
-        "name": "How accurate is this bench press 1RM calculator?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "It is typically accurate within 5-10% for sets of 1 to 10 reps. Bar speed, fatigue, and technique can all affect the real number, so treat the result as a strong estimate rather than an exact figure."
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "What is a good bench press 1RM?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "This depends heavily on bodyweight, sex, and training experience. Rather than comparing to general standards, most lifters get more value from tracking their own estimated 1RM over time."
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "Should I test my actual bench press max instead of estimating it?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "Only with a spotter, a proper warm-up, and good technique. Most lifters get more practical value from an estimated 1RM, which is safer and still accurate enough to plan training percentages."
-        }
-      }
-    ]
-  })} />
-
-  <section class="hero">
-    <h1>Bench Press 1RM Calculator</h1>
-    <p>Enter the weight and reps you benched to estimate your max bench press.</p>
-  </section>
-
-  <section class="ad-slot">Ad Slot (Top)</section>
-
-  <section class="calc-card">
-    <div class="field">
-      <label>Unit</label>
-      <div class="unit-toggle">
-        <button type="button" id="unit-lb" class="active">lb</button>
-        <button type="button" id="unit-kg">kg</button>
-      </div>
-    </div>
-    <div class="field">
-      <label>Formula</label>
-      <div class="unit-toggle">
-        <button type="button" id="formula-epley" class="active">Epley</button>
-        <button type="button" id="formula-brzycki">Brzycki</button>
-      </div>
-    </div>
-    <div class="field">
-      <label for="weight">Weight Benched</label>
-      <input type="number" id="weight" placeholder="e.g. 135" inputmode="decimal" />
-    </div>
-    <div class="field">
-      <label for="reps">Reps Completed</label>
-      <input type="number" id="reps" placeholder="e.g. 8" inputmode="numeric" />
-    </div>
-    <button class="btn-primary" id="calc-btn">Calculate Max Bench</button>
-
-    <div class="result-box" id="result-box">
-      <div class="big-number" id="result-1rm">–</div>
-      <div class="label" id="result-label">Estimated Max Bench Press</div>
-      <table class="result-table" id="result-table"></table>
-    </div>
-  </section>
-
-  <section class="ad-slot">Ad Slot (Bottom)</section>
-
-  <article class="article-section">
-    <h2>How This Calculator Works</h2>
-    <p>
-      This tool estimates your one-rep max bench press using two established
-      formulas: <strong>Epley</strong> (1RM = weight × (1 + reps ÷ 30)) and
-      <strong>Brzycki</strong> (1RM = weight × 36 ÷ (37 − reps)). Both work
-      best for sets of 1 to 10 reps performed close to failure with good
-      form. The bench press responds particularly well to these formulas
-      since bar speed stays fairly consistent across reps compared to lifts
-      like the deadlift.
-    </p>
-  </article>
-
-  <article class="article-section">
-    <h2>How to Use This Calculator</h2>
-    <p>
-      Enter the heaviest weight you benched for a clean set, along with the
-      number of reps completed. Choose your preferred formula and unit, then
-      calculate. The result table shows common training percentages so you
-      can plan your next bench session's working weights directly.
-    </p>
-  </article>
-
-  <article class="article-section">
-    <h2>Frequently Asked Questions</h2>
-    <div class="faq-item">
-      <h3>How accurate is this bench press 1RM calculator?</h3>
-      <p>Typically accurate within 5-10% for sets of 1-10 reps. Bar speed and fatigue can affect the real number.</p>
-    </div>
-    <div class="faq-item">
-      <h3>What is a good bench press 1RM?</h3>
-      <p>It depends on bodyweight, sex, and experience — tracking your own progress matters more than comparing to others.</p>
-    </div>
-    <div class="faq-item">
-      <h3>Should I test my actual max instead?</h3>
-      <p>Only with a spotter and proper warm-up. An estimate is safer and usually accurate enough for training purposes.</p>
-    </div>
-  </article>
-
-  <RelatedTools currentToolId="bench-press-1rm-calculator" />
-
-  <script>
-    let unit = "lb";
-    let formula = "epley";
-
-    document.getElementById("unit-lb")!.addEventListener("click", () => setUnit("lb"));
-    document.getElementById("unit-kg")!.addEventListener("click", () => setUnit("kg"));
-    document.getElementById("formula-epley")!.addEventListener("click", () => setFormula("epley"));
-    document.getElementById("formula-brzycki")!.addEventListener("click", () => setFormula("brzycki"));
-
-    function setUnit(u: string) {
-      unit = u;
-      document.getElementById("unit-lb")!.classList.toggle("active", u === "lb");
-      document.getElementById("unit-kg")!.classList.toggle("active", u === "kg");
-    }
-    function setFormula(f: string) {
-      formula = f;
-      document.getElementById("formula-epley")!.classList.toggle("active", f === "epley");
-      document.getElementById("formula-brzycki")!.classList.toggle("active", f === "brzycki");
-    }
-
-    document.getElementById("calc-btn")!.addEventListener("click", () => {
-      const weight = parseFloat((document.getElementById("weight") as HTMLInputElement).value);
-      const reps = parseInt((document.getElementById("reps") as HTMLInputElement).value, 10);
-      if (!weight || !reps || weight <= 0 || reps <= 0) {
-        alert("Please enter a valid weight and rep count.");
-        return;
-      }
-
-      let oneRM: number;
-      if (reps === 1) {
-        oneRM = weight;
-      } else if (formula === "epley") {
-        oneRM = weight * (1 + reps / 30);
-      } else {
-        oneRM = weight * 36 / (37 - reps);
-      }
-
-      const rounded = Math.round(oneRM * 10) / 10;
-      const formulaName = formula === "epley" ? "Epley" : "Brzycki";
-      document.getElementById("result-1rm")!.textContent = `${rounded} ${unit}`;
-      document.getElementById("result-label")!.textContent = `Estimated Max Bench Press (${formulaName} formula)`;
-
-      const percentages = [95, 90, 85, 80, 75, 70, 65, 60];
-      const rows = percentages.map(p => {
-        const val = Math.round(rounded * (p / 100) * 10) / 10;
-        return `<tr><td>${p}%</td><td>${val} ${unit}</td></tr>`;
-      }).join("");
-      document.getElementById("result-table")!.innerHTML = rows;
-      document.getElementById("result-box")!.classList.add("show");
-    });
-  </script>
+<script type="application/ld+json" set:html={JSON.stringify({
+"@context": "https://schema.org",
+"@type": "SoftwareApplication",
+"name": "Bench Press Max Calculator",
+"applicationCategory": "HealthApplication",
+"operatingSystem": "Any",
+"offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+"description": "Free online bench press calculator that estimates a lifter's true one-rep max (1RM) from a submaximal weight to ensure safe upper body training."
+})} />
+<script type="application/ld+json" set:html={JSON.stringify({
+"@context": "https://schema.org",
+"@type": "FAQPage",
+"mainEntity": [
+{
+"@type": "Question",
+"name": "How do I calculate my bench press max without a spotter?",
+"acceptedAnswer": {
+"@type": "Answer",
+"text": "To safely calculate your bench press max without a spotter, lift a comfortable submaximal weight for 3 to 8 reps until you feel you have only one rep left in the tank (RPE 9). Enter that weight and rep count into a calculator using the Brzycki or Epley formula. This prevents the danger of failing a true max attempt and getting pinned under the barbell."
+}
+},
+{
+"@type": "Question",
+"name": "Which formula is most accurate for the bench press?",
+"acceptedAnswer": {
+"@type": "Answer",
+"text": "The Brzycki formula is widely considered the most accurate for heavy pressing movements like the bench press, especially in the 1 to 8 rep range. It uses a slightly more conservative curve than the Epley formula, which prevents overestimating your true pressing strength."
+}
+},
+{
+"@type": "Question",
+"name": "Why is my estimated bench max higher than what I can actually lift?",
+"acceptedAnswer": {
+"@type": "Answer",
+"text": "If your estimated max is higher than your true max, you likely calculated it using a set of 10 or more reps. Bench press strength relies heavily on the central nervous system (CNS) and fast-twitch muscle fibers. High-rep sets measure muscular endurance rather than absolute pressing power, causing linear formulas to overestimate."
+}
+}
+]
+})} />
+<section class="hero">
+<h1>Bench Press Max Calculator</h1>
+<p>Estimate your heavy bench press one-rep max safely without getting pinned under the bar.</p>
+</section>
+<section class="calc-card">
+<div class="field">
+<label>Unit</label>
+<div class="unit-toggle">
+<button type="button" id="unit-lb" class="active">lb</button>
+<button type="button" id="unit-kg">kg</button>
+</div>
+</div>
+<div class="field">
+<label>Formula</label>
+<div class="unit-toggle">
+<button type="button" id="formula-epley" class="active">Epley</button>
+<button type="button" id="formula-brzycki">Brzycki</button>
+<button type="button" id="formula-lander">Lander</button>
+<button type="button" id="formula-lombardi">Lombardi</button>
+</div>
+</div>
+<div class="field">
+<label for="weight">Weight Lifted</label>
+<input type="number" id="weight" placeholder="e.g. 225" inputmode="decimal" />
+</div>
+<div class="field">
+<label for="reps">Reps Completed (Max 36)</label>
+<input type="number" id="reps" placeholder="e.g. 5" inputmode="numeric" max="36" />
+</div>
+<button class="btn-primary" id="calc-btn">Calculate Bench Max</button>
+<div class="result-box" id="result-box">
+<div class="big-number" id="result-1rm">–</div>
+<div class="label" id="result-label">Estimated Bench Press Max</div>
+<table class="result-table" id="result-table"></table>
+</div>
+</section>
+<article class="article-section">
+<h2>Why Estimate Your Bench Press Max?</h2>
+<p>
+The bench press is the ultimate test of upper-body pushing strength, engaging the pectorals, anterior deltoids, and triceps. However, testing a true 100% one-rep max carries significant risks. Without proper safety arms or an experienced spotter, failing a bench press max means getting pinned under a heavy barbell.
+</p>
+<p>
+Using a bench press max calculator allows you to perform a safer 3-rep to 8-rep max. By plugging those numbers into validated sports science equations, you can accurately estimate your true absolute strength ceiling while keeping your central nervous system (CNS) fresh for your working sets.
+</p>
+</article>
+<article class="article-section">
+<h2>Bench Press Percentage Chart & Training Zones</h2>
+<p>
+Once you have your estimated bench press 1RM, you need to apply the correct percentage to your training blocks to achieve your specific chest development goals:
+</p>
+<ul>
+<li><strong>90% – 100% (1 – 3 Reps):</strong> <em>Peaking & Power.</em> Best for powerlifters preparing for a meet. This zone recruits maximum fast-twitch muscle fibers. Keep volume low to avoid shoulder strain.</li>
+<li><strong>80% – 85% (4 – 6 Reps):</strong> <em>Strength & Density.</em> The ideal zone for building a thicker chest and stronger lockout. This builds foundational pressing power.</li>
+<li><strong>70% – 75% (8 – 12 Reps):</strong> <em>Hypertrophy.</em> Perfect for bodybuilders. This rep range maximizes mechanical tension and metabolic stress for muscle growth across the pecs and triceps.</li>
+<li><strong>60% – 65% (12 – 15+ Reps):</strong> <em>Speed & Technique.</em> Used for dynamic effort days (speed benching) or flushing the muscles with blood during a deload week.</li>
+</ul>
+</article>
+<article class="article-section">
+<h2>The 4 Bench Press Formulas Explained</h2>
+<p>
+Not all formulas treat the bench press equally. Pressing mechanics fatigue differently than squatting or deadlifting. Here is how the four formulas calculate your max:
+</p>
+<h3>1. Brzycki Formula (Recommended for Bench Press)</h3>
+<p>
+<code>1RM = Weight × 36 / (37 - Reps)</code><br />
+The Brzycki formula is widely considered the gold standard for heavy pressing. Because upper body muscles fatigue faster than the lower body, Brzycki's slightly conservative math prevents you from dangerously overestimating your true bench press strength. <strong>Best for:</strong> High accuracy in the 1–8 rep range.
+</p>
+<h3>2. Epley Formula</h3>
+<p>
+<code>1RM = Weight × (1 + Reps / 30)</code><br />
+A reliable baseline for general lifters. It assumes a linear relationship between weight and reps. While great for squats, it can slightly overestimate upper-body lifts if taken past 6 reps. <strong>Best for:</strong> General estimates in the 1–5 rep range.
+</p>
+<h3>3. Lander Formula</h3>
+<p>
+<code>1RM = (100 × Weight) / (101.3 - 2.67123 × Reps)</code><br />
+Provides a very stable average curve. <strong>Best for:</strong> Lifters doing moderate hypertrophy work (8–12 reps) who want a safe working max for their next mesocycle without maxing out.
+</p>
+<h3>4. Lombardi Formula</h3>
+<p>
+<code>1RM = Weight × Reps^0.10</code><br />
+A non-linear model. <strong>Best for:</strong> Lifters performing high-volume pushups, dumbbell presses, or high-rep bench sets (10+ reps) where endurance plays a larger factor than pure power.
+</p>
+</article>
+<article class="article-section">
+<h2>Frequently Asked Questions</h2>
+<div class="faq-item">
+<h3>How do I calculate my bench press max without a spotter?</h3>
+<p>Lift a comfortable weight for 3 to 8 reps until you feel you have only one rep left (RPE 9). Enter that weight and rep count into this calculator to find your max safely, avoiding the risk of getting pinned.</p>
+</div>
+<div class="faq-item">
+<h3>Which formula is most accurate for the bench press?</h3>
+<p>The Brzycki formula is highly recommended for the bench press. Upper body muscles fatigue differently than legs, and Brzycki’s conservative curve prevents dangerous overestimations on heavy pressing movements.</p>
+</div>
+<div class="faq-item">
+<h3>Why is my estimated bench max higher than what I can actually lift?</h3>
+<p>If you calculated your max using a set of 10 or more reps, the formula will likely overestimate. Bench press absolute strength relies on fast-twitch fibers, while high-rep sets rely on endurance. Always calculate your bench max using 8 reps or fewer for true accuracy.</p>
+</div>
+</article>
+<RelatedTools currentToolId="bench-press-calculator" />
+<script>
+let unit = "lb";
+let formula = "epley";
+const unitLb = document.getElementById("unit-lb");
+const unitKg = document.getElementById("unit-kg");
+const formEpley = document.getElementById("formula-epley");
+const formBrzycki = document.getElementById("formula-brzycki");
+const formLander = document.getElementById("formula-lander");
+const formLombardi = document.getElementById("formula-lombardi");
+const weightInput = document.getElementById("weight") as HTMLInputElement | null;
+const repsInput = document.getElementById("reps") as HTMLInputElement | null;
+const calcBtn = document.getElementById("calc-btn");
+const result1rm = document.getElementById("result-1rm");
+const resultLabel = document.getElementById("result-label");
+const resultTable = document.getElementById("result-table");
+const resultBox = document.getElementById("result-box");
+if (unitLb) unitLb.addEventListener("click", () => setUnit("lb"));
+if (unitKg) unitKg.addEventListener("click", () => setUnit("kg"));
+if (formEpley) formEpley.addEventListener("click", () => setFormula("epley"));
+if (formBrzycki) formBrzycki.addEventListener("click", () => setFormula("brzycki"));
+if (formLander) formLander.addEventListener("click", () => setFormula("lander"));
+if (formLombardi) formLombardi.addEventListener("click", () => setFormula("lombardi"));
+if (repsInput) {
+repsInput.addEventListener("input", (e) => {
+const target = e.target as HTMLInputElement;
+if (parseInt(target.value) >= 37) {
+target.value = "36";
+}
+});
+}
+function setUnit(newUnit: string) {
+if (newUnit === unit) return;
+if (weightInput) {
+const currentVal = parseFloat(weightInput.value);
+if (currentVal) {
+weightInput.value = newUnit === "kg"
+? (currentVal / 2.20462).toFixed(1)
+: (currentVal * 2.20462).toFixed(1);
+}
+}
+unit = newUnit;
+if (unitLb) unitLb.classList.toggle("active", unit === "lb");
+if (unitKg) unitKg.classList.toggle("active", unit === "kg");
+}
+function setFormula(f: string) {
+formula = f;
+if (formEpley) formEpley.classList.toggle("active", f === "epley");
+if (formBrzycki) formBrzycki.classList.toggle("active", f === "brzycki");
+if (formLander) formLander.classList.toggle("active", f === "lander");
+if (formLombardi) formLombardi.classList.toggle("active", f === "lombardi");
+}
+function formulaLabel(f: string) {
+if (f === "epley") return "Epley";
+if (f === "brzycki") return "Brzycki";
+if (f === "lander") return "Lander";
+return "Lombardi";
+}
+if (calcBtn) {
+calcBtn.addEventListener("click", () => {
+if (!weightInput || !repsInput) return;
+const weight = parseFloat(weightInput.value);
+let reps = parseInt(repsInput.value, 10);
+if (!weight || !reps || weight <= 0 || reps <= 0) {
+alert("Please enter a valid weight and rep count.");
+return;
+}
+if (reps >= 37) {
+reps = 36;
+repsInput.value = "36";
+}
+let oneRM = 0;
+if (reps === 1) {
+oneRM = weight;
+} else if (formula === "epley") {
+oneRM = weight * (1 + reps / 30);
+} else if (formula === "brzycki") {
+oneRM = weight * 36 / (37 - reps);
+} else if (formula === "lander") {
+oneRM = (100 * weight) / (101.3 - 2.67123 * reps);
+} else if (formula === "lombardi") {
+oneRM = weight * Math.pow(reps, 0.10);
+}
+const rounded = Math.round(oneRM * 10) / 10;
+if (result1rm) result1rm.textContent = ${rounded} ${unit};
+if (resultLabel) resultLabel.textContent = Estimated Bench Max (${formulaLabel(formula)} formula);
+const percentages = [95, 90, 85, 80, 75, 70, 65, 60];
+const rows = percentages.map(p => {
+const val = Math.round(rounded * (p / 100) * 10) / 10;
+return <tr><td>${p}%</td><td>${val} ${unit}</td></tr>;
+}).join("");
+if (resultTable) resultTable.innerHTML = rows;
+if (resultBox) resultBox.classList.add("show");
+});
+}
+</script>
 </Base>
