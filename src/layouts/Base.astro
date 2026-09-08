@@ -1,0 +1,86 @@
+---
+export interface Props {
+  title: string;
+  description: string;
+}
+const { title, description } = Astro.props;
+---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{title}</title>
+  <meta name="description" content={description} />
+  <meta property="og:locale" content="en_US" />
+  <style>
+    :root {
+      --bg: #0f1115;
+      --surface: #171a21;
+      --surface-2: #1f232c;
+      --border: #2a2f3a;
+      --text: #e8eaed;
+      --text-muted: #9aa1ac;
+      --accent: #ff5b2e;
+      --accent-hover: #ff7a52;
+      --success: #3ecf8e;
+      --radius: 14px;
+      --max-width: 780px;
+    }
+    * { box-sizing: border-box; }
+    html, body {
+      margin: 0; padding: 0;
+      background: var(--bg); color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      line-height: 1.55;
+    }
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { color: var(--accent-hover); }
+    .container { max-width: var(--max-width); margin: 0 auto; padding: 0 20px; }
+    .site-header {
+      border-bottom: 1px solid var(--border);
+      padding: 16px 0;
+      position: sticky; top: 0;
+      background: rgba(15,17,21,0.92);
+      backdrop-filter: blur(8px);
+      z-index: 50;
+    }
+    .site-header .container { display: flex; align-items: center; justify-content: space-between; }
+    .logo { font-weight: 700; font-size: 1.15rem; color: var(--text); }
+    .logo span { color: var(--accent); }
+    .site-footer {
+      border-top: 1px solid var(--border);
+      padding: 24px 0; text-align: center;
+      color: var(--text-muted); font-size: 0.82rem;
+      margin-top: 48px;
+    }
+    .site-footer a { color: var(--text-muted); margin: 0 8px; }
+    .ad-slot {
+      margin: 24px 0; min-height: 90px;
+      display: flex; align-items: center; justify-content: center;
+      color: var(--text-muted); font-size: 0.75rem;
+      border: 1px dashed var(--border); border-radius: 10px;
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container">
+      <a href="/" class="logo">Rep<span>Maths</span></a>
+    </div>
+  </header>
+
+  <main class="container">
+    <slot />
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <a href="/about">About</a>
+      <a href="/privacy-policy">Privacy Policy</a>
+      <a href="/contact">Contact</a>
+      <p>&copy; 2026 RepMaths. All calculations are estimates — consult a professional for medical or training advice.</p>
+    </div>
+  </footer>
+</body>
+</html>
