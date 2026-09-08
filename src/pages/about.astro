@@ -1,13 +1,72 @@
 ---
 import Base from '../layouts/Base.astro';
 ---
-<Base title="About — RepMaths" description="About RepMaths free fitness calculators.">
+<Base title="About — RepMaths" description="About RepMaths free fitness calculators and the scientific methods behind them.">
   <article style="margin-top:32px;">
     <h1>About RepMaths</h1>
     <p>
-      RepMaths builds fast, free calculators for lifters and fitness enthusiasts
-      — one-rep max, macros, body composition and more. No sign-up, no clutter,
-      just accurate numbers you can use right away.
+      RepMaths builds fast, free calculators for lifters and fitness
+      enthusiasts — one-rep max, training percentages, body composition,
+      nutrition, and more. No sign-up, no clutter, just accurate numbers
+      you can use right away.
+    </p>
+
+    <h2>Methods &amp; Formulas We Use</h2>
+    <p>
+      Every calculator on this site is built on established, published
+      formulas and methods from strength training and exercise science —
+      never anything we invented ourselves. We name the exact method used
+      on each tool page so you can verify it independently.
+    </p>
+
+    <h3>Strength &amp; 1RM Estimation</h3>
+    <ul>
+      <li>Epley Formula</li>
+      <li>Brzycki Formula</li>
+      <li>Lander Formula</li>
+      <li>Lombardi Formula</li>
+    </ul>
+
+    <h3>Training &amp; Load Management</h3>
+    <ul>
+      <li>RPE (Rate of Perceived Exertion) scale</li>
+      <li>RIR (Reps in Reserve) method</li>
+      <li>Training Max methodology (as used in 5/3/1-style programming)</li>
+    </ul>
+
+    <h3>Strength Comparison</h3>
+    <ul>
+      <li>Wilks Coefficient</li>
+      <li>DOTS Score</li>
+    </ul>
+
+    <h3>Body Composition</h3>
+    <ul>
+      <li>U.S. Navy Body Fat Method (Hodgdon &amp; Beckett, 1984)</li>
+      <li>Body Mass Index (BMI / Quetelet Index)</li>
+      <li>Devine and Robinson ideal body weight formulas</li>
+    </ul>
+
+    <h3>Nutrition &amp; Energy Expenditure</h3>
+    <ul>
+      <li>Mifflin-St Jeor Equation</li>
+      <li>Harris-Benedict Equation</li>
+      <li>Katch-McArdle Formula</li>
+      <li>Standard TDEE activity multipliers</li>
+    </ul>
+
+    <p>
+      All calculators provide estimates for educational purposes and are
+      not a substitute for professional medical, nutritional, or fitness
+      advice. See our <a href="/disclaimer">Disclaimer</a> for more
+      details.
     </p>
   </article>
+
+  <style>
+    h2 { font-size: 1.3rem; margin-top: 32px; }
+    h3 { font-size: 1.05rem; margin-top: 20px; color: var(--text); }
+    ul { color: #c7cbd2; font-size: 0.95rem; padding-left: 20px; }
+    li { margin-bottom: 6px; }
+  </style>
 </Base>
