@@ -3,12 +3,20 @@ import Base from '../layouts/Base.astro';
 import toolsData from '../data/tools.json';
 ---
 <Base
-  title="Free Fitness Calculators — 1RM, Macros, Plates & More | RepMaths"
-  description="Fast, free fitness and strength-training calculators. No sign-up, instant results."
+  title="Free Fitness & Strength Calculators — 1RM, Macros, Body Fat & More | RepMaths"
+  description="Free, fast fitness calculators built on established formulas — 1RM, training percentages, body composition, and nutrition. No sign-up required."
 >
+  <script type="application/ld+json" set:html={JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "RepMaths",
+    "url": "https://repmaths.com",
+    "description": "Free fitness and strength-training calculators built on established, published formulas."
+  })} />
+
   <section class="hero">
     <h1>Free Fitness &amp; Strength Calculators</h1>
-    <p>Instant, accurate tools for lifters — no sign-up, no clutter.</p>
+    <p>Instant, accurate tools for lifters — built on established formulas, no sign-up required.</p>
   </section>
 
   <section class="ad-slot">Ad Slot (Top)</section>
@@ -26,9 +34,6 @@ import toolsData from '../data/tools.json';
   <section class="ad-slot">Ad Slot (Bottom)</section>
 
   <style>
-    .hero { padding: 40px 0 24px; text-align: center; }
-    .hero h1 { font-size: 1.8rem; margin: 0 0 8px; }
-    .hero p { color: var(--text-muted); margin: 0; }
     .tool-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
