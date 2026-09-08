@@ -4,7 +4,7 @@ import RelatedTools from '../../../components/RelatedTools.astro';
 ---
 <Base
   title="1RM Calculator — Calculate Your One Rep Max Instantly"
-  description="Free 1RM calculator. Enter the weight and reps you lifted to estimate your one-rep max for bench press, squat, deadlift or any lift."
+  description="Free 1RM calculator using the Epley and Brzycki formulas. Enter your weight and reps to estimate your one-rep max for squat, bench, or deadlift."
 >
   <script type="application/ld+json" set:html={JSON.stringify({
     "@context": "https://schema.org",
@@ -12,7 +12,47 @@ import RelatedTools from '../../../components/RelatedTools.astro';
     "name": "1RM Calculator",
     "applicationCategory": "HealthApplication",
     "operatingSystem": "Any",
-    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+    "description": "Free online calculator that estimates a lifter's one-rep max (1RM) from a submaximal weight and rep count."
+  })} />
+
+  <script type="application/ld+json" set:html={JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "What is a 1RM calculator?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "A 1RM calculator estimates the maximum weight you could lift for a single repetition, based on a lighter weight you lifted for multiple reps. It uses formulas like Epley or Brzycki to predict this number without requiring you to actually test a true max."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How accurate is a 1RM calculator?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "1RM calculators are typically accurate within 5-10% for sets of 1 to 10 reps. Accuracy decreases for higher rep ranges because rep-max formulas are calibrated on lower rep counts."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Which 1RM formula is most accurate: Epley or Brzycki?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Epley tends to estimate slightly higher for sets above 5 reps, while Brzycki is often considered more precise for sets under 10 reps. Most lifters use Epley as a simple, reliable default."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Should I test my true 1RM instead of estimating it?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Testing a true 1RM carries injury risk, especially without a spotter or coach. Most lifters only need an estimated 1RM to calculate training percentages, making a calculator the safer choice for regular programming."
+        }
+      }
+    ]
   })} />
 
   <section class="hero">
@@ -31,6 +71,13 @@ import RelatedTools from '../../../components/RelatedTools.astro';
       </div>
     </div>
     <div class="field">
+      <label>Formula</label>
+      <div class="unit-toggle">
+        <button type="button" id="formula-epley" class="active">Epley</button>
+        <button type="button" id="formula-brzycki">Brzycki</button>
+      </div>
+    </div>
+    <div class="field">
       <label for="weight">Weight Lifted</label>
       <input type="number" id="weight" placeholder="e.g. 185" inputmode="decimal" />
     </div>
@@ -42,7 +89,7 @@ import RelatedTools from '../../../components/RelatedTools.astro';
 
     <div class="result-box" id="result-box">
       <div class="big-number" id="result-1rm">–</div>
-      <div class="label">Estimated One-Rep Max (Epley formula)</div>
+      <div class="label" id="result-label">Estimated One-Rep Max</div>
       <table class="result-table" id="result-table"></table>
     </div>
   </section>
@@ -50,55 +97,78 @@ import RelatedTools from '../../../components/RelatedTools.astro';
   <section class="ad-slot">Ad Slot (Bottom)</section>
 
   <article class="article-section">
-    <h2>How It Works</h2>
+    <h2>What Is a 1RM Calculator?</h2>
     <p>
-      A one-rep max (1RM) is the heaviest weight you can lift for a single full
-      repetition. This calculator uses the Epley formula:
-      <strong>1RM = weight × (1 + reps ÷ 30)</strong>. It works best for sets of
-      1–10 reps on compound lifts like squat, bench, and deadlift.
+      Your one-rep max (1RM) is the heaviest weight you can lift for a single
+      full repetition of an exercise with correct form. Testing it directly is
+      risky and fatiguing, so most lifters and coaches estimate it instead using
+      a rep-max formula. This calculator supports two of the most widely used
+      formulas:
     </p>
+    <p>
+      <strong>Epley formula:</strong> 1RM = weight × (1 + reps ÷ 30)<br />
+      <strong>Brzycki formula:</strong> 1RM = weight × 36 ÷ (37 − reps)
+    </p>
+    <p>
+      Both formulas assume a fairly direct relationship between the weight you
+      move and how many clean reps you can complete with it. They work best for
+      sets of 1 to 10 reps on compound barbell lifts such as the squat, bench
+      press, and deadlift.
+    </p>
+  </article>
+
+  <article class="article-section">
+    <h2>How to Use This Calculator</h2>
+    <p>
+      Enter the heaviest weight you lifted for a clean set, along with how many
+      reps you completed before reaching failure. For the most reliable
+      estimate, use a set of 10 reps or fewer — accuracy drops for higher-rep
+      sets. The calculator also shows common training percentages (70%, 85%,
+      and more) so you can plan your next session's working weights directly
+      from the result.
+    </p>
+  </article>
+
+  <article class="article-section">
+    <h2>Frequently Asked Questions</h2>
+    <div class="faq-item">
+      <h3>What is a 1RM calculator?</h3>
+      <p>It estimates the maximum weight you could lift once, based on a lighter weight lifted for multiple reps.</p>
+    </div>
+    <div class="faq-item">
+      <h3>How accurate is a 1RM calculator?</h3>
+      <p>Typically accurate within 5-10% for sets of 1-10 reps. Accuracy drops for higher rep counts.</p>
+    </div>
+    <div class="faq-item">
+      <h3>Which formula is most accurate: Epley or Brzycki?</h3>
+      <p>Epley runs slightly higher above 5 reps; Brzycki is often more precise under 10 reps.</p>
+    </div>
+    <div class="faq-item">
+      <h3>Should I test my true 1RM instead?</h3>
+      <p>Only with a spotter and proper warm-up — most lifters get more value from an estimate for planning training percentages.</p>
+    </div>
   </article>
 
   <RelatedTools currentToolId="1rm-calculator" />
 
-  <style>
-    .hero { padding: 28px 0 24px; text-align: center; }
-    .hero h1 { font-size: 1.8rem; margin: 0 0 8px; }
-    .hero p { color: var(--text-muted); margin: 0; }
-    .calc-card {
-      background: var(--surface); border: 1px solid var(--border);
-      border-radius: var(--radius); padding: 24px; margin: 24px 0;
-    }
-    .field { margin-bottom: 16px; }
-    .field label { display: block; font-size: 0.85rem; color: var(--text-muted); margin-bottom: 6px; }
-    .field input { width: 100%; padding: 12px 14px; background: var(--surface-2); border: 1px solid var(--border); border-radius: 10px; color: var(--text); font-size: 1rem; }
-    .field input:focus { outline: none; border-color: var(--accent); }
-    .unit-toggle { display: flex; gap: 8px; }
-    .unit-toggle button { flex: 1; padding: 10px; background: var(--surface-2); border: 1px solid var(--border); border-radius: 10px; color: var(--text-muted); cursor: pointer; }
-    .unit-toggle button.active { border-color: var(--accent); color: var(--text); background: rgba(255,91,46,0.12); }
-    .btn-primary { width: 100%; padding: 14px; background: var(--accent); color: #fff; border: none; border-radius: 10px; font-size: 1rem; font-weight: 600; cursor: pointer; margin-top: 8px; }
-    .btn-primary:hover { background: var(--accent-hover); }
-    .result-box { margin-top: 20px; padding: 20px; background: var(--surface-2); border-radius: 12px; text-align: center; display: none; }
-    .result-box.show { display: block; }
-    .result-box .big-number { font-size: 2.4rem; font-weight: 700; color: var(--success); }
-    .result-box .label { color: var(--text-muted); font-size: 0.85rem; margin-top: 4px; }
-    .result-table { width: 100%; margin-top: 16px; border-collapse: collapse; font-size: 0.88rem; }
-    .result-table td { padding: 8px 6px; border-bottom: 1px solid var(--border); }
-    .result-table td:last-child { text-align: right; font-weight: 600; }
-    .article-section { margin: 32px 0; }
-    .article-section h2 { font-size: 1.2rem; margin-bottom: 10px; }
-    .article-section p { color: #c7cbd2; font-size: 0.95rem; }
-  </style>
-
   <script>
     let unit = "lb";
+    let formula = "epley";
+
     document.getElementById("unit-lb")!.addEventListener("click", () => setUnit("lb"));
     document.getElementById("unit-kg")!.addEventListener("click", () => setUnit("kg"));
+    document.getElementById("formula-epley")!.addEventListener("click", () => setFormula("epley"));
+    document.getElementById("formula-brzycki")!.addEventListener("click", () => setFormula("brzycki"));
 
     function setUnit(u: string) {
       unit = u;
       document.getElementById("unit-lb")!.classList.toggle("active", u === "lb");
       document.getElementById("unit-kg")!.classList.toggle("active", u === "kg");
+    }
+    function setFormula(f: string) {
+      formula = f;
+      document.getElementById("formula-epley")!.classList.toggle("active", f === "epley");
+      document.getElementById("formula-brzycki")!.classList.toggle("active", f === "brzycki");
     }
 
     document.getElementById("calc-btn")!.addEventListener("click", () => {
@@ -108,9 +178,20 @@ import RelatedTools from '../../../components/RelatedTools.astro';
         alert("Please enter a valid weight and rep count.");
         return;
       }
-      const oneRM = reps === 1 ? weight : weight * (1 + reps / 30);
+
+      let oneRM: number;
+      if (reps === 1) {
+        oneRM = weight;
+      } else if (formula === "epley") {
+        oneRM = weight * (1 + reps / 30);
+      } else {
+        oneRM = weight * 36 / (37 - reps);
+      }
+
       const rounded = Math.round(oneRM * 10) / 10;
+      const formulaName = formula === "epley" ? "Epley" : "Brzycki";
       document.getElementById("result-1rm")!.textContent = `${rounded} ${unit}`;
+      document.getElementById("result-label")!.textContent = `Estimated One-Rep Max (${formulaName} formula)`;
 
       const percentages = [95, 90, 85, 80, 75, 70, 65, 60];
       const rows = percentages.map(p => {
