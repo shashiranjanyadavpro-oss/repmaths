@@ -37,6 +37,8 @@ const { title, description } = Astro.props;
     a { color: var(--accent); text-decoration: none; }
     a:hover { color: var(--accent-hover); }
     .container { max-width: var(--max-width); margin: 0 auto; padding: 0 20px; }
+
+    /* Header / Footer */
     .site-header {
       border-bottom: 1px solid var(--border);
       padding: 16px 0;
@@ -61,6 +63,61 @@ const { title, description } = Astro.props;
       color: var(--text-muted); font-size: 0.75rem;
       border: 1px dashed var(--border); border-radius: 10px;
     }
+
+    /* ===== SHARED CALCULATOR COMPONENTS ===== */
+    /* Used by every tool page - do not duplicate in individual tool files */
+
+    .hero { padding: 28px 0 24px; text-align: center; }
+    .hero h1 { font-size: 1.8rem; margin: 0 0 8px; }
+    .hero p { color: var(--text-muted); margin: 0; }
+
+    .calc-card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 24px; margin: 24px 0;
+    }
+    .field { margin-bottom: 16px; }
+    .field label { display: block; font-size: 0.85rem; color: var(--text-muted); margin-bottom: 6px; }
+    .field input, .field select {
+      width: 100%; padding: 12px 14px; background: var(--surface-2);
+      border: 1px solid var(--border); border-radius: 10px; color: var(--text); font-size: 1rem;
+    }
+    .field input:focus, .field select:focus { outline: none; border-color: var(--accent); }
+
+    .unit-toggle { display: flex; gap: 8px; }
+    .unit-toggle button {
+      flex: 1; padding: 10px; background: var(--surface-2);
+      border: 1px solid var(--border); border-radius: 10px; color: var(--text-muted); cursor: pointer;
+    }
+    .unit-toggle button.active {
+      border-color: var(--accent); color: var(--text); background: rgba(255,91,46,0.12);
+    }
+
+    .btn-primary {
+      width: 100%; padding: 14px; background: var(--accent); color: #fff;
+      border: none; border-radius: 10px; font-size: 1rem; font-weight: 600;
+      cursor: pointer; margin-top: 8px;
+    }
+    .btn-primary:hover { background: var(--accent-hover); }
+
+    .result-box {
+      margin-top: 20px; padding: 20px; background: var(--surface-2);
+      border-radius: 12px; text-align: center; display: none;
+    }
+    .result-box.show { display: block; }
+    .result-box .big-number { font-size: 2.4rem; font-weight: 700; color: var(--success); }
+    .result-box .label { color: var(--text-muted); font-size: 0.85rem; margin-top: 4px; }
+
+    .result-table { width: 100%; margin-top: 16px; border-collapse: collapse; font-size: 0.88rem; }
+    .result-table td { padding: 8px 6px; border-bottom: 1px solid var(--border); }
+    .result-table td:last-child { text-align: right; font-weight: 600; }
+
+    .article-section { margin: 32px 0; }
+    .article-section h2 { font-size: 1.2rem; margin-bottom: 10px; }
+    .article-section p { color: #c7cbd2; font-size: 0.95rem; }
+
+    .faq-item { border-bottom: 1px solid var(--border); padding: 14px 0; }
+    .faq-item h3 { font-size: 0.98rem; margin: 0 0 6px; }
+    .faq-item p { color: var(--text-muted); font-size: 0.9rem; margin: 0; }
   </style>
 </head>
 <body>
