@@ -226,12 +226,12 @@ oneRM = (100 * weight) / (101.3 - 2.67123 * reps);
 oneRM = weight * Math.pow(reps, 0.10);
 }
 const rounded = Math.round(oneRM * 10) / 10;
-if (result1rm) result1rm.textContent = ${rounded} ${unit};
-if (resultLabel) resultLabel.textContent = Estimated Bench Max (${formulaLabel(formula)} formula);
+if (result1rm) result1rm.textContent = `${rounded} ${unit}`;
+if (resultLabel) resultLabel.textContent = `Estimated One-Rep Max (${formulaLabel(formula)} formula)`;
 const percentages = [95, 90, 85, 80, 75, 70, 65, 60];
 const rows = percentages.map(p => {
 const val = Math.round(rounded * (p / 100) * 10) / 10;
-return <tr><td>${p}%</td><td>${val} ${unit}</td></tr>;
+return `<tr><td>${p}%</td><td>${val} ${unit}</td></tr>`;
 }).join("");
 if (resultTable) resultTable.innerHTML = rows;
 if (resultBox) resultBox.classList.add("show");
