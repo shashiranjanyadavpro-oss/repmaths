@@ -1,0 +1,124 @@
+---
+import Base from '../../../layouts/Base.astro';
+import RelatedTools from '../../../components/RelatedTools.astro';
+---
+<Base
+  title="1RM Calculator — Calculate Your One Rep Max Instantly"
+  description="Free 1RM calculator. Enter the weight and reps you lifted to estimate your one-rep max for bench press, squat, deadlift or any lift."
+>
+  <script type="application/ld+json" set:html={JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "1RM Calculator",
+    "applicationCategory": "HealthApplication",
+    "operatingSystem": "Any",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+  })} />
+
+  <section class="hero">
+    <h1>1RM Calculator</h1>
+    <p>Enter the weight and reps you just lifted to estimate your one-rep max.</p>
+  </section>
+
+  <section class="ad-slot">Ad Slot (Top)</section>
+
+  <section class="calc-card">
+    <div class="field">
+      <label>Unit</label>
+      <div class="unit-toggle">
+        <button type="button" id="unit-lb" class="active">lb</button>
+        <button type="button" id="unit-kg">kg</button>
+      </div>
+    </div>
+    <div class="field">
+      <label for="weight">Weight Lifted</label>
+      <input type="number" id="weight" placeholder="e.g. 185" inputmode="decimal" />
+    </div>
+    <div class="field">
+      <label for="reps">Reps Completed</label>
+      <input type="number" id="reps" placeholder="e.g. 5" inputmode="numeric" />
+    </div>
+    <button class="btn-primary" id="calc-btn">Calculate 1RM</button>
+
+    <div class="result-box" id="result-box">
+      <div class="big-number" id="result-1rm">–</div>
+      <div class="label">Estimated One-Rep Max (Epley formula)</div>
+      <table class="result-table" id="result-table"></table>
+    </div>
+  </section>
+
+  <section class="ad-slot">Ad Slot (Bottom)</section>
+
+  <article class="article-section">
+    <h2>How It Works</h2>
+    <p>
+      A one-rep max (1RM) is the heaviest weight you can lift for a single full
+      repetition. This calculator uses the Epley formula:
+      <strong>1RM = weight × (1 + reps ÷ 30)</strong>. It works best for sets of
+      1–10 reps on compound lifts like squat, bench, and deadlift.
+    </p>
+  </article>
+
+  <RelatedTools currentToolId="1rm-calculator" />
+
+  <style>
+    .hero { padding: 28px 0 24px; text-align: center; }
+    .hero h1 { font-size: 1.8rem; margin: 0 0 8px; }
+    .hero p { color: var(--text-muted); margin: 0; }
+    .calc-card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 24px; margin: 24px 0;
+    }
+    .field { margin-bottom: 16px; }
+    .field label { display: block; font-size: 0.85rem; color: var(--text-muted); margin-bottom: 6px; }
+    .field input { width: 100%; padding: 12px 14px; background: var(--surface-2); border: 1px solid var(--border); border-radius: 10px; color: var(--text); font-size: 1rem; }
+    .field input:focus { outline: none; border-color: var(--accent); }
+    .unit-toggle { display: flex; gap: 8px; }
+    .unit-toggle button { flex: 1; padding: 10px; background: var(--surface-2); border: 1px solid var(--border); border-radius: 10px; color: var(--text-muted); cursor: pointer; }
+    .unit-toggle button.active { border-color: var(--accent); color: var(--text); background: rgba(255,91,46,0.12); }
+    .btn-primary { width: 100%; padding: 14px; background: var(--accent); color: #fff; border: none; border-radius: 10px; font-size: 1rem; font-weight: 600; cursor: pointer; margin-top: 8px; }
+    .btn-primary:hover { background: var(--accent-hover); }
+    .result-box { margin-top: 20px; padding: 20px; background: var(--surface-2); border-radius: 12px; text-align: center; display: none; }
+    .result-box.show { display: block; }
+    .result-box .big-number { font-size: 2.4rem; font-weight: 700; color: var(--success); }
+    .result-box .label { color: var(--text-muted); font-size: 0.85rem; margin-top: 4px; }
+    .result-table { width: 100%; margin-top: 16px; border-collapse: collapse; font-size: 0.88rem; }
+    .result-table td { padding: 8px 6px; border-bottom: 1px solid var(--border); }
+    .result-table td:last-child { text-align: right; font-weight: 600; }
+    .article-section { margin: 32px 0; }
+    .article-section h2 { font-size: 1.2rem; margin-bottom: 10px; }
+    .article-section p { color: #c7cbd2; font-size: 0.95rem; }
+  </style>
+
+  <script>
+    let unit = "lb";
+    document.getElementById("unit-lb")!.addEventListener("click", () => setUnit("lb"));
+    document.getElementById("unit-kg")!.addEventListener("click", () => setUnit("kg"));
+
+    function setUnit(u: string) {
+      unit = u;
+      document.getElementById("unit-lb")!.classList.toggle("active", u === "lb");
+      document.getElementById("unit-kg")!.classList.toggle("active", u === "kg");
+    }
+
+    document.getElementById("calc-btn")!.addEventListener("click", () => {
+      const weight = parseFloat((document.getElementById("weight") as HTMLInputElement).value);
+      const reps = parseInt((document.getElementById("reps") as HTMLInputElement).value, 10);
+      if (!weight || !reps || weight <= 0 || reps <= 0) {
+        alert("Please enter a valid weight and rep count.");
+        return;
+      }
+      const oneRM = reps === 1 ? weight : weight * (1 + reps / 30);
+      const rounded = Math.round(oneRM * 10) / 10;
+      document.getElementById("result-1rm")!.textContent = `${rounded} ${unit}`;
+
+      const percentages = [95, 90, 85, 80, 75, 70, 65, 60];
+      const rows = percentages.map(p => {
+        const val = Math.round(rounded * (p / 100) * 10) / 10;
+        return `<tr><td>${p}%</td><td>${val} ${unit}</td></tr>`;
+      }).join("");
+      document.getElementById("result-table")!.innerHTML = rows;
+      document.getElementById("result-box")!.classList.add("show");
+    });
+  </script>
+</Base>
