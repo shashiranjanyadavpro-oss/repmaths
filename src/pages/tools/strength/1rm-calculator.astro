@@ -1,237 +1,280 @@
+---
 import Base from '../../../layouts/Base.astro';
 import RelatedTools from '../../../components/RelatedTools.astro';
-​<Base
-title="1RM Calculator — Calculate Your One Rep Max (4 Formulas)"
-description="Free 1RM calculator using Epley, Brzycki, Lander, and Lombardi formulas. Estimate your one-rep max for squat, bench, or deadlift without testing a true max."
-​
-​<script type="application/ld+json" set:html={JSON.stringify({
-"@context": "https://schema.org",
-"@type": "SoftwareApplication",
-"name": "1RM Calculator",
-"applicationCategory": "HealthApplication",
-"operatingSystem": "Any",
-"offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
-"description": "Free online calculator that estimates a lifter's one-rep max (1RM) from a submaximal weight and rep count using the Epley, Brzycki, Lander, or Lombardi formula."
-})} />
-​<script type="application/ld+json" set:html={JSON.stringify({
-"@context": "https://schema.org",
-"@type": "FAQPage",
-"mainEntity": [
-{
-"@type": "Question",
-"name": "Which 1RM formula is the most accurate?",
-"acceptedAnswer": {
-"@type": "Answer",
-"text": "For low reps (under 10), the Epley and Brzycki formulas are considered highly accurate and are the standard in powerlifting. Brzycki is slightly more conservative, making it safer for heavy pressing movements. For higher reps (10+), the Lombardi formula often provides a more realistic curve."
-}
-},
-{
-"@type": "Question",
-"name": "Can I calculate my 1RM using high repetitions (above 10 reps)?",
-"acceptedAnswer": {
-"@type": "Answer",
-"text": "Yes, but accuracy decreases as reps increase. Standard formulas like Epley and Brzycki tend to overestimate maxes when calculated from sets higher than 10 reps. If you must use a high-rep set, the Lombardi or Lander formula adjusts for muscular fatigue better than linear models."
-}
-},
-{
-"@type": "Question",
-"name": "Is estimating a 1RM better than testing a true 1-rep max?",
-"acceptedAnswer": {
-"@type": "Answer",
-"text": "For most gym-goers and athletes, estimating a 1RM using a 3-5 rep max is safer and causes less central nervous system (CNS) fatigue. Testing a true 1RM has a higher injury risk and requires peaking, which should generally be reserved for powerlifting meets or specific test weeks."
-}
-}
-]
-})} />
-​<section class="hero">
-<h1>1RM Calculator</h1>
-<p>Enter the weight and reps you just lifted to estimate your one-rep max.</p>
-</section>
-​<section class="calc-card">
-<div class="field">
-<label>Unit</label>
-<div class="unit-toggle">
-<button type="button" id="unit-lb" class="active">lb</button>
-<button type="button" id="unit-kg">kg</button>
-</div>
-</div>
-<div class="field">
-<label>Formula</label>
-<div class="unit-toggle">
-<button type="button" id="formula-epley" class="active">Epley</button>
-<button type="button" id="formula-brzycki">Brzycki</button>
-<button type="button" id="formula-lander">Lander</button>
-<button type="button" id="formula-lombardi">Lombardi</button>
-</div>
-</div>
-<div class="field">
-<label for="weight">Weight Lifted</label>
-<input type="number" id="weight" placeholder="e.g. 185" inputmode="decimal" />
-</div>
-<div class="field">
-<label for="reps">Reps Completed (Max 36)</label>
-<input type="number" id="reps" placeholder="e.g. 5" inputmode="numeric" max="36" />
-</div>
-<button class="btn-primary" id="calc-btn">Calculate 1RM</button>
-​<div class="result-box" id="result-box">
-<div class="big-number" id="result-1rm">–</div>
-<div class="label" id="result-label">Estimated One-Rep Max</div>
-<table class="result-table" id="result-table"></table>
-</div>
-</section>
-​<article class="article-section">
-<h2>1RM Percentage Chart & Training Zones</h2>
-<p>
-Knowing your estimated One Rep Max (1RM) is just the baseline. To build an effective strength and hypertrophy program, you need to apply the correct percentage of your max to your working sets. Here is how to use your 1RM to hit your specific fitness goals without overtraining:
-</p>
-<ul>
-<li><strong>90% – 100% (1 – 3 Reps):</strong> <em>Absolute Strength</em>. Best for CNS adaptation and peaking for powerlifting meets. Requires maximum intensity and high rest.</li>
-<li><strong>80% – 85% (4 – 6 Reps):</strong> <em>Strength & Hypertrophy</em>. The sweet spot for building dense muscle and foundational strength.</li>
-<li><strong>70% – 75% (8 – 12 Reps):</strong> <em>Hypertrophy (Muscle Growth)</em>. Ideal for maximizing mechanical tension and metabolic stress for muscle building.</li>
-<li><strong>60% – 65% (12 – 15+ Reps):</strong> <em>Endurance & Speed</em>. Used for dynamic effort (speed work), warm-ups, or muscular endurance.</li>
-</ul>
-</article>
-​<article class="article-section">
-<h2>The 4 Core 1RM Formulas Explained</h2>
-<p>
-Not all one rep max calculators are created equal. Because human biomechanics and fatigue rates vary, sports scientists have developed different mathematical models to estimate maximal strength. Here is a deep dive into the four most scientifically validated formulas used in this calculator:
-</p>
-​<h3>1. Epley Formula (1985)</h3>
-<p>
-<code>1RM = Weight × (1 + Reps / 30)</code>
+---
+<Base
+  title="1RM Calculator — Calculate Your One Rep Max (4 Formulas)"
+  description="Free 1RM calculator using Epley, Brzycki, Lander, and Lombardi formulas. Estimate your one-rep max for squat, bench, or deadlift without testing a true max."
+>
+  <script type="application/ld+json" set:html={JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "1RM Calculator",
+    "applicationCategory": "HealthApplication",
+    "operatingSystem": "Any",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+    "description": "Free online calculator that estimates a lifter's one-rep max (1RM) from a submaximal weight and rep count using the Epley, Brzycki, Lander, or Lombardi formula."
+  })} />
 
-The Epley formula is the most widely used baseline in strength training. It assumes a linear relationship between the weight lifted and the number of repetitions. <strong>Best For:</strong> General strength estimates and heavy compound movements (Squat, Deadlift) in the 1–10 rep range.
-</p>
-​<h3>2. Brzycki Formula (1993)</h3>
-<p>
-<code>1RM = Weight × 36 / (37 - Reps)</code>
+  <script type="application/ld+json" set:html={JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Which 1RM formula is the most accurate?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "For low reps (under 10), the Epley and Brzycki formulas are considered highly accurate and are the standard in powerlifting. Brzycki is slightly more conservative, making it safer for heavy pressing movements. For higher reps (10+), the Lombardi formula often provides a more realistic curve."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Can I calculate my 1RM using high repetitions (above 10 reps)?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes, but accuracy decreases as reps increase. Standard formulas like Epley and Brzycki tend to overestimate maxes when calculated from sets higher than 10 reps. If you must use a high-rep set, the Lombardi or Lander formula adjusts for muscular fatigue better than linear models."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Is estimating a 1RM better than testing a true 1-rep max?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "For most gym-goers and athletes, estimating a 1RM using a 3-5 rep max is safer and causes less central nervous system (CNS) fatigue. Testing a true 1RM has a higher injury risk and requires peaking, which should generally be reserved for powerlifting meets or specific test weeks."
+        }
+      }
+    ]
+  })} />
 
-Developed by Matt Brzycki, this hyperbolic equation is a gold standard for powerlifters. As reps increase, the formula becomes increasingly conservative to prevent overestimation. <strong>Best For:</strong> Highly accurate estimates for heavy pressing movements (Bench Press, Overhead Press) specifically in the 1–8 rep range.
-</p>
-​<h3>3. Lander Formula (1985)</h3>
-<p>
-<code>1RM = (100 × Weight) / (101.3 - 2.67123 × Reps)</code>
+  <section class="hero">
+    <h1>1RM Calculator</h1>
+    <p>Enter the weight and reps you just lifted to estimate your one-rep max.</p>
+  </section>
 
-The Lander formula uses a highly precise linear model that provides a stable average between aggressive and conservative mathematical estimates. <strong>Best For:</strong> Moderate rep ranges (5–12 reps) and bodybuilders looking for a realistic working max without inducing heavy CNS fatigue.
-</p>
-​<h3>4. Lombardi Formula (1989)</h3>
-<p>
-<code>1RM = Weight × Reps^0.10</code>
+  <section class="calc-card">
+    <div class="field">
+      <label>Unit</label>
+      <div class="unit-toggle">
+        <button type="button" id="unit-lb" class="active">lb</button>
+        <button type="button" id="unit-kg">kg</button>
+      </div>
+    </div>
+    <div class="field">
+      <label>Formula</label>
+      <div class="unit-toggle">
+        <button type="button" id="formula-epley" class="active">Epley</button>
+        <button type="button" id="formula-brzycki">Brzycki</button>
+        <button type="button" id="formula-lander">Lander</button>
+        <button type="button" id="formula-lombardi">Lombardi</button>
+      </div>
+    </div>
+    <div class="field">
+      <label for="weight">Weight Lifted</label>
+      <input type="number" id="weight" placeholder="e.g. 185" inputmode="decimal" />
+    </div>
+    <div class="field">
+      <label for="reps">Reps Completed (Max 36)</label>
+      <input type="number" id="reps" placeholder="e.g. 5" inputmode="numeric" max="36" />
+    </div>
+    <button class="btn-primary" id="calc-btn">Calculate 1RM</button>
 
-Unlike linear equations, Lombardi's model uses a non-linear power function. This means it increases the estimated 1RM by smaller, tighter increments as the repetition count goes up. <strong>Best For:</strong> Athletes with high muscular endurance who are calculating a max from higher volume sets (10+ reps).
-</p>
-</article>
-​<article class="article-section">
-<h2>Frequently Asked Questions</h2>
-​<div class="faq-item">
-<h3>Which 1RM formula is the most accurate?</h3>
-<p>For low reps (under 10), the Epley and Brzycki formulas are considered highly accurate and are the standard in powerlifting. Brzycki is slightly more conservative, making it safer for heavy pressing movements. For higher reps (10+), the Lombardi formula often provides a more realistic curve.</p>
-</div>
-​<div class="faq-item">
-<h3>Can I calculate my 1RM using high repetitions (above 10 reps)?</h3>
-<p>Yes, but accuracy decreases as reps increase. Standard formulas like Epley and Brzycki tend to overestimate maxes when calculated from sets higher than 10 reps. If you must use a high-rep set, the Lombardi or Lander formula adjusts for muscular fatigue better than linear models.</p>
-</div>
-​<div class="faq-item">
-<h3>Is estimating a 1RM better than testing a true 1-rep max?</h3>
-<p>For most gym-goers and athletes, estimating a 1RM using a 3-5 rep max is safer and causes less central nervous system (CNS) fatigue. Testing a true 1RM has a higher injury risk and requires peaking, which should generally be reserved for powerlifting meets or specific test weeks.</p>
-</div>
-</article>
-​<RelatedTools currentToolId="1rm-calculator" />
-​<script>
-let unit = "lb";
-let formula = "epley";
-​const unitLb = document.getElementById("unit-lb");
-const unitKg = document.getElementById("unit-kg");
-const formEpley = document.getElementById("formula-epley");
-const formBrzycki = document.getElementById("formula-brzycki");
-const formLander = document.getElementById("formula-lander");
-const formLombardi = document.getElementById("formula-lombardi");
-const weightInput = document.getElementById("weight") as HTMLInputElement | null;
-const repsInput = document.getElementById("reps") as HTMLInputElement | null;
-const calcBtn = document.getElementById("calc-btn");
-const result1rm = document.getElementById("result-1rm");
-const resultLabel = document.getElementById("result-label");
-const resultTable = document.getElementById("result-table");
-const resultBox = document.getElementById("result-box");
-​if (unitLb) unitLb.addEventListener("click", () => setUnit("lb"));
-if (unitKg) unitKg.addEventListener("click", () => setUnit("kg"));
-if (formEpley) formEpley.addEventListener("click", () => setFormula("epley"));
-if (formBrzycki) formBrzycki.addEventListener("click", () => setFormula("brzycki"));
-if (formLander) formLander.addEventListener("click", () => setFormula("lander"));
-if (formLombardi) formLombardi.addEventListener("click", () => setFormula("lombardi"));
-​// Prevent Brzycki Formula crash
-if (repsInput) {
-repsInput.addEventListener("input", (e) => {
-const target = e.target as HTMLInputElement;
-if (parseInt(target.value) >= 37) {
-target.value = "36";
-}
-});
-}
-​function setUnit(newUnit: string) {
-if (newUnit === unit) return;
-if (weightInput) {
-const currentVal = parseFloat(weightInput.value);
-if (currentVal) {
-weightInput.value = newUnit === "kg"
-? (currentVal / 2.20462).toFixed(1)
-: (currentVal * 2.20462).toFixed(1);
-}
-}
-unit = newUnit;
-if (unitLb) unitLb.classList.toggle("active", unit === "lb");
-if (unitKg) unitKg.classList.toggle("active", unit === "kg");
-}
-​function setFormula(f: string) {
-formula = f;
-if (formEpley) formEpley.classList.toggle("active", f === "epley");
-if (formBrzycki) formBrzycki.classList.toggle("active", f === "brzycki");
-if (formLander) formLander.classList.toggle("active", f === "lander");
-if (formLombardi) formLombardi.classList.toggle("active", f === "lombardi");
-}
-​function formulaLabel(f: string) {
-if (f === "epley") return "Epley";
-if (f === "brzycki") return "Brzycki";
-if (f === "lander") return "Lander";
-return "Lombardi";
-}
-​if (calcBtn) {
-calcBtn.addEventListener("click", () => {
-if (!weightInput || !repsInput) return;
-​const weight = parseFloat(weightInput.value);
-let reps = parseInt(repsInput.value, 10);
-​if (!weight || !reps || weight <= 0 || reps <= 0) {
-alert("Please enter a valid weight and rep count.");
-return;
-}
-​// Fallback validation for Brzycki
-if (reps >= 37) {
-reps = 36;
-repsInput.value = "36";
-}
-​let oneRM: number = 0;
-if (reps === 1) {
-oneRM = weight;
-} else if (formula === "epley") {
-oneRM = weight * (1 + reps / 30);
-} else if (formula === "brzycki") {
-oneRM = weight * 36 / (37 - reps);
-} else if (formula === "lander") {
-oneRM = (100 * weight) / (101.3 - 2.67123 * reps);
-} else if (formula === "lombardi") {
-oneRM = weight * Math.pow(reps, 0.10);
-}
-​const rounded = Math.round(oneRM * 10) / 10;
-if (result1rm) result1rm.textContent = ${rounded} ${unit};
-if (resultLabel) resultLabel.textContent = Estimated One-Rep Max (${formulaLabel(formula)} formula);
-​const percentages = [95, 90, 85, 80, 75, 70, 65, 60];
-const rows = percentages.map(p => {
-const val = Math.round(rounded * (p / 100) * 10) / 10;
-return <tr><td>${p}%</td><td>${val} ${unit}</td></tr>;
-}).join("");
-​if (resultTable) resultTable.innerHTML = rows;
-if (resultBox) resultBox.classList.add("show");
-});
-}
-</script>
+    <div class="result-box" id="result-box">
+      <div class="big-number" id="result-1rm">–</div>
+      <div class="label" id="result-label">Estimated One-Rep Max</div>
+      <table class="result-table" id="result-table"></table>
+    </div>
+  </section>
+
+  <article class="article-section">
+    <h2>1RM Percentage Chart &amp; Training Zones</h2>
+    <p>
+      Knowing your estimated One Rep Max (1RM) is just the baseline. To build
+      an effective strength and hypertrophy program, you need to apply the
+      correct percentage of your max to your working sets. Here is how to
+      use your 1RM to hit your specific fitness goals without overtraining:
+    </p>
+    <ul>
+      <li><strong>90% – 100% (1 – 3 Reps):</strong> <em>Absolute Strength.</em> Best for CNS adaptation and peaking for powerlifting meets. Requires maximum intensity and high rest.</li>
+      <li><strong>80% – 85% (4 – 6 Reps):</strong> <em>Strength &amp; Hypertrophy.</em> The sweet spot for building dense muscle and foundational strength.</li>
+      <li><strong>70% – 75% (8 – 12 Reps):</strong> <em>Hypertrophy (Muscle Growth).</em> Ideal for maximizing mechanical tension and metabolic stress for muscle building.</li>
+      <li><strong>60% – 65% (12 – 15+ Reps):</strong> <em>Endurance &amp; Speed.</em> Used for dynamic effort (speed work), warm-ups, or muscular endurance.</li>
+    </ul>
+  </article>
+
+  <article class="article-section">
+    <h2>The 4 Core 1RM Formulas Explained</h2>
+    <p>
+      Not all one rep max calculators are created equal. Because human
+      biomechanics and fatigue rates vary, sports scientists have developed
+      different mathematical models to estimate maximal strength. Here is a
+      look at the four formulas used in this calculator:
+    </p>
+
+    <h3>1. Epley Formula (1985)</h3>
+    <p>
+      <code>1RM = Weight × (1 + Reps / 30)</code><br />
+      The Epley formula is the most widely used baseline in strength
+      training. It assumes a linear relationship between the weight lifted
+      and the number of repetitions. <strong>Best for:</strong> general
+      strength estimates and heavy compound movements (squat, deadlift) in
+      the 1–10 rep range.
+    </p>
+
+    <h3>2. Brzycki Formula (1993)</h3>
+    <p>
+      <code>1RM = Weight × 36 / (37 − Reps)</code><br />
+      Developed by Matt Brzycki, this hyperbolic equation is a gold standard
+      for powerlifters. As reps increase, the formula becomes increasingly
+      conservative to prevent overestimation. <strong>Best for:</strong>
+      accurate estimates for heavy pressing movements (bench press, overhead
+      press) in the 1–8 rep range.
+    </p>
+
+    <h3>3. Lander Formula (1985)</h3>
+    <p>
+      <code>1RM = (100 × Weight) / (101.3 − 2.67123 × Reps)</code><br />
+      The Lander formula uses a precise linear model that provides a stable
+      average between aggressive and conservative estimates.
+      <strong>Best for:</strong> moderate rep ranges (5–12 reps) and lifters
+      wanting a realistic working max without inducing heavy CNS fatigue.
+    </p>
+
+    <h3>4. Lombardi Formula (1989)</h3>
+    <p>
+      <code>1RM = Weight × Reps^0.10</code><br />
+      Unlike linear equations, Lombardi's model uses a non-linear power
+      function, increasing the estimated 1RM by smaller increments as reps
+      go up. <strong>Best for:</strong> athletes with high muscular
+      endurance calculating a max from higher-volume sets (10+ reps).
+    </p>
+  </article>
+
+  <article class="article-section">
+    <h2>Frequently Asked Questions</h2>
+    <div class="faq-item">
+      <h3>Which 1RM formula is the most accurate?</h3>
+      <p>For low reps (under 10), Epley and Brzycki are considered highly accurate and are standard in powerlifting. Brzycki is slightly more conservative, making it safer for heavy pressing movements. For higher reps (10+), Lombardi often gives a more realistic curve.</p>
+    </div>
+    <div class="faq-item">
+      <h3>Can I calculate my 1RM using high repetitions (above 10 reps)?</h3>
+      <p>Yes, but accuracy decreases as reps increase. Epley and Brzycki tend to overestimate maxes above 10 reps. Lombardi or Lander adjust for fatigue better in that range.</p>
+    </div>
+    <div class="faq-item">
+      <h3>Is estimating a 1RM better than testing a true 1-rep max?</h3>
+      <p>For most lifters, estimating from a 3-5 rep max is safer and causes less CNS fatigue. Testing a true 1RM carries higher injury risk and should generally be reserved for meets or specific test weeks.</p>
+    </div>
+  </article>
+
+  <RelatedTools currentToolId="1rm-calculator" />
+
+  <script>
+    let unit = "lb";
+    let formula = "epley";
+
+    const unitLb = document.getElementById("unit-lb");
+    const unitKg = document.getElementById("unit-kg");
+    const formEpley = document.getElementById("formula-epley");
+    const formBrzycki = document.getElementById("formula-brzycki");
+    const formLander = document.getElementById("formula-lander");
+    const formLombardi = document.getElementById("formula-lombardi");
+    const weightInput = document.getElementById("weight") as HTMLInputElement | null;
+    const repsInput = document.getElementById("reps") as HTMLInputElement | null;
+    const calcBtn = document.getElementById("calc-btn");
+    const result1rm = document.getElementById("result-1rm");
+    const resultLabel = document.getElementById("result-label");
+    const resultTable = document.getElementById("result-table");
+    const resultBox = document.getElementById("result-box");
+
+    if (unitLb) unitLb.addEventListener("click", () => setUnit("lb"));
+    if (unitKg) unitKg.addEventListener("click", () => setUnit("kg"));
+    if (formEpley) formEpley.addEventListener("click", () => setFormula("epley"));
+    if (formBrzycki) formBrzycki.addEventListener("click", () => setFormula("brzycki"));
+    if (formLander) formLander.addEventListener("click", () => setFormula("lander"));
+    if (formLombardi) formLombardi.addEventListener("click", () => setFormula("lombardi"));
+
+    if (repsInput) {
+      repsInput.addEventListener("input", (e) => {
+        const target = e.target as HTMLInputElement;
+        if (parseInt(target.value) >= 37) {
+          target.value = "36";
+        }
+      });
+    }
+
+    function setUnit(newUnit: string) {
+      if (newUnit === unit) return;
+      if (weightInput) {
+        const currentVal = parseFloat(weightInput.value);
+        if (currentVal) {
+          weightInput.value = newUnit === "kg"
+            ? (currentVal / 2.20462).toFixed(1)
+            : (currentVal * 2.20462).toFixed(1);
+        }
+      }
+      unit = newUnit;
+      if (unitLb) unitLb.classList.toggle("active", unit === "lb");
+      if (unitKg) unitKg.classList.toggle("active", unit === "kg");
+    }
+
+    function setFormula(f: string) {
+      formula = f;
+      if (formEpley) formEpley.classList.toggle("active", f === "epley");
+      if (formBrzycki) formBrzycki.classList.toggle("active", f === "brzycki");
+      if (formLander) formLander.classList.toggle("active", f === "lander");
+      if (formLombardi) formLombardi.classList.toggle("active", f === "lombardi");
+    }
+
+    function formulaLabel(f: string) {
+      if (f === "epley") return "Epley";
+      if (f === "brzycki") return "Brzycki";
+      if (f === "lander") return "Lander";
+      return "Lombardi";
+    }
+
+    if (calcBtn) {
+      calcBtn.addEventListener("click", () => {
+        if (!weightInput || !repsInput) return;
+
+        const weight = parseFloat(weightInput.value);
+        let reps = parseInt(repsInput.value, 10);
+
+        if (!weight || !reps || weight <= 0 || reps <= 0) {
+          alert("Please enter a valid weight and rep count.");
+          return;
+        }
+
+        if (reps >= 37) {
+          reps = 36;
+          repsInput.value = "36";
+        }
+
+        let oneRM = 0;
+        if (reps === 1) {
+          oneRM = weight;
+        } else if (formula === "epley") {
+          oneRM = weight * (1 + reps / 30);
+        } else if (formula === "brzycki") {
+          oneRM = weight * 36 / (37 - reps);
+        } else if (formula === "lander") {
+          oneRM = (100 * weight) / (101.3 - 2.67123 * reps);
+        } else if (formula === "lombardi") {
+          oneRM = weight * Math.pow(reps, 0.10);
+        }
+
+        const rounded = Math.round(oneRM * 10) / 10;
+        if (result1rm) result1rm.textContent = `${rounded} ${unit}`;
+        if (resultLabel) resultLabel.textContent = `Estimated One-Rep Max (${formulaLabel(formula)} formula)`;
+
+        const percentages = [95, 90, 85, 80, 75, 70, 65, 60];
+        const rows = percentages.map(p => {
+          const val = Math.round(rounded * (p / 100) * 10) / 10;
+          return `<tr><td>${p}%</td><td>${val} ${unit}</td></tr>`;
+        }).join("");
+
+        if (resultTable) resultTable.innerHTML = rows;
+        if (resultBox) resultBox.classList.add("show");
+      });
+    }
+  </script>
 </Base>
