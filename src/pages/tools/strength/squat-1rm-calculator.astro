@@ -30,7 +30,7 @@ import RelatedTools from '../../../components/RelatedTools.astro';
       },
       {
         "@type": "Question",
-        "name": "Which formula is best for calculating a Squat 1RM?",
+        "name": "Which formula is best for calculating a squat 1RM?",
         "acceptedAnswer": {
           "@type": "Answer",
           "text": "The Epley formula is widely considered the gold standard for heavy lower-body compound movements like the squat. Legs tend to have higher muscular endurance than the upper body, making Epley's linear progression very accurate for the squat in the 1-10 rep range."
@@ -41,7 +41,15 @@ import RelatedTools from '../../../components/RelatedTools.astro';
         "name": "Do knee sleeves or a lifting belt affect my estimated squat max?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Yes, if you use a belt or sleeves during your submaximal test set, your estimated 1RM will reflect your 'equipped' max. If you plan to train beltless in the future, you should perform your estimation set beltless as well."
+          "text": "Yes, if you use a belt or sleeves during your submaximal test set, your estimated 1RM will reflect your equipped max. If you plan to train beltless in the future, you should perform your estimation set beltless as well."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Does this formula work the same for men and women?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes, these are general-population formulas used for both men and women. Some research suggests minor accuracy differences at higher rep ranges by sex and training experience, but the formulas remain a reliable estimate for most lifters."
         }
       }
     ]
@@ -56,17 +64,17 @@ import RelatedTools from '../../../components/RelatedTools.astro';
     <div class="field">
       <label>Unit</label>
       <div class="unit-toggle">
-        <button type="button" id="unit-lb" class="active">lb</button>
-        <button type="button" id="unit-kg">kg</button>
+        <button type="button" id="unit-lb" class="active" aria-pressed="true">lb</button>
+        <button type="button" id="unit-kg" aria-pressed="false">kg</button>
       </div>
     </div>
     <div class="field">
       <label>Formula</label>
       <div class="unit-toggle">
-        <button type="button" id="formula-epley" class="active">Epley</button>
-        <button type="button" id="formula-brzycki">Brzycki</button>
-        <button type="button" id="formula-lander">Lander</button>
-        <button type="button" id="formula-lombardi">Lombardi</button>
+        <button type="button" id="formula-epley" class="active" aria-pressed="true">Epley</button>
+        <button type="button" id="formula-brzycki" aria-pressed="false">Brzycki</button>
+        <button type="button" id="formula-lander" aria-pressed="false">Lander</button>
+        <button type="button" id="formula-lombardi" aria-pressed="false">Lombardi</button>
       </div>
     </div>
     <div class="field">
@@ -74,68 +82,107 @@ import RelatedTools from '../../../components/RelatedTools.astro';
       <input type="number" id="weight" placeholder="e.g. 315" inputmode="decimal" />
     </div>
     <div class="field">
-      <label for="reps">Reps Completed (Max 36)</label>
-      <input type="number" id="reps" placeholder="e.g. 5" inputmode="numeric" max="36" />
+      <label for="reps">Reps Completed (max 36)</label>
+      <input type="number" id="reps" placeholder="e.g. 5" inputmode="numeric" step="1" max="36" />
     </div>
     <button class="btn-primary" id="calc-btn">Calculate Squat Max</button>
 
     <div class="result-box" id="result-box">
       <div class="big-number" id="result-1rm">–</div>
       <div class="label" id="result-label">Estimated Squat Max</div>
-      <table class="result-table" id="result-table"></table>
+      <table class="result-table" id="result-table">
+        <thead>
+          <tr><th>% of 1RM</th><th>Weight</th></tr>
+        </thead>
+        <tbody id="result-table-body"></tbody>
+      </table>
     </div>
   </section>
 
   <article class="article-section">
     <h2>Why Estimate Your Squat Max?</h2>
     <p>
-      The barbell back squat is the undisputed king of lower-body exercises, demanding massive activation from your quads, glutes, hamstrings, and core. However, testing a true 100% one-rep max on the squat is incredibly taxing on your Central Nervous System (CNS) and carries a high risk of injury if you get stuck at the bottom without safety pins or spotters.
+      The barbell back squat is the undisputed king of lower-body exercises,
+      demanding massive activation from your quads, glutes, hamstrings, and
+      core. However, testing a true 100% one-rep max on the squat is
+      incredibly taxing on your central nervous system and carries a high
+      risk of injury if you get stuck at the bottom without safety pins or
+      spotters.
     </p>
     <p>
-      By using a squat max calculator, you can push a moderately heavy weight for a safer 3-rep to 8-rep set. This allows you to find your absolute strength ceiling to program your upcoming leg days effectively, all while keeping your spine safe and your recovery on track.
+      By using a squat max calculator, you can push a moderately heavy
+      weight for a safer 3-rep to 8-rep set. This allows you to find your
+      absolute strength ceiling to program your upcoming leg days
+      effectively, all while keeping your spine safe and your recovery on
+      track.
     </p>
   </article>
 
   <article class="article-section">
-    <h2>Squat Percentage Chart & Leg Training Zones</h2>
+    <h2>How to Use This Calculator</h2>
     <p>
-      Once you have your estimated squat 1RM, applying the correct percentages ensures you hit your specific lower-body goals without overtraining:
+      Enter the heaviest weight you squatted for a clean set at consistent
+      depth, along with the number of reps completed. Choose a formula and
+      unit, then calculate. For the safest and most accurate estimate, use
+      a set of 3 to 8 reps rather than testing a true single-rep max.
+    </p>
+  </article>
+
+  <article class="article-section">
+    <h2>Squat Percentage Chart &amp; Leg Training Zones</h2>
+    <p>
+      Once you have your estimated squat 1RM, applying the correct
+      percentages ensures you hit your specific lower-body goals without
+      overtraining:
     </p>
     <ul>
-      <li><strong>90% – 100% (1 – 3 Reps):</strong> <em>Peaking & Power.</em> Essential for powerlifters preparing for a meet. This zone builds maximal neural adaptation. Keep volume strictly low to protect your lower back.</li>
-      <li><strong>80% – 85% (4 – 6 Reps):</strong> <em>Strength & Density.</em> The golden zone for building thick, dense legs and a stronger core. This is where most strength programs (like 5x5) operate.</li>
-      <li><strong>70% – 75% (8 – 12 Reps):</strong> <em>Hypertrophy.</em> Ideal for maximizing quad and glute growth. This zone provides enough mechanical tension without completely burning out your CNS.</li>
-      <li><strong>60% – 65% (12 – 20 Reps):</strong> <em>Endurance & "Widowmakers".</em> Used for brutal high-rep squat sets to build mental toughness, conditioning, and muscular endurance.</li>
+      <li><strong>90%–100% (1–3 reps):</strong> <em>Peaking &amp; power.</em> Essential for powerlifters preparing for a meet. Builds maximal neural adaptation. Keep volume strictly low to protect your lower back.</li>
+      <li><strong>80%–85% (4–6 reps):</strong> <em>Strength &amp; density.</em> The golden zone for building thick, dense legs and a stronger core — where most strength programs (like 5x5) operate.</li>
+      <li><strong>70%–75% (8–12 reps):</strong> <em>Hypertrophy.</em> Ideal for maximizing quad and glute growth without completely burning out your CNS.</li>
+      <li><strong>60%–65% (12–20 reps):</strong> <em>Endurance &amp; "widowmakers".</em> Used for brutal high-rep squat sets to build mental toughness, conditioning, and muscular endurance.</li>
     </ul>
   </article>
 
   <article class="article-section">
-    <h2>Squat Math: How The Formulas Differ</h2>
+    <h2>Squat Math: How the Formulas Differ</h2>
     <p>
-      Lower body muscles generally have better endurance and fatigue differently than upper body muscles (like in the bench press). Here is how our four formulas handle squat math:
+      Lower body muscles generally have better endurance and fatigue
+      differently than upper body muscles. Here is how each formula handles
+      squat math:
     </p>
+
     <h3>1. Epley Formula</h3>
     <p>
       <code>1RM = Weight × (1 + Reps / 30)</code><br />
-      The gold standard for the squat. Because legs can often grind out more reps at higher percentages compared to arms, Epley’s linear curve provides highly accurate squat max estimates. <strong>Best for:</strong> Squat sets in the 1–10 rep range.
+      The gold standard for the squat. Because legs can often grind out
+      more reps at higher percentages compared to arms, Epley's linear
+      curve provides highly accurate squat max estimates.
+      <strong>Best for:</strong> squat sets in the 1–10 rep range.
     </p>
 
     <h3>2. Brzycki Formula</h3>
     <p>
-      <code>1RM = Weight × 36 / (37 - Reps)</code><br />
-      Slightly more conservative than Epley. If you have notoriously bad muscular endurance but explosive raw power, Brzycki might give you a safer working max to base your programming on. <strong>Best for:</strong> Heavy low-rep sets (1–5 reps).
+      <code>1RM = Weight × 36 / (37 − Reps)</code><br />
+      Slightly more conservative than Epley. If you have notoriously
+      average muscular endurance but explosive raw power, Brzycki might
+      give a safer working max. <strong>Best for:</strong> heavy low-rep
+      sets (1–5 reps).
     </p>
 
     <h3>3. Lander Formula</h3>
     <p>
-      <code>1RM = (100 × Weight) / (101.3 - 2.67123 × Reps)</code><br />
-      Provides a highly stable average. <strong>Best for:</strong> Bodybuilders doing moderate rep ranges (8–12 reps) who want to estimate a heavy single for their next strength block.
+      <code>1RM = (100 × Weight) / (101.3 − 2.67123 × Reps)</code><br />
+      Provides a highly stable average. <strong>Best for:</strong>
+      moderate rep ranges (8–12 reps) when you want to estimate a heavy
+      single for your next strength block.
     </p>
 
     <h3>4. Lombardi Formula</h3>
     <p>
       <code>1RM = Weight × Reps^0.10</code><br />
-      <strong>Best for:</strong> Lifters who perform high-rep squat sets (10–20 reps). If you just finished a grueling set of 15 reps and want to know your theoretical max, Lombardi is the most realistic model.
+      <strong>Best for:</strong> lifters who perform high-rep squat sets
+      (10–20 reps) — the most realistic model after a grueling high-rep
+      set.
     </p>
   </article>
 
@@ -143,19 +190,23 @@ import RelatedTools from '../../../components/RelatedTools.astro';
     <h2>Frequently Asked Questions</h2>
     <div class="faq-item">
       <h3>How do I calculate my squat max safely?</h3>
-      <p>Load a challenging weight you can lift for 3 to 6 reps. Enter that weight and your completed reps into this calculator. This gives you a highly accurate estimated max without risking a failed rep at the bottom of the squat.</p>
+      <p>Load a weight you can lift for 3 to 6 reps and enter it here — a highly accurate estimate without risking a failed rep at the bottom.</p>
     </div>
     <div class="faq-item">
-      <h3>Which formula is best for calculating a Squat 1RM?</h3>
-      <p>The Epley formula is widely considered the gold standard for heavy lower-body compound movements. Because legs tend to have higher muscular endurance than the upper body, Epley's linear equation is very accurate for squats.</p>
+      <h3>Which formula is best for a squat 1RM?</h3>
+      <p>Epley is the gold standard for the squat since legs tend to have higher muscular endurance than the upper body.</p>
     </div>
     <div class="faq-item">
       <h3>Do knee sleeves or a lifting belt affect my estimated max?</h3>
-      <p>Yes. If you use a belt, knee sleeves, or wraps during your test set, your estimated 1RM will reflect your "equipped" max. If your program calls for beltless work, you should calculate your max using a beltless set.</p>
+      <p>Yes — equipment increases your "equipped" max. If you train beltless, calculate your estimate beltless too.</p>
+    </div>
+    <div class="faq-item">
+      <h3>Does this formula work the same for men and women?</h3>
+      <p>Yes, these are general-population formulas used for both men and women, though minor accuracy differences can appear at higher rep ranges.</p>
     </div>
   </article>
 
-  <RelatedTools currentToolId="squat-calculator" />
+  <RelatedTools currentToolId="squat-1rm-calculator" />
 
   <script>
     let unit = "lb";
@@ -172,7 +223,7 @@ import RelatedTools from '../../../components/RelatedTools.astro';
     const calcBtn = document.getElementById("calc-btn");
     const result1rm = document.getElementById("result-1rm");
     const resultLabel = document.getElementById("result-label");
-    const resultTable = document.getElementById("result-table");
+    const resultTableBody = document.getElementById("result-table-body");
     const resultBox = document.getElementById("result-box");
 
     if (unitLb) unitLb.addEventListener("click", () => setUnit("lb"));
@@ -202,16 +253,17 @@ import RelatedTools from '../../../components/RelatedTools.astro';
         }
       }
       unit = newUnit;
-      if (unitLb) unitLb.classList.toggle("active", unit === "lb");
-      if (unitKg) unitKg.classList.toggle("active", unit === "kg");
+      if (unitLb) { unitLb.classList.toggle("active", unit === "lb"); unitLb.setAttribute("aria-pressed", String(unit === "lb")); }
+      if (unitKg) { unitKg.classList.toggle("active", unit === "kg"); unitKg.setAttribute("aria-pressed", String(unit === "kg")); }
     }
 
     function setFormula(f: string) {
       formula = f;
-      if (formEpley) formEpley.classList.toggle("active", f === "epley");
-      if (formBrzycki) formBrzycki.classList.toggle("active", f === "brzycki");
-      if (formLander) formLander.classList.toggle("active", f === "lander");
-      if (formLombardi) formLombardi.classList.toggle("active", f === "lombardi");
+      const map: Record<string, HTMLElement | null> = { epley: formEpley, brzycki: formBrzycki, lander: formLander, lombardi: formLombardi };
+      for (const key in map) {
+        const el = map[key];
+        if (el) { el.classList.toggle("active", f === key); el.setAttribute("aria-pressed", String(f === key)); }
+      }
     }
 
     function formulaLabel(f: string) {
@@ -261,7 +313,7 @@ import RelatedTools from '../../../components/RelatedTools.astro';
           return `<tr><td>${p}%</td><td>${val} ${unit}</td></tr>`;
         }).join("");
 
-        if (resultTable) resultTable.innerHTML = rows;
+        if (resultTableBody) resultTableBody.innerHTML = rows;
         if (resultBox) resultBox.classList.add("show");
       });
     }
