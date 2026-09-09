@@ -1,0 +1,334 @@
+---
+import Base from '../../../layouts/Base.astro';
+import RelatedTools from '../../../components/RelatedTools.astro';
+---
+<Base
+  title="Rep Max Calculator — Find Your Weight for Any Rep Target"
+  description="Free rep max calculator. Convert a known weight and rep count to any target rep range using the Epley, Brzycki, Lander, or Lombardi formula."
+>
+  <script type="application/ld+json" set:html={JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "Rep Max Calculator",
+    "applicationCategory": "HealthApplication",
+    "operatingSystem": "Any",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+    "description": "Free online calculator that estimates the weight a lifter could use for any target rep count, based on a known weight and rep performance."
+  })} />
+
+  <script type="application/ld+json" set:html={JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "How accurate is a 1RM calculator?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "1RM calculators provide highly accurate estimates, typically within a 5-10% margin of error. Accuracy is highest when you use a submaximal set of 1 to 10 reps. Beyond 10 reps, muscular fatigue becomes a larger factor, making the estimate less reliable."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Which 1RM formula is the best to use?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "There is no single best formula for everyone, which is why comparing a few is ideal. Epley is one of the most widely validated equations in strength training literature. Both Epley and Brzycki work well for moderate reps, while Lombardi uses a non-linear model that scales gently for higher reps."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Should I test a true 1RM or use an estimator?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "For most lifters, estimating is much safer. Testing a true one-rep max places immense stress on your central nervous system, muscles, and connective tissues, increasing injury risk. An estimator lets you gauge maximal strength safely from a submaximal working set."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What percentages of my 1RM should I use for different goals?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "To build strength and power, train with 80-100% of your 1RM for 1-5 reps. For hypertrophy, use 70-85% for 6-12 reps. For muscular endurance, stick to 50-70% for 12-20+ reps."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Does this work the same for men and women?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes, these are general-population formulas used for both men and women, though minor accuracy differences can appear at higher rep ranges."
+        }
+      }
+    ]
+  })} />
+
+  <section class="hero">
+    <h1>Rep Max Calculator</h1>
+    <p>Know your weight for one rep range? Find your estimated weight for any other target reps.</p>
+  </section>
+
+  <section class="calc-card">
+    <div class="field">
+      <label>Unit</label>
+      <div class="unit-toggle">
+        <button type="button" id="unit-lb" class="active" aria-pressed="true">lb</button>
+        <button type="button" id="unit-kg" aria-pressed="false">kg</button>
+      </div>
+    </div>
+    <div class="field">
+      <label>Formula</label>
+      <div class="unit-toggle">
+        <button type="button" id="formula-epley" class="active" aria-pressed="true">Epley</button>
+        <button type="button" id="formula-brzycki" aria-pressed="false">Brzycki</button>
+        <button type="button" id="formula-lander" aria-pressed="false">Lander</button>
+        <button type="button" id="formula-lombardi" aria-pressed="false">Lombardi</button>
+      </div>
+    </div>
+    <div class="field">
+      <label for="weight">Weight You Lifted</label>
+      <input type="number" id="weight" placeholder="e.g. 185" inputmode="decimal" />
+    </div>
+    <div class="field">
+      <label for="reps">Reps Completed (max 36)</label>
+      <input type="number" id="reps" placeholder="e.g. 5" inputmode="numeric" step="1" max="36" />
+    </div>
+    <div class="field">
+      <label for="target-reps">Target Rep Count</label>
+      <input type="number" id="target-reps" placeholder="e.g. 10" inputmode="numeric" step="1" max="36" />
+    </div>
+    <button class="btn-primary" id="calc-btn">Calculate Rep Max</button>
+
+    <div class="result-box" id="result-box">
+      <div class="big-number" id="result-1rm">–</div>
+      <div class="label" id="result-label">Estimated Weight for Target Reps</div>
+      <table class="result-table" id="result-table">
+        <thead>
+          <tr><th>Reps</th><th>Estimated Weight</th></tr>
+        </thead>
+        <tbody id="result-table-body"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <article class="article-section">
+    <h2>What Is a Rep Max Calculator?</h2>
+    <p>
+      A rep max calculator answers a common training question: if you know
+      your weight for one rep count, what weight should you use for a
+      different rep count? This is how to calculate your 1RM without maxing
+      out, then work in the opposite direction — from your estimated 1RM to
+      any target rep range, whether that's a heavier 3-rep set or a lighter
+      15-rep set.
+    </p>
+    <p>
+      It works in two steps: first, your known weight and reps are converted
+      into an estimated one rep max (1RM) using an established formula.
+      Then, that 1RM is converted back down to the weight matching your
+      target rep count using the same formula's curve.
+    </p>
+  </article>
+
+  <article class="article-section">
+    <h2>How to Use This Calculator</h2>
+    <p>
+      Enter a weight and rep count you've already performed for a clean
+      set, then enter the rep count you want to train at. Choose a formula
+      and unit, then calculate. The result table also shows estimated
+      weights across a full range of rep counts, so you can plan multiple
+      training days from a single data point.
+    </p>
+  </article>
+
+  <article class="article-section">
+    <h2>Percentage-Based Training: What Percentage Should You Use?</h2>
+    <p>
+      Rep max and 1RM percentages are the foundation of percentage-based
+      training programs. Once you know your estimated max, the rep range
+      you train in determines what adaptation you're driving:
+    </p>
+    <ul>
+      <li><strong>80%–100% (1–5 reps):</strong> Strength and power. Recruits maximum motor units but carries the highest CNS fatigue cost — this is the most taxing zone on your central nervous system, so keep sessions in this range infrequent.</li>
+      <li><strong>70%–85% (6–12 reps):</strong> Hypertrophy. The most efficient zone for 1RM percentages for muscle growth, balancing mechanical tension with manageable fatigue.</li>
+      <li><strong>50%–70% (12–20+ reps):</strong> Muscular endurance. Lower CNS demand per set, useful for conditioning, deloads, or high-volume accessory work.</li>
+    </ul>
+  </article>
+
+  <article class="article-section">
+    <h2>Epley vs. Brzycki vs. Lander vs. Lombardi</h2>
+    <p>
+      There is no single best formula for every lifter — comparing a few
+      gives a more reliable picture. Here's how each one handles the
+      rep-to-weight conversion:
+    </p>
+
+    <h3>1. Epley Formula</h3>
+    <p>
+      <code>1RM = Weight × (1 + Reps / 30)</code><br />
+      One of the most widely validated equations in strength training
+      literature. <strong>Best for:</strong> converting between rep ranges
+      of 1–10.
+    </p>
+
+    <h3>2. Brzycki Formula</h3>
+    <p>
+      <code>1RM = Weight × 36 / (37 − Reps)</code><br />
+      Slightly more conservative than Epley, especially at higher reps.
+      <strong>Best for:</strong> cross-checking Epley results in the 1–8
+      rep range.
+    </p>
+
+    <h3>3. Lander Formula</h3>
+    <p>
+      <code>1RM = (100 × Weight) / (101.3 − 2.67123 × Reps)</code><br />
+      A stable linear model. <strong>Best for:</strong> moderate rep
+      conversions (6–12 reps).
+    </p>
+
+    <h3>4. Lombardi Formula</h3>
+    <p>
+      <code>1RM = Weight × Reps^0.10</code><br />
+      A non-linear model that scales gently for higher reps.
+      <strong>Best for:</strong> converting to or from high target rep
+      counts (12+ reps).
+    </p>
+  </article>
+
+  <article class="article-section">
+    <h2>Frequently Asked Questions</h2>
+    <div class="faq-item">
+      <h3>How accurate is a 1RM calculator?</h3>
+      <p>Typically accurate within 5-10% for sets of 1-10 reps. Beyond 10 reps, fatigue makes the estimate less reliable.</p>
+    </div>
+    <div class="faq-item">
+      <h3>Which 1RM formula is the best to use?</h3>
+      <p>There's no single best formula — comparing Epley, Brzycki, Lander, and Lombardi gives a more complete picture, especially at higher rep ranges.</p>
+    </div>
+    <div class="faq-item">
+      <h3>Should I test a true 1RM or use an estimator?</h3>
+      <p>Estimating is safer for most lifters — testing a true max places high stress on your CNS and connective tissues.</p>
+    </div>
+    <div class="faq-item">
+      <h3>What percentages of my 1RM should I use for different goals?</h3>
+      <p>80-100% for strength (1-5 reps), 70-85% for hypertrophy (6-12 reps), 50-70% for endurance (12-20+ reps).</p>
+    </div>
+    <div class="faq-item">
+      <h3>Does this work the same for men and women?</h3>
+      <p>Yes, these are general-population formulas used for both men and women, though minor accuracy differences can appear at higher rep ranges.</p>
+    </div>
+  </article>
+
+  <RelatedTools currentToolId="rep-max-calculator" />
+
+  <script>
+    let unit = "lb";
+    let formula = "epley";
+
+    const unitLb = document.getElementById("unit-lb");
+    const unitKg = document.getElementById("unit-kg");
+    const formEpley = document.getElementById("formula-epley");
+    const formBrzycki = document.getElementById("formula-brzycki");
+    const formLander = document.getElementById("formula-lander");
+    const formLombardi = document.getElementById("formula-lombardi");
+    const weightInput = document.getElementById("weight") as HTMLInputElement | null;
+    const repsInput = document.getElementById("reps") as HTMLInputElement | null;
+    const targetRepsInput = document.getElementById("target-reps") as HTMLInputElement | null;
+    const calcBtn = document.getElementById("calc-btn");
+    const result1rm = document.getElementById("result-1rm");
+    const resultLabel = document.getElementById("result-label");
+    const resultTableBody = document.getElementById("result-table-body");
+    const resultBox = document.getElementById("result-box");
+
+    if (unitLb) unitLb.addEventListener("click", () => setUnit("lb"));
+    if (unitKg) unitKg.addEventListener("click", () => setUnit("kg"));
+    if (formEpley) formEpley.addEventListener("click", () => setFormula("epley"));
+    if (formBrzycki) formBrzycki.addEventListener("click", () => setFormula("brzycki"));
+    if (formLander) formLander.addEventListener("click", () => setFormula("lander"));
+    if (formLombardi) formLombardi.addEventListener("click", () => setFormula("lombardi"));
+
+    function capReps(input: HTMLInputElement | null) {
+      if (!input) return;
+      input.addEventListener("input", (e) => {
+        const target = e.target as HTMLInputElement;
+        if (parseInt(target.value) >= 37) {
+          target.value = "36";
+        }
+      });
+    }
+    capReps(repsInput);
+    capReps(targetRepsInput);
+
+    function setUnit(newUnit: string) {
+      if (newUnit === unit) return;
+      if (weightInput) {
+        const currentVal = parseFloat(weightInput.value);
+        if (currentVal) {
+          weightInput.value = newUnit === "kg"
+            ? (currentVal / 2.20462).toFixed(1)
+            : (currentVal * 2.20462).toFixed(1);
+        }
+      }
+      unit = newUnit;
+      if (unitLb) { unitLb.classList.toggle("active", unit === "lb"); unitLb.setAttribute("aria-pressed", String(unit === "lb")); }
+      if (unitKg) { unitKg.classList.toggle("active", unit === "kg"); unitKg.setAttribute("aria-pressed", String(unit === "kg")); }
+    }
+
+    function setFormula(f: string) {
+      formula = f;
+      const map: Record<string, HTMLElement | null> = { epley: formEpley, brzycki: formBrzycki, lander: formLander, lombardi: formLombardi };
+      for (const key in map) {
+        const el = map[key];
+        if (el) { el.classList.toggle("active", f === key); el.setAttribute("aria-pressed", String(f === key)); }
+      }
+    }
+
+    function oneRMFrom(weight: number, reps: number): number {
+      if (reps === 1) return weight;
+      if (formula === "epley") return weight * (1 + reps / 30);
+      if (formula === "brzycki") return weight * 36 / (37 - reps);
+      if (formula === "lander") return (100 * weight) / (101.3 - 2.67123 * reps);
+      return weight * Math.pow(reps, 0.10);
+    }
+
+    function weightFromOneRM(oneRM: number, targetReps: number): number {
+      if (targetReps === 1) return oneRM;
+      if (formula === "epley") return oneRM / (1 + targetReps / 30);
+      if (formula === "brzycki") return oneRM * (37 - targetReps) / 36;
+      if (formula === "lander") return oneRM * (101.3 - 2.67123 * targetReps) / 100;
+      return oneRM / Math.pow(targetReps, 0.10);
+    }
+
+    if (calcBtn) {
+      calcBtn.addEventListener("click", () => {
+        if (!weightInput || !repsInput || !targetRepsInput) return;
+
+        const weight = parseFloat(weightInput.value);
+        let reps = parseInt(repsInput.value, 10);
+        let targetReps = parseInt(targetRepsInput.value, 10);
+
+        if (!weight || !reps || !targetReps || weight <= 0 || reps <= 0 || targetReps <= 0) {
+          alert("Please enter a valid weight, rep count, and target reps.");
+          return;
+        }
+        if (reps >= 37) { reps = 36; repsInput.value = "36"; }
+        if (targetReps >= 37) { targetReps = 36; targetRepsInput.value = "36"; }
+
+        const estOneRM = oneRMFrom(weight, reps);
+        const targetWeight = weightFromOneRM(estOneRM, targetReps);
+        const rounded = Math.round(targetWeight * 10) / 10;
+
+        if (result1rm) result1rm.textContent = `${rounded} ${unit}`;
+        if (resultLabel) resultLabel.textContent = `Estimated Weight for ${targetReps} Rep${targetReps > 1 ? "s" : ""}`;
+
+        const repList = [1, 2, 3, 5, 8, 10, 12, 15, 20];
+        const rows = repList.map(r => {
+          const w = Math.round(weightFromOneRM(estOneRM, r) * 10) / 10;
+          return `<tr><td>${r}</td><td>${w} ${unit}</td></tr>`;
+        }).join("");
+
+        if (resultTableBody) resultTableBody.innerHTML = rows;
+        if (resultBox) resultBox.classList.add("show");
+      });
+    }
+  </script>
+</Base>
