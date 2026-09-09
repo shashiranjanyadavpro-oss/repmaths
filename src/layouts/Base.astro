@@ -132,7 +132,14 @@ const { title, description } = Astro.props;
   padding: 6px; border-bottom: 1px solid var(--border);
 }
 .result-table thead th:last-child { text-align: right; }
- </style>
+ .tool-card .icon {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 44px; height: 44px; margin: 0 auto 8px;
+  background: rgba(255,91,46,0.12); border: 1px solid var(--accent);
+  border-radius: 10px; font-size: 0.85rem !important; font-weight: 700;
+  color: var(--accent);
+}
+</style>
 </head>
 <body>
   <header class="site-header">
