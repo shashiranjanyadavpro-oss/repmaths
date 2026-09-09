@@ -79,5 +79,14 @@
     "icon": "531",
     "cluster": "strength",
     "related": ["training-max-calculator", "1rm-calculator"]
+  },
+  {
+    "id": "warmup-set-calculator",
+    "name": "Warm-Up Set Calculator",
+    "url": "/tools/strength/warmup-set-calculator",
+    "shortDesc": "Generate your full warm-up ramp from the empty bar to your working weight.",
+    "icon": "WU",
+    "cluster": "strength",
+    "related": ["1rm-calculator", "1rm-percentage-calculator"]
   }
 ]
