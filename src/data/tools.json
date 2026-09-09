@@ -6,7 +6,7 @@
     "shortDesc": "Estimate your one-rep max from any weight and rep count.",
     "icon": "1RM",
     "cluster": "strength",
-    "related": ["bench-press-1rm-calculator", "squat-1rm-calculator", "deadlift-1rm-calculator", "rep-max-calculator"]
+    "related": ["bench-press-1rm-calculator", "squat-1rm-calculator", "deadlift-1rm-calculator", "overhead-press-1rm-calculator"]
   },
   {
     "id": "bench-press-1rm-calculator",
@@ -15,7 +15,7 @@
     "shortDesc": "Estimate your max bench press from weight and reps.",
     "icon": "BP",
     "cluster": "strength",
-    "related": ["1rm-calculator", "squat-1rm-calculator", "deadlift-1rm-calculator"]
+    "related": ["1rm-calculator", "overhead-press-1rm-calculator", "deadlift-1rm-calculator"]
   },
   {
     "id": "squat-1rm-calculator",
@@ -52,5 +52,14 @@
     "icon": "%",
     "cluster": "strength",
     "related": ["1rm-calculator", "rep-max-calculator"]
+  },
+  {
+    "id": "overhead-press-1rm-calculator",
+    "name": "Overhead Press Max Calculator",
+    "url": "/tools/strength/overhead-press-1rm-calculator",
+    "shortDesc": "Estimate your strict press or military press max from weight and reps.",
+    "icon": "OH",
+    "cluster": "strength",
+    "related": ["1rm-calculator", "bench-press-1rm-calculator"]
   }
 ]
