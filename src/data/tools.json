@@ -6,7 +6,7 @@
     "shortDesc": "Estimate your one-rep max from any weight and rep count.",
     "icon": "1RM",
     "cluster": "strength",
-    "related": ["bench-press-1rm-calculator", "squat-1rm-calculator", "deadlift-1rm-calculator"]
+    "related": ["bench-press-1rm-calculator", "squat-1rm-calculator", "deadlift-1rm-calculator", "rep-max-calculator"]
   },
   {
     "id": "bench-press-1rm-calculator",
@@ -34,5 +34,14 @@
     "icon": "DL",
     "cluster": "strength",
     "related": ["1rm-calculator", "squat-1rm-calculator", "bench-press-1rm-calculator"]
+  },
+  {
+    "id": "rep-max-calculator",
+    "name": "Rep Max Calculator",
+    "url": "/tools/strength/rep-max-calculator",
+    "shortDesc": "Convert a known weight and reps to any target rep count.",
+    "icon": "RM",
+    "cluster": "strength",
+    "related": ["1rm-calculator", "bench-press-1rm-calculator", "squat-1rm-calculator"]
   }
 ]
