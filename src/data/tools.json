@@ -70,5 +70,14 @@
     "icon": "TM",
     "cluster": "strength",
     "related": ["1rm-calculator", "1rm-percentage-calculator"]
+  },
+  {
+    "id": "531-calculator",
+    "name": "5/3/1 Calculator",
+    "url": "/tools/strength/531-calculator",
+    "shortDesc": "Generate the full Wendler 5/3/1 four-week cycle from your training max.",
+    "icon": "531",
+    "cluster": "strength",
+    "related": ["training-max-calculator", "1rm-calculator"]
   }
 ]
