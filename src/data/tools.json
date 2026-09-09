@@ -88,5 +88,14 @@
     "icon": "WU",
     "cluster": "strength",
     "related": ["1rm-calculator", "1rm-percentage-calculator"]
+  },
+  {
+    "id": "rpe-rir-calculator",
+    "name": "RPE & RIR Calculator",
+    "url": "/tools/strength/rpe-rir-calculator",
+    "shortDesc": "Convert a completed set into your estimated 1RM using the RTS RPE chart.",
+    "icon": "RPE",
+    "cluster": "strength",
+    "related": ["1rm-calculator", "1rm-percentage-calculator", "training-max-calculator"]
   }
 ]
