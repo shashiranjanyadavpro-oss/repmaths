@@ -1,0 +1,302 @@
+---
+import Base from '../../../layouts/Base.astro';
+import RelatedTools from '../../../components/RelatedTools.astro';
+---
+<Base
+  title="Overhead Press 1RM Calculator — Military & Strict Press Max"
+  description="Free overhead press 1RM calculator. Estimate your strict press or military press max safely using the Epley, Brzycki, Lander, or Lombardi formula."
+>
+  <script type="application/ld+json" set:html={JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "Overhead Press 1RM Calculator",
+    "applicationCategory": "HealthApplication",
+    "operatingSystem": "Any",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+    "description": "Free online calculator that estimates a lifter's one-rep max for the overhead press, strict press, or military press from a submaximal weight."
+  })} />
+
+  <script type="application/ld+json" set:html={JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Why is my overhead press max so much lower than my bench press?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "The overhead press relies on smaller muscle groups (anterior deltoids and triceps) and a less advantageous leverage position compared to the bench press, which recruits the much larger pectoral muscles. On average, a lifter's overhead press 1RM is roughly 60% to 65% of their bench press 1RM."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Should I test a true 1-rep max for the overhead press?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Testing a true 1RM on the overhead press can be risky. When lifters struggle to lock out a maximal weight overhead, they often compensate by leaning back excessively, which places dangerous shear stress on the lower back. Using an estimated 1RM from a heavy 3-to-5 rep set is much safer and equally effective for programming."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Which 1RM formula is most accurate for the overhead press?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "For upper-body pressing movements like the overhead press, the Brzycki formula is highly recommended. Because the shoulders and triceps fatigue rapidly, linear formulas like Epley tend to overestimate upper-body strength when calculated from high-rep sets. Brzycki provides a safer, more conservative estimate for heavy pressing."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Does leg drive count in a strict overhead press max?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "No. If you bend your knees and use leg drive to initiate the movement, the lift becomes a push press. A strict overhead press, or military press, requires your knees, hips, and core to remain locked and completely static throughout the entire lift."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Does this formula work the same for men and women?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes, these are general-population formulas used for both men and women, though minor accuracy differences can appear at higher rep ranges."
+        }
+      }
+    ]
+  })} />
+
+  <section class="hero">
+    <h1>Overhead Press 1RM Calculator</h1>
+    <p>Estimate your strict overhead press or military press max safely, without straining your lower back.</p>
+  </section>
+
+  <section class="calc-card">
+    <div class="field">
+      <label>Unit</label>
+      <div class="unit-toggle">
+        <button type="button" id="unit-lb" class="active" aria-pressed="true">lb</button>
+        <button type="button" id="unit-kg" aria-pressed="false">kg</button>
+      </div>
+    </div>
+    <div class="field">
+      <label>Formula</label>
+      <div class="unit-toggle">
+        <button type="button" id="formula-epley" aria-pressed="false">Epley</button>
+        <button type="button" id="formula-brzycki" class="active" aria-pressed="true">Brzycki</button>
+        <button type="button" id="formula-lander" aria-pressed="false">Lander</button>
+        <button type="button" id="formula-lombardi" aria-pressed="false">Lombardi</button>
+      </div>
+    </div>
+    <div class="field">
+      <label for="weight">Weight Pressed</label>
+      <input type="number" id="weight" placeholder="e.g. 95" inputmode="decimal" />
+    </div>
+    <div class="field">
+      <label for="reps">Reps Completed (max 36)</label>
+      <input type="number" id="reps" placeholder="e.g. 5" inputmode="numeric" step="1" max="36" />
+    </div>
+    <button class="btn-primary" id="calc-btn">Calculate OHP Max</button>
+
+    <div class="result-box" id="result-box">
+      <div class="big-number" id="result-1rm">–</div>
+      <div class="label" id="result-label">Estimated Overhead Press Max</div>
+      <table class="result-table" id="result-table">
+        <thead>
+          <tr><th>% of 1RM</th><th>Weight</th></tr>
+        </thead>
+        <tbody id="result-table-body"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <article class="article-section">
+    <h2>Why Estimate Your Overhead Press Max?</h2>
+    <p>
+      The strict overhead press, also called the military press, is one of
+      the purest tests of upper-body pressing strength — but it's also one
+      of the slowest lifts to progress. Because it relies heavily on the
+      anterior deltoids and triceps rather than the larger pectoral muscles
+      used in the bench press, most lifters find their overhead press 1RM
+      sits at roughly 60% to 65% of their bench press max. Comparing the two
+      numbers directly isn't a fair benchmark — they train different
+      leverage and muscle patterns.
+    </p>
+    <p>
+      Testing a true one-rep max overhead is also riskier than most lifts:
+      lifters who struggle to lock out a heavy single often lean back
+      excessively to finish the rep, placing unwanted shear stress on the
+      lower back. Estimating your max from a heavy 3-to-5 rep set avoids
+      this risk entirely while giving an equally useful number for
+      programming.
+    </p>
+  </article>
+
+  <article class="article-section">
+    <h2>How to Use This Calculator</h2>
+    <p>
+      Enter the heaviest weight you strict-pressed for a clean set, along
+      with the reps completed. This calculator defaults to the Brzycki
+      formula since it's the most conservative option for overhead
+      pressing, but you can switch formulas or units freely. For the
+      safest, most reliable estimate, use a set of 3 to 6 reps.
+    </p>
+  </article>
+
+  <article class="article-section">
+    <h2>Strict Press vs. Push Press: Does Leg Drive Count?</h2>
+    <p>
+      No — if you bend your knees and use leg drive to help initiate the
+      bar's upward path, the lift becomes a push press, not a strict
+      overhead press. A true strict press (or military press) requires your
+      knees, hips, and core to stay locked and completely static from start
+      to finish. Only enter weight from a genuinely strict, leg-drive-free
+      set for an accurate 1RM estimate — push press numbers will
+      significantly overestimate your true strict press strength.
+    </p>
+  </article>
+
+  <article class="article-section">
+    <h2>Overhead Press Percentage Chart &amp; Training Zones</h2>
+    <ul>
+      <li><strong>90%–100% (1–3 reps):</strong> <em>Peaking &amp; power.</em> Very taxing on the shoulders — keep this zone infrequent and prioritize strict form over ego lifting.</li>
+      <li><strong>80%–85% (4–6 reps):</strong> <em>Strength &amp; density.</em> The most common zone for overhead press progression programs.</li>
+      <li><strong>70%–75% (8–12 reps):</strong> <em>Hypertrophy.</em> Builds shoulder and tricep size with more manageable joint stress.</li>
+      <li><strong>60%–65% (12–15+ reps):</strong> <em>Technique &amp; endurance.</em> Useful for warm-ups, deloads, or reinforcing strict pressing mechanics.</li>
+    </ul>
+  </article>
+
+  <article class="article-section">
+    <h2>Frequently Asked Questions</h2>
+    <div class="faq-item">
+      <h3>Why is my overhead press max so much lower than my bench press?</h3>
+      <p>Smaller muscle groups and worse leverage mean overhead press 1RM is typically about 60-65% of bench press 1RM — this is normal, not a weakness.</p>
+    </div>
+    <div class="faq-item">
+      <h3>Should I test a true 1-rep max for the overhead press?</h3>
+      <p>It's risky — lifters often lean back excessively on a heavy single, stressing the lower back. An estimate from a 3-5 rep set is safer and just as useful.</p>
+    </div>
+    <div class="faq-item">
+      <h3>Which formula is most accurate for the overhead press?</h3>
+      <p>Brzycki is recommended since it's more conservative for fast-fatiguing upper-body pressing movements.</p>
+    </div>
+    <div class="faq-item">
+      <h3>Does leg drive count in a strict overhead press max?</h3>
+      <p>No — using leg drive makes it a push press. A strict press requires locked, static knees and hips throughout.</p>
+    </div>
+    <div class="faq-item">
+      <h3>Does this work the same for men and women?</h3>
+      <p>Yes, these are general-population formulas used for both men and women, though minor accuracy differences can appear at higher rep ranges.</p>
+    </div>
+  </article>
+
+  <RelatedTools currentToolId="overhead-press-1rm-calculator" />
+
+  <script>
+    let unit = "lb";
+    let formula = "brzycki";
+
+    const unitLb = document.getElementById("unit-lb");
+    const unitKg = document.getElementById("unit-kg");
+    const formEpley = document.getElementById("formula-epley");
+    const formBrzycki = document.getElementById("formula-brzycki");
+    const formLander = document.getElementById("formula-lander");
+    const formLombardi = document.getElementById("formula-lombardi");
+    const weightInput = document.getElementById("weight") as HTMLInputElement | null;
+    const repsInput = document.getElementById("reps") as HTMLInputElement | null;
+    const calcBtn = document.getElementById("calc-btn");
+    const result1rm = document.getElementById("result-1rm");
+    const resultLabel = document.getElementById("result-label");
+    const resultTableBody = document.getElementById("result-table-body");
+    const resultBox = document.getElementById("result-box");
+
+    if (unitLb) unitLb.addEventListener("click", () => setUnit("lb"));
+    if (unitKg) unitKg.addEventListener("click", () => setUnit("kg"));
+    if (formEpley) formEpley.addEventListener("click", () => setFormula("epley"));
+    if (formBrzycki) formBrzycki.addEventListener("click", () => setFormula("brzycki"));
+    if (formLander) formLander.addEventListener("click", () => setFormula("lander"));
+    if (formLombardi) formLombardi.addEventListener("click", () => setFormula("lombardi"));
+
+    if (repsInput) {
+      repsInput.addEventListener("input", (e) => {
+        const target = e.target as HTMLInputElement;
+        if (parseInt(target.value) >= 37) {
+          target.value = "36";
+        }
+      });
+    }
+
+    function setUnit(newUnit: string) {
+      if (newUnit === unit) return;
+      if (weightInput) {
+        const currentVal = parseFloat(weightInput.value);
+        if (currentVal) {
+          weightInput.value = newUnit === "kg"
+            ? (currentVal / 2.20462).toFixed(1)
+            : (currentVal * 2.20462).toFixed(1);
+        }
+      }
+      unit = newUnit;
+      if (unitLb) { unitLb.classList.toggle("active", unit === "lb"); unitLb.setAttribute("aria-pressed", String(unit === "lb")); }
+      if (unitKg) { unitKg.classList.toggle("active", unit === "kg"); unitKg.setAttribute("aria-pressed", String(unit === "kg")); }
+    }
+
+    function setFormula(f: string) {
+      formula = f;
+      const map: Record<string, HTMLElement | null> = { epley: formEpley, brzycki: formBrzycki, lander: formLander, lombardi: formLombardi };
+      for (const key in map) {
+        const el = map[key];
+        if (el) { el.classList.toggle("active", f === key); el.setAttribute("aria-pressed", String(f === key)); }
+      }
+    }
+
+    function formulaLabel(f: string) {
+      if (f === "epley") return "Epley";
+      if (f === "brzycki") return "Brzycki";
+      if (f === "lander") return "Lander";
+      return "Lombardi";
+    }
+
+    if (calcBtn) {
+      calcBtn.addEventListener("click", () => {
+        if (!weightInput || !repsInput) return;
+
+        const weight = parseFloat(weightInput.value);
+        let reps = parseInt(repsInput.value, 10);
+
+        if (!weight || !reps || weight <= 0 || reps <= 0) {
+          alert("Please enter a valid weight and rep count.");
+          return;
+        }
+
+        if (reps >= 37) {
+          reps = 36;
+          repsInput.value = "36";
+        }
+
+        let oneRM = 0;
+        if (reps === 1) {
+          oneRM = weight;
+        } else if (formula === "epley") {
+          oneRM = weight * (1 + reps / 30);
+        } else if (formula === "brzycki") {
+          oneRM = weight * 36 / (37 - reps);
+        } else if (formula === "lander") {
+          oneRM = (100 * weight) / (101.3 - 2.67123 * reps);
+        } else if (formula === "lombardi") {
+          oneRM = weight * Math.pow(reps, 0.10);
+        }
+
+        const rounded = Math.round(oneRM * 10) / 10;
+        if (result1rm) result1rm.textContent = `${rounded} ${unit}`;
+        if (resultLabel) resultLabel.textContent = `Estimated Overhead Press Max (${formulaLabel(formula)} formula)`;
+
+        const percentages = [95, 90, 85, 80, 75, 70, 65, 60];
+        const rows = percentages.map(p => {
+          const val = Math.round(rounded * (p / 100) * 10) / 10;
+          return `<tr><td>${p}%</td><td>${val} ${unit}</td></tr>`;
+        }).join("");
+
+        if (resultTableBody) resultTableBody.innerHTML = rows;
+        if (resultBox) resultBox.classList.add("show");
+      });
+    }
+  </script>
+</Base>
