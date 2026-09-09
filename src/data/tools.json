@@ -42,6 +42,15 @@
     "shortDesc": "Convert a known weight and reps to any target rep count.",
     "icon": "RM",
     "cluster": "strength",
-    "related": ["1rm-calculator", "bench-press-1rm-calculator", "squat-1rm-calculator"]
+    "related": ["1rm-calculator", "1rm-percentage-calculator"]
+  },
+  {
+    "id": "1rm-percentage-calculator",
+    "name": "1RM Percentage Calculator",
+    "url": "/tools/strength/1rm-percentage-calculator",
+    "shortDesc": "Find your weight at any training percentage, or reverse-calculate your 1RM.",
+    "icon": "%",
+    "cluster": "strength",
+    "related": ["1rm-calculator", "rep-max-calculator"]
   }
 ]
