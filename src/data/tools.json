@@ -61,5 +61,14 @@
     "icon": "OH",
     "cluster": "strength",
     "related": ["1rm-calculator", "bench-press-1rm-calculator"]
+  },
+  {
+    "id": "training-max-calculator",
+    "name": "Training Max Calculator",
+    "url": "/tools/strength/training-max-calculator",
+    "shortDesc": "Convert your 1RM into a safe training max for 5/3/1 programs.",
+    "icon": "TM",
+    "cluster": "strength",
+    "related": ["1rm-calculator", "1rm-percentage-calculator"]
   }
 ]
