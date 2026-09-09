@@ -1,0 +1,243 @@
+---
+import Base from '../../../layouts/Base.astro';
+import RelatedTools from '../../../components/RelatedTools.astro';
+---
+<Base
+  title="Training Max Calculator — 5/3/1 & Wendler Training Max"
+  description="Free training max calculator for 5/3/1 and Wendler programs. Convert your 1RM to a safe 85% or 90% training max, rounded to the nearest 5 lb or 2.5 kg."
+>
+  <script type="application/ld+json" set:html={JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "Training Max Calculator",
+    "applicationCategory": "HealthApplication",
+    "operatingSystem": "Any",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+    "description": "Free online calculator that converts a one-rep max into a submaximal training max for percentage-based programs like Wendler 5/3/1."
+  })} />
+
+  <script type="application/ld+json" set:html={JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "What is a Training Max and how is it different from a 1RM?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "A true one-rep max is the absolute maximum weight you can lift for a single repetition under perfect conditions. A Training Max is a deliberately conservative number, typically 85% to 90% of your 1RM, used as the baseline for percentage-based programs so you can complete all weekly sets with good form, even on fatigued days."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Should I use an 85% or 90% training max?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "A 90% training max is the standard recommendation for most programs, including Wendler 5/3/1. Use an 85% training max instead if you are in a calorie deficit, returning from a layoff, or if your estimated 1RM came from a messy, high-rep set."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How often should I increase my training max?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "You don't need to retest your true 1RM constantly. In programs like 5/3/1, add 5 lb (2.5 kg) to upper body training maxes (bench and overhead press) and 10 lb (5 kg) to lower body training maxes (squat and deadlift) after completing a full 3-to-4 week training cycle."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What happens if I miss reps using my current training max?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "If your working sets consistently feel maximal or you start missing reps, your training max is too high. Drop it by 10% and build back up. A lower training max that lets you progress is always better than a grinding, unsustainable one."
+        }
+      }
+    ]
+  })} />
+
+  <section class="hero">
+    <h1>Training Max Calculator</h1>
+    <p>Convert your 1RM into a safe, sustainable training max for 5/3/1 and other percentage-based programs.</p>
+  </section>
+
+  <section class="calc-card">
+    <div class="field">
+      <label>Unit</label>
+      <div class="unit-toggle">
+        <button type="button" id="unit-lb" class="active" aria-pressed="true">lb</button>
+        <button type="button" id="unit-kg" aria-pressed="false">kg</button>
+      </div>
+    </div>
+    <div class="field">
+      <label>Training Max %</label>
+      <div class="unit-toggle">
+        <button type="button" id="pct-85" aria-pressed="false">85%</button>
+        <button type="button" id="pct-90" class="active" aria-pressed="true">90%</button>
+        <button type="button" id="pct-95" aria-pressed="false">95%</button>
+      </div>
+    </div>
+    <div class="field">
+      <label for="onerm">Your 1RM</label>
+      <input type="number" id="onerm" placeholder="e.g. 315" inputmode="decimal" />
+    </div>
+    <button class="btn-primary" id="calc-btn">Calculate Training Max</button>
+
+    <div class="result-box" id="result-box">
+      <div class="big-number" id="result-tm">–</div>
+      <div class="label" id="result-label">Your Training Max</div>
+      <table class="result-table" id="result-table">
+        <thead>
+          <tr><th>Training Max %</th><th>Weight</th></tr>
+        </thead>
+        <tbody id="result-table-body"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <article class="article-section">
+    <h2>What Is a Training Max?</h2>
+    <p>
+      A Training Max (TM) is a deliberately submaximal number — usually 85%
+      to 90% of your true 1RM — used as the reference point for
+      percentage-based programs like Wendler's 5/3/1 or the Juggernaut
+      Method. Instead of programming your heaviest working sets off your
+      actual max, you train off a slightly reduced number. This keeps your
+      central nervous system fresh, allows you to hit every prescribed rep
+      with good bar speed, and builds in a buffer for fatigued or stressful
+      training days.
+    </p>
+  </article>
+
+  <article class="article-section">
+    <h2>How to Use This Calculator</h2>
+    <p>
+      Enter your 1RM (tested or estimated), choose 85%, 90%, or 95%, and
+      calculate. Results are rounded to the nearest 5 lb or 2.5 kg, matching
+      standard barbell loading conventions. The table also shows your
+      training max at the other common percentages for comparison.
+    </p>
+  </article>
+
+  <article class="article-section">
+    <h2>85% vs. 90% vs. 95%: Which Should You Use?</h2>
+    <p>
+      <strong>90%</strong> is the standard used in most published 5/3/1
+      templates and works well for most lifters. <strong>85%</strong> is the
+      more conservative option — better if you're in a calorie deficit,
+      returning from a layoff, new to the program, or your 1RM came from an
+      imprecise high-rep estimate. <strong>95%</strong> suits experienced
+      lifters who recover well and want slightly heavier working sets, but
+      it leaves less room for error on bad days.
+    </p>
+  </article>
+
+  <article class="article-section">
+    <h2>Progressing Your Training Max</h2>
+    <p>
+      You don't need to retest your 1RM every cycle. After completing a
+      full 3-to-4 week training block, add 5 lb (2.5 kg) to your upper body
+      training maxes (bench press, overhead press) and 10 lb (5 kg) to your
+      lower body training maxes (squat, deadlift). If your working sets
+      start feeling maximal or you miss reps, drop your training max by 10%
+      and rebuild — a lower, sustainable number beats a grinding one every
+      time.
+    </p>
+  </article>
+
+  <article class="article-section">
+    <h2>Frequently Asked Questions</h2>
+    <div class="faq-item">
+      <h3>What is a Training Max and how is it different from a 1RM?</h3>
+      <p>A 1RM is your absolute max for one rep. A Training Max is a deliberately reduced number (85-90% of 1RM) used to keep percentage-based programs sustainable.</p>
+    </div>
+    <div class="faq-item">
+      <h3>Should I use an 85% or 90% training max?</h3>
+      <p>90% is standard for most lifters. Use 85% if you're in a deficit, returning from a layoff, or working from an imprecise 1RM estimate.</p>
+    </div>
+    <div class="faq-item">
+      <h3>How often should I increase my training max?</h3>
+      <p>After each 3-4 week cycle, add 5 lb to upper body lifts and 10 lb to lower body lifts — no need to retest your 1RM constantly.</p>
+    </div>
+    <div class="faq-item">
+      <h3>What happens if I miss reps using my current training max?</h3>
+      <p>Drop your training max by 10% and rebuild. A sustainable, lower number is always better than a grinding one.</p>
+    </div>
+  </article>
+
+  <RelatedTools currentToolId="training-max-calculator" />
+
+  <script>
+    let unit = "lb";
+    let pct = 90;
+
+    const unitLb = document.getElementById("unit-lb");
+    const unitKg = document.getElementById("unit-kg");
+    const pct85 = document.getElementById("pct-85");
+    const pct90 = document.getElementById("pct-90");
+    const pct95 = document.getElementById("pct-95");
+    const oneRMInput = document.getElementById("onerm") as HTMLInputElement | null;
+    const calcBtn = document.getElementById("calc-btn");
+    const resultTM = document.getElementById("result-tm");
+    const resultLabel = document.getElementById("result-label");
+    const resultTableBody = document.getElementById("result-table-body");
+    const resultBox = document.getElementById("result-box");
+
+    if (unitLb) unitLb.addEventListener("click", () => setUnit("lb"));
+    if (unitKg) unitKg.addEventListener("click", () => setUnit("kg"));
+    if (pct85) pct85.addEventListener("click", () => setPct(85));
+    if (pct90) pct90.addEventListener("click", () => setPct(90));
+    if (pct95) pct95.addEventListener("click", () => setPct(95));
+
+    function setUnit(newUnit: string) {
+      if (newUnit === unit) return;
+      if (oneRMInput) {
+        const currentVal = parseFloat(oneRMInput.value);
+        if (currentVal) {
+          oneRMInput.value = newUnit === "kg"
+            ? (currentVal / 2.20462).toFixed(1)
+            : (currentVal * 2.20462).toFixed(1);
+        }
+      }
+      unit = newUnit;
+      if (unitLb) { unitLb.classList.toggle("active", unit === "lb"); unitLb.setAttribute("aria-pressed", String(unit === "lb")); }
+      if (unitKg) { unitKg.classList.toggle("active", unit === "kg"); unitKg.setAttribute("aria-pressed", String(unit === "kg")); }
+    }
+
+    function setPct(newPct: number) {
+      pct = newPct;
+      if (pct85) { pct85.classList.toggle("active", pct === 85); pct85.setAttribute("aria-pressed", String(pct === 85)); }
+      if (pct90) { pct90.classList.toggle("active", pct === 90); pct90.setAttribute("aria-pressed", String(pct === 90)); }
+      if (pct95) { pct95.classList.toggle("active", pct === 95); pct95.setAttribute("aria-pressed", String(pct === 95)); }
+    }
+
+    function roundToNearest(value: number, step: number): number {
+      return Math.round(value / step) * step;
+    }
+
+    if (calcBtn) {
+      calcBtn.addEventListener("click", () => {
+        if (!oneRMInput) return;
+        const oneRM = parseFloat(oneRMInput.value);
+        if (!oneRM || oneRM <= 0) {
+          alert("Please enter a valid 1RM.");
+          return;
+        }
+
+        const roundStep = unit === "lb" ? 5 : 2.5;
+        const tm = roundToNearest(oneRM * (pct / 100), roundStep);
+
+        if (resultTM) resultTM.textContent = `${tm} ${unit}`;
+        if (resultLabel) resultLabel.textContent = `Training Max (${pct}%)`;
+
+        const allPcts = [85, 90, 95];
+        const rows = allPcts.map(p => {
+          const w = roundToNearest(oneRM * (p / 100), roundStep);
+          return `<tr><td>${p}%</td><td>${w} ${unit}</td></tr>`;
+        }).join("");
+
+        if (resultTableBody) resultTableBody.innerHTML = rows;
+        if (resultBox) resultBox.classList.add("show");
+      });
+    }
+  </script>
+</Base>
