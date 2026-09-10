@@ -6,7 +6,7 @@
     "shortDesc": "Estimate your one-rep max from any weight and rep count.",
     "icon": "1RM",
     "cluster": "strength",
-    "related": ["bench-press-1rm-calculator", "squat-1rm-calculator", "deadlift-1rm-calculator", "overhead-press-1rm-calculator"]
+    "related": ["bench-press-1rm-calculator", "squat-1rm-calculator", "deadlift-1rm-calculator", "rep-max-calculator"]
   },
   {
     "id": "bench-press-1rm-calculator",
@@ -15,7 +15,7 @@
     "shortDesc": "Estimate your max bench press from weight and reps.",
     "icon": "BP",
     "cluster": "strength",
-    "related": ["1rm-calculator", "overhead-press-1rm-calculator", "deadlift-1rm-calculator"]
+    "related": ["1rm-calculator", "squat-1rm-calculator", "overhead-press-1rm-calculator"]
   },
   {
     "id": "squat-1rm-calculator",
@@ -36,6 +36,15 @@
     "related": ["1rm-calculator", "squat-1rm-calculator", "bench-press-1rm-calculator"]
   },
   {
+    "id": "overhead-press-1rm-calculator",
+    "name": "Overhead Press Max Calculator",
+    "url": "/tools/strength/overhead-press-1rm-calculator",
+    "shortDesc": "Estimate your strict press or military press max from weight and reps.",
+    "icon": "OH",
+    "cluster": "strength",
+    "related": ["1rm-calculator", "bench-press-1rm-calculator"]
+  },
+  {
     "id": "rep-max-calculator",
     "name": "Rep Max Calculator",
     "url": "/tools/strength/rep-max-calculator",
@@ -51,16 +60,7 @@
     "shortDesc": "Find your weight at any training percentage, or reverse-calculate your 1RM.",
     "icon": "%",
     "cluster": "strength",
-    "related": ["1rm-calculator", "rep-max-calculator"]
-  },
-  {
-    "id": "overhead-press-1rm-calculator",
-    "name": "Overhead Press Max Calculator",
-    "url": "/tools/strength/overhead-press-1rm-calculator",
-    "shortDesc": "Estimate your strict press or military press max from weight and reps.",
-    "icon": "OH",
-    "cluster": "strength",
-    "related": ["1rm-calculator", "bench-press-1rm-calculator"]
+    "related": ["1rm-calculator", "rep-max-calculator", "training-max-calculator"]
   },
   {
     "id": "training-max-calculator",
@@ -69,7 +69,7 @@
     "shortDesc": "Convert your 1RM into a safe training max for 5/3/1 programs.",
     "icon": "TM",
     "cluster": "strength",
-    "related": ["1rm-calculator", "1rm-percentage-calculator"]
+    "related": ["1rm-calculator", "1rm-percentage-calculator", "531-calculator"]
   },
   {
     "id": "531-calculator",
