@@ -1,0 +1,4 @@
+User-agent: *
+Disallow: /
+
+Sitemap: https://repmaths.com/sitemap-index.xml
