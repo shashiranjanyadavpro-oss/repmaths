@@ -1,40 +1,65 @@
 ---
 import Base from '../layouts/Base.astro';
 import toolsData from '../data/tools.json';
+
+const clusterLabels: Record<string, string> = {
+  strength: "1RM & Strength Calculators",
+  training: "Training & Programming",
+  "plate-loading": "Plate & Equipment",
+};
+
+const clusterOrder = ["strength", "training", "plate-loading"];
+
+const groupedTools = clusterOrder
+  .map((clusterId) => ({
+    id: clusterId,
+    label: clusterLabels[clusterId],
+    tools: toolsData.filter((t) => t.cluster === clusterId),
+  }))
+  .filter((group) => group.tools.length > 0);
 ---
 <Base
-  title="Free Fitness & Strength Calculators — 1RM, Macros, Body Fat & More | RepMaths"
-  description="Free, fast fitness calculators built on established formulas — 1RM, training percentages, body composition, and nutrition. No sign-up required."
+  title="Free Strength & 1RM Calculators | RepMaths"
+  description="Free, fast strength-training calculators built on established formulas — 1RM, training percentages, and plate loading. No sign-up required."
 >
   <script type="application/ld+json" set:html={JSON.stringify({
     "@context": "https://schema.org",
     "@type": "WebSite",
     "name": "RepMaths",
     "url": "https://repmaths.com",
-    "description": "Free fitness and strength-training calculators built on established, published formulas."
+    "description": "Free strength-training calculators built on established, published formulas."
   })} />
 
   <section class="hero">
     <h1>Free Fitness &amp; Strength Calculators</h1>
-    <p>Instant, accurate tools for lifters — built on established formulas, no sign-up required.</p>
+    <p>Instant, reliable tools for lifters — built on established formulas, no sign-up required.</p>
   </section>
 
-  <section class="tool-grid">
-    {toolsData.map((tool) => (
-      <a class="tool-card" href={tool.url}>
-        <span class="icon">{tool.icon}</span>
-        <span class="name">{tool.name}</span>
-        <span class="desc">{tool.shortDesc}</span>
-      </a>
-    ))}
-  </section>
+  {groupedTools.map((group) => (
+    <section class="cluster-section">
+      <h2>{group.label}</h2>
+      <div class="tool-grid">
+        {group.tools.map((tool) => (
+          <a class="tool-card" href={tool.url}>
+            <span class="icon">{tool.icon}</span>
+            <span class="name">{tool.name}</span>
+            <span class="desc">{tool.shortDesc}</span>
+          </a>
+        ))}
+      </div>
+    </section>
+  ))}
 
   <style>
+    .cluster-section { margin: 32px 0 40px; }
+    .cluster-section h2 {
+      font-size: 1.3rem; margin-bottom: 16px;
+      padding-bottom: 8px; border-bottom: 1px solid var(--border);
+    }
     .tool-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
       gap: 12px;
-      padding: 24px 0 48px;
     }
     .tool-card {
       background: var(--surface);
