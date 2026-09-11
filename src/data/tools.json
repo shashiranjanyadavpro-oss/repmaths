@@ -104,7 +104,7 @@
     "url": "/tools/equipment/plate-calculator",
     "shortDesc": "Find exactly which plates to load on each side of the bar.",
     "icon": "PL",
-    "cluster": "plate-loading",
+    "cluster": "equipment",
     "related": ["1rm-calculator", "warmup-set-calculator"]
   },
   {
