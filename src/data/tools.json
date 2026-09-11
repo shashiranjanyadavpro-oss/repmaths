@@ -68,7 +68,7 @@
     "url": "/tools/strength/training-max-calculator",
     "shortDesc": "Convert your 1RM into a safe training max for 5/3/1 programs.",
     "icon": "TM",
-    "cluster": "strength",
+    "cluster": "training",
     "related": ["1rm-calculator", "1rm-percentage-calculator", "531-calculator"]
   },
   {
@@ -77,7 +77,7 @@
     "url": "/tools/strength/531-calculator",
     "shortDesc": "Generate the full Wendler 5/3/1 four-week cycle from your training max.",
     "icon": "531",
-    "cluster": "strength",
+    "cluster": "training",
     "related": ["training-max-calculator", "1rm-calculator"]
   },
   {
@@ -86,7 +86,7 @@
     "url": "/tools/strength/warmup-set-calculator",
     "shortDesc": "Generate your full warm-up ramp from the empty bar to your working weight.",
     "icon": "WU",
-    "cluster": "strength",
+    "cluster": "training",
     "related": ["1rm-calculator", "1rm-percentage-calculator"]
   },
   {
@@ -104,7 +104,7 @@
     "url": "/tools/strength/plate-calculator",
     "shortDesc": "Find exactly which plates to load on each side of the bar.",
     "icon": "PL",
-    "cluster": "strength",
+    "cluster": "training",
     "related": ["1rm-calculator", "warmup-set-calculator"]
   }
 ]
