@@ -1,0 +1,267 @@
+---
+import Base from '../../../layouts/Base.astro';
+import RelatedTools from '../../../components/RelatedTools.astro';
+---
+<Base
+  title="Barbell Plate Calculator — Plates Per Side for Any Weight"
+  description="Free barbell plate calculator. Enter your target weight to instantly see which plates to load on each side of the bar, in lb or kg."
+>
+  <script type="application/ld+json" set:html={JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "Barbell Plate Calculator",
+    "applicationCategory": "HealthApplication",
+    "operatingSystem": "Any",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+    "description": "Free online calculator that determines which barbell plates to load on each side of the bar to reach a target total weight."
+  })} />
+
+  <script type="application/ld+json" set:html={JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "How do you calculate plate loading on a barbell?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Take your target total weight and subtract the weight of the barbell, typically 45 lb or 20 kg. Divide the remaining weight by 2 to find the load for one side. Load plates starting with the heaviest available, working down to the smallest, for balance and stability."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How much does a standard Olympic barbell weigh?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "A standard men's Olympic barbell weighs 45 lb (20 kg). A women's Olympic barbell weighs 35 lb (15 kg) with a slightly thinner shaft. Technique bars typically weigh around 15-25 lb, and trap or hex bars usually weigh 45-65 lb depending on the manufacturer."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What does '1 plate', '2 plates', or '3 plates' mean in lifting?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "In gym slang, 'plates' refers to standard 45 lb (or 20 kg) plates loaded on each side of a standard bar. '1 plate' is 135 lb (60 kg), '2 plates' is 225 lb (100 kg), '3 plates' is 315 lb (140 kg), and '4 plates' is 405 lb (180 kg)."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Do barbell collars count toward total weight?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Standard plastic spring collars or clips weigh under 0.5 lb per pair and are generally ignored in everyday gym math. Competition powerlifting collars, however, weigh about 5.5 lb (2.5 kg) each and must be factored into official competition totals."
+        }
+      }
+    ]
+  })} />
+
+  <section class="hero">
+    <h1>Barbell Plate Calculator</h1>
+    <p>Enter your target weight to see exactly which plates to load on each side.</p>
+  </section>
+
+  <section class="calc-card">
+    <div class="field">
+      <label>Unit</label>
+      <div class="unit-toggle">
+        <button type="button" id="unit-lb" class="active" aria-pressed="true">lb</button>
+        <button type="button" id="unit-kg" aria-pressed="false">kg</button>
+      </div>
+    </div>
+    <div class="field">
+      <label>Barbell</label>
+      <div class="unit-toggle">
+        <button type="button" id="bar-mens" class="active" aria-pressed="true">Men's (45 lb)</button>
+        <button type="button" id="bar-womens" aria-pressed="false">Women's (35 lb)</button>
+      </div>
+    </div>
+    <div class="field">
+      <label for="target-weight">Target Total Weight</label>
+      <input type="number" id="target-weight" placeholder="e.g. 225" inputmode="decimal" />
+    </div>
+    <button class="btn-primary" id="calc-btn">Calculate Plates</button>
+
+    <div class="result-box" id="result-box">
+      <div class="big-number" id="result-total">–</div>
+      <div class="label" id="result-label">Total Weight Loaded</div>
+      <table class="result-table" id="result-table">
+        <thead>
+          <tr><th>Plate Size (each side)</th><th>Quantity</th></tr>
+        </thead>
+        <tbody id="result-table-body"></tbody>
+      </table>
+      <div id="warning-msg" style="display:none; color:var(--text-muted); font-size:0.85rem; margin-top:10px;"></div>
+    </div>
+  </section>
+
+  <article class="article-section">
+    <h2>How to Calculate Plate Loading</h2>
+    <p>
+      To figure out barbell plate math yourself: take your target total
+      weight and subtract the barbell weight (typically 45 lb or 20 kg).
+      Divide what's left by 2 to get the weight needed per side, then load
+      plates from heaviest to lightest, closest to the collar first, for
+      the most balanced and stable bar.
+    </p>
+  </article>
+
+  <article class="article-section">
+    <h2>How to Use This Calculator</h2>
+    <p>
+      Choose your unit and barbell type, enter your target total weight,
+      and calculate. This tool uses standard plate sizes — 45, 35, 25, 10,
+      5, and 2.5 lb, or 25, 20, 15, 10, 5, 2.5, and 1.25 kg — and finds the
+      exact combination for each side. If your target weight isn't
+      achievable with standard plates, the closest possible load will be
+      shown instead.
+    </p>
+  </article>
+
+  <article class="article-section">
+    <h2>Gym Slang: What Does "2 Plates" Mean?</h2>
+    <p>
+      "Plates" in gym slang always refers to the standard 45 lb (or 20 kg)
+      plate on a standard bar. Here's the quick reference:
+    </p>
+    <ul>
+      <li><strong>1 plate:</strong> 135 lb (60 kg)</li>
+      <li><strong>2 plates:</strong> 225 lb (100 kg)</li>
+      <li><strong>3 plates:</strong> 315 lb (140 kg)</li>
+      <li><strong>4 plates:</strong> 405 lb (180 kg)</li>
+    </ul>
+  </article>
+
+  <article class="article-section">
+    <h2>Frequently Asked Questions</h2>
+    <div class="faq-item">
+      <h3>How do you calculate plate loading on a barbell?</h3>
+      <p>Subtract the bar weight from your target, divide by 2 for the per-side load, then fill it with the heaviest plates down to the smallest.</p>
+    </div>
+    <div class="faq-item">
+      <h3>How much does a standard Olympic barbell weigh?</h3>
+      <p>Men's bars weigh 45 lb (20 kg); women's bars weigh 35 lb (15 kg).</p>
+    </div>
+    <div class="faq-item">
+      <h3>What does "2 plates" mean in lifting?</h3>
+      <p>Two 45 lb (or 20 kg) plates per side on a standard bar — 225 lb (100 kg) total.</p>
+    </div>
+    <div class="faq-item">
+      <h3>Do barbell collars count toward total weight?</h3>
+      <p>Standard gym collars are negligible and usually ignored. Official competition collars weigh about 5.5 lb (2.5 kg) each and do count.</p>
+    </div>
+  </article>
+
+  <RelatedTools currentToolId="plate-calculator" />
+
+  <script>
+    let unit = "lb";
+    let barWeight = 45;
+
+    const plateSizes: Record<string, number[]> = {
+      lb: [45, 35, 25, 10, 5, 2.5],
+      kg: [25, 20, 15, 10, 5, 2.5, 1.25],
+    };
+
+    const unitLb = document.getElementById("unit-lb");
+    const unitKg = document.getElementById("unit-kg");
+    const barMens = document.getElementById("bar-mens");
+    const barWomens = document.getElementById("bar-womens");
+    const targetInput = document.getElementById("target-weight") as HTMLInputElement | null;
+    const calcBtn = document.getElementById("calc-btn");
+    const resultTotal = document.getElementById("result-total");
+    const resultTableBody = document.getElementById("result-table-body");
+    const resultBox = document.getElementById("result-box");
+    const warningMsg = document.getElementById("warning-msg");
+
+    if (unitLb) unitLb.addEventListener("click", () => setUnit("lb"));
+    if (unitKg) unitKg.addEventListener("click", () => setUnit("kg"));
+    if (barMens) barMens.addEventListener("click", () => setBar("mens"));
+    if (barWomens) barWomens.addEventListener("click", () => setBar("womens"));
+
+    function setUnit(newUnit: string) {
+      if (newUnit === unit) return;
+      unit = newUnit;
+      barWeight = unit === "lb" ? (barWeight === 45 ? 45 : 35) : (barWeight === 20 ? 20 : 15);
+      // convert bar preset defaults cleanly
+      const isMens = barMens?.classList.contains("active");
+      barWeight = unit === "lb" ? (isMens ? 45 : 35) : (isMens ? 20 : 15);
+
+      if (targetInput) {
+        const currentVal = parseFloat(targetInput.value);
+        if (currentVal) {
+          targetInput.value = newUnit === "kg"
+            ? (currentVal / 2.20462).toFixed(1)
+            : (currentVal * 2.20462).toFixed(1);
+        }
+      }
+      if (unitLb) { unitLb.classList.toggle("active", unit === "lb"); unitLb.setAttribute("aria-pressed", String(unit === "lb")); }
+      if (unitKg) { unitKg.classList.toggle("active", unit === "kg"); unitKg.setAttribute("aria-pressed", String(unit === "kg")); }
+      updateBarLabels();
+    }
+
+    function setBar(type: string) {
+      const isMens = type === "mens";
+      barWeight = unit === "lb" ? (isMens ? 45 : 35) : (isMens ? 20 : 15);
+      if (barMens) { barMens.classList.toggle("active", isMens); barMens.setAttribute("aria-pressed", String(isMens)); }
+      if (barWomens) { barWomens.classList.toggle("active", !isMens); barWomens.setAttribute("aria-pressed", String(!isMens)); }
+    }
+
+    function updateBarLabels() {
+      if (barMens) barMens.textContent = unit === "lb" ? "Men's (45 lb)" : "Men's (20 kg)";
+      if (barWomens) barWomens.textContent = unit === "lb" ? "Women's (35 lb)" : "Women's (15 kg)";
+    }
+
+    if (calcBtn) {
+      calcBtn.addEventListener("click", () => {
+        if (!targetInput) return;
+        const target = parseFloat(targetInput.value);
+        if (!target || target <= 0) {
+          alert("Please enter a valid target weight.");
+          return;
+        }
+        if (target < barWeight) {
+          alert(`Target weight must be at least the bar weight (${barWeight} ${unit}).`);
+          return;
+        }
+
+        let perSide = (target - barWeight) / 2;
+        const sizes = plateSizes[unit];
+        const usedPlates: Record<number, number> = {};
+        let remaining = perSide;
+
+        for (const size of sizes) {
+          const count = Math.floor(remaining / size + 1e-6);
+          if (count > 0) {
+            usedPlates[size] = count;
+            remaining = Math.round((remaining - count * size) * 1000) / 1000;
+          }
+        }
+
+        const totalPlatesWeight = Object.entries(usedPlates).reduce((sum, [size, count]) => sum + parseFloat(size) * count, 0);
+        const achievedTotal = barWeight + totalPlatesWeight * 2;
+
+        if (resultTotal) resultTotal.textContent = `${achievedTotal} ${unit}`;
+
+        const rows = sizes
+          .filter(s => usedPlates[s])
+          .map(s => `<tr><td>${s} ${unit}</td><td>× ${usedPlates[s]}</td></tr>`)
+          .join("");
+
+        if (resultTableBody) resultTableBody.innerHTML = rows || `<tr><td colspan="2">Bar only — no plates needed</td></tr>`;
+
+        if (warningMsg) {
+          if (remaining > 0.01) {
+            warningMsg.style.display = "block";
+            warningMsg.textContent = `Closest achievable weight shown — exact target needs a ${remaining.toFixed(2)} ${unit} plate not in the standard set.`;
+          } else {
+            warningMsg.style.display = "none";
+          }
+        }
+
+        if (resultBox) resultBox.classList.add("show");
+      });
+    }
+
+    updateBarLabels();
+  </script>
+</Base>
