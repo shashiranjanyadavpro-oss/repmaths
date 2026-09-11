@@ -101,7 +101,7 @@
   {
     "id": "plate-calculator",
     "name": "Barbell Plate Calculator",
-    "url": "/tools/strength/plate-calculator",
+    "url": "/tools/equipment/plate-calculator",
     "shortDesc": "Find exactly which plates to load on each side of the bar.",
     "icon": "PL",
     "cluster": "plate-loading",
