@@ -95,7 +95,7 @@
     "url": "/tools/strength/rpe-rir-calculator",
     "shortDesc": "Convert a completed set into your estimated 1RM using the RTS RPE chart.",
     "icon": "RPE",
-    "cluster": "strength",
+    "cluster": "training",
     "related": ["1rm-calculator", "1rm-percentage-calculator", "training-max-calculator"]
   },
   {
@@ -104,7 +104,7 @@
     "url": "/tools/strength/plate-calculator",
     "shortDesc": "Find exactly which plates to load on each side of the bar.",
     "icon": "PL",
-    "cluster": "training",
+    "cluster": "plate-loading",
     "related": ["1rm-calculator", "warmup-set-calculator"]
   }
 ]
