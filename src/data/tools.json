@@ -106,5 +106,14 @@
     "icon": "PL",
     "cluster": "plate-loading",
     "related": ["1rm-calculator", "warmup-set-calculator"]
+  },
+  {
+    "id": "tdee-calculator",
+    "name": "TDEE Calculator",
+    "url": "/tools/nutrition/tdee-calculator",
+    "shortDesc": "Find your daily maintenance calories using the Mifflin-St Jeor equation.",
+    "icon": "TDEE",
+    "cluster": "nutrition",
+    "related": ["1rm-calculator"]
   }
 ]
