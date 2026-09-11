@@ -97,5 +97,14 @@
     "icon": "RPE",
     "cluster": "strength",
     "related": ["1rm-calculator", "1rm-percentage-calculator", "training-max-calculator"]
+  },
+  {
+    "id": "plate-calculator",
+    "name": "Barbell Plate Calculator",
+    "url": "/tools/strength/plate-calculator",
+    "shortDesc": "Find exactly which plates to load on each side of the bar.",
+    "icon": "PL",
+    "cluster": "strength",
+    "related": ["1rm-calculator", "warmup-set-calculator"]
   }
 ]
