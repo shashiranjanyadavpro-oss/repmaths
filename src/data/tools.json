@@ -65,7 +65,7 @@
   {
     "id": "training-max-calculator",
     "name": "Training Max Calculator",
-    "url": "/tools/strength/training-max-calculator",
+    "url": "/tools/training/training-max-calculator",
     "shortDesc": "Convert your 1RM into a safe training max for 5/3/1 programs.",
     "icon": "TM",
     "cluster": "training",
@@ -74,7 +74,7 @@
   {
     "id": "531-calculator",
     "name": "5/3/1 Calculator",
-    "url": "/tools/strength/531-calculator",
+    "url": "/tools/training/531-calculator",
     "shortDesc": "Generate the full Wendler 5/3/1 four-week cycle from your training max.",
     "icon": "531",
     "cluster": "training",
@@ -83,7 +83,7 @@
   {
     "id": "warmup-set-calculator",
     "name": "Warm-Up Set Calculator",
-    "url": "/tools/strength/warmup-set-calculator",
+    "url": "/tools/training/warmup-set-calculator",
     "shortDesc": "Generate your full warm-up ramp from the empty bar to your working weight.",
     "icon": "WU",
     "cluster": "training",
@@ -92,7 +92,7 @@
   {
     "id": "rpe-rir-calculator",
     "name": "RPE & RIR Calculator",
-    "url": "/tools/strength/rpe-rir-calculator",
+    "url": "/tools/training/rpe-rir-calculator",
     "shortDesc": "Convert a completed set into your estimated 1RM using the RTS RPE chart.",
     "icon": "RPE",
     "cluster": "training",
