@@ -5,11 +5,11 @@ import toolsData from '../data/tools.json';
 const clusterLabels: Record<string, string> = {
   strength: "1RM & Strength Calculators",
   training: "Training & Programming",
-  "plate-loading": "Plate & Equipment",
+  "equipment": "Plate & Equipment",
 nutrition: "Nutrition & Body Composition",
 };
 
-const clusterOrder = ["strength", "training", "plate-loading", "nutrition"];
+const clusterOrder = ["strength", "training", "equipment", "nutrition"];
 
 const groupedTools = clusterOrder
   .map((clusterId) => ({
