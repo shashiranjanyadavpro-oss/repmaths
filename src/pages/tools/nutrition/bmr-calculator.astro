@@ -1,0 +1,305 @@
+---
+import Base from '../../../layouts/Base.astro';
+import RelatedTools from '../../../components/RelatedTools.astro';
+---
+<Base
+  title="BMR Calculator (Mifflin-St Jeor) — Basal Metabolic Rate"
+  description="Free BMR calculator using the Mifflin-St Jeor and Harris-Benedict equations. Find your basal metabolic rate — the calories your body burns at complete rest."
+>
+  <script type="application/ld+json" set:html={JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "BMR Calculator",
+    "applicationCategory": "HealthApplication",
+    "operatingSystem": "Any",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+    "description": "Free online calculator that estimates Basal Metabolic Rate using the Mifflin-St Jeor or Harris-Benedict equation."
+  })} />
+
+  <script type="application/ld+json" set:html={JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "What is a good Basal Metabolic Rate?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "There is no single 'good' BMR — it depends on your body size, muscle mass, and age. A higher BMR simply means your body burns more calories at rest, typically due to more lean muscle mass or larger body size. Adult men often fall in a range of roughly 1,600-1,800 calories, and adult women roughly 1,400-1,600, but individual results vary widely."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How is BMR different from TDEE?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "BMR is the baseline calories your body needs for vital functions like breathing and circulation at complete rest. TDEE adds your daily activity, exercise, and food digestion on top of that. BMR typically makes up around 60-70% of TDEE."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Which BMR formula is most accurate?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Mifflin-St Jeor is widely regarded as one of the more reliable equations for the general population and is commonly recommended by dietetics professionals today. The older Harris-Benedict equation (1919, revised 1984) tends to overestimate resting calorie burn, particularly in overweight individuals. No formula is exact for every person."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Does building muscle increase my BMR?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes. Muscle tissue is more metabolically active than fat tissue and requires more energy to maintain, even at rest. Building lean muscle mass through resistance training raises your BMR over time."
+        }
+      }
+    ]
+  })} />
+
+  <section class="hero">
+    <h1>BMR Calculator</h1>
+    <p>Find your Basal Metabolic Rate — the calories your body burns at complete rest.</p>
+  </section>
+
+  <section class="calc-card">
+    <div class="field">
+      <label>Units</label>
+      <div class="unit-toggle">
+        <button type="button" id="unit-imperial" class="active" aria-pressed="true">lb / ft-in</button>
+        <button type="button" id="unit-metric" aria-pressed="false">kg / cm</button>
+      </div>
+    </div>
+    <div class="field">
+      <label>Sex</label>
+      <div class="unit-toggle">
+        <button type="button" id="sex-male" class="active" aria-pressed="true">Male</button>
+        <button type="button" id="sex-female" aria-pressed="false">Female</button>
+      </div>
+    </div>
+    <div class="field">
+      <label>Formula</label>
+      <div class="unit-toggle">
+        <button type="button" id="formula-mifflin" class="active" aria-pressed="true">Mifflin-St Jeor</button>
+        <button type="button" id="formula-harris" aria-pressed="false">Harris-Benedict</button>
+      </div>
+    </div>
+    <div class="field">
+      <label for="age">Age (15-90)</label>
+      <input type="number" id="age" placeholder="e.g. 28" inputmode="numeric" min="15" max="90" />
+    </div>
+    <div class="field">
+      <label for="weight">Weight</label>
+      <input type="number" id="weight" placeholder="e.g. 180" inputmode="decimal" min="1" />
+    </div>
+    <div id="imperial-height" class="field">
+      <label>Height</label>
+      <div style="display:flex; gap:8px;">
+        <input type="number" id="height-ft" placeholder="ft" inputmode="numeric" min="0" max="8" style="flex:1;" />
+        <input type="number" id="height-in" placeholder="in (0-11)" inputmode="numeric" min="0" max="11" style="flex:1;" />
+      </div>
+    </div>
+    <div id="metric-height" class="field" style="display:none;">
+      <label for="height-cm">Height (cm)</label>
+      <input type="number" id="height-cm" placeholder="e.g. 178" inputmode="decimal" min="1" />
+    </div>
+    <button class="btn-primary" id="calc-btn">Calculate BMR</button>
+
+    <div class="result-box" id="result-box">
+      <div class="big-number" id="result-bmr">–</div>
+      <div class="label" id="result-label">Your Basal Metabolic Rate</div>
+      <a href="/tools/nutrition/tdee-calculator" class="btn-primary" style="display:block; text-decoration:none; margin-top:14px;">
+        Calculate Your Full TDEE →
+      </a>
+    </div>
+  </section>
+
+  <article class="article-section">
+    <h2>What Is Basal Metabolic Rate (BMR)?</h2>
+    <p>
+      BMR is the number of calories your body needs at complete rest just
+      to keep your organs functioning — breathing, circulating blood, and
+      maintaining cells. It doesn't include digestion or movement. BMR
+      typically accounts for around 60-70% of your total daily calorie
+      burn (TDEE), making it the largest single piece of your energy needs.
+    </p>
+  </article>
+
+  <article class="article-section">
+    <h2>BMR vs. TDEE</h2>
+    <ul>
+      <li><strong>BMR:</strong> Calories burned at complete rest only.</li>
+      <li><strong>TDEE:</strong> BMR plus activity, exercise, and food digestion — the number to use for cutting, bulking, or maintenance.</li>
+    </ul>
+    <p>
+      Because BMR excludes activity, it should never be used directly as a
+      calorie target for weight loss — eating at or below your BMR long
+      term isn't sustainable and isn't how weight-management guidance
+      works. Use your <a href="/tools/nutrition/tdee-calculator">TDEE Calculator</a>{" "}
+      to find your full daily number and a safe deficit or surplus from
+      there.
+    </p>
+  </article>
+
+  <article class="article-section">
+    <h2>Mifflin-St Jeor vs. Harris-Benedict</h2>
+    <table class="result-table">
+      <thead>
+        <tr><th>Equation</th><th>Notes</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Mifflin-St Jeor (1990)</td><td>Widely used today; generally performs well across body types</td></tr>
+        <tr><td>Harris-Benedict (1919, rev. 1984)</td><td>Older equation; tends to overestimate, especially in overweight individuals</td></tr>
+      </tbody>
+    </table>
+    <p>
+      <strong>Mifflin-St Jeor:</strong><br />
+      Men: 10 × weight(kg) + 6.25 × height(cm) − 5 × age + 5<br />
+      Women: 10 × weight(kg) + 6.25 × height(cm) − 5 × age − 161
+    </p>
+    <p>
+      <strong>Harris-Benedict (revised):</strong><br />
+      Men: 13.397 × weight(kg) + 4.799 × height(cm) − 5.677 × age + 88.362<br />
+      Women: 9.247 × weight(kg) + 3.098 × height(cm) − 4.330 × age + 447.593
+    </p>
+  </article>
+
+  <article class="article-section">
+    <h2>Factors That Affect Your BMR</h2>
+    <ul>
+      <li><strong>Muscle mass:</strong> Muscle tissue burns more calories at rest than fat tissue — more lean mass means a higher BMR.</li>
+      <li><strong>Age:</strong> BMR tends to gradually decline with age, partly due to natural muscle loss over time.</li>
+      <li><strong>Sex:</strong> Men typically have a somewhat higher BMR than women at the same weight, largely due to differences in average muscle mass.</li>
+      <li><strong>Body size:</strong> Larger bodies generally require more energy to maintain basic functions.</li>
+    </ul>
+  </article>
+
+  <article class="article-section">
+    <h2>Frequently Asked Questions</h2>
+    <div class="faq-item">
+      <h3>What is a good BMR?</h3>
+      <p>There's no single "good" number — it depends on body size, muscle mass, and age. Men often fall around 1,600-1,800 kcal, women around 1,400-1,600, but this varies widely.</p>
+    </div>
+    <div class="faq-item">
+      <h3>How is BMR different from TDEE?</h3>
+      <p>BMR is rest-only; TDEE adds activity and digestion on top, making up around 60-70% BMR share of TDEE.</p>
+    </div>
+    <div class="faq-item">
+      <h3>Which BMR formula is most accurate?</h3>
+      <p>Mifflin-St Jeor is widely regarded as more reliable than the older Harris-Benedict equation, though no formula is exact for everyone.</p>
+    </div>
+    <div class="faq-item">
+      <h3>Does building muscle increase my BMR?</h3>
+      <p>Yes — muscle is more metabolically active than fat, so more lean mass raises your resting calorie burn.</p>
+    </div>
+  </article>
+
+  <RelatedTools currentToolId="bmr-calculator" />
+
+  <script>
+    let unitSystem = "imperial";
+    let sex = "male";
+    let formula = "mifflin";
+
+    const unitImperial = document.getElementById("unit-imperial");
+    const unitMetric = document.getElementById("unit-metric");
+    const sexMale = document.getElementById("sex-male");
+    const sexFemale = document.getElementById("sex-female");
+    const formulaMifflin = document.getElementById("formula-mifflin");
+    const formulaHarris = document.getElementById("formula-harris");
+    const imperialHeight = document.getElementById("imperial-height");
+    const metricHeight = document.getElementById("metric-height");
+    const ageInput = document.getElementById("age") as HTMLInputElement | null;
+    const weightInput = document.getElementById("weight") as HTMLInputElement | null;
+    const heightFtInput = document.getElementById("height-ft") as HTMLInputElement | null;
+    const heightInInput = document.getElementById("height-in") as HTMLInputElement | null;
+    const heightCmInput = document.getElementById("height-cm") as HTMLInputElement | null;
+    const calcBtn = document.getElementById("calc-btn");
+    const resultBmr = document.getElementById("result-bmr");
+    const resultBox = document.getElementById("result-box");
+
+    if (unitImperial) unitImperial.addEventListener("click", () => setUnitSystem("imperial"));
+    if (unitMetric) unitMetric.addEventListener("click", () => setUnitSystem("metric"));
+    if (sexMale) sexMale.addEventListener("click", () => setSex("male"));
+    if (sexFemale) sexFemale.addEventListener("click", () => setSex("female"));
+    if (formulaMifflin) formulaMifflin.addEventListener("click", () => setFormula("mifflin"));
+    if (formulaHarris) formulaHarris.addEventListener("click", () => setFormula("harris"));
+
+    function setUnitSystem(sys: string) {
+      unitSystem = sys;
+      if (unitImperial) { unitImperial.classList.toggle("active", sys === "imperial"); unitImperial.setAttribute("aria-pressed", String(sys === "imperial")); }
+      if (unitMetric) { unitMetric.classList.toggle("active", sys === "metric"); unitMetric.setAttribute("aria-pressed", String(sys === "metric")); }
+      if (imperialHeight) (imperialHeight as HTMLElement).style.display = sys === "imperial" ? "block" : "none";
+      if (metricHeight) (metricHeight as HTMLElement).style.display = sys === "metric" ? "block" : "none";
+    }
+
+    function setSex(s: string) {
+      sex = s;
+      if (sexMale) { sexMale.classList.toggle("active", s === "male"); sexMale.setAttribute("aria-pressed", String(s === "male")); }
+      if (sexFemale) { sexFemale.classList.toggle("active", s === "female"); sexFemale.setAttribute("aria-pressed", String(s === "female")); }
+    }
+
+    function setFormula(f: string) {
+      formula = f;
+      if (formulaMifflin) { formulaMifflin.classList.toggle("active", f === "mifflin"); formulaMifflin.setAttribute("aria-pressed", String(f === "mifflin")); }
+      if (formulaHarris) { formulaHarris.classList.toggle("active", f === "harris"); formulaHarris.setAttribute("aria-pressed", String(f === "harris")); }
+    }
+
+    if (calcBtn) {
+      calcBtn.addEventListener("click", () => {
+        if (!ageInput || !weightInput) return;
+
+        const age = parseFloat(ageInput.value);
+        const weightRaw = parseFloat(weightInput.value);
+
+        if (!age || age < 15 || age > 90) {
+          alert("Please enter a valid age between 15 and 90.");
+          return;
+        }
+        if (!weightRaw || weightRaw <= 0) {
+          alert("Please enter a valid weight.");
+          return;
+        }
+
+        let weightKg: number;
+        let heightCm: number;
+
+        if (unitSystem === "imperial") {
+          const ft = parseFloat(heightFtInput?.value || "0");
+          const inch = parseFloat(heightInInput?.value || "0");
+          if (ft <= 0 && inch <= 0) {
+            alert("Please enter a valid height.");
+            return;
+          }
+          if (inch < 0 || inch > 11) {
+            alert("Inches must be between 0 and 11.");
+            return;
+          }
+          weightKg = weightRaw / 2.20462;
+          heightCm = (ft * 12 + inch) * 2.54;
+        } else {
+          const cm = parseFloat(heightCmInput?.value || "0");
+          if (!cm || cm <= 0) {
+            alert("Please enter a valid height.");
+            return;
+          }
+          weightKg = weightRaw;
+          heightCm = cm;
+        }
+
+        let bmr: number;
+        if (formula === "mifflin") {
+          bmr = sex === "male"
+            ? 10 * weightKg + 6.25 * heightCm - 5 * age + 5
+            : 10 * weightKg + 6.25 * heightCm - 5 * age - 161;
+        } else {
+          bmr = sex === "male"
+            ? 13.397 * weightKg + 4.799 * heightCm - 5.677 * age + 88.362
+            : 9.247 * weightKg + 3.098 * heightCm - 4.330 * age + 447.593;
+        }
+
+        const rounded = Math.round(bmr);
+        if (resultBmr) resultBmr.textContent = `${rounded} kcal/day`;
+        if (resultBox) resultBox.classList.add("show");
+      });
+    }
+  </script>
+</Base>
