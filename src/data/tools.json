@@ -124,5 +124,14 @@
     "icon": "BMR",
     "cluster": "nutrition",
     "related": ["tdee-calculator"]
+  },
+  {
+    "id": "macro-calculator",
+    "name": "Macro Calculator",
+    "url": "/tools/nutrition/macro-calculator",
+    "shortDesc": "Convert your daily calories into protein, carb, and fat targets.",
+    "icon": "MAC",
+    "cluster": "nutrition",
+    "related": ["tdee-calculator", "bmr-calculator"]
   }
 ]
