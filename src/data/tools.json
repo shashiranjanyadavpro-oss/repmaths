@@ -115,5 +115,14 @@
     "icon": "TDEE",
     "cluster": "nutrition",
     "related": ["1rm-calculator"]
+  },
+  {
+    "id": "bmr-calculator",
+    "name": "BMR Calculator",
+    "url": "/tools/nutrition/bmr-calculator",
+    "shortDesc": "Find your Basal Metabolic Rate using Mifflin-St Jeor or Harris-Benedict.",
+    "icon": "BMR",
+    "cluster": "nutrition",
+    "related": ["tdee-calculator"]
   }
 ]
