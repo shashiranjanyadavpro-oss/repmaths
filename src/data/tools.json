@@ -114,7 +114,7 @@
     "shortDesc": "Find your daily maintenance calories using the Mifflin-St Jeor equation.",
     "icon": "TDEE",
     "cluster": "nutrition",
-    "related": ["1rm-calculator"]
+    "related": ["1rm-calculator", "bmr-calculator"]
   },
   {
     "id": "bmr-calculator",
