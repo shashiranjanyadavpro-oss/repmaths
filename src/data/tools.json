@@ -133,5 +133,14 @@
     "icon": "MAC",
     "cluster": "nutrition",
     "related": ["tdee-calculator", "bmr-calculator"]
+  },
+  {
+    "id": "protein-calculator",
+    "name": "Protein Intake Calculator",
+    "url": "/tools/nutrition/protein-calculator",
+    "shortDesc": "Find your daily protein range based on ISSN sports nutrition guidelines.",
+    "icon": "PRO",
+    "cluster": "nutrition",
+    "related": ["tdee-calculator", "macro-calculator"]
   }
 ]
