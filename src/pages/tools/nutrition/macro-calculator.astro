@@ -1,0 +1,250 @@
+---
+import Base from '../../../layouts/Base.astro';
+import RelatedTools from '../../../components/RelatedTools.astro';
+---
+<Base
+  title="Macro Calculator — Protein, Carbs & Fat by Goal"
+  description="Free macro calculator. Enter your daily calories and choose a goal — cutting, bulking, maintenance, or keto — to get your protein, carb, and fat targets in grams."
+>
+  <script type="application/ld+json" set:html={JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "Macro Calculator",
+    "applicationCategory": "HealthApplication",
+    "operatingSystem": "Any",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+    "description": "Free online calculator that converts daily calories into protein, carbohydrate, and fat targets based on a selected goal or custom ratio."
+  })} />
+
+  <script type="application/ld+json" set:html={JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "What is a good macro split for fat loss?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "A commonly used starting point for fat loss is roughly 35-40% protein, 25-35% carbohydrates, and 25-30% fat. Higher protein during a calorie deficit helps preserve muscle tissue and supports satiety, though individual needs and preferences vary."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Why track macros instead of just counting calories?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Total calories determine whether you gain or lose weight, but your macro split influences body composition — how much of that change is fat versus muscle. Adequate protein in particular helps preserve muscle during a deficit and supports recovery during a surplus."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How many calories are in each macronutrient?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Protein provides 4 calories per gram, carbohydrates provide 4 calories per gram, and fat provides 9 calories per gram. Alcohol, while not a core macronutrient, provides 7 calories per gram."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What macro split is used for a ketogenic diet?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "A typical ketogenic split is roughly 70-75% fat, 20-25% protein, and 5-10% carbohydrates, designed to shift the body toward using fat for fuel. This is a significant dietary change and is worth discussing with a doctor or dietitian before starting."
+        }
+      }
+    ]
+  })} />
+
+  <section class="hero">
+    <h1>Macro Calculator</h1>
+    <p>Turn your daily calories into a protein, carb, and fat target based on your goal.</p>
+  </section>
+
+  <section class="calc-card">
+    <p style="margin:0 0 16px; font-size:0.85rem; color:var(--text-muted);">
+      Don't know your daily calories? <a href="/tools/nutrition/tdee-calculator">Calculate your TDEE first</a>.
+    </p>
+    <div class="field">
+      <label for="calories">Daily Calories</label>
+      <input type="number" id="calories" placeholder="e.g. 2200" inputmode="numeric" min="800" />
+    </div>
+    <div class="field">
+      <label>Goal / Split</label>
+      <div class="unit-toggle">
+        <button type="button" id="goal-cutting" class="active" aria-pressed="true">Cutting</button>
+        <button type="button" id="goal-maintenance" aria-pressed="false">Maintenance</button>
+        <button type="button" id="goal-bulking" aria-pressed="false">Bulking</button>
+        <button type="button" id="goal-keto" aria-pressed="false">Keto</button>
+        <button type="button" id="goal-custom" aria-pressed="false">Custom</button>
+      </div>
+    </div>
+    <div id="custom-fields" style="display:none;">
+      <div class="field">
+        <label for="custom-protein">Protein %</label>
+        <input type="number" id="custom-protein" placeholder="e.g. 30" inputmode="numeric" min="0" max="100" />
+      </div>
+      <div class="field">
+        <label for="custom-carbs">Carbs %</label>
+        <input type="number" id="custom-carbs" placeholder="e.g. 40" inputmode="numeric" min="0" max="100" />
+      </div>
+      <div class="field">
+        <label for="custom-fat">Fat %</label>
+        <input type="number" id="custom-fat" placeholder="e.g. 30" inputmode="numeric" min="0" max="100" />
+      </div>
+      <p style="font-size:0.8rem; color:var(--text-muted); margin-top:-8px;">Must add up to 100%.</p>
+    </div>
+    <button class="btn-primary" id="calc-btn">Calculate Macros</button>
+
+    <div class="result-box" id="result-box">
+      <div class="label" id="result-label">Your Daily Macro Targets</div>
+      <table class="result-table" id="result-table">
+        <thead>
+          <tr><th>Macro</th><th>Grams</th><th>Calories</th></tr>
+        </thead>
+        <tbody id="result-table-body"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <article class="article-section">
+    <h2>How to Calculate Your Macros</h2>
+    <p>
+      Macros (macronutrients) — protein, carbohydrates, and fat — each
+      provide a fixed number of calories per gram: protein and carbs each
+      provide 4, and fat provides 9. To calculate targets, your total daily
+      calories are split by percentage across the three, then divided by
+      each macro's calories-per-gram to get a gram target.
+    </p>
+  </article>
+
+  <article class="article-section">
+    <h2>Best Macro Splits by Goal</h2>
+    <p>These are common starting points, not fixed rules — adjust based on how you respond over a few weeks.</p>
+    <h3>Cutting (Fat Loss)</h3>
+    <p>Roughly 40% protein, 30% carbs, 30% fat. Higher protein helps preserve muscle in a calorie deficit.</p>
+    <h3>Maintenance / Balanced</h3>
+    <p>Roughly 30% protein, 40% carbs, 30% fat — a common general-purpose split.</p>
+    <h3>Bulking (Muscle Gain)</h3>
+    <p>Roughly 25% protein, 50% carbs, 25% fat, prioritizing carbs to fuel training and recovery.</p>
+    <h3>Ketogenic</h3>
+    <p>Roughly 25% protein, 5% carbs, 70% fat — a significant shift best discussed with a doctor or dietitian first.</p>
+  </article>
+
+  <article class="article-section">
+    <h2>Why Track Macros Instead of Just Calories?</h2>
+    <p>
+      Total calories determine whether you gain or lose weight, but your
+      macro split influences body composition — how much of that change is
+      fat versus muscle. Adequate protein in particular helps preserve
+      muscle during a deficit and supports recovery during a surplus, even
+      when total calories are identical.
+    </p>
+  </article>
+
+  <article class="article-section">
+    <h2>Frequently Asked Questions</h2>
+    <div class="faq-item">
+      <h3>What is a good macro split for fat loss?</h3>
+      <p>Roughly 35-40% protein, 25-35% carbs, 25-30% fat is a common starting point — higher protein helps preserve muscle in a deficit.</p>
+    </div>
+    <div class="faq-item">
+      <h3>Why track macros instead of just calories?</h3>
+      <p>Calories determine weight change; macros influence whether that change is mostly fat or muscle.</p>
+    </div>
+    <div class="faq-item">
+      <h3>How many calories are in each macronutrient?</h3>
+      <p>Protein and carbs: 4 kcal/gram. Fat: 9 kcal/gram. Alcohol: 7 kcal/gram.</p>
+    </div>
+    <div class="faq-item">
+      <h3>What macro split works for keto?</h3>
+      <p>Roughly 70-75% fat, 20-25% protein, 5-10% carbs — a significant change worth discussing with a doctor first.</p>
+    </div>
+  </article>
+
+  <RelatedTools currentToolId="macro-calculator" />
+
+  <script>
+    let goal = "cutting";
+
+    const splits: Record<string, [number, number, number]> = {
+      cutting: [40, 30, 30],
+      maintenance: [30, 40, 30],
+      bulking: [25, 50, 25],
+      keto: [25, 5, 70],
+    };
+
+    const goalButtons: Record<string, HTMLElement | null> = {
+      cutting: document.getElementById("goal-cutting"),
+      maintenance: document.getElementById("goal-maintenance"),
+      bulking: document.getElementById("goal-bulking"),
+      keto: document.getElementById("goal-keto"),
+      custom: document.getElementById("goal-custom"),
+    };
+
+    const customFields = document.getElementById("custom-fields");
+    const caloriesInput = document.getElementById("calories") as HTMLInputElement | null;
+    const customProtein = document.getElementById("custom-protein") as HTMLInputElement | null;
+    const customCarbs = document.getElementById("custom-carbs") as HTMLInputElement | null;
+    const customFat = document.getElementById("custom-fat") as HTMLInputElement | null;
+    const calcBtn = document.getElementById("calc-btn");
+    const resultTableBody = document.getElementById("result-table-body");
+    const resultBox = document.getElementById("result-box");
+
+    for (const key in goalButtons) {
+      const btn = goalButtons[key];
+      if (btn) btn.addEventListener("click", () => setGoal(key));
+    }
+
+    function setGoal(g: string) {
+      goal = g;
+      for (const key in goalButtons) {
+        const btn = goalButtons[key];
+        if (btn) { btn.classList.toggle("active", key === g); btn.setAttribute("aria-pressed", String(key === g)); }
+      }
+      if (customFields) (customFields as HTMLElement).style.display = g === "custom" ? "block" : "none";
+    }
+
+    if (calcBtn) {
+      calcBtn.addEventListener("click", () => {
+        if (!caloriesInput) return;
+        const calories = parseFloat(caloriesInput.value);
+        if (!calories || calories < 800) {
+          alert("Please enter a valid daily calorie amount (800 or more).");
+          return;
+        }
+
+        let proteinPct: number, carbsPct: number, fatPct: number;
+
+        if (goal === "custom") {
+          proteinPct = parseFloat(customProtein?.value || "0");
+          carbsPct = parseFloat(customCarbs?.value || "0");
+          fatPct = parseFloat(customFat?.value || "0");
+          const total = proteinPct + carbsPct + fatPct;
+          if (total !== 100) {
+            alert(`Your percentages add up to ${total}%. Please make them add up to 100%.`);
+            return;
+          }
+        } else {
+          [proteinPct, carbsPct, fatPct] = splits[goal];
+        }
+
+        const proteinCal = calories * (proteinPct / 100);
+        const carbsCal = calories * (carbsPct / 100);
+        const fatCal = calories * (fatPct / 100);
+
+        const proteinG = Math.round(proteinCal / 4);
+        const carbsG = Math.round(carbsCal / 4);
+        const fatG = Math.round(fatCal / 9);
+
+        const rows = [
+          { name: `Protein (${proteinPct}%)`, g: proteinG, cal: Math.round(proteinCal) },
+          { name: `Carbs (${carbsPct}%)`, g: carbsG, cal: Math.round(carbsCal) },
+          { name: `Fat (${fatPct}%)`, g: fatG, cal: Math.round(fatCal) },
+        ].map(r => `<tr><td>${r.name}</td><td>${r.g} g</td><td>${r.cal} kcal</td></tr>`).join("");
+
+        if (resultTableBody) resultTableBody.innerHTML = rows;
+        if (resultBox) resultBox.classList.add("show");
+      });
+    }
+  </script>
+</Base>
