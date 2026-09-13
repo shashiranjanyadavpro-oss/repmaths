@@ -1,0 +1,292 @@
+---
+import Base from '../../../layouts/Base.astro';
+import RelatedTools from '../../../components/RelatedTools.astro';
+---
+<Base
+  title="Body Fat Calculator (US Navy Method) — Men & Women"
+  description="Free body fat percentage calculator using the US Navy tape-measure method. Enter neck, waist, and height (plus hip for women) for an instant estimate."
+>
+  <script type="application/ld+json" set:html={JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "Body Fat Calculator (US Navy Method)",
+    "applicationCategory": "HealthApplication",
+    "operatingSystem": "Any",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+    "description": "Free online calculator that estimates body fat percentage from neck, waist, hip, and height measurements using the US Navy circumference method."
+  })} />
+
+  <script type="application/ld+json" set:html={JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "How accurate is the Navy body fat calculator compared to DEXA?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Research comparing the Navy tape method to DEXA scans has found average differences of roughly 2-4 percentage points, with some studies observing a slight underestimate in men and overestimate in women. It's a convenient field estimate rather than a lab-grade measurement, but it's useful for tracking trends over time."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What is a healthy body fat percentage?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Using commonly cited fitness-industry categories: essential fat is roughly 2-5% for men and 10-13% for women. An athletic range is about 6-13% for men and 14-20% for women. A general fitness range is roughly 14-17% for men and 21-24% for women, with an acceptable range extending further. Healthy ranges vary by individual and by source."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Why is body fat percentage better than BMI?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "BMI only compares height to total weight and cannot distinguish muscle from fat. A muscular person can have a BMI in the 'overweight' range while having a low body fat percentage. Body fat percentage estimates actual composition, making it more informative for people with above-average muscle mass."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Where should I measure my waist, neck, and hips?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Measure the neck just below the larynx. For men, measure the waist at the navel. For women, measure the waist at the narrowest point and the hips at their widest point. Keep the tape level and snug without compressing the skin, and take a couple of measurements to average out small errors."
+        }
+      }
+    ]
+  })} />
+
+  <section class="hero">
+    <h1>Body Fat Calculator (US Navy Method)</h1>
+    <p>Estimate your body fat percentage from a few tape-measure readings.</p>
+  </section>
+
+  <section class="calc-card">
+    <div class="field">
+      <label>Unit</label>
+      <div class="unit-toggle">
+        <button type="button" id="unit-in" class="active" aria-pressed="true">inches</button>
+        <button type="button" id="unit-cm" aria-pressed="false">cm</button>
+      </div>
+    </div>
+    <div class="field">
+      <label>Sex</label>
+      <div class="unit-toggle">
+        <button type="button" id="sex-male" class="active" aria-pressed="true">Male</button>
+        <button type="button" id="sex-female" aria-pressed="false">Female</button>
+      </div>
+    </div>
+    <div class="field">
+      <label for="height">Height</label>
+      <input type="number" id="height" placeholder="e.g. 70" inputmode="decimal" min="1" />
+    </div>
+    <div class="field">
+      <label for="neck">Neck (below larynx)</label>
+      <input type="number" id="neck" placeholder="e.g. 15" inputmode="decimal" min="1" />
+    </div>
+    <div class="field">
+      <label for="waist" id="waist-label">Waist (at navel)</label>
+      <input type="number" id="waist" placeholder="e.g. 34" inputmode="decimal" min="1" />
+    </div>
+    <div id="hip-field" class="field" style="display:none;">
+      <label for="hip">Hip (at widest point)</label>
+      <input type="number" id="hip" placeholder="e.g. 38" inputmode="decimal" min="1" />
+    </div>
+    <button class="btn-primary" id="calc-btn">Calculate Body Fat %</button>
+
+    <div class="result-box" id="result-box">
+      <div class="big-number" id="result-bf">–</div>
+      <div class="label" id="result-label">Estimated Body Fat Percentage</div>
+      <div class="result-actions">
+        <a href="/tools/nutrition/tdee-calculator" class="btn-primary">Calculate TDEE</a>
+        <a href="/tools/nutrition/macro-calculator" class="btn-primary">Calculate Macros</a>
+      </div>
+    </div>
+  </section>
+
+  <article class="article-section">
+    <h2>How to Measure Accurately at Home</h2>
+    <ol>
+      <li>Use a soft measuring tape, not a metal one.</li>
+      <li>Measure your neck just below the larynx (Adam's apple).</li>
+      <li>Men: measure the waist at the navel. Women: measure at the narrowest point of the abdomen.</li>
+      <li>Women only: measure the hips at their widest point.</li>
+      <li>Keep the tape level and snug, without compressing the skin, and don't flex or hold your stomach in.</li>
+    </ol>
+  </article>
+
+  <article class="article-section">
+    <h2>The US Navy Body Fat Formula</h2>
+    <p>
+      This calculator uses the circumference-based formula developed by
+      Hodgdon &amp; Beckett (1984) for the U.S. Navy, using measurements in
+      inches:
+    </p>
+    <p>
+      <strong>Men:</strong> BF% = 86.010 × log₁₀(waist − neck) − 70.041 × log₁₀(height) + 36.76<br />
+      <strong>Women:</strong> BF% = 163.205 × log₁₀(waist + hip − neck) − 97.684 × log₁₀(height) − 78.387
+    </p>
+    <p>
+      Research comparing this method to DEXA scans has found average
+      differences of roughly 2-4 percentage points, so treat the result as
+      a useful estimate for tracking trends rather than a lab-precise
+      measurement.
+    </p>
+  </article>
+
+  <article class="article-section">
+    <h2>Body Fat Percentage Categories</h2>
+    <table class="result-table">
+      <thead>
+        <tr><th>Category</th><th>Men</th><th>Women</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Essential Fat</td><td>2-5%</td><td>10-13%</td></tr>
+        <tr><td>Athletes</td><td>6-13%</td><td>14-20%</td></tr>
+        <tr><td>Fitness</td><td>14-17%</td><td>21-24%</td></tr>
+        <tr><td>Acceptable</td><td>18-24%</td><td>25-31%</td></tr>
+        <tr><td>Above Average</td><td>25%+</td><td>32%+</td></tr>
+      </tbody>
+    </table>
+    <p style="font-size:0.82rem; color:var(--text-muted); margin-top:8px;">
+      These are commonly cited fitness-industry categories, not strict medical thresholds — individual healthy ranges vary.
+    </p>
+  </article>
+
+  <article class="article-section">
+    <h2>Body Fat Percentage vs. BMI</h2>
+    <p>
+      BMI only compares your height to your total weight and can't
+      distinguish muscle from fat. A muscular person can register as
+      "overweight" on the BMI scale while carrying a low body fat
+      percentage. Body fat percentage estimates actual composition,
+      making it more useful for athletes and lifters with above-average
+      muscle mass.
+    </p>
+  </article>
+
+  <article class="article-section">
+    <h2>Frequently Asked Questions</h2>
+    <div class="faq-item">
+      <h3>How accurate is the Navy method vs DEXA?</h3>
+      <p>Studies typically find differences of roughly 2-4 percentage points — a useful field estimate, not a lab-precise measurement.</p>
+    </div>
+    <div class="faq-item">
+      <h3>What is a healthy body fat percentage?</h3>
+      <p>Commonly cited fitness ranges are roughly 14-17% for men and 21-24% for women, though this varies by individual and source.</p>
+    </div>
+    <div class="faq-item">
+      <h3>Why is body fat % better than BMI?</h3>
+      <p>BMI can't distinguish muscle from fat; body fat percentage estimates actual composition directly.</p>
+    </div>
+    <div class="faq-item">
+      <h3>Where do I measure waist, neck, and hips?</h3>
+      <p>Neck below the larynx; waist at the navel (men) or narrowest point (women); hips at the widest point (women only).</p>
+    </div>
+  </article>
+
+  <p style="color:var(--text-muted); font-size:0.82rem; margin-top:24px;">
+    Note: This calculator provides a general estimate for healthy adults, not a medical diagnosis. Body composition assessment tools like DEXA or hydrostatic weighing are more precise if you need clinical accuracy.
+  </p>
+
+  <RelatedTools currentToolId="body-fat-calculator" />
+
+  <script>
+    let unit = "in";
+    let sex = "male";
+
+    const unitIn = document.getElementById("unit-in");
+    const unitCm = document.getElementById("unit-cm");
+    const sexMale = document.getElementById("sex-male");
+    const sexFemale = document.getElementById("sex-female");
+    const hipField = document.getElementById("hip-field");
+    const waistLabel = document.getElementById("waist-label");
+    const heightInput = document.getElementById("height") as HTMLInputElement | null;
+    const neckInput = document.getElementById("neck") as HTMLInputElement | null;
+    const waistInput = document.getElementById("waist") as HTMLInputElement | null;
+    const hipInput = document.getElementById("hip") as HTMLInputElement | null;
+    const calcBtn = document.getElementById("calc-btn");
+    const resultBf = document.getElementById("result-bf");
+    const resultBox = document.getElementById("result-box");
+
+    if (unitIn) unitIn.addEventListener("click", () => setUnit("in"));
+    if (unitCm) unitCm.addEventListener("click", () => setUnit("cm"));
+    if (sexMale) sexMale.addEventListener("click", () => setSex("male"));
+    if (sexFemale) sexFemale.addEventListener("click", () => setSex("female"));
+
+    function setUnit(newUnit: string) {
+      if (newUnit === unit) return;
+      const inputs = [heightInput, neckInput, waistInput, hipInput];
+      for (const input of inputs) {
+        if (input) {
+          const val = parseFloat(input.value);
+          if (val && !isNaN(val)) {
+            input.value = newUnit === "cm" ? (val * 2.54).toFixed(1) : (val / 2.54).toFixed(1);
+          }
+        }
+      }
+      unit = newUnit;
+      if (unitIn) { unitIn.classList.toggle("active", unit === "in"); unitIn.setAttribute("aria-pressed", String(unit === "in")); }
+      if (unitCm) { unitCm.classList.toggle("active", unit === "cm"); unitCm.setAttribute("aria-pressed", String(unit === "cm")); }
+    }
+
+    function setSex(s: string) {
+      sex = s;
+      if (sexMale) { sexMale.classList.toggle("active", s === "male"); sexMale.setAttribute("aria-pressed", String(s === "male")); }
+      if (sexFemale) { sexFemale.classList.toggle("active", s === "female"); sexFemale.setAttribute("aria-pressed", String(s === "female")); }
+      if (hipField) (hipField as HTMLElement).style.display = s === "female" ? "block" : "none";
+      if (waistLabel) waistLabel.textContent = s === "male" ? "Waist (at navel)" : "Waist (narrowest point)";
+    }
+
+    if (calcBtn) {
+      calcBtn.addEventListener("click", () => {
+        if (!heightInput || !neckInput || !waistInput) return;
+
+        const heightRaw = parseFloat(heightInput.value);
+        const neckRaw = parseFloat(neckInput.value);
+        const waistRaw = parseFloat(waistInput.value);
+        const hipRaw = sex === "female" ? parseFloat(hipInput?.value || "0") : 0;
+
+        if (!heightRaw || !neckRaw || !waistRaw || heightRaw <= 0 || neckRaw <= 0 || waistRaw <= 0) {
+          alert("Please enter valid measurements.");
+          return;
+        }
+        if (sex === "female" && (!hipRaw || hipRaw <= 0)) {
+          alert("Please enter a valid hip measurement.");
+          return;
+        }
+
+        const toInches = (v: number) => unit === "cm" ? v / 2.54 : v;
+        const heightIn = toInches(heightRaw);
+        const neckIn = toInches(neckRaw);
+        const waistIn = toInches(waistRaw);
+        const hipIn = toInches(hipRaw);
+
+        let bodyFat: number;
+        if (sex === "male") {
+          const diff = waistIn - neckIn;
+          if (diff <= 0) {
+            alert("Waist measurement must be greater than neck measurement.");
+            return;
+          }
+          bodyFat = 86.010 * Math.log10(diff) - 70.041 * Math.log10(heightIn) + 36.76;
+        } else {
+          const diff = waistIn + hipIn - neckIn;
+          if (diff <= 0) {
+            alert("Please check your measurements — the combined waist and hip must exceed the neck measurement.");
+            return;
+          }
+          bodyFat = 163.205 * Math.log10(diff) - 97.684 * Math.log10(heightIn) - 78.387;
+        }
+
+        if (!isFinite(bodyFat) || bodyFat < 0 || bodyFat > 75) {
+          alert("The measurements entered produced an unrealistic result. Please double-check your inputs.");
+          return;
+        }
+
+        const rounded = Math.round(bodyFat * 10) / 10;
+        if (resultBf) resultBf.textContent = `${rounded}%`;
+        if (resultBox) resultBox.classList.add("show");
+      });
+    }
+  </script>
+</Base>
