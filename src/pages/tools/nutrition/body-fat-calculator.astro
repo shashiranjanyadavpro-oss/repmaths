@@ -25,7 +25,7 @@ import RelatedTools from '../../../components/RelatedTools.astro';
         "name": "How accurate is the Navy body fat calculator compared to DEXA?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Research comparing the Navy tape method to DEXA scans has found average differences of roughly 2-4 percentage points, with some studies observing a slight underestimate in men and overestimate in women. It's a convenient field estimate rather than a lab-grade measurement, but it's useful for tracking trends over time."
+          "text": "A 2022 study of physically fit U.S. Marines found the method underestimated body fat by about 2.5-2.6 percentage points in men and overestimated it by about 1.3-2.3 percentage points in women, with individual variability of roughly 3.7-4.8 percentage points. It's a field estimate rather than a lab-grade measurement, but useful for tracking trends over time."
         }
       },
       {
@@ -126,10 +126,12 @@ import RelatedTools from '../../../components/RelatedTools.astro';
       <strong>Women:</strong> BF% = 163.205 × log₁₀(waist + hip − neck) − 97.684 × log₁₀(height) − 78.387
     </p>
     <p>
-      Research comparing this method to DEXA scans has found average
-      differences of roughly 2-4 percentage points, so treat the result as
-      a useful estimate for tracking trends rather than a lab-precise
-      measurement.
+      A 2022 study of physically fit U.S. Marines found that this method
+      underestimated body fat by about 2.5-2.6 percentage points in men
+      and overestimated it by about 1.3-2.3 percentage points in women,
+      with individual variability of roughly 3.7-4.8 percentage points
+      (Potter et al., 2022). Treat the result as a field estimate rather
+      than a research-grade measurement.
     </p>
   </article>
 
@@ -168,7 +170,7 @@ import RelatedTools from '../../../components/RelatedTools.astro';
     <h2>Frequently Asked Questions</h2>
     <div class="faq-item">
       <h3>How accurate is the Navy method vs DEXA?</h3>
-      <p>Studies typically find differences of roughly 2-4 percentage points — a useful field estimate, not a lab-precise measurement.</p>
+      <p>A 2022 study found the method underestimated body fat by about 2.5-2.6 percentage points in men and overestimated it by about 1.3-2.3 percentage points in women, with individual variability around 3.7-4.8 percentage points — a field estimate, not a lab-precise measurement.</p>
     </div>
     <div class="faq-item">
       <h3>What is a healthy body fat percentage?</h3>
@@ -235,6 +237,7 @@ import RelatedTools from '../../../components/RelatedTools.astro';
       if (sexFemale) { sexFemale.classList.toggle("active", s === "female"); sexFemale.setAttribute("aria-pressed", String(s === "female")); }
       if (hipField) (hipField as HTMLElement).style.display = s === "female" ? "block" : "none";
       if (waistLabel) waistLabel.textContent = s === "male" ? "Waist (at navel)" : "Waist (narrowest point)";
+      if (resultBox) resultBox.classList.remove("show");
     }
 
     if (calcBtn) {
