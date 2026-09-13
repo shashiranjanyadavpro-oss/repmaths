@@ -1,0 +1,278 @@
+---
+import Base from '../../../layouts/Base.astro';
+import RelatedTools from '../../../components/RelatedTools.astro';
+---
+<Base
+  title="Water Intake Calculator — How Much Water Should I Drink?"
+  description="Free water intake calculator based on body weight and activity level. Find your daily hydration estimate in liters and ounces."
+>
+  <script type="application/ld+json" set:html={JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "Water Intake Calculator",
+    "applicationCategory": "HealthApplication",
+    "operatingSystem": "Any",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+    "description": "Free online calculator that estimates daily water intake needs based on body weight and activity level."
+  })} />
+
+  <script type="application/ld+json" set:html={JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Is the '8 glasses of water a day' rule scientifically accurate?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "It's a popular but oversimplified guideline. Actual needs vary with body weight, activity level, climate, and overall health. A body-weight-based estimate, adjusted for activity, gives a more personalized starting point than a fixed number for everyone."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Does coffee, tea, or soda count toward daily water intake?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes. While caffeine has a mild diuretic effect, the water content in coffee, tea, and most other beverages still contributes to overall hydration. Plain water remains the simplest, calorie-free option, but you don't need to discount other fluids entirely."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Can you drink too much water?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes. Consuming very large amounts of water in a short period can dilute blood sodium levels, a dangerous condition called hyponatremia. Spacing water intake evenly throughout the day rather than drinking it all at once is safer, especially during prolonged exercise."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How much extra water should I drink when exercising?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Exercise fluid needs vary widely with sweat rate, duration, temperature, and humidity, so there's no single correct hourly amount. Measuring body-weight change before and after exercise can give a more individualized estimate than a fixed number."
+        }
+      }
+    ]
+  })} />
+
+  <section class="hero">
+    <h1>Water Intake Calculator</h1>
+    <p>Find your daily water estimate based on your body weight and activity level.</p>
+  </section>
+
+  <section class="calc-card">
+    <div class="field">
+      <label>Unit</label>
+      <div class="unit-toggle">
+        <button type="button" id="unit-lb" class="active" aria-pressed="true">lb</button>
+        <button type="button" id="unit-kg" aria-pressed="false">kg</button>
+      </div>
+    </div>
+    <div class="field">
+      <label for="weight">Body Weight</label>
+      <input type="number" id="weight" placeholder="e.g. 180" inputmode="decimal" min="1" />
+    </div>
+    <div class="field">
+      <label>Activity Level</label>
+      <div class="unit-toggle">
+        <button type="button" id="act-sedentary" class="active" aria-pressed="true">Sedentary</button>
+        <button type="button" id="act-light" aria-pressed="false">Light</button>
+        <button type="button" id="act-active" aria-pressed="false">Active</button>
+        <button type="button" id="act-very" aria-pressed="false">Very Active / Hot Climate</button>
+      </div>
+    </div>
+    <button class="btn-primary" id="calc-btn">Calculate Water Intake</button>
+
+    <div class="result-box" id="result-box">
+      <div class="big-number" id="result-water">–</div>
+      <div class="label" id="result-label">Daily Water Estimate</div>
+      <p class="result-range" id="result-range"></p>
+      <div class="result-actions">
+        <a href="/tools/nutrition/tdee-calculator" class="btn-primary">Calculate TDEE</a>
+        <a href="/tools/nutrition/protein-calculator" class="btn-primary">Calculate Protein</a>
+      </div>
+    </div>
+  </section>
+
+  <article class="article-section">
+    <h2>Beyond the "8 Glasses a Day" Myth</h2>
+    <p>
+      The "8x8" rule — eight 8-ounce glasses a day — is a popular
+      guideline, but it isn't personalized to your body size or activity
+      level. This calculator uses a body-weight-based estimate as a
+      practical starting point, then adjusts it for activity level. It is
+      not a clinical or official daily water requirement, just a
+      reasonable everyday guide.
+    </p>
+  </article>
+
+  <article class="article-section">
+    <h2>How This Calculator Works</h2>
+    <p>
+      This tool uses a RepMaths practical estimate starting at roughly
+      0.5 fl oz per pound of body weight (about 30 ml per kg) and
+      increases the estimate for higher activity or hot conditions, since
+      sweat loss increases fluid needs. For reference, the U.S. National
+      Academies of Sciences, Engineering, and Medicine set an Adequate
+      Intake of about 3.7 liters per day for men and 2.7 liters for women
+      from all beverages and food combined, and EFSA sets similar
+      reference values of 2.5 liters for men and 2.0 liters for women.
+      These reference values aren't directly equivalent to this
+      calculator's output, since they represent total water from food and
+      beverages together, while this tool estimates practical fluid
+      intake specifically.
+    </p>
+  </article>
+
+  <article class="article-section">
+    <h2>Does Coffee, Tea, or Soda Count?</h2>
+    <p>
+      Yes. Despite caffeine's mild diuretic effect, beverages like coffee
+      and tea still contribute meaningfully to total hydration. Roughly
+      20% of daily water intake typically comes from food as well. Plain
+      water is simply the easiest calorie-free option, not the only one
+      that counts.
+    </p>
+  </article>
+
+  <article class="article-section">
+    <h2>Water and Exercise: How Much Extra Do You Need?</h2>
+    <p>
+      Exercise fluid needs vary widely with sweat rate, duration,
+      temperature, and humidity, so there's no single hourly amount that
+      applies to everyone. Measuring your body weight before and after a
+      workout can give a more individualized estimate — each pound (or
+      roughly 0.45 kg) lost during exercise is a rough guide to fluid
+      lost through sweat. The "Very Active / Hot Climate" option above
+      accounts for higher general needs with a larger multiplier.
+    </p>
+  </article>
+
+  <article class="article-section">
+    <h2>Frequently Asked Questions</h2>
+    <div class="faq-item">
+      <h3>Is the "8 glasses a day" rule accurate?</h3>
+      <p>It's oversimplified — needs vary by body weight, activity, and climate. A weight-based estimate is more personalized.</p>
+    </div>
+    <div class="faq-item">
+      <h3>Does coffee or tea count toward water intake?</h3>
+      <p>Yes — the water content still contributes to hydration despite caffeine's mild diuretic effect.</p>
+    </div>
+    <div class="faq-item">
+      <h3>Can you drink too much water?</h3>
+      <p>Yes — very large amounts in a short time can cause hyponatremia (diluted blood sodium). Space intake throughout the day.</p>
+    </div>
+    <div class="faq-item">
+      <h3>How much extra water for exercise?</h3>
+      <p>It varies too much by sweat rate and conditions for one fixed number — weighing yourself before and after exercise gives a more personal estimate.</p>
+    </div>
+  </article>
+
+  <p style="color:var(--text-muted); font-size:0.82rem; margin-top:24px;">
+    Note: This calculator provides a general estimate for healthy adults, not individualized medical advice. Fluid needs can differ substantially with illness, medications, pregnancy, kidney or heart conditions, and extreme exercise or heat.
+  </p>
+
+  <RelatedTools currentToolId="water-intake-calculator" />
+
+  <script>
+    let unit = "lb";
+    let activity = "sedentary";
+
+    const activityFactors: Record<string, number> = {
+      sedentary: 30,
+      light: 33,
+      active: 38,
+      very: 43,
+    };
+
+    const activityLabels: Record<string, string> = {
+      sedentary: "Sedentary (~0.5 oz/lb · 30 ml/kg estimate)",
+      light: "Light Activity (~0.55 oz/lb · 33 ml/kg estimate)",
+      active: "Active (~0.63 oz/lb · 38 ml/kg estimate)",
+      very: "Very Active / Hot Climate (~0.72 oz/lb · 43 ml/kg estimate)",
+    };
+
+    const activityButtons: Record<string, HTMLElement | null> = {
+      sedentary: document.getElementById("act-sedentary"),
+      light: document.getElementById("act-light"),
+      active: document.getElementById("act-active"),
+      very: document.getElementById("act-very"),
+    };
+
+    const MIN_WEIGHT_KG = 25;
+    const MAX_WEIGHT_KG = 250;
+
+    const unitLb = document.getElementById("unit-lb");
+    const unitKg = document.getElementById("unit-kg");
+    const weightInput = document.getElementById("weight") as HTMLInputElement | null;
+    const calcBtn = document.getElementById("calc-btn");
+    const resultWater = document.getElementById("result-water");
+    const resultRange = document.getElementById("result-range");
+    const resultBox = document.getElementById("result-box");
+
+    if (unitLb) unitLb.addEventListener("click", () => setUnit("lb"));
+    if (unitKg) unitKg.addEventListener("click", () => setUnit("kg"));
+    for (const key in activityButtons) {
+      const btn = activityButtons[key];
+      if (btn) btn.addEventListener("click", () => setActivity(key));
+    }
+
+    function setUnit(newUnit: string) {
+      if (newUnit === unit) return;
+      if (weightInput) {
+        const currentVal = parseFloat(weightInput.value);
+        if (currentVal && !isNaN(currentVal)) {
+          weightInput.value = newUnit === "kg"
+            ? (currentVal / 2.20462).toFixed(1)
+            : (currentVal * 2.20462).toFixed(1);
+        }
+      }
+      unit = newUnit;
+      if (unitLb) { unitLb.classList.toggle("active", unit === "lb"); unitLb.setAttribute("aria-pressed", String(unit === "lb")); }
+      if (unitKg) { unitKg.classList.toggle("active", unit === "kg"); unitKg.setAttribute("aria-pressed", String(unit === "kg")); }
+    }
+
+    function setActivity(a: string) {
+      if (!activityFactors[a]) return;
+      activity = a;
+      for (const key in activityButtons) {
+        const btn = activityButtons[key];
+        if (btn) { btn.classList.toggle("active", key === a); btn.setAttribute("aria-pressed", String(key === a)); }
+      }
+    }
+
+    if (calcBtn) {
+      calcBtn.addEventListener("click", () => {
+        if (!weightInput) return;
+        const weightRaw = parseFloat(weightInput.value);
+
+        if (!weightRaw || isNaN(weightRaw) || weightRaw <= 0) {
+          alert("Please enter a valid body weight.");
+          return;
+        }
+
+        const weightKg = unit === "lb" ? weightRaw / 2.20462 : weightRaw;
+
+        if (weightKg < MIN_WEIGHT_KG || weightKg > MAX_WEIGHT_KG) {
+          alert("Please enter a body weight between 55 lb and 550 lb (25-250 kg).");
+          return;
+        }
+
+        const mlPerDay = weightKg * activityFactors[activity];
+
+        let displayText: string;
+        if (unit === "lb") {
+          const flOz = Math.round(mlPerDay / 29.5735);
+          displayText = `${flOz} fl oz`;
+        } else {
+          const liters = Math.round((mlPerDay / 1000) * 10) / 10;
+          displayText = `${liters} L`;
+        }
+
+        if (resultWater) resultWater.textContent = displayText;
+        if (resultRange) resultRange.textContent = activityLabels[activity];
+        if (resultBox) resultBox.classList.add("show");
+      });
+    }
+  </script>
+</Base>
