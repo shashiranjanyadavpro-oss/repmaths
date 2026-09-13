@@ -104,10 +104,10 @@ import RelatedTools from '../../../components/RelatedTools.astro';
       research-cited figure.
     </p>
     <ul>
-      <li><strong>Sedentary (RDA):</strong> 0.8 g/kg — the standard Recommended Dietary Allowance, representing a minimum to avoid deficiency rather than an optimal target for active people.</li>
-      <li><strong>General Activity:</strong> ~1.0-1.4 g/kg — a reasonable estimate for people who exercise moderately but aren't training specifically for muscle or performance goals.</li>
-      <li><strong>Muscle Gain / Maintenance:</strong> 1.4-2.0 g/kg — the ISSN-cited range for most exercising individuals building or maintaining muscle.</li>
-      <li><strong>Cutting (Fat Loss):</strong> 2.3-3.1 g/kg — a higher range from research on resistance-trained individuals during calorie deficits, aimed at preserving lean mass.</li>
+      <li><strong>Sedentary (RDA):</strong> ~0.36 g/lb (0.8 g/kg) — the standard Recommended Dietary Allowance, representing a minimum to avoid deficiency rather than an optimal target for active people.</li>
+      <li><strong>General Activity:</strong> ~0.45-0.64 g/lb (1.0-1.4 g/kg) — a reasonable estimate for people who exercise moderately but aren't training specifically for muscle or performance goals.</li>
+      <li><strong>Muscle Gain / Maintenance:</strong> ~0.64-0.91 g/lb (1.4-2.0 g/kg) — the ISSN-cited range for most exercising individuals building or maintaining muscle.</li>
+      <li><strong>Cutting (Fat Loss):</strong> ~1.04-1.41 g/lb (2.3-3.1 g/kg) — a higher range from research on resistance-trained individuals during calorie deficits, aimed at preserving lean mass.</li>
     </ul>
   </article>
 
@@ -180,10 +180,10 @@ import RelatedTools from '../../../components/RelatedTools.astro';
     };
 
     const goalLabels: Record<string, string> = {
-      sedentary: "Based on 0.8 g/kg (RDA)",
-      active: "Based on ~1.0-1.4 g/kg (general estimate)",
-      muscle: "Based on 1.4-2.0 g/kg (ISSN)",
-      cutting: "Based on 2.3-3.1 g/kg (research, cutting phase)",
+      sedentary: "Based on ~0.36 g/lb (0.8 g/kg) — RDA",
+      active: "Based on ~0.45-0.64 g/lb (1.0-1.4 g/kg) — general estimate",
+      muscle: "Based on ~0.64-0.91 g/lb (1.4-2.0 g/kg) — ISSN",
+      cutting: "Based on ~1.04-1.41 g/lb (2.3-3.1 g/kg) — research, cutting phase",
     };
 
     const MIN_WEIGHT_KG = 25;
@@ -263,7 +263,8 @@ import RelatedTools from '../../../components/RelatedTools.astro';
           resultProtein.textContent = lowG === highG ? `${lowG} g/day` : `${lowG}-${highG} g/day`;
         }
         if (resultLabel) resultLabel.textContent = "Daily Protein Target";
-        if (resultRange) resultRange.textContent = `${goalLabels[goal]} · Body weight: ${Math.round(weightKg)} kg`;
+        const displayWeight = unit === "lb" ? `${Math.round(weightRaw)} lb` : `${Math.round(weightKg)} kg`;
+        if (resultRange) resultRange.textContent = `${goalLabels[goal]} · Body weight: ${displayWeight}`;
         if (resultBox) resultBox.classList.add("show");
       });
     }
