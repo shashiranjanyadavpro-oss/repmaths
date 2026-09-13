@@ -151,5 +151,14 @@
     "icon": "H2O",
     "cluster": "nutrition",
     "related": ["tdee-calculator", "protein-calculator"]
+  },
+  {
+    "id": "body-fat-calculator",
+    "name": "Body Fat Calculator",
+    "url": "/tools/nutrition/body-fat-calculator",
+    "shortDesc": "Estimate your body fat percentage using the US Navy tape-measure method.",
+    "icon": "BF%",
+    "cluster": "nutrition",
+    "related": ["tdee-calculator", "macro-calculator"]
   }
 ]
