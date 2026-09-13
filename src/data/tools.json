@@ -142,5 +142,14 @@
     "icon": "PRO",
     "cluster": "nutrition",
     "related": ["tdee-calculator", "macro-calculator"]
+  },
+  {
+    "id": "water-intake-calculator",
+    "name": "Water Intake Calculator",
+    "url": "/tools/nutrition/water-intake-calculator",
+    "shortDesc": "Find your daily water target based on body weight and activity level.",
+    "icon": "H2O",
+    "cluster": "nutrition",
+    "related": ["tdee-calculator", "protein-calculator"]
   }
 ]
