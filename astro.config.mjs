@@ -4,4 +4,5 @@ import sitemap from '@astrojs/sitemap';
 export default defineConfig({
   output: 'static',
   site: 'https://repmaths.com',
+  integrations: [sitemap()],
 });
