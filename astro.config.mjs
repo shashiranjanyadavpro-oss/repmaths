@@ -5,4 +5,4 @@ export default defineConfig({
   output: 'static',
   site: 'https://repmaths.com',
   integrations: [sitemap()],
-});abcd
+});
