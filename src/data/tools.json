@@ -51,7 +51,7 @@
     "shortDesc": "Convert a known weight and reps to any target rep count.",
     "icon": "RM",
     "cluster": "strength",
-    "related": ["1rm-calculator", "1rm-percentage-calculator"]
+    "related": ["1rm-calculator", "1rm-percentage-calculator", "training-max-calculator"]
   },
   {
     "id": "1rm-percentage-calculator",
