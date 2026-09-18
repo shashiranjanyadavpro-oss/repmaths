@@ -42,7 +42,10 @@
     "shortDesc": "Estimate your strict press or military press max from weight and reps.",
     "icon": "OH",
     "cluster": "strength",
-    "related": ["1rm-calculator", "bench-press-1rm-calculator"]
+    "related": ["1rm-calculator",
+  "bench-press-1rm-calculator",
+  "rep-max-calculator",
+  "1rm-percentage-calculator"]
   },
   {
     "id": "rep-max-calculator",
