@@ -33,7 +33,7 @@
     "shortDesc": "Estimate your max deadlift from weight and reps.",
     "icon": "DL",
     "cluster": "strength",
-    "related": ["1rm-calculator", "squat-1rm-calculator", "bench-press-1rm-calculator"]
+    "related": ["1rm-calculator", "squat-1rm-calculator", "rep-max-calculator", "1rm-percentage-calculator", "bench-press-1rm-calculator"]
   },
   {
     "id": "overhead-press-1rm-calculator",
