@@ -13,7 +13,7 @@ import RelatedTools from '../../../components/RelatedTools.astro';
     "applicationCategory": "HealthApplication",
     "operatingSystem": "Any",
     "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
-    "description": "Free online squat calculator that estimates a lifter's true one-rep max (1RM) for lower body training from a submaximal weight to ensure safe programming."
+    "description": "Free online squat calculator that estimates a lifter's one-rep max (1RM) for lower body training from a submaximal weight to support strength programming."
   })} />
 
   <script type="application/ld+json" set:html={JSON.stringify({
@@ -25,7 +25,7 @@ import RelatedTools from '../../../components/RelatedTools.astro';
         "name": "How do I calculate my squat max safely?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Instead of testing a dangerous true 1RM, load a challenging weight you can lift for 3 to 6 reps. Enter that weight and your completed reps into a squat calculator. This gives you a highly accurate estimated max without risking a failed rep in the hole."
+          "text": "Instead of attempting a true 1RM, use a manageable weight you can lift for a controlled submaximal set and enter the weight and completed reps into a squat calculator. This provides an estimated max without requiring a true maximum attempt."
         }
       },
       {
@@ -33,7 +33,7 @@ import RelatedTools from '../../../components/RelatedTools.astro';
         "name": "Which formula is best for calculating a squat 1RM?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Epley is a commonly used formula for compound lower-body movements like the squat, particularly in the 1-10 rep range. Different formulas can still produce different estimates, so treat any result as an estimate rather than a guaranteed maximum."
+          "text": "Epley is a commonly used formula for compound lower-body movements such as the squat, particularly at lower rep counts. Different formulas can produce different estimates, so treat any result as an estimate rather than a guaranteed maximum."
         }
       },
       {
@@ -41,7 +41,7 @@ import RelatedTools from '../../../components/RelatedTools.astro';
         "name": "Do knee sleeves or a lifting belt affect my estimated squat max?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Yes, if you use a belt or sleeves during your submaximal test set, your estimated 1RM will reflect your equipped max. If you plan to train beltless in the future, you should perform your estimation set beltless as well."
+          "text": "They can affect performance during the set used for the estimate. If you use a belt or sleeves during the estimation set, the resulting estimate reflects performance under those same conditions."
         }
       },
       {
@@ -49,7 +49,7 @@ import RelatedTools from '../../../components/RelatedTools.astro';
         "name": "Does this formula work the same for men and women?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Yes, these are general-population formulas used for both men and women. Some research suggests minor accuracy differences at higher rep ranges by sex and training experience, but the formulas remain a reliable estimate for most lifters."
+          "text": "These general-population formulas can be used for both men and women. Individual accuracy can vary with rep range, training experience, technique, fatigue, and other factors."
         }
       }
     ]
@@ -57,7 +57,7 @@ import RelatedTools from '../../../components/RelatedTools.astro';
 
   <section class="hero">
     <h1>Squat Max Calculator</h1>
-    <p>Estimate your heavy back squat one-rep max safely without risking a failed lift in the hole.</p>
+    <p>Estimate your heavy back squat one-rep max from a submaximal set without needing to attempt a true maximum.</p>
   </section>
 
   <section class="calc-card">
@@ -68,6 +68,7 @@ import RelatedTools from '../../../components/RelatedTools.astro';
         <button type="button" id="unit-kg" aria-pressed="false">kg</button>
       </div>
     </div>
+
     <div class="field">
       <label>Formula</label>
       <div class="unit-toggle">
@@ -77,19 +78,37 @@ import RelatedTools from '../../../components/RelatedTools.astro';
         <button type="button" id="formula-lombardi" aria-pressed="false">Lombardi</button>
       </div>
     </div>
+
     <div class="field">
       <label for="weight">Weight Lifted</label>
-      <input type="number" id="weight" placeholder="e.g. 315" inputmode="decimal" />
+      <input
+        type="number"
+        id="weight"
+        placeholder="e.g. 315"
+        inputmode="decimal"
+        min="0"
+        step="any"
+      />
     </div>
+
     <div class="field">
-      <label for="reps">Reps Completed (max 36)</label>
-      <input type="number" id="reps" placeholder="e.g. 5" inputmode="numeric" step="1" max="36" />
+      <label for="reps">Reps Completed</label>
+      <input
+        type="number"
+        id="reps"
+        placeholder="e.g. 5"
+        inputmode="numeric"
+        step="1"
+        min="1"
+      />
     </div>
+
     <button class="btn-primary" id="calc-btn">Calculate Squat Max</button>
 
     <div class="result-box" id="result-box">
       <div class="big-number" id="result-1rm">–</div>
       <div class="label" id="result-label">Estimated Squat Max</div>
+
       <table class="result-table" id="result-table">
         <thead>
           <tr><th>% of 1RM</th><th>Weight</th></tr>
@@ -101,108 +120,182 @@ import RelatedTools from '../../../components/RelatedTools.astro';
 
   <article class="article-section">
     <h2>Why Estimate Your Squat Max?</h2>
+
     <p>
-      The barbell back squat is the undisputed king of lower-body exercises,
-      demanding massive activation from your quads, glutes, hamstrings, and
-      core. However, testing a true 100% one-rep max on the squat is
-      incredibly taxing on your central nervous system and carries a high
-      risk of injury if you get stuck at the bottom without safety pins or
-      spotters.
+      The barbell back squat is a common lower-body strength exercise,
+      involving the quads, glutes, hamstrings, and trunk muscles. Testing
+      a true 100% one-rep max requires appropriate technique, setup, and
+      safety precautions. A missed heavy rep can create a meaningful
+      safety concern, particularly without suitable safety equipment or
+      experienced assistance.
     </p>
+
     <p>
-      By using a squat max calculator, you can push a moderately heavy
-      weight for a safer 3-rep to 8-rep set. This allows you to find your
-      absolute strength ceiling to program your upcoming leg days
-      effectively, all while keeping your spine safe and your recovery on
-      track.
+      By using a squat max calculator, you can estimate your 1RM from a
+      submaximal set instead. This provides a useful reference for
+      programming upcoming leg training without requiring a true maximum
+      attempt.
+    </p>
+
+    <p>
+      For broader strength planning, you can compare this estimate with the
+      <a href="/tools/strength/1rm-calculator">1RM Calculator</a>,
+      compare another major compound lift with the
+      <a href="/tools/strength/bench-press-1rm-calculator">Bench Press Max Calculator</a>,
+      or use the
+      <a href="/tools/strength/deadlift-1rm-calculator">Deadlift Max Calculator</a>
+      for another lower-body strength estimate.
     </p>
   </article>
 
   <article class="article-section">
     <h2>How to Use This Calculator</h2>
+
     <p>
       Enter the heaviest weight you squatted for a clean set at consistent
       depth, along with the number of reps completed. Choose a formula and
-      unit, then calculate. For the safest and most accurate estimate, use
-      a set of 3 to 8 reps rather than testing a true single-rep max.
+      unit, then calculate. For a more consistent estimate, use a lower-rep
+      set rather than a very high-rep set.
+    </p>
+
+    <p>
+      Keep your technique, depth, equipment, and general lifting conditions
+      reasonably consistent when comparing estimates over time. Fatigue and
+      day-to-day performance can affect the number of reps you complete at
+      a given load, so an estimated 1RM should be treated as a planning
+      reference rather than a guaranteed maximum.
     </p>
   </article>
 
   <article class="article-section">
     <h2>Squat Percentage Chart &amp; Leg Training Zones</h2>
+
     <p>
-      Once you have your estimated squat 1RM, applying the correct
-      percentages ensures you hit your specific lower-body goals without
-      overtraining:
+      Once you have your estimated squat 1RM, applying percentages can help
+      organize training loads around different goals. The relationship
+      between percentage of 1RM and achievable reps varies between lifters,
+      exercises, and training days, so these ranges are useful as planning
+      guides rather than fixed rules.
     </p>
+
     <ul>
-      <li><strong>90%–100% (1–3 reps):</strong> <em>Peaking &amp; power.</em> Essential for powerlifters preparing for a meet. Builds maximal neural adaptation. Keep volume strictly low to protect your lower back.</li>
-      <li><strong>80%–85% (4–6 reps):</strong> <em>Strength &amp; density.</em> The golden zone for building thick, dense legs and a stronger core — where most strength programs (like 5x5) operate.</li>
-      <li><strong>70%–75% (8–12 reps):</strong> <em>Hypertrophy.</em> Ideal for maximizing quad and glute growth without completely burning out your CNS.</li>
-      <li><strong>60%–65% (12–20 reps):</strong> <em>Endurance &amp; "widowmakers".</em> Used for brutal high-rep squat sets to build mental toughness, conditioning, and muscular endurance.</li>
+      <li>
+        <strong>90%–100% (1–3 reps):</strong>
+        <em>Peaking &amp; power.</em>
+        Often used for heavier strength work or preparation for a strength
+        test. This zone is demanding, so technique, setup, recovery, and
+        appropriate safety measures matter.
+      </li>
+
+      <li>
+        <strong>80%–85% (4–6 reps):</strong>
+        <em>Strength &amp; density.</em>
+        A commonly used heavier loading zone for strength-focused training.
+      </li>
+
+      <li>
+        <strong>70%–75% (8–12 reps):</strong>
+        <em>Hypertrophy.</em>
+        Frequently used for moderate-load resistance training and
+        accumulating training volume.
+      </li>
+
+      <li>
+        <strong>60%–65% (12–20 reps):</strong>
+        <em>Endurance &amp; high-rep work.</em>
+        Can be used for lighter, higher-repetition squat training when
+        appropriate for the program and the lifter's technique and recovery.
+      </li>
     </ul>
   </article>
 
   <article class="article-section">
     <h2>Squat Math: How the Formulas Differ</h2>
+
     <p>
-      Lower body muscles generally have better endurance and fatigue
-      differently than upper body muscles. Here is how each formula handles
-      squat math:
+      Lower-body exercises can produce different rep performance from
+      upper-body movements, and individual fatigue resistance also varies.
+      Here is how each formula estimates your squat max:
     </p>
 
     <h3>1. Epley Formula</h3>
+
     <p>
       <code>1RM = Weight × (1 + Reps / 30)</code><br />
-      The gold standard for the squat. Because legs can often grind out
-      more reps at higher percentages compared to arms, Epley's linear
-      curve provides highly accurate squat max estimates.
-      <strong>Best for:</strong> squat sets in the 1–10 rep range.
+      A widely used 1RM prediction equation that models the relationship
+      between weight and reps in a simple linear form.
+      <strong>Best for:</strong> squat sets in the lower-rep range.
     </p>
 
     <h3>2. Brzycki Formula</h3>
+
     <p>
       <code>1RM = Weight × 36 / (37 − Reps)</code><br />
-      Slightly more conservative than Epley. If you have notoriously
-      average muscular endurance but explosive raw power, Brzycki might
-      give a safer working max. <strong>Best for:</strong> heavy low-rep
-      sets (1–5 reps).
+      A commonly used formula that can produce a somewhat more conservative
+      estimate as reps increase. It is mathematically defined for integer
+      rep counts from 1 through 36.
+      <strong>Best for:</strong> heavy low-rep sets.
     </p>
 
     <h3>3. Lander Formula</h3>
+
     <p>
       <code>1RM = (100 × Weight) / (101.3 − 2.67123 × Reps)</code><br />
-      Provides a highly stable average. <strong>Best for:</strong>
-      moderate rep ranges (8–12 reps) when you want to estimate a heavy
-      single for your next strength block.
+      Another commonly used 1RM prediction equation. It is mathematically
+      defined for integer rep counts from 1 through 37; prediction
+      reliability can vary as rep count increases.
+      <strong>Best for:</strong> comparing estimates from moderate-rep sets.
     </p>
 
     <h3>4. Lombardi Formula</h3>
+
     <p>
       <code>1RM = Weight × Reps^0.10</code><br />
-      <strong>Best for:</strong> lifters who perform high-rep squat sets
-      (10–20 reps) — the most realistic model after a grueling high-rep
-      set.
+      A non-linear model without the same mathematical denominator limit as
+      Brzycki or Lander. Like other prediction equations, its estimate may
+      become less representative of a true 1RM as rep count increases.
+      <strong>Best for:</strong> comparing estimates from higher-rep sets.
     </p>
   </article>
 
   <article class="article-section">
     <h2>Frequently Asked Questions</h2>
+
     <div class="faq-item">
       <h3>How do I calculate my squat max safely?</h3>
-      <p>Load a weight you can lift for 3 to 6 reps and enter it here — a highly accurate estimate without risking a failed rep at the bottom.</p>
+      <p>
+        Use a manageable submaximal set and enter the weight and completed
+        reps here to estimate your 1RM rather than attempting a true maximum.
+        Appropriate technique and safety equipment are still important when
+        squatting heavy loads.
+      </p>
     </div>
+
     <div class="faq-item">
       <h3>Which formula is best for a squat 1RM?</h3>
-      <p>Epley is commonly used for the squat, though results are still an estimate rather than a guaranteed number.</p>
+      <p>
+        Epley is commonly used for the squat, though different formulas can
+        produce different estimates. Treat the calculated value as an
+        estimate rather than a guaranteed maximum.
+      </p>
     </div>
+
     <div class="faq-item">
       <h3>Do knee sleeves or a lifting belt affect my estimated max?</h3>
-      <p>Yes — equipment increases your "equipped" max. If you train beltless, calculate your estimate beltless too.</p>
+      <p>
+        They can affect performance during the set used for the estimate.
+        For more consistent comparisons, use similar equipment and lifting
+        conditions when repeating your estimate.
+      </p>
     </div>
+
     <div class="faq-item">
       <h3>Does this formula work the same for men and women?</h3>
-      <p>Yes, these are general-population formulas used for both men and women, though minor accuracy differences can appear at higher rep ranges.</p>
+      <p>
+        These general-population formulas can be used for both men and women,
+        though individual accuracy can vary with rep range, training
+        experience, technique, fatigue, and other factors.
+      </p>
     </div>
   </article>
 
@@ -214,56 +307,126 @@ import RelatedTools from '../../../components/RelatedTools.astro';
 
     const unitLb = document.getElementById("unit-lb");
     const unitKg = document.getElementById("unit-kg");
+
     const formEpley = document.getElementById("formula-epley");
     const formBrzycki = document.getElementById("formula-brzycki");
     const formLander = document.getElementById("formula-lander");
     const formLombardi = document.getElementById("formula-lombardi");
-    const weightInput = document.getElementById("weight") as HTMLInputElement | null;
-    const repsInput = document.getElementById("reps") as HTMLInputElement | null;
+
+    const weightInput =
+      document.getElementById("weight") as HTMLInputElement | null;
+
+    const repsInput =
+      document.getElementById("reps") as HTMLInputElement | null;
+
     const calcBtn = document.getElementById("calc-btn");
     const result1rm = document.getElementById("result-1rm");
     const resultLabel = document.getElementById("result-label");
     const resultTableBody = document.getElementById("result-table-body");
     const resultBox = document.getElementById("result-box");
 
-    if (unitLb) unitLb.addEventListener("click", () => setUnit("lb"));
-    if (unitKg) unitKg.addEventListener("click", () => setUnit("kg"));
-    if (formEpley) formEpley.addEventListener("click", () => setFormula("epley"));
-    if (formBrzycki) formBrzycki.addEventListener("click", () => setFormula("brzycki"));
-    if (formLander) formLander.addEventListener("click", () => setFormula("lander"));
-    if (formLombardi) formLombardi.addEventListener("click", () => setFormula("lombardi"));
+    if (unitLb) {
+      unitLb.addEventListener("click", () => setUnit("lb"));
+    }
 
-    if (repsInput) {
-      repsInput.addEventListener("input", (e) => {
-        const target = e.target as HTMLInputElement;
-        if (parseInt(target.value) >= 37) {
-          target.value = "36";
-        }
-      });
+    if (unitKg) {
+      unitKg.addEventListener("click", () => setUnit("kg"));
+    }
+
+    if (formEpley) {
+      formEpley.addEventListener("click", () => setFormula("epley"));
+    }
+
+    if (formBrzycki) {
+      formBrzycki.addEventListener("click", () => setFormula("brzycki"));
+    }
+
+    if (formLander) {
+      formLander.addEventListener("click", () => setFormula("lander"));
+    }
+
+    if (formLombardi) {
+      formLombardi.addEventListener("click", () => setFormula("lombardi"));
     }
 
     function setUnit(newUnit: string) {
+      if (newUnit !== "lb" && newUnit !== "kg") return;
       if (newUnit === unit) return;
+
       if (weightInput) {
-        const currentVal = parseFloat(weightInput.value);
-        if (currentVal) {
-          weightInput.value = newUnit === "kg"
-            ? (currentVal / 2.20462).toFixed(1)
-            : (currentVal * 2.20462).toFixed(1);
+        const currentVal = Number(weightInput.value);
+
+        if (Number.isFinite(currentVal) && currentVal > 0) {
+          weightInput.value =
+            newUnit === "kg"
+              ? (currentVal / 2.20462).toFixed(1)
+              : (currentVal * 2.20462).toFixed(1);
         }
       }
+
       unit = newUnit;
-      if (unitLb) { unitLb.classList.toggle("active", unit === "lb"); unitLb.setAttribute("aria-pressed", String(unit === "lb")); }
-      if (unitKg) { unitKg.classList.toggle("active", unit === "kg"); unitKg.setAttribute("aria-pressed", String(unit === "kg")); }
+
+      if (unitLb) {
+        unitLb.classList.toggle("active", unit === "lb");
+        unitLb.setAttribute(
+          "aria-pressed",
+          String(unit === "lb")
+        );
+      }
+
+      if (unitKg) {
+        unitKg.classList.toggle("active", unit === "kg");
+        unitKg.setAttribute(
+          "aria-pressed",
+          String(unit === "kg")
+        );
+      }
     }
 
     function setFormula(f: string) {
+      const validFormulas = [
+        "epley",
+        "brzycki",
+        "lander",
+        "lombardi"
+      ];
+
+      if (!validFormulas.includes(f)) return;
+
       formula = f;
-      const map: Record<string, HTMLElement | null> = { epley: formEpley, brzycki: formBrzycki, lander: formLander, lombardi: formLombardi };
+
+      const map: Record<string, HTMLElement | null> = {
+        epley: formEpley,
+        brzycki: formBrzycki,
+        lander: formLander,
+        lombardi: formLombardi
+      };
+
       for (const key in map) {
         const el = map[key];
-        if (el) { el.classList.toggle("active", f === key); el.setAttribute("aria-pressed", String(f === key)); }
+
+        if (el) {
+          el.classList.toggle("active", f === key);
+          el.setAttribute(
+            "aria-pressed",
+            String(f === key)
+          );
+        }
       }
+    }
+
+    function formulaSupportsReps(reps: number): boolean {
+      if (!Number.isInteger(reps) || reps < 1) return false;
+
+      if (formula === "brzycki") {
+        return 37 - reps > 0;
+      }
+
+      if (formula === "lander") {
+        return 101.3 - 2.67123 * reps > 0;
+      }
+
+      return true;
     }
 
     function formulaLabel(f: string) {
@@ -273,24 +436,63 @@ import RelatedTools from '../../../components/RelatedTools.astro';
       return "Lombardi";
     }
 
+    function showError(message: string) {
+      if (resultBox) {
+        resultBox.classList.add("show");
+      }
+
+      if (result1rm) {
+        result1rm.textContent = "—";
+      }
+
+      if (resultLabel) {
+        resultLabel.textContent = message;
+      }
+
+      if (resultTableBody) {
+        resultTableBody.innerHTML = "";
+      }
+    }
+
     if (calcBtn) {
       calcBtn.addEventListener("click", () => {
         if (!weightInput || !repsInput) return;
 
-        const weight = parseFloat(weightInput.value);
-        let reps = parseInt(repsInput.value, 10);
+        const weight = Number(weightInput.value);
+        const reps = Number(repsInput.value);
 
-        if (!weight || !reps || weight <= 0 || reps <= 0) {
-          alert("Please enter a valid weight and rep count.");
+        if (
+          !Number.isFinite(weight) ||
+          weight <= 0 ||
+          !Number.isInteger(reps) ||
+          reps < 1
+        ) {
+          showError(
+            "Please enter a valid weight and whole-number rep count."
+          );
           return;
         }
 
-        if (reps >= 37) {
-          reps = 36;
-          repsInput.value = "36";
+        if (!formulaSupportsReps(reps)) {
+          if (formula === "brzycki") {
+            showError(
+              "The Brzycki formula is only defined for 1–36 reps. Try Epley or Lombardi for this rep count."
+            );
+          } else if (formula === "lander") {
+            showError(
+              "The Lander formula is only defined for 1–37 reps. Try Epley or Lombardi for this rep count."
+            );
+          } else {
+            showError(
+              "Please enter a valid rep count for the selected formula."
+            );
+          }
+
+          return;
         }
 
         let oneRM = 0;
+
         if (reps === 1) {
           oneRM = weight;
         } else if (formula === "epley") {
@@ -298,23 +500,78 @@ import RelatedTools from '../../../components/RelatedTools.astro';
         } else if (formula === "brzycki") {
           oneRM = weight * 36 / (37 - reps);
         } else if (formula === "lander") {
-          oneRM = (100 * weight) / (101.3 - 2.67123 * reps);
+          oneRM =
+            (100 * weight) /
+            (101.3 - 2.67123 * reps);
         } else if (formula === "lombardi") {
-          oneRM = weight * Math.pow(reps, 0.10);
+          oneRM =
+            weight * Math.pow(reps, 0.10);
         }
 
-        const rounded = Math.round(oneRM * 10) / 10;
-        if (result1rm) result1rm.textContent = `${rounded} ${unit}`;
-        if (resultLabel) resultLabel.textContent = `Estimated Squat Max (${formulaLabel(formula)} formula)`;
+        if (!Number.isFinite(oneRM) || oneRM <= 0) {
+          showError(
+            "Unable to calculate a valid estimate from these inputs."
+          );
+          return;
+        }
 
-        const percentages = [95, 90, 85, 80, 75, 70, 65, 60];
-        const rows = percentages.map(p => {
-          const val = Math.round(rounded * (p / 100) * 10) / 10;
-          return `<tr><td>${p}%</td><td>${val} ${unit}</td></tr>`;
-        }).join("");
+        const rounded =
+          Math.round(oneRM * 10) / 10;
 
-        if (resultTableBody) resultTableBody.innerHTML = rows;
-        if (resultBox) resultBox.classList.add("show");
+        if (
+          !Number.isFinite(rounded) ||
+          rounded <= 0
+        ) {
+          showError(
+            "Unable to calculate a valid estimate from these inputs."
+          );
+          return;
+        }
+
+        if (result1rm) {
+          result1rm.textContent =
+            `${rounded} ${unit}`;
+        }
+
+        if (resultLabel) {
+          resultLabel.textContent =
+            `Estimated Squat Max (${formulaLabel(formula)} formula)`;
+        }
+
+        const percentages = [
+          95,
+          90,
+          85,
+          80,
+          75,
+          70,
+          65,
+          60
+        ];
+
+        const rows = percentages
+          .map((p) => {
+            const val =
+              Math.round(
+                rounded * (p / 100) * 10
+              ) / 10;
+
+            return `
+              <tr>
+                <td>${p}%</td>
+                <td>${val} ${unit}</td>
+              </tr>
+            `;
+          })
+          .join("");
+
+        if (resultTableBody) {
+          resultTableBody.innerHTML = rows;
+        }
+
+        if (resultBox) {
+          resultBox.classList.add("show");
+        }
       });
     }
   </script>
