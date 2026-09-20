@@ -25,7 +25,7 @@ import RelatedTools from '../../../components/RelatedTools.astro';
         "name": "What is a Training Max (TM) in the 5/3/1 program?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "The Training Max is the foundation of the 5/3/1 program, calculated as 90% of your true one-rep max. Jim Wendler designed the program around a submaximal TM so you can progress slowly and safely without burning out your central nervous system or stalling on your lifts."
+          "text": "The Training Max is the foundation of the 5/3/1 program, commonly set at 90% of your true one-rep max. Using a submaximal TM lets you progress gradually without every session feeling maximal, which many lifters find easier to sustain over time."
         }
       },
       {
@@ -33,7 +33,7 @@ import RelatedTools from '../../../components/RelatedTools.astro';
         "name": "Do I really have to do the deload week in 5/3/1?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Yes. Jim Wendler is explicit that the week 4 deload is not optional. While the weights (40-60% of your TM) feel very light, this week lets accumulated fatigue dissipate so your joints and nervous system recover before the next cycle."
+          "text": "The week 4 deload is widely recommended and is a core part of the standard 5/3/1 structure. While the weights (40-60% of your TM) feel light, this week is intended to let accumulated fatigue dissipate before your next cycle, and skipping it regularly may affect longer-term progress."
         }
       },
       {
@@ -41,7 +41,7 @@ import RelatedTools from '../../../components/RelatedTools.astro';
         "name": "What does AMRAP mean in Wendler's 5/3/1?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "AMRAP stands for 'as many reps as possible.' In weeks 1, 2, and 3, the final working set of your main lift is an AMRAP set, marked with a plus sign like 5+, 3+, or 1+. Push this set for as many clean reps as possible, stopping 1-2 reps shy of technical failure."
+          "text": "AMRAP stands for 'as many reps as possible.' In weeks 1, 2, and 3, the final working set of your main lift is an AMRAP set, marked with a plus sign like 5+, 3+, or 1+. It's generally treated as a rep-record and feedback tool rather than a maximal test — most guidance suggests stopping short of technical failure rather than grinding out the absolute last rep."
         }
       },
       {
@@ -49,7 +49,7 @@ import RelatedTools from '../../../components/RelatedTools.astro';
         "name": "What is the Boring But Big (BBB) assistance template?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Boring But Big is the most popular assistance template for 5/3/1. After your main heavy sets, you perform 5 sets of 10 reps of the same lift at roughly 50% to 60% of your Training Max. It's effective for building muscle mass and work capacity."
+          "text": "Boring But Big is a well-known assistance template for 5/3/1. After your main heavy sets, you perform 5 sets of 10 reps of the same lift, commonly in a 50% to 60% of Training Max range depending on the variation and your experience level. It's often used to add supplemental training volume alongside the main lifts."
         }
       },
       {
@@ -57,7 +57,7 @@ import RelatedTools from '../../../components/RelatedTools.astro';
         "name": "How and when should I increase my 5/3/1 Training Max?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Increase your Training Max after successfully completing a full 4-week cycle. Add 5 lb (2.5 kg) to upper body training maxes (bench press, overhead press) and 10 lb (5 kg) to lower body training maxes (squat, deadlift). Don't increase it by more than this, even if the weights felt easy."
+          "text": "A common approach is to increase your Training Max after completing a full 4-week cycle — typically by 5 lb (2.5 kg) for upper body lifts (bench press, overhead press) and 10 lb (5 kg) for lower body lifts (squat, deadlift). Smaller, steady increases are generally favored over larger jumps, even if a cycle felt easy."
         }
       }
     ]
@@ -85,7 +85,7 @@ import RelatedTools from '../../../components/RelatedTools.astro';
     </div>
     <div class="field">
       <label for="input-weight" id="input-label">Training Max</label>
-      <input type="number" id="input-weight" placeholder="e.g. 280" inputmode="decimal" />
+      <input type="number" id="input-weight" placeholder="e.g. 280" inputmode="decimal" min="0" step="any" />
     </div>
     <button class="btn-primary" id="calc-btn">Generate 5/3/1 Cycle</button>
 
@@ -133,9 +133,12 @@ import RelatedTools from '../../../components/RelatedTools.astro';
     <p>
       If you already know your Training Max, enter it directly. If you only
       have your 1RM, switch to "1RM (auto 90%)" mode and the calculator will
-      apply the standard 90% conversion automatically. Generate the cycle to
-      see all four weeks of main work plus a Boring But Big assistance
-      table, all rounded to the nearest 5 lb or 2.5 kg.
+      apply the standard 90% conversion automatically. If you need to
+      estimate your 1RM first, use our
+      <a href="/tools/strength/1rm-calculator">1RM Calculator</a>
+      before converting it to a Training Max. Generate the cycle to see all
+      four weeks of main work plus a Boring But Big assistance table, all
+      rounded to the nearest 5 lb or 2.5 kg.
     </p>
   </article>
 
@@ -148,21 +151,28 @@ import RelatedTools from '../../../components/RelatedTools.astro';
       <li><strong>Week 4 — Deload (5/5/5):</strong> 40%, 50%, 60% of Training Max.</li>
     </ul>
     <p>
-      The last set of each main week is an AMRAP set (marked with a "+")
-      — push it for as many clean reps as possible, stopping 1-2 reps shy
-      of failure. The deload week is not optional; it lets fatigue
-      dissipate before your next cycle.
+      The last set of each main week is an AMRAP set (marked with a "+").
+      Treat it as a controlled rep-record set rather than a true 1RM test:
+      perform quality reps and avoid taking the set to technical failure.
+      The deload week is widely recommended as part of the standard
+      structure — it's intended to let accumulated fatigue dissipate before
+      your next cycle.
     </p>
   </article>
 
   <article class="article-section">
     <h2>Boring But Big (BBB) Assistance</h2>
     <p>
-      Boring But Big is the most common assistance template for 5/3/1:
-      after your main lift, perform 5 sets of 10 reps at roughly 50-60% of
-      your Training Max. This calculator uses 50% by default — a
-      straightforward, effective option for building work capacity and
-      muscle mass alongside your strength work.
+      Boring But Big (BBB) is a well-known assistance template for 5/3/1:
+      after your main lift, perform 5 sets of 10 reps. The exact percentage
+      can vary by BBB variation and training experience. This calculator
+      uses 50% of your Training Max as a conservative default.
+    </p>
+    <p>
+      This adds substantial supplemental volume for lifters using BBB
+      alongside their main 5/3/1 work. Start with a load that allows you
+      to complete the prescribed sets with controlled technique and
+      recover for your next session.
     </p>
   </article>
 
@@ -170,23 +180,23 @@ import RelatedTools from '../../../components/RelatedTools.astro';
     <h2>Frequently Asked Questions</h2>
     <div class="faq-item">
       <h3>What is a Training Max in the 5/3/1 program?</h3>
-      <p>It's 90% of your true 1RM — the submaximal number every percentage in the program is calculated from.</p>
+      <p>Commonly set at 90% of your true 1RM — the submaximal number every percentage in the program is calculated from.</p>
     </div>
     <div class="faq-item">
       <h3>Do I really have to do the deload week?</h3>
-      <p>Yes — Wendler is explicit that it's mandatory. It lets fatigue dissipate before the next cycle.</p>
+      <p>It's widely recommended and part of the standard structure — it lets fatigue dissipate before the next cycle.</p>
     </div>
     <div class="faq-item">
       <h3>What does AMRAP mean?</h3>
-      <p>"As many reps as possible" — the final set of weeks 1-3, pushed to 1-2 reps shy of failure.</p>
+      <p>"As many reps as possible" — the final set of weeks 1-3, generally treated as a rep-record set rather than a true max effort.</p>
     </div>
     <div class="faq-item">
       <h3>What is Boring But Big (BBB)?</h3>
-      <p>5 sets of 10 reps at 50-60% of your Training Max, done after your main lift for size and work capacity.</p>
+      <p>5 sets of 10 reps, commonly 50-60% of your Training Max depending on the variation, done after your main lift for added volume.</p>
     </div>
     <div class="faq-item">
       <h3>How and when should I increase my Training Max?</h3>
-      <p>After each full 4-week cycle: +5 lb (2.5 kg) upper body, +10 lb (5 kg) lower body.</p>
+      <p>A common approach: after each full 4-week cycle, +5 lb (2.5 kg) upper body, +10 lb (5 kg) lower body.</p>
     </div>
   </article>
 
@@ -213,37 +223,49 @@ import RelatedTools from '../../../components/RelatedTools.astro';
     if (mode1RM) mode1RM.addEventListener("click", () => setMode("1rm"));
 
     function setUnit(newUnit: string) {
+      if (newUnit !== "lb" && newUnit !== "kg") return;
       if (newUnit === unit) return;
+
       if (inputWeight) {
-        const currentVal = parseFloat(inputWeight.value);
-        if (currentVal) {
-          inputWeight.value = newUnit === "kg"
-            ? (currentVal / 2.20462).toFixed(1)
-            : (currentVal * 2.20462).toFixed(1);
+        const currentVal = Number(inputWeight.value);
+        if (Number.isFinite(currentVal) && currentVal > 0) {
+          const converted = newUnit === "kg"
+            ? currentVal / 2.20462
+            : currentVal * 2.20462;
+          inputWeight.value = converted.toFixed(1);
         }
       }
+
       unit = newUnit;
       if (unitLb) { unitLb.classList.toggle("active", unit === "lb"); unitLb.setAttribute("aria-pressed", String(unit === "lb")); }
       if (unitKg) { unitKg.classList.toggle("active", unit === "kg"); unitKg.setAttribute("aria-pressed", String(unit === "kg")); }
     }
 
     function setMode(newMode: string) {
+      if (newMode !== "tm" && newMode !== "1rm") return;
       mode = newMode;
+
       if (modeTM) { modeTM.classList.toggle("active", mode === "tm"); modeTM.setAttribute("aria-pressed", String(mode === "tm")); }
       if (mode1RM) { mode1RM.classList.toggle("active", mode === "1rm"); mode1RM.setAttribute("aria-pressed", String(mode === "1rm")); }
       if (inputLabel) inputLabel.textContent = mode === "tm" ? "Training Max" : "1RM";
+      if (inputWeight) inputWeight.placeholder = mode === "tm" ? "e.g. 280" : "e.g. 310";
     }
 
     function roundToNearest(value: number, step: number): number {
       return Math.round(value / step) * step;
     }
 
+    function formatWeight(value: number): string {
+      if (unit === "kg") return Number(value.toFixed(1)).toString();
+      return Math.round(value).toString();
+    }
+
     function fillTable(bodyId: string, pcts: number[], reps: string[], tm: number, roundStep: number) {
       const body = document.getElementById(bodyId);
       if (!body) return;
       const rows = pcts.map((p, i) => {
-        const w = roundToNearest(tm * (p / 100), roundStep);
-        return `<tr><td>${p}% × ${reps[i]}</td><td>${w} ${unit}</td></tr>`;
+        const weight = roundToNearest(tm * (p / 100), roundStep);
+        return `<tr><td>${p}% × ${reps[i]}</td><td>${formatWeight(weight)} ${unit}</td></tr>`;
       }).join("");
       body.innerHTML = rows;
     }
@@ -251,16 +273,22 @@ import RelatedTools from '../../../components/RelatedTools.astro';
     if (calcBtn) {
       calcBtn.addEventListener("click", () => {
         if (!inputWeight) return;
-        const raw = parseFloat(inputWeight.value);
-        if (!raw || raw <= 0) {
-          alert("Please enter a valid weight.");
+        const raw = Number(inputWeight.value);
+
+        if (!Number.isFinite(raw) || raw <= 0) {
+          alert("Please enter a valid Training Max or 1RM greater than 0.");
           return;
         }
 
         const roundStep = unit === "lb" ? 5 : 2.5;
         const tm = mode === "tm" ? raw : roundToNearest(raw * 0.9, roundStep);
 
-        if (resultTM) resultTM.textContent = `${tm} ${unit}`;
+        if (!Number.isFinite(tm) || tm <= 0) {
+          alert("Unable to calculate a valid Training Max. Please check your input.");
+          return;
+        }
+
+        if (resultTM) resultTM.textContent = `${formatWeight(tm)} ${unit}`;
         if (resultLabel) resultLabel.textContent = "Training Max Used";
 
         fillTable("week1-body", [65, 75, 85], ["5", "5", "5+"], tm, roundStep);
