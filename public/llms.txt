@@ -9,12 +9,12 @@ RepMaths is a premium, lightning-fast suite of fitness calculators, strength tra
 - **Nutrition & Body Composition:** TDEE Calculator (Mifflin-St Jeor), BMR Calculator (Mifflin St Jeor Formula Calculator), Macro Split Calculator (Cutting/Bulking/Maintenance), Protein Intake Calculator (Hypertrophy/Fat Loss), Daily Water Intake Calculator (Calculate daily water intake or how much water should I drink), Body Fat Percentage Calculator (US Navy Method).
 
 ## Key Pages & Navigation
-- Home: https://repmaths.com/
-- All Tools Directory: https://repmaths.com/tools/
-- Strength & Lifting Tools: https://repmaths.com/tools/strength/
-- Training Programs: https://repmaths.com/tools/training/
-- Gym Math & Equipment: https://repmaths.com/tools/equipment/
-- Nutrition & Health Tools: https://repmaths.com/tools/nutrition/
+- [RepMaths Home](https://repmaths.com/)
+- [All Tools Directory](https://repmaths.com/tools/)
+- [Strength & Lifting Tools](https://repmaths.com/tools/strength/)
+- [Training Programs](https://repmaths.com/tools/training/)
+- [Gym Math & Equipment](https://repmaths.com/tools/equipment/)
+- [Nutrition & Health Tools](https://repmaths.com/tools/nutrition/)
 
 ## Content & Methodology
 - Strictly utilizes scientifically validated algorithms and models (e.g., Mifflin-St Jeor, US DoD Navy Tape Method, Reactive Training Systems RPE scale).
