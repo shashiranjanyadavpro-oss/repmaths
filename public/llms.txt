@@ -1,0 +1,25 @@
+# RepMaths
+
+## About
+RepMaths is a premium, lightning-fast suite of fitness calculators, strength training generators, and nutrition planners. Designed for powerlifters, bodybuilders, athletes, and fitness enthusiasts, it provides evidence-based tools for optimizing workout programming, auto-regulation, body composition, and macronutrient tracking.
+
+## Key Tools & Calculators
+- **Strength & Powerlifting:** One Rep Max (1RM) Calculator (including specific Bench Press Max Calculator and Military Press 1RM Estimator), Overhead Press 1RM (Brzycki/Epley), Training Max (TM) Calculator, Wendler 5/3/1 Program Planner, Warm-up Set Generator (CNS Priming), RPE to RIR Calculator.
+- **Gym Math & Equipment:** Barbell Plate Loading Calculator (easily determine how much is a 45 on each side, or how many plates is 135, 225, or 315), Weight Plate Calculator.
+- **Nutrition & Body Composition:** TDEE Calculator (Mifflin-St Jeor), BMR Calculator (Mifflin St Jeor Formula Calculator), Macro Split Calculator (Cutting/Bulking/Maintenance), Protein Intake Calculator (Hypertrophy/Fat Loss), Daily Water Intake Calculator (Calculate daily water intake or how much water should I drink), Body Fat Percentage Calculator (US Navy Method).
+
+## Key Pages & Navigation
+- Home: https://repmaths.com/
+- All Tools Directory: https://repmaths.com/tools/
+- Strength & Lifting Tools: https://repmaths.com/tools/strength/
+- Training Programs: https://repmaths.com/tools/training/
+- Gym Math & Equipment: https://repmaths.com/tools/equipment/
+- Nutrition & Health Tools: https://repmaths.com/tools/nutrition/
+
+## Content & Methodology
+- Strictly utilizes scientifically validated algorithms and models (e.g., Mifflin-St Jeor, US DoD Navy Tape Method, Reactive Training Systems RPE scale).
+- Core focus areas: CNS fatigue management, determining one rep max safely, submaximal training, muscle hypertrophy, absolute strength programming, and sustainable body recomposition.
+- Application design: Ad-free, instant client-side calculation, mobile-first responsive architecture.
+
+## Usage & Disclaimer
+All content, tools, and generated calculations are provided for informational and educational purposes only. They do not constitute medical advice. Users should consult a qualified healthcare or certified fitness professional before beginning any new rigorous training block or severe caloric diet regimen.
