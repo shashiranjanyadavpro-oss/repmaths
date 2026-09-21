@@ -25,7 +25,7 @@ import RelatedTools from '../../../components/RelatedTools.astro';
         "name": "What is the difference between RPE and RIR?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "RPE (Rate of Perceived Exertion) rates effort on a scale of roughly 6 to 10, while RIR (Reps in Reserve) counts how many more reps you could have done before failure. They're directly linked: RPE 8 means 2 reps in reserve, RPE 9 means 1 rep in reserve, and RPE 10 means 0 reps in reserve, or absolute failure."
+          "text": "RPE (Rate of Perceived Exertion) describes how difficult a completed set felt, while RIR (Reps in Reserve) estimates how many additional reps you could have performed. A common strength-training convention is that RPE 10 means 0 RIR, RPE 9 means about 1 RIR, and RPE 8 means about 2 RIR."
         }
       },
       {
@@ -33,7 +33,7 @@ import RelatedTools from '../../../components/RelatedTools.astro';
         "name": "Why use RPE instead of traditional percentage-based training?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Percentage-based training uses a fixed 1RM that doesn't account for daily fluctuations in fatigue, stress, nutrition, or sleep. RPE auto-regulates your training by matching the weight to what you're actually capable of on that specific day, reducing injury risk while still providing the intended training stimulus."
+          "text": "Percentage-based training uses a fixed reference such as a 1RM, while RPE can help adjust training loads according to how difficult a set feels on a particular day. Daily performance can vary with factors such as fatigue, stress, sleep, and nutrition."
         }
       },
       {
@@ -41,7 +41,7 @@ import RelatedTools from '../../../components/RelatedTools.astro';
         "name": "How do you calculate estimated 1RM (e1RM) from an RPE set?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "This calculator matches your completed reps and RPE to the validated RTS (Reactive Training Systems) percentage chart. For example, 5 reps at RPE 8 corresponds to roughly 81% of your 1RM. Dividing the weight you lifted by that percentage gives your estimated one-rep max for the day."
+          "text": "This calculator matches your completed reps and RPE to the RTS RPE-to-percentage chart. The corresponding percentage is used to estimate your one-rep max by dividing the weight lifted by that percentage."
         }
       },
       {
@@ -49,7 +49,7 @@ import RelatedTools from '../../../components/RelatedTools.astro';
         "name": "Are RPE and RIR accurate for high-rep sets?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "RPE and RIR are most accurate for heavy, low-to-moderate rep ranges of roughly 1 to 8 reps. Above 10 reps, RPE becomes harder to gauge accurately because lactic acid buildup and cardiovascular fatigue cloud a lifter's perception of true muscular failure."
+          "text": "RPE and RIR are subjective estimates, and their precision can vary with the exercise, lifter, rep range, and experience. This calculator uses a 1-to-10 rep range, where the chart-based estimate should be treated as an estimate rather than an exact measurement."
         }
       }
     ]
@@ -68,14 +68,32 @@ import RelatedTools from '../../../components/RelatedTools.astro';
         <button type="button" id="unit-kg" aria-pressed="false">kg</button>
       </div>
     </div>
+
     <div class="field">
       <label for="weight">Weight Lifted</label>
-      <input type="number" id="weight" placeholder="e.g. 225" inputmode="decimal" />
+      <input
+        type="number"
+        id="weight"
+        placeholder="e.g. 225"
+        inputmode="decimal"
+        min="0"
+        step="any"
+      />
     </div>
+
     <div class="field">
       <label for="reps">Reps Completed (1-10)</label>
-      <input type="number" id="reps" placeholder="e.g. 5" inputmode="numeric" min="1" max="10" />
+      <input
+        type="number"
+        id="reps"
+        placeholder="e.g. 5"
+        inputmode="numeric"
+        min="1"
+        max="10"
+        step="1"
+      />
     </div>
+
     <div class="field">
       <label for="rpe">RPE of That Set</label>
       <select id="rpe">
@@ -90,14 +108,19 @@ import RelatedTools from '../../../components/RelatedTools.astro';
         <option value="6">RPE 6 (4 RIR)</option>
       </select>
     </div>
+
     <button class="btn-primary" id="calc-btn">Calculate e1RM</button>
 
     <div class="result-box" id="result-box">
       <div class="big-number" id="result-e1rm">–</div>
       <div class="label">Estimated 1RM (e1RM) for Today</div>
+
       <table class="result-table" id="result-table">
         <thead>
-          <tr><th>Target RPE</th><th>Weight (5 reps)</th></tr>
+          <tr>
+            <th>Target RPE</th>
+            <th>Weight (5 reps)</th>
+          </tr>
         </thead>
         <tbody id="result-table-body"></tbody>
       </table>
@@ -107,56 +130,106 @@ import RelatedTools from '../../../components/RelatedTools.astro';
   <article class="article-section">
     <h2>What Is RPE and RIR?</h2>
     <p>
-      RPE (Rate of Perceived Exertion) rates how hard a set felt on a scale
-      of roughly 6 to 10. RIR (Reps in Reserve) is the same concept from the
-      other direction — how many more reps you could have done. The two are
-      directly linked: RPE 8 means 2 reps in reserve, RPE 9 means 1 rep in
-      reserve, and RPE 10 means 0 reps in reserve, or absolute muscular
-      failure.
+      RPE (Rate of Perceived Exertion) describes how difficult a completed
+      set felt on a scale commonly used from 1 to 10. RIR (Reps in Reserve)
+      describes how many additional reps you believe you could have
+      completed. A common strength-training convention links the two:
+      RPE 10 means no reps left, RPE 9 means about 1 rep left, and RPE 8
+      means about 2 reps left. Exact RPE-to-RIR interpretation can vary
+      between lifters and coaching systems.
     </p>
   </article>
 
   <article class="article-section">
     <h2>Why Use RPE Instead of Fixed Percentages?</h2>
     <p>
-      Traditional percentage-based training locks your working weight to a
-      fixed 1RM that doesn't account for daily fluctuations in fatigue,
-      stress, nutrition, or sleep. RPE auto-regulates your training instead
-      — matching the weight to what you're actually capable of that day.
-      This reduces injury risk on bad days and can push slightly harder on
-      good days, all while targeting the same intended training stimulus.
+      Traditional percentage-based training sets a working weight from a
+      reference such as your 1RM. RPE adds a subjective measure of how
+      difficult the set actually feels on that day, which can help account
+      for normal changes in performance caused by fatigue, stress, sleep,
+      nutrition, and other factors.
+    </p>
+    <p>
+      RPE can therefore be used as an autoregulation tool rather than relying
+      entirely on a fixed percentage. The appropriate load still depends
+      on the exercise, training goal, individual lifter, and programmed
+      effort level.
     </p>
   </article>
 
   <article class="article-section">
     <h2>How This Calculator Works</h2>
     <p>
-      This tool uses the validated RTS (Reactive Training Systems) RPE
-      chart — the same chart popularized by Mike Tuchscherer and widely used
-      in powerlifting — rather than a generic formula. Your reps and RPE are
-      matched to the chart's corresponding percentage of 1RM, then your
-      lifted weight is divided by that percentage to estimate your e1RM for
-      today. Chart-based estimates and formula-based estimates can both produce useful but different results — treat either as an estimate rather than an exact number.
+      This tool uses the RTS (Reactive Training Systems) RPE-to-percentage
+      chart associated with Mike Tuchscherer rather than a generic
+      one-rep-max formula. Your completed reps and RPE are matched to the
+      chart's corresponding percentage of 1RM, then your lifted weight is
+      divided by that percentage to estimate your e1RM for today.
+    </p>
+    <p>
+      For example, if your completed set corresponds to 83.7% of 1RM,
+      dividing the weight you lifted by 0.837 produces the estimated 1RM.
+      Chart-based estimates and formula-based estimates can produce
+      different results, so treat an e1RM as an estimate rather than an
+      exact measurement.
+    </p>
+  </article>
+
+  <article class="article-section">
+    <h2>Using e1RM for Your Training</h2>
+    <p>
+      Your e1RM can be useful for tracking changes in estimated strength
+      without repeatedly testing a true 1RM. It can also provide a reference
+      for percentage-based programming and help you compare performance
+      across training sessions.
+    </p>
+    <p>
+      If you want to convert a known 1RM into specific percentage-based
+      working weights, use our
+      <a href="/tools/strength/1rm-percentage-calculator">1RM Percentage Calculator</a>.
+      For a submaximal Training Max used in programs such as 5/3/1, use our
+      <a href="/tools/training/training-max-calculator">Training Max Calculator</a>.
     </p>
   </article>
 
   <article class="article-section">
     <h2>Frequently Asked Questions</h2>
+
     <div class="faq-item">
       <h3>What is the difference between RPE and RIR?</h3>
-      <p>RPE rates effort (6-10 scale); RIR counts reps left in the tank. RPE 8 = 2 RIR, RPE 9 = 1 RIR, RPE 10 = 0 RIR.</p>
+      <p>
+        RPE describes how difficult a set felt, while RIR estimates how many
+        reps were left before failure. A common convention is RPE 8 ≈ 2 RIR,
+        RPE 9 ≈ 1 RIR, and RPE 10 ≈ 0 RIR.
+      </p>
     </div>
+
     <div class="faq-item">
       <h3>Why use RPE instead of fixed percentages?</h3>
-      <p>RPE auto-regulates for daily fatigue, sleep, and stress, unlike a fixed 1RM percentage that ignores how you actually feel that day.</p>
+      <p>
+        RPE provides a way to account for day-to-day differences in
+        performance and perceived effort instead of relying only on a fixed
+        1RM percentage.
+      </p>
     </div>
+
     <div class="faq-item">
       <h3>How do you calculate e1RM from an RPE set?</h3>
-      <p>Match your reps and RPE to the RTS chart's percentage, then divide your lifted weight by that percentage.</p>
+      <p>
+        Match your completed reps and RPE to the RTS chart's corresponding
+        percentage, then divide the weight lifted by that percentage to
+        estimate your e1RM.
+      </p>
     </div>
+
     <div class="faq-item">
       <h3>Are RPE and RIR accurate for high-rep sets?</h3>
-      <p>They're most accurate for 1-8 reps. Above 10 reps, fatigue and burning sensations make true failure harder to judge.</p>
+      <p>
+        RPE and RIR are subjective estimates, and their precision can vary
+        with the exercise, lifter, rep range, and experience. This calculator
+        uses a 1-10 rep range, so its chart-based result should be treated as
+        an estimate rather than an exact measurement.
+      </p>
     </div>
   </article>
 
@@ -178,6 +251,18 @@ import RelatedTools from '../../../components/RelatedTools.astro';
       "6":   [86.3, 83.7, 81.1, 78.6, 76.2, 73.9, 71.7, 69.4, 67.4, 65.3],
     };
 
+    const allowedRPEs = new Set([
+      "10",
+      "9.5",
+      "9",
+      "8.5",
+      "8",
+      "7.5",
+      "7",
+      "6.5",
+      "6"
+    ]);
+
     const unitLb = document.getElementById("unit-lb");
     const unitKg = document.getElementById("unit-kg");
     const weightInput = document.getElementById("weight") as HTMLInputElement | null;
@@ -188,53 +273,131 @@ import RelatedTools from '../../../components/RelatedTools.astro';
     const resultTableBody = document.getElementById("result-table-body");
     const resultBox = document.getElementById("result-box");
 
-    if (unitLb) unitLb.addEventListener("click", () => setUnit("lb"));
-    if (unitKg) unitKg.addEventListener("click", () => setUnit("kg"));
+    if (unitLb) {
+      unitLb.addEventListener("click", () => setUnit("lb"));
+    }
+
+    if (unitKg) {
+      unitKg.addEventListener("click", () => setUnit("kg"));
+    }
 
     function setUnit(newUnit: string) {
+      if (newUnit !== "lb" && newUnit !== "kg") return;
       if (newUnit === unit) return;
+
       if (weightInput) {
-        const currentVal = parseFloat(weightInput.value);
-        if (currentVal) {
-          weightInput.value = newUnit === "kg"
-            ? (currentVal / 2.20462).toFixed(1)
-            : (currentVal * 2.20462).toFixed(1);
+        const currentVal = Number(weightInput.value);
+
+        if (Number.isFinite(currentVal) && currentVal > 0) {
+          const converted = newUnit === "kg"
+            ? currentVal / 2.20462
+            : currentVal * 2.20462;
+
+          weightInput.value = converted.toFixed(1);
         }
       }
+
       unit = newUnit;
-      if (unitLb) { unitLb.classList.toggle("active", unit === "lb"); unitLb.setAttribute("aria-pressed", String(unit === "lb")); }
-      if (unitKg) { unitKg.classList.toggle("active", unit === "kg"); unitKg.setAttribute("aria-pressed", String(unit === "kg")); }
+
+      if (unitLb) {
+        unitLb.classList.toggle("active", unit === "lb");
+        unitLb.setAttribute("aria-pressed", String(unit === "lb"));
+      }
+
+      if (unitKg) {
+        unitKg.classList.toggle("active", unit === "kg");
+        unitKg.setAttribute("aria-pressed", String(unit === "kg"));
+      }
+    }
+
+    function formatWeight(value: number): string {
+      if (unit === "kg") {
+        return Number(value.toFixed(1)).toString();
+      }
+
+      return Math.round(value).toString();
     }
 
     if (calcBtn) {
       calcBtn.addEventListener("click", () => {
         if (!weightInput || !repsInput || !rpeSelect) return;
 
-        const weight = parseFloat(weightInput.value);
-        let reps = parseInt(repsInput.value, 10);
+        const weight = Number(weightInput.value);
+        const reps = Number(repsInput.value);
         const rpe = rpeSelect.value;
 
-        if (!weight || !reps || weight <= 0 || reps <= 0) {
-          alert("Please enter a valid weight and rep count.");
+        if (!Number.isFinite(weight) || weight <= 0) {
+          alert("Please enter a valid weight greater than 0.");
           return;
         }
-        if (reps > 10) { reps = 10; repsInput.value = "10"; }
 
-        const pct = rpeChart[rpe][reps - 1] / 100;
+        if (!Number.isInteger(reps) || reps < 1 || reps > 10) {
+          alert("Please enter a whole-number rep count from 1 to 10.");
+          return;
+        }
+
+        if (!allowedRPEs.has(rpe)) {
+          alert("Please select a valid RPE.");
+          return;
+        }
+
+        const rpeRow = rpeChart[rpe];
+
+        if (!rpeRow || rpeRow.length < 10) {
+          alert("Unable to find the selected RPE chart data.");
+          return;
+        }
+
+        const chartPercentage = rpeRow[reps - 1];
+
+        if (!Number.isFinite(chartPercentage) || chartPercentage <= 0) {
+          alert("Unable to calculate a valid e1RM from these inputs.");
+          return;
+        }
+
+        const pct = chartPercentage / 100;
         const e1rm = weight / pct;
-        const rounded = Math.round(e1rm * 10) / 10;
 
-        if (resultE1RM) resultE1RM.textContent = `${rounded} ${unit}`;
+        if (!Number.isFinite(e1rm) || e1rm <= 0) {
+          alert("Unable to calculate a valid e1RM. Please check your inputs.");
+          return;
+        }
 
         const targetRPEs = ["10", "9", "8", "7", "6"];
-        const rows = targetRPEs.map(r => {
-          const p = rpeChart[r][4] / 100; // 5-rep column
-          const w = Math.round(rounded * p * 10) / 10;
-          return `<tr><td>RPE ${r}</td><td>${w} ${unit}</td></tr>`;
+
+        const rows = targetRPEs.map((targetRPE) => {
+          const targetRow = rpeChart[targetRPE];
+
+          if (!targetRow || !Number.isFinite(targetRow[4])) {
+            return "";
+          }
+
+          const targetPct = targetRow[4] / 100;
+          const targetWeight = e1rm * targetPct;
+
+          if (!Number.isFinite(targetWeight) || targetWeight <= 0) {
+            return "";
+          }
+
+          return `
+            <tr>
+              <td>RPE ${targetRPE}</td>
+              <td>${formatWeight(targetWeight)} ${unit}</td>
+            </tr>
+          `;
         }).join("");
 
-        if (resultTableBody) resultTableBody.innerHTML = rows;
-        if (resultBox) resultBox.classList.add("show");
+        if (resultE1RM) {
+          resultE1RM.textContent = `${formatWeight(e1rm)} ${unit}`;
+        }
+
+        if (resultTableBody) {
+          resultTableBody.innerHTML = rows;
+        }
+
+        if (resultBox) {
+          resultBox.classList.add("show");
+        }
       });
     }
   </script>
