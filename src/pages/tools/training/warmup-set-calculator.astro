@@ -25,7 +25,7 @@ import RelatedTools from '../../../components/RelatedTools.astro';
         "name": "How many warm-up sets should I do before a heavy lift?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "For heavy compound barbell lifts like squats or bench presses, 3 to 5 warm-up sets are ideal. A standard ramp starts with the empty bar for higher reps, followed by sets at roughly 40%, 60%, 80%, and 90% of your working weight. As the weight increases, reps should progressively decrease to prime your central nervous system without causing muscular fatigue."
+          "text": "The number of warm-up sets depends on the exercise, working weight, training experience, and how prepared you feel. For a heavy compound lift, a short ramp of several progressively heavier sets can prepare you for the working weight while limiting unnecessary fatigue. This calculator provides a 5-step default ramp including the empty bar and four progressively heavier warm-up loads before the working set."
         }
       },
       {
@@ -33,7 +33,7 @@ import RelatedTools from '../../../components/RelatedTools.astro';
         "name": "Why do warm-up reps decrease as the weight gets heavier?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Heavier warm-up sets exist to prepare your joints and nervous system for a heavy load, a concept related to post-activation potentiation. Doing high reps at 80% or 90% of your working weight builds fatigue that will steal energy from your actual working sets."
+          "text": "As warm-up loads increase, using fewer repetitions can provide practice with heavier weights while limiting unnecessary fatigue before the working sets. The exact number of repetitions should depend on the exercise, load, and individual response."
         }
       },
       {
@@ -41,7 +41,7 @@ import RelatedTools from '../../../components/RelatedTools.astro';
         "name": "How long should I rest between warm-up sets?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Rest should scale with the weight on the bar. Early sets with the empty bar or light loads need only 30 to 45 seconds. As you approach 80% to 90% of your working weight, rest 90 seconds to 2 minutes so your energy stores are replenished before your working sets begin."
+          "text": "Rest can be shorter during light warm-up sets and longer as the load approaches the working weight. This calculator uses approximately 30 to 45 seconds after the empty bar and progressively longer rest periods for heavier warm-up sets. Rest should be adjusted based on the exercise, load, and how recovered you feel."
         }
       },
       {
@@ -49,7 +49,7 @@ import RelatedTools from '../../../components/RelatedTools.astro';
         "name": "Do warm-up sets count toward my training volume?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "No. Warm-up sets are for movement preparation and neuromuscular activation. Because they're submaximal and don't push your muscles near failure, they don't provide enough mechanical tension to count as working volume and shouldn't be tracked as such."
+          "text": "Warm-up sets are commonly tracked separately from working sets because their main purpose is preparation rather than accumulating the programmed working-set volume. However, warm-up sets still involve physical work and may contribute to overall training stress, especially when they become heavy or high in repetitions."
         }
       }
     ]
@@ -68,17 +68,32 @@ import RelatedTools from '../../../components/RelatedTools.astro';
         <button type="button" id="unit-kg" aria-pressed="false">kg</button>
       </div>
     </div>
+
     <div class="field">
       <label for="working-weight">Working Weight</label>
-      <input type="number" id="working-weight" placeholder="e.g. 225" inputmode="decimal" />
+      <input
+        type="number"
+        id="working-weight"
+        placeholder="e.g. 225"
+        inputmode="decimal"
+        min="0"
+        step="any"
+      />
     </div>
+
     <button class="btn-primary" id="calc-btn">Generate Warm-Up Ramp</button>
 
     <div class="result-box" id="result-box">
       <div class="label">Your Warm-Up Ramp</div>
+
       <table class="result-table" id="result-table">
         <thead>
-          <tr><th>Set</th><th>Weight</th><th>Reps</th><th>Rest After</th></tr>
+          <tr>
+            <th>Set</th>
+            <th>Weight</th>
+            <th>Reps</th>
+            <th>Rest After</th>
+          </tr>
         </thead>
         <tbody id="result-table-body"></tbody>
       </table>
@@ -88,73 +103,106 @@ import RelatedTools from '../../../components/RelatedTools.astro';
   <article class="article-section">
     <h2>What Is a Warm-Up Set Calculator?</h2>
     <p>
-      A warm-up set calculator generates the ramp of lighter sets you
-      perform on the way to your working weight — starting with the empty
-      bar and climbing through a few percentage-based jumps. The goal is
-      purely preparation: raising muscle temperature, rehearsing your
-      technique, and priming your nervous system for the heavy work ahead,
-      without pre-fatiguing yourself before it counts.
+      A warm-up set calculator generates a ramp of lighter sets you perform
+      on the way to your working weight — starting with the empty bar and
+      climbing through progressively heavier loads. The goal is preparation:
+      rehearsing the movement, getting accustomed to the exercise and load,
+      and preparing for the working sets without creating unnecessary fatigue.
     </p>
   </article>
 
   <article class="article-section">
     <h2>How to Use This Calculator</h2>
     <p>
-      Enter the working weight for your first real set (estimate it with
-      our <a href="/tools/strength/1rm-calculator">1RM Calculator</a> and{" "}
-      <a href="/tools/strength/1rm-percentage-calculator">1RM Percentage Calculator</a>{" "}
-      if needed), then generate your ramp. Each warm-up weight is rounded
-      to the nearest 5 lb or 2.5 kg so it actually loads on a barbell with
-      standard plates.
+      Enter the working weight for your first real set. If you need help
+      estimating a strength reference, use our
+      <a href="/tools/strength/1rm-calculator">1RM Calculator</a> and
+      <a href="/tools/strength/1rm-percentage-calculator">1RM Percentage Calculator</a>
+      if needed, then generate your ramp.
+    </p>
+    <p>
+      The calculator rounds warm-up loads to the nearest 5 lb or 2.5 kg so
+      the suggested weights are practical for common barbell plate
+      combinations. Actual available plates may require a small adjustment.
     </p>
   </article>
 
   <article class="article-section">
     <h2>How Many Warm-Up Sets Do You Need?</h2>
     <p>
-      For heavy compound lifts like the squat, bench press, deadlift, or
-      overhead press, 3 to 5 warm-up sets is the standard range. This
-      calculator uses a reliable default ramp: empty bar for higher reps,
-      then roughly 40%, 60%, 80%, and 90% of your working weight, with reps
-      dropping as the weight climbs. Reps decrease at higher percentages
-      because the goal shifts from movement rehearsal to pure CNS priming —
-      high reps at 80-90% would build fatigue instead of preventing it.
+      There is no single number of warm-up sets that fits every lifter or
+      exercise. A heavier compound lift may benefit from several progressively
+      heavier preparation sets, while a lighter or later exercise may need
+      fewer. Your training experience, working weight, exercise complexity,
+      and how prepared you feel can all affect the appropriate warm-up.
     </p>
     <p>
-      Rest periods scale the same way: 30-45 seconds after the lightest
-      sets, climbing to 90 seconds to 2 minutes as you approach your
-      working weight, so your energy stores are fully replenished before
-      the set that counts.
+      This calculator uses a simple default ramp: the empty bar, followed by
+      approximately 40%, 60%, 80%, and 90% of the working weight. Repetitions
+      decrease as the load increases to keep the later warm-up sets relatively
+      low in volume. Treat this as a starting template rather than a universal
+      prescription.
+    </p>
+    <p>
+      Rest periods also increase as the load gets heavier. Light preparation
+      sets may require only a short break, while heavier warm-up sets can
+      justify longer rest before the working set. Adjust the rest interval
+      if you still feel out of breath, fatigued, or insufficiently prepared.
     </p>
   </article>
 
   <article class="article-section">
     <h2>Do Warm-Up Sets Count as Training Volume?</h2>
     <p>
-      No. Warm-up sets are submaximal by design and never approach failure,
-      so they don't provide the mechanical tension needed to drive strength
-      or hypertrophy adaptations. Track only your working sets as training
-      volume — warm-ups are preparation, not part of the workout total.
+      Warm-up sets are commonly recorded separately from programmed working
+      sets because they are primarily used for preparation rather than
+      accumulating the planned training volume. That does not mean they have
+      no physical training effect: heavier or higher-repetition warm-up sets
+      still add work and can contribute to fatigue.
+    </p>
+    <p>
+      If a warm-up becomes sufficiently challenging, it may be useful to
+      consider its contribution to your overall training stress rather than
+      treating every warm-up as completely negligible.
     </p>
   </article>
 
   <article class="article-section">
     <h2>Frequently Asked Questions</h2>
+
     <div class="faq-item">
       <h3>How many warm-up sets should I do before a heavy lift?</h3>
-      <p>3 to 5 sets, ramping from the empty bar through roughly 40/60/80/90% of your working weight, with reps decreasing as weight increases.</p>
+      <p>
+        It depends on the exercise, working weight, training experience, and
+        how prepared you feel. This calculator provides a 5-step default ramp
+        including the empty bar and progressively heavier warm-up loads.
+      </p>
     </div>
+
     <div class="faq-item">
       <h3>Why do warm-up reps decrease as the weight gets heavier?</h3>
-      <p>Heavier sets exist to prime your nervous system, not build fatigue — high reps at 80-90% would steal energy from your working sets.</p>
+      <p>
+        Fewer reps at heavier warm-up loads provide exposure to the increasing
+        weight while helping limit unnecessary fatigue before the working sets.
+      </p>
     </div>
+
     <div class="faq-item">
       <h3>How long should I rest between warm-up sets?</h3>
-      <p>30-45 seconds for light sets, climbing to 90 seconds-2 minutes as you approach your working weight.</p>
+      <p>
+        Light sets generally need less rest, while heavier warm-up sets may
+        need longer recovery. This calculator progressively increases rest as
+        the load approaches your working weight.
+      </p>
     </div>
+
     <div class="faq-item">
       <h3>Do warm-up sets count toward my training volume?</h3>
-      <p>No — they're submaximal preparation and don't count as working volume.</p>
+      <p>
+        They are commonly tracked separately from programmed working sets,
+        but they still contribute physical work and can add training stress,
+        particularly when they are heavy or high in repetitions.
+      </p>
     </div>
   </article>
 
@@ -165,39 +213,69 @@ import RelatedTools from '../../../components/RelatedTools.astro';
 
     const unitLb = document.getElementById("unit-lb");
     const unitKg = document.getElementById("unit-kg");
-    const workingWeightInput = document.getElementById("working-weight") as HTMLInputElement | null;
+    const workingWeightInput =
+      document.getElementById("working-weight") as HTMLInputElement | null;
     const calcBtn = document.getElementById("calc-btn");
     const resultTableBody = document.getElementById("result-table-body");
     const resultBox = document.getElementById("result-box");
 
-    if (unitLb) unitLb.addEventListener("click", () => setUnit("lb"));
-    if (unitKg) unitKg.addEventListener("click", () => setUnit("kg"));
+    if (unitLb) {
+      unitLb.addEventListener("click", () => setUnit("lb"));
+    }
+
+    if (unitKg) {
+      unitKg.addEventListener("click", () => setUnit("kg"));
+    }
 
     function setUnit(newUnit: string) {
+      if (newUnit !== "lb" && newUnit !== "kg") return;
       if (newUnit === unit) return;
+
       if (workingWeightInput) {
-        const currentVal = parseFloat(workingWeightInput.value);
-        if (currentVal) {
-          workingWeightInput.value = newUnit === "kg"
-            ? (currentVal / 2.20462).toFixed(1)
-            : (currentVal * 2.20462).toFixed(1);
+        const currentVal = Number(workingWeightInput.value);
+
+        if (Number.isFinite(currentVal) && currentVal > 0) {
+          const converted = newUnit === "kg"
+            ? currentVal / 2.20462
+            : currentVal * 2.20462;
+
+          workingWeightInput.value = converted.toFixed(1);
         }
       }
+
       unit = newUnit;
-      if (unitLb) { unitLb.classList.toggle("active", unit === "lb"); unitLb.setAttribute("aria-pressed", String(unit === "lb")); }
-      if (unitKg) { unitKg.classList.toggle("active", unit === "kg"); unitKg.setAttribute("aria-pressed", String(unit === "kg")); }
+
+      if (unitLb) {
+        unitLb.classList.toggle("active", unit === "lb");
+        unitLb.setAttribute("aria-pressed", String(unit === "lb"));
+      }
+
+      if (unitKg) {
+        unitKg.classList.toggle("active", unit === "kg");
+        unitKg.setAttribute("aria-pressed", String(unit === "kg"));
+      }
     }
 
     function roundToNearest(value: number, step: number): number {
       return Math.round(value / step) * step;
     }
 
+    function formatWeight(value: number): string {
+      if (unit === "kg") {
+        return Number(value.toFixed(1)).toString();
+      }
+
+      return Math.round(value).toString();
+    }
+
     if (calcBtn) {
       calcBtn.addEventListener("click", () => {
         if (!workingWeightInput) return;
-        const workingWeight = parseFloat(workingWeightInput.value);
-        if (!workingWeight || workingWeight <= 0) {
-          alert("Please enter a valid working weight.");
+
+        const workingWeight = Number(workingWeightInput.value);
+
+        if (!Number.isFinite(workingWeight) || workingWeight <= 0) {
+          alert("Please enter a valid working weight greater than 0.");
           return;
         }
 
@@ -205,24 +283,59 @@ import RelatedTools from '../../../components/RelatedTools.astro';
         const roundStep = unit === "lb" ? 5 : 2.5;
 
         const steps = [
-          { pct: 0, reps: "10", rest: "30-45 sec" },
-          { pct: 40, reps: "5", rest: "45-60 sec" },
-          { pct: 60, reps: "3", rest: "60-90 sec" },
-          { pct: 80, reps: "2", rest: "90 sec-2 min" },
-          { pct: 90, reps: "1", rest: "2-3 min" },
+          { pct: 0, reps: 10, rest: "30-45 sec" },
+          { pct: 40, reps: 5, rest: "45-60 sec" },
+          { pct: 60, reps: 3, rest: "60-90 sec" },
+          { pct: 80, reps: 2, rest: "90 sec-2 min" },
+          { pct: 90, reps: 1, rest: "2-3 min" }
         ];
 
-        const rows = steps.map((s, i) => {
-          let weight = s.pct === 0 ? barWeight : roundToNearest(workingWeight * (s.pct / 100), roundStep);
+        const computed = steps.map((step) => {
+          let weight = step.pct === 0
+            ? barWeight
+            : roundToNearest(workingWeight * (step.pct / 100), roundStep);
+
           if (weight < barWeight) weight = barWeight;
-          const label = s.pct === 0 ? "Empty Bar" : `Warm-Up ${i}`;
-          return `<tr><td>${label}</td><td>${weight} ${unit}</td><td>${s.reps}</td><td>${s.rest}</td></tr>`;
+
+          return { weight, reps: step.reps, rest: step.rest, isBar: step.pct === 0 };
+        });
+
+        const deduped: typeof computed = [];
+        for (const step of computed) {
+          const last = deduped[deduped.length - 1];
+          if (last && last.weight === step.weight) continue;
+          deduped.push(step);
+        }
+
+        let warmupCount = 0;
+        const rows = deduped.map((step) => {
+          const label = step.isBar ? "Empty Bar" : `Warm-Up ${++warmupCount}`;
+          return `
+            <tr>
+              <td>${label}</td>
+              <td>${formatWeight(step.weight)} ${unit}</td>
+              <td>${step.reps}</td>
+              <td>${step.rest}</td>
+            </tr>
+          `;
         }).join("");
 
-        const workingRow = `<tr><td><strong>Working Set</strong></td><td><strong>${workingWeight} ${unit}</strong></td><td>—</td><td>—</td></tr>`;
+        const workingRow = `
+          <tr>
+            <td><strong>Working Set</strong></td>
+            <td><strong>${formatWeight(workingWeight)} ${unit}</strong></td>
+            <td>—</td>
+            <td>—</td>
+          </tr>
+        `;
 
-        if (resultTableBody) resultTableBody.innerHTML = rows + workingRow;
-        if (resultBox) resultBox.classList.add("show");
+        if (resultTableBody) {
+          resultTableBody.innerHTML = rows + workingRow;
+        }
+
+        if (resultBox) {
+          resultBox.classList.add("show");
+        }
       });
     }
   </script>
