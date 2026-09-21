@@ -33,7 +33,7 @@ import RelatedTools from '../../../components/RelatedTools.astro';
         "name": "How much does a standard Olympic barbell weigh?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "A standard men's Olympic barbell weighs 45 lb (20 kg). A women's Olympic barbell weighs 35 lb (15 kg) with a slightly thinner shaft. Technique bars typically weigh around 15-25 lb, and trap or hex bars usually weigh 45-65 lb depending on the manufacturer."
+          "text": "A common men's Olympic-style barbell weighs 45 lb (20 kg), while an IWF women's competition bar weighs 35 lb (15 kg). Commercial Olympic-style bars can vary by manufacturer and model, so check the bar's stated weight when precision matters."
         }
       },
       {
@@ -49,7 +49,7 @@ import RelatedTools from '../../../components/RelatedTools.astro';
         "name": "Do barbell collars count toward total weight?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Standard plastic spring collars or clips weigh under 0.5 lb per pair and are generally ignored in everyday gym math. Competition powerlifting collars, however, weigh about 5.5 lb (2.5 kg) each and must be factored into official competition totals."
+          "text": "Collar weight depends on the type of collar. Many everyday gym collars are light enough that lifters commonly ignore them for routine plate math, but competition collars are heavier and can materially affect the total. For example, IWF competition rules specify two collars weighing 2.5 kg each, so competition calculations should include them when applicable."
         }
       }
     ]
@@ -108,20 +108,20 @@ import RelatedTools from '../../../components/RelatedTools.astro';
   <article class="article-section">
     <h2>How to Use This Calculator</h2>
     <p>
-      Choose your unit and barbell type, enter your target total weight,
-      and calculate. This tool uses standard plate sizes — 45, 35, 25, 10,
-      5, and 2.5 lb, or 25, 20, 15, 10, 5, 2.5, and 1.25 kg — and finds the
-      exact combination for each side. If your target weight isn't
-      achievable with standard plates, the closest possible load will be
-      shown instead.
+  Choose your unit and barbell type, enter your target total weight,
+  and calculate. This tool uses a practical set of common gym plate sizes —
+  45, 35, 25, 10, 5, and 2.5 lb, or 25, 20, 15, 10, 5, 2.5, and 1.25 kg —
+  and finds the best matching combination for each side. If your target
+  isn't achievable with these plate sizes, the closest achievable load is
+  shown instead. Actual plate availability varies by gym.
     </p>
   </article>
 
   <article class="article-section">
     <h2>Gym Slang: What Does "2 Plates" Mean?</h2>
     <p>
-      "Plates" in gym slang always refers to the standard 45 lb (or 20 kg)
-      plate on a standard bar. Here's the quick reference:
+  In common gym slang, "plates" often refers to 45 lb plates on a
+  standard 45 lb bar in the United States. Here's the quick reference:
     </p>
     <ul>
       <li><strong>1 plate:</strong> 135 lb (60 kg)</li>
@@ -138,17 +138,26 @@ import RelatedTools from '../../../components/RelatedTools.astro';
       <p>Subtract the bar weight from your target, divide by 2 for the per-side load, then fill it with the heaviest plates down to the smallest.</p>
     </div>
     <div class="faq-item">
-      <h3>How much does a standard Olympic barbell weigh?</h3>
-      <p>Men's bars weigh 45 lb (20 kg); women's bars weigh 35 lb (15 kg).</p>
-    </div>
+  <h3>How much does a standard Olympic barbell weigh?</h3>
+  <p>
+    A common men's Olympic-style bar weighs 45 lb (20 kg), while an IWF
+    women's competition bar weighs 35 lb (15 kg). Commercial bars can vary,
+    so check the bar's stated weight when precision matters.
+  </p>
+  </div>
     <div class="faq-item">
       <h3>What does "2 plates" mean in lifting?</h3>
       <p>Two 45 lb (or 20 kg) plates per side on a standard bar — 225 lb (100 kg) total.</p>
     </div>
     <div class="faq-item">
-      <h3>Do barbell collars count toward total weight?</h3>
-      <p>Standard gym collars are negligible and usually ignored. Official competition collars weigh about 5.5 lb (2.5 kg) each and do count.</p>
-    </div>
+  <h3>Do barbell collars count toward total weight?</h3>
+  <p>
+    It depends on the type of collar. Light everyday gym collars are often
+    ignored for routine plate math, while heavier competition collars should
+    be included. IWF competition collars weigh 2.5 kg each, so they matter
+    when calculating an official competition total.
+  </p>
+</div>
   </article>
 
   <RelatedTools currentToolId="plate-calculator" />
