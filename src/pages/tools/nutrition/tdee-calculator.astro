@@ -4,7 +4,7 @@ import RelatedTools from '../../../components/RelatedTools.astro';
 ---
 <Base
   title="TDEE Calculator (Mifflin-St Jeor) — Daily Calorie Needs"
-  description="Free TDEE calculator using the Mifflin-St Jeor equation. Find your BMR, maintenance calories, and calorie targets for cutting or bulking."
+  description="Free TDEE calculator using the Mifflin-St Jeor equation. Estimate your BMR, maintenance calories, and calorie targets for cutting, maintaining, or gaining weight."
 >
   <script type="application/ld+json" set:html={JSON.stringify({
     "@context": "https://schema.org",
@@ -12,7 +12,11 @@ import RelatedTools from '../../../components/RelatedTools.astro';
     "name": "TDEE Calculator",
     "applicationCategory": "HealthApplication",
     "operatingSystem": "Any",
-    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    },
     "description": "Free online calculator that estimates Total Daily Energy Expenditure using the Mifflin-St Jeor equation and an activity multiplier."
   })} />
 
@@ -25,15 +29,15 @@ import RelatedTools from '../../../components/RelatedTools.astro';
         "name": "What is the difference between BMR and TDEE?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "BMR (Basal Metabolic Rate) is the calories your body burns at complete rest just to keep your organs functioning. TDEE (Total Daily Energy Expenditure) is an estimate built by multiplying BMR by an activity factor, accounting for exercise, daily movement, and digestion."
+          "text": "BMR estimates the energy your body requires for essential functions under resting conditions. TDEE estimates total daily energy expenditure by applying an activity factor to resting energy expenditure and is intended as an estimate of your daily calorie needs."
         }
       },
       {
         "@type": "Question",
-        "name": "Why is the Mifflin-St Jeor equation commonly recommended?",
+        "name": "Why is the Mifflin-St Jeor equation commonly used?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Research comparing prediction equations to measured resting metabolic rate has generally found Mifflin-St Jeor to be among the more reliable options, and it's the equation commonly recommended by dietetics associations. Older equations like Harris-Benedict tend to overestimate calorie burn, particularly in overweight individuals. No equation is exact for every person — treat the result as a starting estimate to adjust from."
+          "text": "Mifflin-St Jeor is a widely used predictive equation for resting energy expenditure and has performed well compared with several older equations in research. No predictive equation is exact for every individual."
         }
       },
       {
@@ -41,15 +45,47 @@ import RelatedTools from '../../../components/RelatedTools.astro';
         "name": "How many calories should I subtract from my TDEE to lose weight?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "A deficit of around 300 to 500 calories per day is a commonly used starting point for fat loss, generally producing roughly 0.5 to 1 pound (0.2-0.5 kg) of loss per week. Individual needs vary, so monitor your weight trend over a few weeks and adjust gradually rather than treating this as a fixed rule."
+          "text": "A calorie deficit is commonly used for weight loss, but there is no single deficit that is appropriate for everyone. The calculator shows illustrative calorie adjustments, which should be treated as starting estimates and evaluated against your actual weight trend, nutrition, activity, and individual circumstances."
         }
       },
       {
         "@type": "Question",
-        "name": "Which activity multiplier should I choose?",
+        "name": "Which TDEE activity multiplier should I choose?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Most people with a desk job who train 3-5 days a week should choose Lightly Active or, at most, Moderately Active. It's common to overestimate daily activity — an hour of training doesn't fully offset 8-10 hours of sitting."
+          "text": "Choose the activity level that best reflects your overall weekly activity, including exercise and everyday movement. A person who trains several days per week can still have a lower overall activity level if most of the day is spent sitting."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Is TDEE the same every day?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "No. Actual energy expenditure can vary from day to day with changes in exercise, walking, work activity, food intake, and other factors. A TDEE calculator provides an estimated average daily requirement rather than an exact value for every day."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Can I use TDEE for muscle gain?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "TDEE can be used as an estimated maintenance starting point. A calorie surplus is often used when gaining body weight and muscle, but the appropriate amount depends on the individual and should be adjusted based on changes in body weight, training performance, and other factors."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How accurate is a TDEE calculator?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "TDEE calculators provide estimates rather than direct measurements. Error can come from the resting-energy equation and from estimating daily activity. Comparing the estimate with your weight trend and real-world intake over time can help you refine your maintenance estimate."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What should I calculate after TDEE?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "After estimating TDEE, you can use a macro calculator to estimate protein, carbohydrate, and fat targets, or a protein calculator if you want to focus specifically on daily protein intake."
         }
       }
     ]
@@ -57,63 +93,175 @@ import RelatedTools from '../../../components/RelatedTools.astro';
 
   <section class="hero">
     <h1>TDEE Calculator (Mifflin-St Jeor)</h1>
-    <p>Find your daily maintenance calories, plus targets for cutting or bulking.</p>
+    <p>
+      Estimate your daily maintenance calories, plus starting targets
+      for cutting or gaining weight.
+    </p>
   </section>
 
   <section class="calc-card">
     <div class="field">
       <label>Units</label>
       <div class="unit-toggle">
-        <button type="button" id="unit-imperial" class="active" aria-pressed="true">lb / ft-in</button>
-        <button type="button" id="unit-metric" aria-pressed="false">kg / cm</button>
+        <button
+          type="button"
+          id="unit-imperial"
+          class="active"
+          aria-pressed="true"
+        >
+          lb / ft-in
+        </button>
+        <button
+          type="button"
+          id="unit-metric"
+          aria-pressed="false"
+        >
+          kg / cm
+        </button>
       </div>
     </div>
+
     <div class="field">
       <label>Sex</label>
       <div class="unit-toggle">
-        <button type="button" id="sex-male" class="active" aria-pressed="true">Male</button>
-        <button type="button" id="sex-female" aria-pressed="false">Female</button>
+        <button
+          type="button"
+          id="sex-male"
+          class="active"
+          aria-pressed="true"
+        >
+          Male
+        </button>
+        <button
+          type="button"
+          id="sex-female"
+          aria-pressed="false"
+        >
+          Female
+        </button>
       </div>
     </div>
+
     <div class="field">
-      <label for="age">Age (15-90)</label>
-      <input type="number" id="age" placeholder="e.g. 28" inputmode="numeric" min="15" max="90" />
+      <label for="age">Age (18-90)</label>
+      <input
+        type="number"
+        id="age"
+        placeholder="e.g. 28"
+        inputmode="numeric"
+        min="18"
+        max="90"
+      />
     </div>
+
     <div class="field">
       <label for="weight">Weight</label>
-      <input type="number" id="weight" placeholder="e.g. 180" inputmode="decimal" min="1" />
+      <input
+        type="number"
+        id="weight"
+        placeholder="e.g. 180"
+        inputmode="decimal"
+        min="1"
+      />
     </div>
+
     <div id="imperial-height" class="field">
       <label>Height</label>
       <div style="display:flex; gap:8px;">
-        <input type="number" id="height-ft" placeholder="ft" inputmode="numeric" min="0" max="8" style="flex:1;" />
-        <input type="number" id="height-in" placeholder="in (0-11)" inputmode="numeric" min="0" max="11" style="flex:1;" />
+        <input
+          type="number"
+          id="height-ft"
+          placeholder="ft"
+          inputmode="numeric"
+          min="0"
+          max="8"
+          style="flex:1;"
+        />
+        <input
+          type="number"
+          id="height-in"
+          placeholder="in (0-11)"
+          inputmode="numeric"
+          min="0"
+          max="11"
+          style="flex:1;"
+        />
       </div>
     </div>
-    <div id="metric-height" class="field" style="display:none;">
+
+    <div
+      id="metric-height"
+      class="field"
+      style="display:none;"
+    >
       <label for="height-cm">Height (cm)</label>
-      <input type="number" id="height-cm" placeholder="e.g. 178" inputmode="decimal" min="1" />
+      <input
+        type="number"
+        id="height-cm"
+        placeholder="e.g. 178"
+        inputmode="decimal"
+        min="1"
+      />
     </div>
+
     <div class="field">
       <label for="activity">Activity Level</label>
+
       <select id="activity">
-        <option value="1.2">Sedentary (desk job, no exercise)</option>
-        <option value="1.375" selected>Lightly Active (1-3 days/week)</option>
-        <option value="1.55">Moderately Active (3-5 days/week)</option>
-        <option value="1.725">Very Active (6-7 days/week)</option>
-        <option value="1.9">Extra Active (hard training + physical job)</option>
+        <option value="1.2">
+          Sedentary (desk job, little exercise)
+        </option>
+
+        <option value="1.375" selected>
+          Lightly Active (1-3 days/week)
+        </option>
+
+        <option value="1.55">
+          Moderately Active (3-5 days/week)
+        </option>
+
+        <option value="1.725">
+          Very Active (6-7 days/week)
+        </option>
+
+        <option value="1.9">
+          Extra Active (hard training + physical job)
+        </option>
       </select>
     </div>
-    <button class="btn-primary" id="calc-btn">Calculate TDEE</button>
+
+    <button class="btn-primary" id="calc-btn">
+      Calculate TDEE
+    </button>
 
     <div class="result-box" id="result-box">
       <div class="big-number" id="result-tdee">–</div>
-      <div class="label">Maintenance Calories (TDEE)</div>
-      <p id="result-bmr-line" style="color:var(--text-muted); font-size:0.9rem; margin-top:6px;"></p>
+
+      <div class="label">
+        Estimated Maintenance Calories (TDEE)
+      </div>
+
+      <p
+        id="result-bmr-line"
+        style="color:var(--text-muted); font-size:0.9rem; margin-top:6px;"
+      ></p>
+
+      <p
+        id="result-note"
+        style="margin:10px 0 0; font-size:0.9rem; opacity:0.85;"
+      >
+        This is an estimated average daily calorie requirement, not an
+        exact calorie burn for every day.
+      </p>
+
       <table class="result-table" id="result-table">
         <thead>
-          <tr><th>Goal</th><th>Daily Calories</th></tr>
+          <tr>
+            <th>Goal</th>
+            <th>Daily Calories</th>
+          </tr>
         </thead>
+
         <tbody id="result-table-body"></tbody>
       </table>
     </div>
@@ -121,88 +269,276 @@ import RelatedTools from '../../../components/RelatedTools.astro';
 
   <article class="article-section">
     <h2>What Is TDEE?</h2>
+
     <p>
       TDEE (Total Daily Energy Expenditure) is an estimate of the total
-      calories your body uses in 24 hours, combining your resting
-      metabolism (BMR), digestion, and all daily activity. It's the
-      approximate number you'd need to eat at to maintain your current
-      weight — the baseline for any cutting or bulking plan.
+      energy your body uses over an average day. It includes resting energy
+      expenditure plus energy associated with physical activity, exercise,
+      and the thermic effect of food.
+    </p>
+
+    <p>
+      Your estimated TDEE is commonly used as a starting point for
+      understanding <strong>maintenance calories</strong> — the approximate
+      intake that may maintain your current body weight when averaged over
+      time. Actual energy needs can vary from day to day.
     </p>
   </article>
 
   <article class="article-section">
-    <h2>How This Calculator Works</h2>
+    <h2>How This TDEE Calculator Works</h2>
+
     <p>
-      This calculator follows three steps: first, it calculates your BMR
-      using the Mifflin-St Jeor equation. Second, it multiplies that number
-      by your selected activity multiplier to estimate your TDEE. Third, it
-      shows calorie targets above and below that maintenance number for
-      cutting, bulking, and maintenance.
+      This calculator follows three steps. First, it estimates your BMR
+      using the Mifflin-St Jeor equation. Second, it applies the activity
+      multiplier you select to estimate TDEE. Third, it shows illustrative
+      calorie adjustments around that estimated maintenance level.
     </p>
+
     <p>
-      <strong>Men:</strong> BMR = 10 × weight(kg) + 6.25 × height(cm) − 5 × age + 5<br />
-      <strong>Women:</strong> BMR = 10 × weight(kg) + 6.25 × height(cm) − 5 × age − 161
+      <strong>Men:</strong><br />
+      BMR = 10 × weight(kg) + 6.25 × height(cm) − 5 × age + 5
+    </p>
+
+    <p>
+      <strong>Women:</strong><br />
+      BMR = 10 × weight(kg) + 6.25 × height(cm) − 5 × age − 161
+    </p>
+
+    <p>
+      Because both resting energy expenditure and activity are estimated,
+      the final TDEE should be treated as a starting estimate rather than
+      a measured value.
     </p>
   </article>
 
   <article class="article-section">
     <h2>Activity Level Multipliers</h2>
+
     <ul>
-      <li><strong>Sedentary (×1.2):</strong> Desk job, little to no exercise.</li>
-      <li><strong>Lightly Active (×1.375):</strong> Light exercise 1-3 days a week.</li>
-      <li><strong>Moderately Active (×1.55):</strong> Moderate exercise 3-5 days a week.</li>
-      <li><strong>Very Active (×1.725):</strong> Hard exercise 6-7 days a week.</li>
-      <li><strong>Extra Active (×1.9):</strong> Very hard training plus a physically demanding job.</li>
+      <li>
+        <strong>Sedentary (×1.2):</strong>
+        Desk-based lifestyle with little structured exercise.
+      </li>
+
+      <li>
+        <strong>Lightly Active (×1.375):</strong>
+        Light exercise or sports around 1-3 days per week.
+      </li>
+
+      <li>
+        <strong>Moderately Active (×1.55):</strong>
+        Moderate exercise or sports around 3-5 days per week.
+      </li>
+
+      <li>
+        <strong>Very Active (×1.725):</strong>
+        Hard exercise or sports on most days.
+      </li>
+
+      <li>
+        <strong>Extra Active (×1.9):</strong>
+        Very hard training combined with a physically demanding lifestyle
+        or job.
+      </li>
     </ul>
+
     <p>
-      Most people overestimate their activity level. A desk job with a few
-      weekly gym sessions is usually Lightly to Moderately Active, not Very
-      Active.
+      Activity multipliers are broad estimates, not precise measurements.
+      Consider your total weekly movement, exercise, job, walking, and
+      sedentary time when choosing a level. Someone who trains several
+      times per week may still have relatively low total daily activity
+      if most of the day is spent sitting.
     </p>
   </article>
 
   <article class="article-section">
-    <h2>Using Your TDEE for Cutting, Bulking, or Maintenance</h2>
+    <h2>Using Your TDEE for Cutting, Maintenance, or Bulking</h2>
+
     <p>
-      A calorie deficit of around 300-500 per day is a commonly used
-      starting point for fat loss, and a surplus of roughly 250-400 is a
-      common starting point for lean muscle gain. These are starting
-      points, not fixed rules — monitor your actual weight trend over 2-3
-      weeks and adjust gradually, since no formula accounts for individual
-      metabolic variation perfectly.
+      Your estimated TDEE can provide a starting point for setting a
+      calorie intake. Eating around your estimated maintenance level is
+      intended to support weight maintenance, while eating below or above
+      it can be used as a starting framework for weight loss or weight
+      gain.
+    </p>
+
+    <p>
+      This calculator shows illustrative adjustments of 300 and 500 calories
+      below TDEE and 250 and 400 calories above TDEE. These numbers are not
+      universal prescriptions. Your appropriate calorie intake depends on
+      your body size, goals, activity, food intake, health, and response
+      over time.
+    </p>
+
+    <p>
+      For weight management, compare your actual weight trend over several
+      weeks with the calculator estimate and adjust gradually when needed.
+      NIDDK notes that calorie needs can change during weight loss and that
+      long-term weight management involves both eating patterns and physical
+      activity. 2
+    </p>
+  </article>
+
+  <article class="article-section">
+    <h2>How Accurate Is a TDEE Calculator?</h2>
+
+    <p>
+      A TDEE calculator cannot directly measure your daily energy
+      expenditure. It combines a predictive resting-energy equation with
+      an estimated activity multiplier, so some error is expected.
+    </p>
+
+    <p>
+      Research on energy-prediction equations shows that performance can
+      vary substantially between people and populations. Even when an
+      equation performs well on average, individual estimates can differ
+      from measured energy expenditure. 3
+    </p>
+
+    <p>
+      One practical way to refine your maintenance estimate is to compare
+      your estimated calorie intake with your body-weight trend over time.
+      Your real-world response provides additional information that a
+      calculator cannot capture from height, weight, age, sex, and activity
+      alone.
     </p>
   </article>
 
   <article class="article-section">
     <h2>Mifflin-St Jeor vs. Harris-Benedict</h2>
+
     <p>
-      Research comparing prediction equations to measured metabolic rate
-      has generally found Mifflin-St Jeor performs at least as well as, and
-      often better than, the older Harris-Benedict equation (1919, revised
-      1984), particularly in overweight individuals where Harris-Benedict
-      tends to overestimate. This is a key reason Mifflin-St Jeor is widely
-      recommended today, though individual results still vary from person
-      to person.
+      Mifflin-St Jeor is a widely used predictive equation for resting
+      energy expenditure and has performed well compared with several
+      commonly used equations in research. However, no predictive equation
+      is exact for every individual, and accuracy can vary by population.
+      4
+    </p>
+
+    <p>
+      This calculator uses Mifflin-St Jeor because it is a well-established
+      option for estimating resting energy expenditure in adults. The
+      resulting TDEE should still be treated as an estimate rather than a
+      direct measurement.
+    </p>
+  </article>
+
+  <article class="article-section">
+    <h2>TDEE for Weight Loss</h2>
+
+    <p>
+      If your goal is fat loss, estimated TDEE gives you a reference point
+      for your current daily energy needs. A calorie deficit means consuming
+      fewer calories than you expend over time, but the size of the deficit
+      should not be treated as a universal rule.
+    </p>
+
+    <p>
+      Track your body-weight trend, nutrition, activity, and training
+      performance rather than expecting a calculator to predict an exact
+      rate of weight change. NIDDK recommends sustainable eating and
+      physical-activity habits as part of long-term weight management.
+      5
+    </p>
+  </article>
+
+  <article class="article-section">
+    <h2>TDEE for Muscle Gain</h2>
+
+    <p>
+      If your goal is to gain body weight and muscle, estimated TDEE can
+      provide a maintenance starting point. A calorie surplus is commonly
+      used when intentionally gaining weight, but the appropriate amount
+      varies between individuals.
+    </p>
+
+    <p>
+      Monitor changes in body weight and gym performance over time rather
+      than assuming the calculator's estimate is exact. For nutrition
+      planning, you can also use the
+      <a href="/tools/nutrition/macro-calculator">Macro Calculator</a>
+      to estimate protein, carbohydrate, and fat targets.
     </p>
   </article>
 
   <article class="article-section">
     <h2>Frequently Asked Questions</h2>
+
     <div class="faq-item">
       <h3>What is the difference between BMR and TDEE?</h3>
-      <p>BMR is calories burned at complete rest. TDEE is an estimate built by multiplying BMR by an activity factor.</p>
+      <p>
+        BMR estimates the energy your body requires for essential functions
+        under resting conditions. TDEE estimates total daily energy
+        expenditure by accounting for resting energy needs and activity.
+      </p>
     </div>
+
     <div class="faq-item">
-      <h3>Why is Mifflin-St Jeor commonly recommended?</h3>
-      <p>Studies generally find it performs well compared to older equations like Harris-Benedict, which tends to overestimate, especially in overweight individuals. No equation is exact for everyone.</p>
+      <h3>Why is Mifflin-St Jeor commonly used?</h3>
+      <p>
+        Mifflin-St Jeor is a widely used predictive equation and has
+        performed well compared with several older equations. No equation
+        is exact for every individual.
+      </p>
     </div>
+
     <div class="faq-item">
       <h3>How many calories should I cut for weight loss?</h3>
-      <p>Around 300-500 calories below maintenance is a common starting point — adjust based on your actual weight trend.</p>
+      <p>
+        There is no single calorie deficit that is appropriate for everyone.
+        This calculator shows illustrative adjustments below TDEE that can
+        be used as starting estimates, then evaluated against your actual
+        weight trend and individual circumstances.
+      </p>
     </div>
+
     <div class="faq-item">
       <h3>Which activity multiplier should I choose?</h3>
-      <p>Most desk-job lifters fall into Lightly or Moderately Active — people often overestimate how active they really are.</p>
+      <p>
+        Choose the level that best represents your total weekly activity,
+        including exercise, walking, work, and everyday movement. Several
+        gym sessions per week do not automatically mean a very high overall
+        activity level.
+      </p>
+    </div>
+
+    <div class="faq-item">
+      <h3>Is TDEE the same every day?</h3>
+      <p>
+        No. Your actual energy expenditure can change from day to day
+        depending on exercise, walking, work activity, food intake, and
+        other factors. TDEE is an estimated average daily requirement.
+      </p>
+    </div>
+
+    <div class="faq-item">
+      <h3>Can I use TDEE for muscle gain?</h3>
+      <p>
+        Yes. Estimated TDEE can provide a maintenance starting point.
+        A calorie surplus is often used for weight gain, but the appropriate
+        amount varies by individual and should be adjusted based on progress.
+      </p>
+    </div>
+
+    <div class="faq-item">
+      <h3>How accurate is a TDEE calculator?</h3>
+      <p>
+        TDEE calculators provide estimates rather than direct measurements.
+        Comparing the estimate with your calorie intake and body-weight
+        trend over time can help you refine your maintenance estimate.
+      </p>
+    </div>
+
+    <div class="faq-item">
+      <h3>What should I calculate after TDEE?</h3>
+      <p>
+        After estimating TDEE, use the
+        <a href="/tools/nutrition/macro-calculator">Macro Calculator</a>
+        to estimate protein, carbohydrate, and fat targets, or the
+        <a href="/tools/nutrition/protein-calculator">Protein Calculator</a>
+        if you want to focus specifically on daily protein intake.
+      </p>
     </div>
   </article>
 
@@ -212,57 +548,197 @@ import RelatedTools from '../../../components/RelatedTools.astro';
     let unitSystem = "imperial";
     let sex = "male";
 
-    const unitImperial = document.getElementById("unit-imperial");
-    const unitMetric = document.getElementById("unit-metric");
-    const sexMale = document.getElementById("sex-male");
-    const sexFemale = document.getElementById("sex-female");
-    const imperialHeight = document.getElementById("imperial-height");
-    const metricHeight = document.getElementById("metric-height");
-    const ageInput = document.getElementById("age") as HTMLInputElement | null;
-    const weightInput = document.getElementById("weight") as HTMLInputElement | null;
-    const heightFtInput = document.getElementById("height-ft") as HTMLInputElement | null;
-    const heightInInput = document.getElementById("height-in") as HTMLInputElement | null;
-    const heightCmInput = document.getElementById("height-cm") as HTMLInputElement | null;
-    const activitySelect = document.getElementById("activity") as HTMLSelectElement | null;
-    const calcBtn = document.getElementById("calc-btn");
-    const resultTdee = document.getElementById("result-tdee");
-    const resultBmrLine = document.getElementById("result-bmr-line");
-    const resultTableBody = document.getElementById("result-table-body");
-    const resultBox = document.getElementById("result-box");
+    const unitImperial =
+      document.getElementById("unit-imperial");
 
-    if (unitImperial) unitImperial.addEventListener("click", () => setUnitSystem("imperial"));
-    if (unitMetric) unitMetric.addEventListener("click", () => setUnitSystem("metric"));
-    if (sexMale) sexMale.addEventListener("click", () => setSex("male"));
-    if (sexFemale) sexFemale.addEventListener("click", () => setSex("female"));
+    const unitMetric =
+      document.getElementById("unit-metric");
+
+    const sexMale =
+      document.getElementById("sex-male");
+
+    const sexFemale =
+      document.getElementById("sex-female");
+
+    const imperialHeight =
+      document.getElementById("imperial-height");
+
+    const metricHeight =
+      document.getElementById("metric-height");
+
+    const ageInput =
+      document.getElementById("age") as HTMLInputElement | null;
+
+    const weightInput =
+      document.getElementById("weight") as HTMLInputElement | null;
+
+    const heightFtInput =
+      document.getElementById("height-ft") as HTMLInputElement | null;
+
+    const heightInInput =
+      document.getElementById("height-in") as HTMLInputElement | null;
+
+    const heightCmInput =
+      document.getElementById("height-cm") as HTMLInputElement | null;
+
+    const activitySelect =
+      document.getElementById("activity") as HTMLSelectElement | null;
+
+    const calcBtn =
+      document.getElementById("calc-btn");
+
+    const resultTdee =
+      document.getElementById("result-tdee");
+
+    const resultBmrLine =
+      document.getElementById("result-bmr-line");
+
+    const resultNote =
+      document.getElementById("result-note");
+
+    const resultTableBody =
+      document.getElementById("result-table-body");
+
+    const resultBox =
+      document.getElementById("result-box");
+
+    if (unitImperial) {
+      unitImperial.addEventListener("click", () => {
+        setUnitSystem("imperial");
+      });
+    }
+
+    if (unitMetric) {
+      unitMetric.addEventListener("click", () => {
+        setUnitSystem("metric");
+      });
+    }
+
+    if (sexMale) {
+      sexMale.addEventListener("click", () => {
+        setSex("male");
+      });
+    }
+
+    if (sexFemale) {
+      sexFemale.addEventListener("click", () => {
+        setSex("female");
+      });
+    }
 
     function setUnitSystem(sys: string) {
       unitSystem = sys;
-      if (unitImperial) { unitImperial.classList.toggle("active", sys === "imperial"); unitImperial.setAttribute("aria-pressed", String(sys === "imperial")); }
-      if (unitMetric) { unitMetric.classList.toggle("active", sys === "metric"); unitMetric.setAttribute("aria-pressed", String(sys === "metric")); }
-      if (imperialHeight) (imperialHeight as HTMLElement).style.display = sys === "imperial" ? "block" : "none";
-      if (metricHeight) (metricHeight as HTMLElement).style.display = sys === "metric" ? "block" : "none";
+
+      if (unitImperial) {
+        unitImperial.classList.toggle(
+          "active",
+          sys === "imperial"
+        );
+
+        unitImperial.setAttribute(
+          "aria-pressed",
+          String(sys === "imperial")
+        );
+      }
+
+      if (unitMetric) {
+        unitMetric.classList.toggle(
+          "active",
+          sys === "metric"
+        );
+
+        unitMetric.setAttribute(
+          "aria-pressed",
+          String(sys === "metric")
+        );
+      }
+
+      if (imperialHeight) {
+        (imperialHeight as HTMLElement).style.display =
+          sys === "imperial"
+            ? "block"
+            : "none";
+      }
+
+      if (metricHeight) {
+        (metricHeight as HTMLElement).style.display =
+          sys === "metric"
+            ? "block"
+            : "none";
+      }
     }
 
     function setSex(s: string) {
       sex = s;
-      if (sexMale) { sexMale.classList.toggle("active", s === "male"); sexMale.setAttribute("aria-pressed", String(s === "male")); }
-      if (sexFemale) { sexFemale.classList.toggle("active", s === "female"); sexFemale.setAttribute("aria-pressed", String(s === "female")); }
+
+      if (sexMale) {
+        sexMale.classList.toggle(
+          "active",
+          s === "male"
+        );
+
+        sexMale.setAttribute(
+          "aria-pressed",
+          String(s === "male")
+        );
+      }
+
+      if (sexFemale) {
+        sexFemale.classList.toggle(
+          "active",
+          s === "female"
+        );
+
+        sexFemale.setAttribute(
+          "aria-pressed",
+          String(s === "female")
+        );
+      }
     }
 
     if (calcBtn) {
       calcBtn.addEventListener("click", () => {
-        if (!ageInput || !weightInput || !activitySelect) return;
-
-        const age = parseFloat(ageInput.value);
-        const weightRaw = parseFloat(weightInput.value);
-        const activityMultiplier = parseFloat(activitySelect.value);
-
-        if (!age || age < 15 || age > 90) {
-          alert("Please enter a valid age between 15 and 90.");
+        if (
+          !ageInput ||
+          !weightInput ||
+          !activitySelect
+        ) {
           return;
         }
-        if (!weightRaw || weightRaw <= 0) {
+
+        const age =
+          parseFloat(ageInput.value);
+
+        const weightRaw =
+          parseFloat(weightInput.value);
+
+        const activityMultiplier =
+          parseFloat(activitySelect.value);
+
+        if (
+          !Number.isFinite(age) ||
+          age < 18 ||
+          age > 90
+        ) {
+          alert(
+            "Please enter a valid adult age between 18 and 90."
+          );
+          return;
+        }
+
+        if (
+          !Number.isFinite(weightRaw) ||
+          weightRaw <= 0
+        ) {
           alert("Please enter a valid weight.");
+          return;
+        }
+
+        if (
+          !Number.isFinite(activityMultiplier) ||
+          activityMultiplier <= 0
+        ) {
+          alert("Please select a valid activity level.");
           return;
         }
 
@@ -270,50 +746,188 @@ import RelatedTools from '../../../components/RelatedTools.astro';
         let heightCm: number;
 
         if (unitSystem === "imperial") {
-          const ft = parseFloat(heightFtInput?.value || "0");
-          const inch = parseFloat(heightInInput?.value || "0");
-          if (ft <= 0 && inch <= 0) {
+          const ft =
+            parseFloat(
+              heightFtInput?.value || "0"
+            );
+
+          const inch =
+            parseFloat(
+              heightInInput?.value || "0"
+            );
+
+          if (
+            !Number.isFinite(ft) ||
+            !Number.isFinite(inch) ||
+            (ft <= 0 && inch <= 0)
+          ) {
             alert("Please enter a valid height.");
             return;
           }
+
+          if (ft < 0 || ft > 8) {
+            alert(
+              "Feet must be between 0 and 8."
+            );
+            return;
+          }
+
           if (inch < 0 || inch > 11) {
-            alert("Inches must be between 0 and 11.");
+            alert(
+              "Inches must be between 0 and 11."
+            );
             return;
           }
-          weightKg = weightRaw / 2.20462;
-          heightCm = (ft * 12 + inch) * 2.54;
+
+          const totalInches =
+            ft * 12 + inch;
+
+          if (
+            totalInches < 48 ||
+            totalInches > 96
+          ) {
+            alert(
+              "Please enter a realistic height between 4 ft and 8 ft."
+            );
+            return;
+          }
+
+          weightKg =
+            weightRaw / 2.20462;
+
+          heightCm =
+            totalInches * 2.54;
+
+          if (
+            weightKg < 20 ||
+            weightKg > 500
+          ) {
+            alert(
+              "Please enter a realistic body weight."
+            );
+            return;
+          }
         } else {
-          const cm = parseFloat(heightCmInput?.value || "0");
-          if (!cm || cm <= 0) {
+          const cm =
+            parseFloat(
+              heightCmInput?.value || "0"
+            );
+
+          if (
+            !Number.isFinite(cm) ||
+            cm <= 0
+          ) {
             alert("Please enter a valid height.");
             return;
           }
+
+          if (
+            cm < 122 ||
+            cm > 244
+          ) {
+            alert(
+              "Please enter a realistic height between 122 and 244 cm."
+            );
+            return;
+          }
+
           weightKg = weightRaw;
           heightCm = cm;
+
+          if (
+            weightKg < 20 ||
+            weightKg > 500
+          ) {
+            alert(
+              "Please enter a realistic body weight."
+            );
+            return;
+          }
         }
 
-        const bmr = sex === "male"
-          ? 10 * weightKg + 6.25 * heightCm - 5 * age + 5
-          : 10 * weightKg + 6.25 * heightCm - 5 * age - 161;
+        const bmr =
+          sex === "male"
+            ? (
+                10 * weightKg +
+                6.25 * heightCm -
+                5 * age +
+                5
+              )
+            : (
+                10 * weightKg +
+                6.25 * heightCm -
+                5 * age -
+                161
+              );
 
-        const tdee = bmr * activityMultiplier;
-        const roundedBmr = Math.round(bmr);
-        const roundedTdee = Math.round(tdee);
+        const tdee =
+          bmr * activityMultiplier;
 
-        if (resultTdee) resultTdee.textContent = `${roundedTdee} kcal/day`;
-        if (resultBmrLine) resultBmrLine.textContent = `BMR: ${roundedBmr} kcal/day`;
+        const roundedBmr =
+          Math.round(bmr);
+
+        const roundedTdee =
+          Math.round(tdee);
+
+        if (resultTdee) {
+          resultTdee.textContent =
+            `${roundedTdee} kcal/day`;
+        }
+
+        if (resultBmrLine) {
+          resultBmrLine.textContent =
+            `Estimated BMR: ${roundedBmr} kcal/day`;
+        }
+
+        if (resultNote) {
+          resultNote.textContent =
+            "This is an estimated average daily calorie requirement, not an exact calorie burn for every day.";
+        }
 
         const goals = [
-          { label: "Aggressive Cut (-500)", value: Math.max(roundedTdee - 500, 0) },
-          { label: "Moderate Cut (-300)", value: Math.max(roundedTdee - 300, 0) },
-          { label: "Maintenance", value: roundedTdee },
-          { label: "Lean Bulk (+250)", value: roundedTdee + 250 },
-          { label: "Bulk (+400)", value: roundedTdee + 400 },
+          {
+            label: "Cut (-500)",
+            value: Math.max(
+              roundedTdee - 500,
+              0
+            )
+          },
+          {
+            label: "Cut (-300)",
+            value: Math.max(
+              roundedTdee - 300,
+              0
+            )
+          },
+          {
+            label: "Maintenance",
+            value: roundedTdee
+          },
+          {
+            label: "Gain (+250)",
+            value: roundedTdee + 250
+          },
+          {
+            label: "Gain (+400)",
+            value: roundedTdee + 400
+          }
         ];
 
-        const rows = goals.map(g => `<tr><td>${g.label}</td><td>${g.value} kcal</td></tr>`).join("");
-        if (resultTableBody) resultTableBody.innerHTML = rows;
-        if (resultBox) resultBox.classList.add("show");
+        const rows =
+          goals
+            .map(
+              (goal) =>
+                `<tr><td>${goal.label}</td><td>${goal.value} kcal</td></tr>`
+            )
+            .join("");
+
+        if (resultTableBody) {
+          resultTableBody.innerHTML = rows;
+        }
+
+        if (resultBox) {
+          resultBox.classList.add("show");
+        }
       });
     }
   </script>
