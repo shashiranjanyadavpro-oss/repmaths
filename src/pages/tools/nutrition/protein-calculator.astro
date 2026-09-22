@@ -2,9 +2,10 @@
 import Base from '../../../layouts/Base.astro';
 import RelatedTools from '../../../components/RelatedTools.astro';
 ---
+
 <Base
   title="Protein Intake Calculator — How Much Protein Do You Need?"
-  description="Free protein intake calculator based on ISSN sports nutrition research. Find your daily protein range by weight, activity level, and goal."
+  description="Free protein intake calculator based on sports nutrition research. Find your daily protein target in grams using body weight in pounds or kilograms, activity level, and goal."
 >
   <script type="application/ld+json" set:html={JSON.stringify({
     "@context": "https://schema.org",
@@ -12,8 +13,12 @@ import RelatedTools from '../../../components/RelatedTools.astro';
     "name": "Protein Intake Calculator",
     "applicationCategory": "HealthApplication",
     "operatingSystem": "Any",
-    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
-    "description": "Free online calculator that estimates a daily protein range based on body weight and activity or dietary goal, using ranges drawn from ISSN sports nutrition research."
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    },
+    "description": "Free online protein calculator that estimates a daily protein target from body weight, activity level, and goal using ranges informed by sports nutrition research."
   })} />
 
   <script type="application/ld+json" set:html={JSON.stringify({
@@ -22,10 +27,26 @@ import RelatedTools from '../../../components/RelatedTools.astro';
     "mainEntity": [
       {
         "@type": "Question",
-        "name": "How much protein do I need daily to build muscle?",
+        "name": "How much protein do I need to build muscle?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "The International Society of Sports Nutrition's position stand cites 1.4 to 2.0 grams of protein per kilogram of body weight per day as sufficient for most exercising individuals building or maintaining muscle. Consuming significantly more generally provides diminishing returns for natural lifters."
+          "text": "The International Society of Sports Nutrition cites about 1.4 to 2.0 grams of protein per kilogram of body weight per day for most exercising individuals who want to build or maintain muscle. That is roughly 0.64 to 0.91 grams per pound."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How much protein should I eat per day?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Daily protein needs depend on body weight, activity, training status, and goal. For most exercising people, a commonly cited sports-nutrition range is about 1.4 to 2.0 g/kg per day, or about 0.64 to 0.91 g/lb."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How much protein should I eat per pound?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "For muscle gain or maintenance, about 0.64 to 0.91 grams of protein per pound of body weight corresponds to 1.4 to 2.0 g/kg. Individual needs can vary."
         }
       },
       {
@@ -33,23 +54,39 @@ import RelatedTools from '../../../components/RelatedTools.astro';
         "name": "Do I need more protein when losing weight?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Research cited in the same ISSN position stand suggests intakes of roughly 2.3 to 3.1 grams per kilogram during calorie-deficit periods may help preserve lean muscle mass, higher than the range typically cited for muscle maintenance alone. This is drawn from research on resistance-trained individuals specifically."
+          "text": "Higher protein intake can be useful during a calorie deficit, particularly for resistance-trained people trying to preserve lean mass. Research and sports-nutrition guidance use higher targets during cutting, but the appropriate amount depends on body composition, calorie deficit, training, and individual circumstances."
         }
       },
       {
         "@type": "Question",
-        "name": "Can your body only absorb 20-30 grams of protein per meal?",
+        "name": "Can I only absorb 30 grams of protein per meal?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "This is a common oversimplification. Around 20-40 grams of high-quality protein appears sufficient to maximize the short-term muscle protein synthesis response per meal, but your body still digests and uses larger amounts — it simply takes longer. Total daily protein intake matters far more than precise per-meal amounts."
+          "text": "No. The 20 to 30 gram limit is an oversimplification. Around 20 to 40 grams of high-quality protein is often discussed as a useful per-meal amount for stimulating muscle protein synthesis, but your body can digest and use larger amounts."
         }
       },
       {
         "@type": "Question",
-        "name": "Should I calculate protein based on total body weight or lean body mass?",
+        "name": "Should I calculate protein from total body weight or lean body mass?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "If you're at a fairly typical body fat percentage, total body weight works fine. If you carry significantly more body fat, calculating from total weight can overestimate your needs — using lean body mass or a goal weight tends to give a more reasonable target in that case."
+          "text": "This calculator uses total body weight for simplicity. For people with substantially higher body fat, using lean body mass or a realistic goal weight may produce a more practical protein target."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Is 1 gram of protein per pound necessary for muscle gain?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "No. One gram per pound is a common fitness guideline, but it is not required for most people. The ISSN range of about 0.64 to 0.91 g/lb covers 1.4 to 2.0 g/kg, which is sufficient for most exercising individuals."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What should I calculate after my protein target?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Once you have a protein target, you can estimate your daily calorie needs with a TDEE calculator and then use a macro calculator to divide calories between protein, carbohydrates, and fat."
         }
       }
     ]
@@ -57,112 +94,453 @@ import RelatedTools from '../../../components/RelatedTools.astro';
 
   <section class="hero">
     <h1>Protein Intake Calculator</h1>
-    <p>Find your daily protein range based on your weight, activity, and goal.</p>
+    <p>
+      Find your daily protein target in grams using body weight in pounds or
+      kilograms, activity level, and goal.
+    </p>
   </section>
 
   <section class="calc-card">
     <div class="field">
-      <label>Unit</label>
+      <label>Weight Unit</label>
+
       <div class="unit-toggle">
-        <button type="button" id="unit-lb" class="active" aria-pressed="true">lb</button>
-        <button type="button" id="unit-kg" aria-pressed="false">kg</button>
+        <button
+          type="button"
+          id="unit-lb"
+          class="active"
+          aria-pressed="true"
+        >
+          lb
+        </button>
+
+        <button
+          type="button"
+          id="unit-kg"
+          aria-pressed="false"
+        >
+          kg
+        </button>
       </div>
     </div>
+
     <div class="field">
-      <label for="weight">Body Weight</label>
-      <input type="number" id="weight" placeholder="e.g. 180" inputmode="decimal" min="1" />
+      <label for="weight" id="weight-label">Body Weight (lb)</label>
+
+      <input
+        type="number"
+        id="weight"
+        placeholder="e.g. 180"
+        inputmode="decimal"
+        min="1"
+        step="0.1"
+        autocomplete="off"
+      />
+
+      <small id="weight-help">
+        Enter your body weight in pounds. You can switch to kilograms anytime.
+      </small>
     </div>
+
     <div class="field">
       <label>Goal / Activity Level</label>
+
       <div class="unit-toggle">
-        <button type="button" id="goal-sedentary" aria-pressed="false">Sedentary (RDA)</button>
-        <button type="button" id="goal-active" class="active" aria-pressed="true">General Activity</button>
-        <button type="button" id="goal-muscle" aria-pressed="false">Muscle Gain</button>
-        <button type="button" id="goal-cutting" aria-pressed="false">Cutting</button>
+        <button
+          type="button"
+          id="goal-sedentary"
+          aria-pressed="false"
+        >
+          Sedentary (RDA)
+        </button>
+
+        <button
+          type="button"
+          id="goal-active"
+          class="active"
+          aria-pressed="true"
+        >
+          General Activity
+        </button>
+
+        <button
+          type="button"
+          id="goal-muscle"
+          aria-pressed="false"
+        >
+          Muscle Gain
+        </button>
+
+        <button
+          type="button"
+          id="goal-cutting"
+          aria-pressed="false"
+        >
+          Cutting
+        </button>
       </div>
     </div>
-    <button class="btn-primary" id="calc-btn">Calculate Protein Target</button>
+
+    <button class="btn-primary" id="calc-btn">
+      Calculate Protein Target
+    </button>
 
     <div class="result-box" id="result-box">
       <div class="big-number" id="result-protein">–</div>
-      <div class="label" id="result-label">Daily Protein Target</div>
+
+      <div class="label" id="result-label">
+        Daily Protein Target
+      </div>
+
       <p class="result-range" id="result-range"></p>
+
       <div class="result-actions">
-        <a href="/tools/nutrition/tdee-calculator" class="btn-primary">Calculate TDEE</a>
-        <a href="/tools/nutrition/macro-calculator" class="btn-primary">Calculate Macros</a>
+        <a
+          href="/tools/nutrition/tdee-calculator"
+          class="btn-primary"
+        >
+          Calculate TDEE
+        </a>
+
+        <a
+          href="/tools/nutrition/macro-calculator"
+          class="btn-primary"
+        >
+          Calculate Macros
+        </a>
       </div>
     </div>
   </section>
 
   <article class="article-section">
     <h2>Protein Intake by Goal</h2>
+
     <p>
-      The 1.4-2.0 g/kg and 2.3-3.1 g/kg ranges below are drawn from the
-      International Society of Sports Nutrition's position stand on
-      protein and exercise. The "General Activity" tier is a practical
-      estimate for moderately active people rather than a specific
-      research-cited figure.
+      Protein needs vary with body weight, activity, training status, and
+      calorie intake. For people who exercise regularly, sports-nutrition
+      guidance commonly places daily protein around
+      <strong>1.4-2.0 g/kg</strong>, equivalent to about
+      <strong>0.64-0.91 g/lb</strong>, for building or maintaining muscle.
+      The ranges below are practical estimates, not universal prescriptions.
     </p>
+
     <ul>
-      <li><strong>Sedentary (RDA):</strong> ~0.36 g/lb (0.8 g/kg) — the standard Recommended Dietary Allowance, representing a minimum to avoid deficiency rather than an optimal target for active people.</li>
-      <li><strong>General Activity:</strong> ~0.45-0.64 g/lb (1.0-1.4 g/kg) — a reasonable estimate for people who exercise moderately but aren't training specifically for muscle or performance goals.</li>
-      <li><strong>Muscle Gain / Maintenance:</strong> ~0.64-0.91 g/lb (1.4-2.0 g/kg) — the ISSN-cited range for most exercising individuals building or maintaining muscle.</li>
-      <li><strong>Cutting (Fat Loss):</strong> ~1.04-1.41 g/lb (2.3-3.1 g/kg) — a higher range from research on resistance-trained individuals during calorie deficits, aimed at preserving lean mass.</li>
+      <li>
+        <strong>Sedentary (RDA):</strong>
+        ~0.36 g/lb (0.8 g/kg) — the standard adult RDA for protein.
+      </li>
+
+      <li>
+        <strong>General Activity:</strong>
+        ~0.45-0.64 g/lb (1.0-1.4 g/kg) — a practical range for people
+        who exercise but are not specifically targeting muscle growth or
+        performance.
+      </li>
+
+      <li>
+        <strong>Muscle Gain / Maintenance:</strong>
+        ~0.64-0.91 g/lb (1.4-2.0 g/kg) — the range commonly cited by
+        ISSN for most exercising individuals.
+      </li>
+
+      <li>
+        <strong>Cutting / Fat Loss:</strong>
+        ~0.82-1.22 g/lb (1.8-2.7 g/kg) — a higher athlete-oriented range
+        that may be useful during an energy deficit when preserving lean
+        mass is a priority.
+      </li>
     </ul>
+
+    <p>
+      Cutting needs can vary considerably. The higher
+      <strong>2.3-3.1 g/kg</strong> figure sometimes seen online refers to
+      <strong>fat-free mass</strong> in specific resistance-trained,
+      calorie-restricted contexts rather than a universal body-weight
+      target.
+    </p>
   </article>
 
   <article class="article-section">
-    <h2>Grams per Pound vs. Grams per Kilogram</h2>
+    <h2>Protein Grams per Pound vs. Grams per Kilogram</h2>
+
     <p>
-      Most sports-science research is published in grams per kilogram
-      (g/kg), which this calculator uses internally regardless of which
-      unit you select for your weight. If you prefer thinking in pounds, a
-      rough rule of thumb many lifters use is 0.7-1.0 grams of protein per
-      pound of body weight for muscle gain, which lines up closely with
-      the 1.4-2.0 g/kg range above.
+      Most sports nutrition research reports protein intake in
+      <strong>grams per kilogram (g/kg)</strong>, while many lifters in the
+      United States and Canada think in <strong>grams per pound (g/lb)</strong>.
+      This calculator supports both.
+    </p>
+
+    <p>
+      For muscle gain or maintenance, the commonly cited
+      1.4-2.0 g/kg range works out to approximately
+      <strong>0.64-0.91 g/lb</strong>.
+      You do not need to convert your weight manually — choose lb or kg above
+      and the calculator handles the conversion.
+    </p>
+
+    <p>
+      A target of <strong>1 gram of protein per pound</strong> is a popular
+      fitness rule of thumb, but it is not a requirement for most people.
+      It is slightly above the ISSN range for most exercising individuals,
+      so more is not automatically better.
+    </p>
+  </article>
+
+  <article class="article-section">
+    <h2>Protein for Muscle Gain</h2>
+
+    <p>
+      If your goal is muscle growth, daily protein is only one part of the
+      equation. Resistance training, sufficient calories, recovery, and
+      progressive overload all matter.
+    </p>
+
+    <p>
+      For most people who train regularly, around
+      <strong>0.64-0.91 g/lb (1.4-2.0 g/kg) per day</strong> is a reasonable
+      evidence-based range. Research on resistance training suggests that
+      increasing protein beyond roughly 1.6 g/kg/day does not consistently
+      produce additional gains in fat-free mass for the average healthy
+      exercising population.
+    </p>
+
+    <p>
+      Once you know your protein target, use our
+      <a href="/tools/nutrition/macro-calculator">Macro Calculator</a>
+      to distribute your remaining calories between carbohydrates and fat.
+    </p>
+  </article>
+
+  <article class="article-section">
+    <h2>Protein During a Cutting Phase</h2>
+
+    <p>
+      During a calorie deficit, maintaining resistance training and getting
+      enough protein can help support lean-mass retention. Higher protein
+      intakes have been studied in resistance-trained people during
+      energy restriction, but the appropriate target depends on body
+      composition, deficit size, training, and the individual.
+    </p>
+
+    <p>
+      For a practical starting point, this calculator uses
+      <strong>1.8-2.7 g/kg (0.82-1.22 g/lb)</strong> for the Cutting option.
+      This is an athlete-oriented range rather than a requirement for every
+      person trying to lose weight.
+    </p>
+
+    <p>
+      If you are setting up a complete fat-loss plan, estimate your daily
+      calorie needs first with our
+      <a href="/tools/nutrition/tdee-calculator">TDEE Calculator</a>,
+      then use your protein target when building your macros.
+    </p>
+  </article>
+
+  <article class="article-section">
+    <h2>Protein Per Meal and Protein Timing</h2>
+
+    <p>
+      You do not have to hit one exact protein number at every meal.
+      Sports-nutrition guidance commonly discusses roughly
+      <strong>20-40 grams of high-quality protein per meal</strong> as a
+      useful general range, with individual needs depending on body size,
+      age, training, and the meal.
+    </p>
+
+    <p>
+      Spreading protein across several meals can make it easier to reach your
+      daily target and provide repeated opportunities to stimulate muscle
+      protein synthesis. Your <strong>total daily protein intake</strong>
+      remains more important than obsessing over a precise 30-gram limit.
     </p>
   </article>
 
   <article class="article-section">
     <h2>Total Body Weight vs. Lean Body Mass</h2>
+
     <p>
-      These calculations use total body weight, which works well for most
-      people at a typical body fat percentage. If you carry significantly
-      more body fat, calculating from total weight can overestimate what
-      you actually need — in that case, using your lean body mass or a
-      realistic goal weight tends to give a more sensible number.
+      This calculator uses total body weight because it is simple and useful
+      for most people. If you have substantially higher body fat, calculating
+      protein from total body weight can produce a target that is higher than
+      necessary.
+    </p>
+
+    <p>
+      In that situation, a realistic goal weight or lean body mass can be a
+      more practical reference point. If you want an estimate of body-fat
+      percentage first, you can use our
+      <a href="/tools/nutrition/body-fat-calculator">Body Fat Calculator</a>.
+    </p>
+  </article>
+
+  <article class="article-section">
+    <h2>Protein Quality and Food Sources</h2>
+
+    <p>
+      You can reach a daily protein target from whole foods, protein-rich
+      meals, or supplements. Common high-protein foods include eggs, dairy,
+      Greek yogurt, milk, chicken, turkey, lean meat, fish, soy foods,
+      beans, lentils, and other legumes.
+    </p>
+
+    <p>
+      Protein supplements such as whey or plant-based powders can be
+      convenient when food alone makes your daily target difficult to reach,
+      but a supplement is not required if you can meet your needs through
+      regular meals.
     </p>
   </article>
 
   <article class="article-section">
     <h2>Common Protein Myth: The "30 Grams Per Meal" Limit</h2>
+
     <p>
-      A widely repeated claim is that your body can't use more than
-      20-30 grams of protein per meal. In reality, that range appears
-      sufficient to maximize the short-term muscle protein synthesis
-      response, but your body still digests and uses larger amounts —
-      it just takes longer. Total daily protein intake matters far more
-      than hitting an exact number at every meal.
+      A common claim is that the body can only absorb 20-30 grams of protein
+      at one time. That is an oversimplification.
+    </p>
+
+    <p>
+      A meal containing roughly 20-40 grams of high-quality protein is often
+      discussed as a useful amount for maximizing the short-term muscle
+      protein synthesis response, but your digestive system does not simply
+      stop processing protein above 30 grams. Larger meals can still be
+      digested and used.
+    </p>
+
+    <p>
+      For most people, getting an appropriate total amount of protein across
+      the day is more important than trying to hit an exact protein number
+      at every meal.
+    </p>
+  </article>
+
+  <article class="article-section">
+    <h2>Protein RDA vs. Protein for Active People</h2>
+
+    <p>
+      The adult protein RDA of <strong>0.8 g/kg (about 0.36 g/lb)</strong>
+      is designed as a population-level requirement, not necessarily as an
+      optimal target for someone regularly lifting weights or training for
+      performance.
+    </p>
+
+    <p>
+      People who exercise regularly often use higher protein targets because
+      training, body composition goals, and energy intake can change protein
+      needs. This is why the calculator separates the Sedentary RDA option
+      from General Activity, Muscle Gain, and Cutting.
+    </p>
+  </article>
+
+  <article class="article-section">
+    <h2>Evidence Behind This Protein Calculator</h2>
+
+    <p>
+      The Muscle Gain range is informed by the International Society of
+      Sports Nutrition's position stand, which reports 1.4-2.0 g/kg/day as
+      sufficient for most exercising individuals. 4
+    </p>
+
+    <p>
+      A large meta-analysis of resistance-training studies found that
+      protein supplementation increased gains in fat-free mass and strength,
+      while additional benefit became limited at higher total protein
+      intakes, with a modeled breakpoint around 1.62 g/kg/day. 5
+    </p>
+
+    <p>
+      Higher protein intake can also be relevant during calorie restriction.
+      Research in resistance-trained athletes and sports-nutrition reviews
+      has examined higher protein targets during cutting to help preserve
+      lean mass, although the appropriate amount varies by individual and
+      body composition. 6
+    </p>
+
+    <p>
+      These findings are useful for setting a practical starting point, not
+      a guarantee of a specific result for every person.
     </p>
   </article>
 
   <article class="article-section">
     <h2>Frequently Asked Questions</h2>
+
     <div class="faq-item">
       <h3>How much protein do I need to build muscle?</h3>
-      <p>ISSN's position stand cites 1.4-2.0 g/kg body weight daily for most exercising individuals building or maintaining muscle.</p>
+      <p>
+        For most exercising individuals, about
+        <strong>0.64-0.91 g/lb (1.4-2.0 g/kg)</strong> per day is a
+        commonly cited sports-nutrition range for building or maintaining
+        muscle.
+      </p>
     </div>
+
+    <div class="faq-item">
+      <h3>How much protein should I eat per day?</h3>
+      <p>
+        It depends on your body weight, activity, training status, and goal.
+        For people who exercise regularly, around 1.4-2.0 g/kg
+        (0.64-0.91 g/lb) is a commonly used range for muscle-related goals.
+      </p>
+    </div>
+
+    <div class="faq-item">
+      <h3>How much protein should I eat per pound?</h3>
+      <p>
+        For muscle gain or maintenance, about
+        <strong>0.64-0.91 grams per pound</strong> corresponds to
+        1.4-2.0 g/kg. Individual needs can vary.
+      </p>
+    </div>
+
     <div class="faq-item">
       <h3>Do I need more protein when losing weight?</h3>
-      <p>Research on resistance-trained individuals during deficits suggests 2.3-3.1 g/kg may help preserve muscle mass while cutting.</p>
+      <p>
+        Higher protein can be useful during a calorie deficit, especially
+        for resistance-trained people trying to preserve lean mass. The
+        appropriate amount depends on body composition, calorie deficit,
+        training, and other individual factors.
+      </p>
     </div>
+
     <div class="faq-item">
       <h3>Can I only absorb 30g of protein per meal?</h3>
-      <p>No — that's an oversimplification. Your body digests larger amounts too; total daily intake matters more than per-meal precision.</p>
+      <p>
+        No. That is an oversimplification. Your body can digest and use more
+        than 30 grams. Around 20-40 grams is often discussed as a useful
+        per-meal amount for stimulating muscle protein synthesis, but total
+        daily protein matters more than an exact per-meal limit.
+      </p>
     </div>
+
     <div class="faq-item">
       <h3>Should I use total body weight or lean body mass?</h3>
-      <p>Total weight is fine at a typical body fat percentage. At significantly higher body fat, lean mass or a goal weight gives a more reasonable target.</p>
+      <p>
+        Total body weight is a convenient starting point for most people.
+        If you have substantially higher body fat, using lean body mass or a
+        realistic goal weight may produce a more practical target.
+      </p>
+    </div>
+
+    <div class="faq-item">
+      <h3>Is 1 gram of protein per pound necessary for muscle gain?</h3>
+      <p>
+        No. One gram per pound is a popular fitness guideline, but it is not
+        required for most people. The commonly cited 1.4-2.0 g/kg range is
+        about 0.64-0.91 g/lb.
+      </p>
+    </div>
+
+    <div class="faq-item">
+      <h3>What should I calculate after my protein target?</h3>
+      <p>
+        Estimate your daily calorie needs with our
+        <a href="/tools/nutrition/tdee-calculator">TDEE Calculator</a>,
+        then use our
+        <a href="/tools/nutrition/macro-calculator">Macro Calculator</a>
+        to divide calories between protein, carbohydrates, and fat.
+      </p>
     </div>
   </article>
 
@@ -172,18 +550,33 @@ import RelatedTools from '../../../components/RelatedTools.astro';
     let unit = "lb";
     let goal = "active";
 
+    /*
+     * Internal calculations use g/kg because the research ranges
+     * are commonly reported in g/kg. The UI supports lb and kg.
+     */
     const factorRanges: Record<string, [number, number]> = {
       sedentary: [0.8, 0.8],
       active: [1.0, 1.4],
       muscle: [1.4, 2.0],
-      cutting: [2.3, 3.1],
+
+      // Practical athlete-oriented cutting range.
+      // Higher 2.3-3.1 g/kg figures are generally discussed
+      // in fat-free-mass / specific resistance-trained contexts.
+      cutting: [1.8, 2.7],
     };
 
     const goalLabels: Record<string, string> = {
-      sedentary: "Based on ~0.36 g/lb (0.8 g/kg) — RDA",
-      active: "Based on ~0.45-0.64 g/lb (1.0-1.4 g/kg) — general estimate",
-      muscle: "Based on ~0.64-0.91 g/lb (1.4-2.0 g/kg) — ISSN",
-      cutting: "Based on ~1.04-1.41 g/lb (2.3-3.1 g/kg) — research, cutting phase",
+      sedentary:
+        "Based on ~0.36 g/lb (0.8 g/kg) — adult RDA",
+
+      active:
+        "Based on ~0.45-0.64 g/lb (1.0-1.4 g/kg) — general estimate",
+
+      muscle:
+        "Based on ~0.64-0.91 g/lb (1.4-2.0 g/kg) — sports nutrition range",
+
+      cutting:
+        "Based on ~0.82-1.22 g/lb (1.8-2.7 g/kg) — athlete-oriented cutting range",
     };
 
     const MIN_WEIGHT_KG = 25;
@@ -191,81 +584,190 @@ import RelatedTools from '../../../components/RelatedTools.astro';
 
     const unitLb = document.getElementById("unit-lb");
     const unitKg = document.getElementById("unit-kg");
+
     const goalButtons: Record<string, HTMLElement | null> = {
       sedentary: document.getElementById("goal-sedentary"),
       active: document.getElementById("goal-active"),
       muscle: document.getElementById("goal-muscle"),
       cutting: document.getElementById("goal-cutting"),
     };
-    const weightInput = document.getElementById("weight") as HTMLInputElement | null;
+
+    const weightInput =
+      document.getElementById("weight") as HTMLInputElement | null;
+
+    const weightLabel = document.getElementById("weight-label");
+    const weightHelp = document.getElementById("weight-help");
+
     const calcBtn = document.getElementById("calc-btn");
+
     const resultProtein = document.getElementById("result-protein");
     const resultLabel = document.getElementById("result-label");
     const resultRange = document.getElementById("result-range");
     const resultBox = document.getElementById("result-box");
 
-    if (unitLb) unitLb.addEventListener("click", () => setUnit("lb"));
-    if (unitKg) unitKg.addEventListener("click", () => setUnit("kg"));
+    if (unitLb) {
+      unitLb.addEventListener("click", () => setUnit("lb"));
+    }
+
+    if (unitKg) {
+      unitKg.addEventListener("click", () => setUnit("kg"));
+    }
+
     for (const key in goalButtons) {
       const btn = goalButtons[key];
-      if (btn) btn.addEventListener("click", () => setGoal(key));
+
+      if (btn) {
+        btn.addEventListener("click", () => setGoal(key));
+      }
     }
 
     function setUnit(newUnit: string) {
+      if (newUnit !== "lb" && newUnit !== "kg") return;
       if (newUnit === unit) return;
+
       if (weightInput) {
         const currentVal = parseFloat(weightInput.value);
-        if (currentVal && !isNaN(currentVal)) {
-          weightInput.value = newUnit === "kg"
-            ? (currentVal / 2.20462).toFixed(1)
-            : (currentVal * 2.20462).toFixed(1);
+
+        if (Number.isFinite(currentVal) && currentVal > 0) {
+          weightInput.value =
+            newUnit === "kg"
+              ? (currentVal / 2.20462).toFixed(1)
+              : (currentVal * 2.20462).toFixed(1);
         }
       }
+
       unit = newUnit;
-      if (unitLb) { unitLb.classList.toggle("active", unit === "lb"); unitLb.setAttribute("aria-pressed", String(unit === "lb")); }
-      if (unitKg) { unitKg.classList.toggle("active", unit === "kg"); unitKg.setAttribute("aria-pressed", String(unit === "kg")); }
+
+      if (unitLb) {
+        unitLb.classList.toggle("active", unit === "lb");
+        unitLb.setAttribute(
+          "aria-pressed",
+          String(unit === "lb")
+        );
+      }
+
+      if (unitKg) {
+        unitKg.classList.toggle("active", unit === "kg");
+        unitKg.setAttribute(
+          "aria-pressed",
+          String(unit === "kg")
+        );
+      }
+
+      if (weightLabel) {
+        weightLabel.textContent =
+          unit === "lb"
+            ? "Body Weight (lb)"
+            : "Body Weight (kg)";
+      }
+
+      if (weightHelp) {
+        weightHelp.textContent =
+          unit === "lb"
+            ? "Enter your body weight in pounds. You can switch to kilograms anytime."
+            : "Enter your body weight in kilograms. You can switch to pounds anytime.";
+      }
+
+      if (weightInput) {
+        weightInput.placeholder =
+          unit === "lb"
+            ? "e.g. 180"
+            : "e.g. 82";
+      }
     }
 
     function setGoal(g: string) {
       if (!factorRanges[g]) return;
+
       goal = g;
+
       for (const key in goalButtons) {
         const btn = goalButtons[key];
-        if (btn) { btn.classList.toggle("active", key === g); btn.setAttribute("aria-pressed", String(key === g)); }
+
+        if (btn) {
+          btn.classList.toggle("active", key === g);
+          btn.setAttribute(
+            "aria-pressed",
+            String(key === g)
+          );
+        }
       }
     }
 
     if (calcBtn) {
       calcBtn.addEventListener("click", () => {
         if (!weightInput) return;
+
         const weightRaw = parseFloat(weightInput.value);
 
-        if (!weightRaw || isNaN(weightRaw) || weightRaw <= 0) {
+        if (!Number.isFinite(weightRaw) || weightRaw <= 0) {
           alert("Please enter a valid body weight.");
           return;
         }
 
-        const weightKg = unit === "lb" ? weightRaw / 2.20462 : weightRaw;
+        const weightKg =
+          unit === "lb"
+            ? weightRaw / 2.20462
+            : weightRaw;
 
-        if (weightKg < MIN_WEIGHT_KG || weightKg > MAX_WEIGHT_KG) {
-          alert("Please enter a body weight between 55 lb and 550 lb (25-250 kg).");
+        if (
+          weightKg < MIN_WEIGHT_KG ||
+          weightKg > MAX_WEIGHT_KG
+        ) {
+          alert(
+            "Please enter a body weight between 55 lb and 550 lb (25-250 kg)."
+          );
           return;
         }
 
         const range = factorRanges[goal];
+
         if (!range) return;
 
         const [lowFactor, highFactor] = range;
+
         const lowG = Math.round(weightKg * lowFactor);
         const highG = Math.round(weightKg * highFactor);
 
+        const lowLbFactor = lowFactor / 2.20462;
+        const highLbFactor = highFactor / 2.20462;
+
+        const proteinText =
+          lowG === highG
+            ? `${lowG} g/day`
+            : `${lowG}-${highG} g/day`;
+
+        const proteinPerLbText =
+          lowLbFactor === highLbFactor
+            ? `${lowLbFactor.toFixed(2)} g/lb`
+            : `${lowLbFactor.toFixed(2)}-${highLbFactor.toFixed(2)} g/lb`;
+
+        const proteinPerKgText =
+          lowFactor === highFactor
+            ? `${lowFactor.toFixed(1)} g/kg`
+            : `${lowFactor.toFixed(1)}-${highFactor.toFixed(1)} g/kg`;
+
+        const displayWeight =
+          unit === "lb"
+            ? `${weightRaw.toFixed(1)} lb (${weightKg.toFixed(1)} kg)`
+            : `${weightRaw.toFixed(1)} kg (${(weightKg * 2.20462).toFixed(1)} lb)`;
+
         if (resultProtein) {
-          resultProtein.textContent = lowG === highG ? `${lowG} g/day` : `${lowG}-${highG} g/day`;
+          resultProtein.textContent = proteinText;
         }
-        if (resultLabel) resultLabel.textContent = "Daily Protein Target";
-        const displayWeight = unit === "lb" ? `${Math.round(weightRaw)} lb` : `${Math.round(weightKg)} kg`;
-        if (resultRange) resultRange.textContent = `${goalLabels[goal]} · Body weight: ${displayWeight}`;
-        if (resultBox) resultBox.classList.add("show");
+
+        if (resultLabel) {
+          resultLabel.textContent = "Daily Protein Target";
+        }
+
+        if (resultRange) {
+          resultRange.textContent =
+            `${goalLabels[goal]} · ${proteinPerLbText} · ${proteinPerKgText} · Body weight: ${displayWeight}`;
+        }
+
+        if (resultBox) {
+          resultBox.classList.add("show");
+        }
       });
     }
   </script>
