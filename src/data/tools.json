@@ -163,5 +163,14 @@
     "icon": "BF%",
     "cluster": "nutrition",
     "related": ["tdee-calculator", "macro-calculator"]
+  },
+  {
+  "id": "strength-standards-calculator",
+  "name": "Strength Standards Calculator",
+  "url": "/tools/strength/strength-standards-calculator",
+  "shortDesc": "Compare your bench, squat, deadlift, or OHP 1RM with bodyweight-based reference standards.",
+  "icon": "STD",
+  "cluster": "strength",
+  "related": ["1rm-calculator", "1rm-percentage-calculator", "training-max-calculator", "rpe-rir-calculator"]
   }
 ]
