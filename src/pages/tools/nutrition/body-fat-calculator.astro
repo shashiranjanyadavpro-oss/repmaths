@@ -2,9 +2,10 @@
 import Base from '../../../layouts/Base.astro';
 import RelatedTools from '../../../components/RelatedTools.astro';
 ---
+
 <Base
   title="Body Fat Calculator (US Navy Method) — Men & Women"
-  description="Free body fat percentage calculator using the US Navy tape-measure method. Enter neck, waist, and height (plus hip for women) for an instant estimate."
+  description="Free body fat percentage calculator using the US Navy tape-measure method. Enter neck, waist, and height (plus hip for women) in inches or cm for an instant estimate."
 >
   <script type="application/ld+json" set:html={JSON.stringify({
     "@context": "https://schema.org",
@@ -12,8 +13,12 @@ import RelatedTools from '../../../components/RelatedTools.astro';
     "name": "Body Fat Calculator (US Navy Method)",
     "applicationCategory": "HealthApplication",
     "operatingSystem": "Any",
-    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
-    "description": "Free online calculator that estimates body fat percentage from neck, waist, hip, and height measurements using the US Navy circumference method."
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    },
+    "description": "Free online body fat percentage calculator using the U.S. Navy circumference method with height, neck, waist, and hip measurements."
   })} />
 
   <script type="application/ld+json" set:html={JSON.stringify({
@@ -22,10 +27,10 @@ import RelatedTools from '../../../components/RelatedTools.astro';
     "mainEntity": [
       {
         "@type": "Question",
-        "name": "How accurate is the Navy body fat calculator compared to DEXA?",
+        "name": "How accurate is the Navy body fat calculator compared with DEXA?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "A 2022 study of physically fit U.S. Marines found the method underestimated body fat by about 2.5-2.6 percentage points in men and overestimated it by about 1.3-2.3 percentage points in women, with individual variability of roughly 3.7-4.8 percentage points. It's a field estimate rather than a lab-grade measurement, but useful for tracking trends over time."
+          "text": "The Navy circumference method is a field estimate, not a laboratory measurement. A 2022 study of physically fit U.S. Marines found that the method underestimated body fat by about 2.5-2.6 percentage points in men and overestimated it by about 1.3-2.3 percentage points in women, with individual variability of roughly 3.7-4.8 percentage points."
         }
       },
       {
@@ -33,15 +38,15 @@ import RelatedTools from '../../../components/RelatedTools.astro';
         "name": "What is a healthy body fat percentage?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Using commonly cited fitness-industry categories: essential fat is roughly 2-5% for men and 10-13% for women. An athletic range is about 6-13% for men and 14-20% for women. A general fitness range is roughly 14-17% for men and 21-24% for women, with an acceptable range extending further. Healthy ranges vary by individual and by source."
+          "text": "Body fat ranges vary by sex, age, population, and reference source. Common fitness references often describe approximately 18-24% for men and 25-31% for women as typical non-athlete ranges. These are not universal medical thresholds."
         }
       },
       {
         "@type": "Question",
-        "name": "Why is body fat percentage better than BMI?",
+        "name": "Why is body fat percentage different from BMI?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "BMI only compares height to total weight and cannot distinguish muscle from fat. A muscular person can have a BMI in the 'overweight' range while having a low body fat percentage. Body fat percentage estimates actual composition, making it more informative for people with above-average muscle mass."
+          "text": "BMI uses only height and body weight and cannot distinguish fat mass from muscle mass. Body fat percentage attempts to estimate the proportion of body weight that is fat, although the Navy method is itself an estimate."
         }
       },
       {
@@ -49,7 +54,39 @@ import RelatedTools from '../../../components/RelatedTools.astro';
         "name": "Where should I measure my waist, neck, and hips?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Measure the neck just below the larynx. For men, measure the waist at the navel. For women, measure the waist at the narrowest point and the hips at their widest point. Keep the tape level and snug without compressing the skin, and take a couple of measurements to average out small errors."
+          "text": "For the Navy-style circumference method, men measure the abdomen at the navel and the neck below the larynx. Women measure the natural waist at its smallest point, the hips at the greatest protrusion, and the neck below the larynx. Keep the tape level and snug without compressing the skin."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Can I use this body fat calculator for men and women?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes. The calculator uses separate Navy circumference equations for males and females. Women also enter a hip measurement because the female equation uses waist, hip, and neck circumferences."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Is the Navy body fat method better than a smart scale?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Neither method should automatically be treated as a precise measurement for an individual. Bioelectrical impedance and circumference methods both have sources of measurement error. For consistency, using the same method and conditions over time can be more useful for tracking trends."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How can I lower my body fat percentage?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Reducing body fat generally involves sustained energy balance, appropriate nutrition, resistance training, physical activity, and adequate recovery. A calorie target can be estimated with a TDEE calculator, while protein and macro targets can be set with dedicated calculators."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What should I calculate after body fat percentage?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "If you are using body composition to plan nutrition, you can estimate daily calorie needs with a TDEE calculator and then use a protein calculator or macro calculator to build a practical nutrition target."
         }
       }
     ]
@@ -57,137 +94,526 @@ import RelatedTools from '../../../components/RelatedTools.astro';
 
   <section class="hero">
     <h1>Body Fat Calculator (US Navy Method)</h1>
-    <p>Estimate your body fat percentage from a few tape-measure readings.</p>
+    <p>
+      Estimate your body fat percentage from height and tape-measure readings
+      using the U.S. Navy circumference method.
+    </p>
   </section>
 
   <section class="calc-card">
     <div class="field">
-      <label>Unit</label>
+      <label>Measurement Unit</label>
+
       <div class="unit-toggle">
-        <button type="button" id="unit-in" class="active" aria-pressed="true">inches</button>
-        <button type="button" id="unit-cm" aria-pressed="false">cm</button>
+        <button
+          type="button"
+          id="unit-in"
+          class="active"
+          aria-pressed="true"
+        >
+          inches
+        </button>
+
+        <button
+          type="button"
+          id="unit-cm"
+          aria-pressed="false"
+        >
+          cm
+        </button>
       </div>
     </div>
+
     <div class="field">
       <label>Sex</label>
+
       <div class="unit-toggle">
-        <button type="button" id="sex-male" class="active" aria-pressed="true">Male</button>
-        <button type="button" id="sex-female" aria-pressed="false">Female</button>
+        <button
+          type="button"
+          id="sex-male"
+          class="active"
+          aria-pressed="true"
+        >
+          Male
+        </button>
+
+        <button
+          type="button"
+          id="sex-female"
+          aria-pressed="false"
+        >
+          Female
+        </button>
       </div>
     </div>
+
     <div class="field">
-      <label for="height">Height</label>
-      <input type="number" id="height" placeholder="e.g. 70" inputmode="decimal" min="1" />
+      <label for="height" id="height-label">
+        Height (inches)
+      </label>
+
+      <input
+        type="number"
+        id="height"
+        placeholder="e.g. 70"
+        inputmode="decimal"
+        min="1"
+        step="0.1"
+        autocomplete="off"
+      />
     </div>
+
     <div class="field">
-      <label for="neck">Neck (below larynx)</label>
-      <input type="number" id="neck" placeholder="e.g. 15" inputmode="decimal" min="1" />
+      <label for="neck" id="neck-label">
+        Neck (inches, below larynx)
+      </label>
+
+      <input
+        type="number"
+        id="neck"
+        placeholder="e.g. 15"
+        inputmode="decimal"
+        min="1"
+        step="0.1"
+        autocomplete="off"
+      />
     </div>
+
     <div class="field">
-      <label for="waist" id="waist-label">Waist (at navel)</label>
-      <input type="number" id="waist" placeholder="e.g. 34" inputmode="decimal" min="1" />
+      <label for="waist" id="waist-label">
+        Waist (inches, at navel)
+      </label>
+
+      <input
+        type="number"
+        id="waist"
+        placeholder="e.g. 34"
+        inputmode="decimal"
+        min="1"
+        step="0.1"
+        autocomplete="off"
+      />
     </div>
-    <div id="hip-field" class="field" style="display:none;">
-      <label for="hip">Hip (at widest point)</label>
-      <input type="number" id="hip" placeholder="e.g. 38" inputmode="decimal" min="1" />
+
+    <div
+      id="hip-field"
+      class="field"
+      style="display:none;"
+    >
+      <label for="hip" id="hip-label">
+        Hip (inches, widest point)
+      </label>
+
+      <input
+        type="number"
+        id="hip"
+        placeholder="e.g. 38"
+        inputmode="decimal"
+        min="1"
+        step="0.1"
+        autocomplete="off"
+      />
     </div>
-    <button class="btn-primary" id="calc-btn">Calculate Body Fat %</button>
+
+    <button class="btn-primary" id="calc-btn">
+      Calculate Body Fat %
+    </button>
 
     <div class="result-box" id="result-box">
       <div class="big-number" id="result-bf">–</div>
-      <div class="label" id="result-label">Estimated Body Fat Percentage</div>
+
+      <div class="label" id="result-label">
+        Estimated Body Fat Percentage
+      </div>
+
+      <p
+        id="result-note"
+        style="color:var(--text-muted); font-size:0.9rem; margin-top:8px;"
+      >
+        This is a circumference-based estimate, not a direct measurement of
+        body fat.
+      </p>
+
       <div class="result-actions">
-        <a href="/tools/nutrition/tdee-calculator" class="btn-primary">Calculate TDEE</a>
-        <a href="/tools/nutrition/macro-calculator" class="btn-primary">Calculate Macros</a>
+        <a
+          href="/tools/nutrition/tdee-calculator"
+          class="btn-primary"
+        >
+          Calculate TDEE
+        </a>
+
+        <a
+          href="/tools/nutrition/protein-calculator"
+          class="btn-primary"
+        >
+          Calculate Protein
+        </a>
+
+        <a
+          href="/tools/nutrition/macro-calculator"
+          class="btn-primary"
+        >
+          Calculate Macros
+        </a>
       </div>
     </div>
   </section>
 
   <article class="article-section">
-    <h2>How to Measure Accurately at Home</h2>
+    <h2>How to Measure for the Navy Body Fat Calculator</h2>
+
+    <p>
+      Measurement technique matters because small differences in tape
+      placement or tension can change the estimate. Use a flexible tape
+      measure and take each measurement consistently.
+    </p>
+
     <ol>
-      <li>Use a soft measuring tape, not a metal one.</li>
-      <li>Measure your neck just below the larynx (Adam's apple).</li>
-      <li>Men: measure the waist at the navel. Women: measure at the narrowest point of the abdomen.</li>
-      <li>Women only: measure the hips at their widest point.</li>
-      <li>Keep the tape level and snug, without compressing the skin, and don't flex or hold your stomach in.</li>
+      <li>
+        Use a soft measuring tape rather than a rigid metal tape.
+      </li>
+
+      <li>
+        Measure the neck just below the larynx. Keep your head facing
+        straight ahead and avoid pressing the tape into the skin.
+      </li>
+
+      <li>
+        <strong>Men:</strong> measure the abdomen at the level of the navel.
+      </li>
+
+      <li>
+        <strong>Women:</strong> measure the natural waist at the smallest
+        portion of the abdomen.
+      </li>
+
+      <li>
+        <strong>Women only:</strong> measure the hips around the greatest
+        protrusion of the gluteal area.
+      </li>
+
+      <li>
+        Keep the tape approximately level and snug without compressing
+        the soft tissue.
+      </li>
+
+      <li>
+        Take measurements in a relaxed state rather than flexing or
+        deliberately pulling your stomach in.
+      </li>
     </ol>
-  </article>
 
-  <article class="article-section">
-    <h2>The US Navy Body Fat Formula</h2>
     <p>
-      This calculator uses the circumference-based formula developed by
-      Hodgdon &amp; Beckett (1984) for the U.S. Navy, using measurements in
-      inches:
-    </p>
-    <p>
-      <strong>Men:</strong> BF% = 86.010 × log₁₀(waist − neck) − 70.041 × log₁₀(height) + 36.76<br />
-      <strong>Women:</strong> BF% = 163.205 × log₁₀(waist + hip − neck) − 97.684 × log₁₀(height) − 78.387
-    </p>
-    <p>
-      A 2022 study of physically fit U.S. Marines found that this method
-      underestimated body fat by about 2.5-2.6 percentage points in men
-      and overestimated it by about 1.3-2.3 percentage points in women,
-      with individual variability of roughly 3.7-4.8 percentage points
-      (Potter et al., 2022). Treat the result as a field estimate rather
-      than a research-grade measurement.
+      For progress tracking, try to measure under similar conditions each
+      time. Consistency is often more useful than treating a single
+      circumference result as an exact body-fat measurement.
     </p>
   </article>
 
   <article class="article-section">
-    <h2>Body Fat Percentage Categories</h2>
+    <h2>The U.S. Navy Body Fat Formula</h2>
+
+    <p>
+      This calculator uses the circumference-based equations associated with
+      the U.S. Navy method. The underlying equations use measurements in
+      inches and logarithms.
+    </p>
+
+    <p>
+      <strong>Men:</strong><br />
+      BF% = 86.010 × log₁₀(waist − neck)
+      − 70.041 × log₁₀(height) + 36.76
+    </p>
+
+    <p>
+      <strong>Women:</strong><br />
+      BF% = 163.205 × log₁₀(waist + hip − neck)
+      − 97.684 × log₁₀(height) − 78.387
+    </p>
+
+    <p>
+      The calculator converts centimetre inputs to inches before applying
+      the equations, so the same underlying formula is used regardless of
+      the selected display unit.
+    </p>
+
+    <p>
+      This is a <strong>field estimate</strong>, not a direct measurement of
+      fat mass. A 2022 study comparing the circumference-based approach with
+      DXA in physically fit U.S. Marines found an average underestimation in
+      men and overestimation in women, with meaningful individual-level
+      variation. 1
+    </p>
+  </article>
+
+  <article class="article-section">
+    <h2>Body Fat Percentage Ranges</h2>
+
+    <p>
+      Body-fat percentage categories vary by organization, age, sex, and
+      population. The following ranges are commonly cited fitness-industry
+      reference categories rather than strict medical thresholds.
+    </p>
+
     <table class="result-table">
       <thead>
-        <tr><th>Category</th><th>Men</th><th>Women</th></tr>
+        <tr>
+          <th>Category</th>
+          <th>Men</th>
+          <th>Women</th>
+        </tr>
       </thead>
+
       <tbody>
-        <tr><td>Essential Fat</td><td>2-5%</td><td>10-13%</td></tr>
-        <tr><td>Athletes</td><td>6-13%</td><td>14-20%</td></tr>
-        <tr><td>Fitness</td><td>14-17%</td><td>21-24%</td></tr>
-        <tr><td>Acceptable</td><td>18-24%</td><td>25-31%</td></tr>
-        <tr><td>Above Average</td><td>25%+</td><td>32%+</td></tr>
+        <tr>
+          <td>Essential Fat</td>
+          <td>2-5%</td>
+          <td>10-13%</td>
+        </tr>
+
+        <tr>
+          <td>Athletes</td>
+          <td>6-13%</td>
+          <td>14-20%</td>
+        </tr>
+
+        <tr>
+          <td>Fitness</td>
+          <td>14-17%</td>
+          <td>21-24%</td>
+        </tr>
+
+        <tr>
+          <td>Typical Non-Athlete</td>
+          <td>18-24%</td>
+          <td>25-31%</td>
+        </tr>
       </tbody>
     </table>
-    <p style="font-size:0.82rem; color:var(--text-muted); margin-top:8px;">
-      These are commonly cited fitness-industry categories, not strict medical thresholds — individual healthy ranges vary.
+
+    <p
+      style="font-size:0.82rem; color:var(--text-muted); margin-top:8px;"
+    >
+      These ranges are reference categories, not individual medical
+      diagnoses. Very low body fat can also carry health risks, and a
+      single percentage should not be used to judge overall health.
     </p>
   </article>
 
   <article class="article-section">
     <h2>Body Fat Percentage vs. BMI</h2>
+
     <p>
-      BMI only compares your height to your total weight and can't
-      distinguish muscle from fat. A muscular person can register as
-      "overweight" on the BMI scale while carrying a low body fat
-      percentage. Body fat percentage estimates actual composition,
-      making it more useful for athletes and lifters with above-average
-      muscle mass.
+      BMI uses height and total body weight. It does not directly distinguish
+      muscle mass from fat mass, which can make it less informative for
+      people with substantial muscular development. Body-fat percentage
+      attempts to describe body composition more directly, although methods
+      such as the Navy calculator are still estimates.
+    </p>
+
+    <p>
+      For that reason, body fat percentage and BMI answer different
+      questions. BMI is useful as a population-level screening measure,
+      while body-composition estimates can provide additional context for
+      individual fitness tracking.
+    </p>
+  </article>
+
+  <article class="article-section">
+    <h2>How Accurate Is a Navy Body Fat Calculator?</h2>
+
+    <p>
+      The Navy circumference method is convenient because it requires only
+      a tape measure, but it should not be treated as laboratory-grade
+      body-composition testing.
+    </p>
+
+    <p>
+      In a 2022 study of physically fit U.S. Marines, the circumference
+      method underestimated body fat in men by about 2.5-2.6 percentage
+      points and overestimated it in women by about 1.3-2.3 percentage
+      points. Individual variability was also several percentage points. 
+      2
+    </p>
+
+    <p>
+      If you use this calculator repeatedly, the most useful approach is
+      usually to keep your measurement technique, time of day, tape
+      placement, and conditions as consistent as possible and watch the
+      trend rather than overinterpreting a single reading.
+    </p>
+  </article>
+
+  <article class="article-section">
+    <h2>Body Fat Measurement Methods</h2>
+
+    <p>
+      No single body-composition method is perfect for every person.
+      Circumference measurements, skinfolds, bioelectrical impedance,
+      hydrostatic weighing, and DXA each have different costs, assumptions,
+      and sources of measurement error.
+    </p>
+
+    <p>
+      DXA can provide a more detailed body-composition assessment, but it is
+      not necessary for routine fitness tracking. A simple tape-measure
+      method can be useful when the goal is to monitor changes consistently
+      over time.
+    </p>
+  </article>
+
+  <article class="article-section">
+    <h2>Using Body Fat Percentage for Nutrition Planning</h2>
+
+    <p>
+      A body-fat estimate can provide additional context when setting
+      nutrition targets, especially when you are tracking changes in body
+      composition rather than body weight alone.
+    </p>
+
+    <p>
+      If your goal is fat loss or weight gain, start by estimating daily
+      calorie needs with our
+      <a href="/tools/nutrition/tdee-calculator">TDEE Calculator</a>.
+    </p>
+
+    <p>
+      For protein planning, use our
+      <a href="/tools/nutrition/protein-calculator">Protein Intake Calculator</a>.
+      If you want a complete calorie-and-macro target, our
+      <a href="/tools/nutrition/macro-calculator">Macro Calculator</a>
+      can split calories between protein, carbohydrates, and fat.
     </p>
   </article>
 
   <article class="article-section">
     <h2>Frequently Asked Questions</h2>
+
     <div class="faq-item">
-      <h3>How accurate is the Navy method vs DEXA?</h3>
-      <p>A 2022 study found the method underestimated body fat by about 2.5-2.6 percentage points in men and overestimated it by about 1.3-2.3 percentage points in women, with individual variability around 3.7-4.8 percentage points — a field estimate, not a lab-precise measurement.</p>
+      <h3>How accurate is the Navy body fat calculator compared with DEXA?</h3>
+      <p>
+        The Navy method is a field estimate rather than a laboratory
+        measurement. A 2022 study of physically fit U.S. Marines found
+        average underestimation in men and overestimation in women, with
+        several percentage points of individual variability. 3
+      </p>
     </div>
+
     <div class="faq-item">
       <h3>What is a healthy body fat percentage?</h3>
-      <p>Commonly cited fitness ranges are roughly 14-17% for men and 21-24% for women, though this varies by individual and source.</p>
+      <p>
+        Reference ranges vary by sex, age, population, and source. Common
+        fitness references often describe roughly 18-24% for men and
+        25-31% for women as typical non-athlete ranges. These should not be
+        treated as universal medical thresholds. 4
+      </p>
     </div>
+
     <div class="faq-item">
-      <h3>Why is body fat % better than BMI?</h3>
-      <p>BMI can't distinguish muscle from fat; body fat percentage estimates actual composition directly.</p>
+      <h3>Why is body fat percentage different from BMI?</h3>
+      <p>
+        BMI uses height and total weight and cannot distinguish muscle from
+        fat. Body-fat percentage attempts to estimate body composition,
+        although the Navy method is also an estimate.
+      </p>
     </div>
+
     <div class="faq-item">
-      <h3>Where do I measure waist, neck, and hips?</h3>
-      <p>Neck below the larynx; waist at the navel (men) or narrowest point (women); hips at the widest point (women only).</p>
+      <h3>Where should I measure my waist, neck, and hips?</h3>
+      <p>
+        Men measure the abdomen at the navel and the neck below the larynx.
+        Women measure the natural waist at its smallest point, the hips at
+        their greatest protrusion, and the neck below the larynx.
+      </p>
+    </div>
+
+    <div class="faq-item">
+      <h3>Can I use this body fat calculator for men and women?</h3>
+      <p>
+        Yes. The calculator uses separate circumference equations for males
+        and females. Women also enter a hip measurement because the female
+        equation uses waist, hip, and neck measurements.
+      </p>
+    </div>
+
+    <div class="faq-item">
+      <h3>Is the Navy body fat method better than a smart scale?</h3>
+      <p>
+        Neither method should automatically be considered a precise
+        individual measurement. Both circumference and bioelectrical
+        impedance methods have potential sources of error. For tracking
+        progress, consistent measurement conditions are important.
+      </p>
+    </div>
+
+    <div class="faq-item">
+      <h3>How can I lower my body fat percentage?</h3>
+      <p>
+        Fat loss generally involves a sustained calorie deficit combined
+        with appropriate nutrition, resistance training, physical activity,
+        and recovery. Use the
+        <a href="/tools/nutrition/tdee-calculator">TDEE Calculator</a>
+        to estimate calorie needs and the
+        <a href="/tools/nutrition/protein-calculator">Protein Calculator</a>
+        to set a protein target.
+      </p>
+    </div>
+
+    <div class="faq-item">
+      <h3>What should I calculate after body fat percentage?</h3>
+      <p>
+        You can estimate daily calorie needs with the
+        <a href="/tools/nutrition/tdee-calculator">TDEE Calculator</a>
+        and then use the
+        <a href="/tools/nutrition/macro-calculator">Macro Calculator</a>
+        to create a calorie and macronutrient target.
+      </p>
     </div>
   </article>
 
-  <p style="color:var(--text-muted); font-size:0.82rem; margin-top:24px;">
-    Note: This calculator provides a general estimate for healthy adults, not a medical diagnosis. Body composition assessment tools like DEXA or hydrostatic weighing are more precise if you need clinical accuracy.
+  <article class="article-section">
+    <h2>Sources and Further Reading</h2>
+
+    <ul>
+      <li>
+        <a
+          href="https://pubmed.ncbi.nlm.nih.gov/8437737/"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          U.S. Navy circumference method validation research
+        </a>
+      </li>
+
+      <li>
+        <a
+          href="https://pubmed.ncbi.nlm.nih.gov/35432005/"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          2022 U.S. Marine Corps circumference method vs DXA study
+        </a>
+      </li>
+
+      <li>
+        <a
+          href="https://www.mynavyhr.navy.mil/Portals/55/Support/Culture%20Resilience/Physical/Guide%204%20-%20Body%20Composition%20Assessment.pdf"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          U.S. Navy Body Composition Assessment measurement guidance
+        </a>
+      </li>
+    </ul>
+  </article>
+
+  <p
+    style="color:var(--text-muted); font-size:0.82rem; margin-top:24px;"
+  >
+    Note: This calculator provides a general body-fat estimate for adults,
+    not a medical diagnosis. If you need clinical body-composition
+    assessment, discuss appropriate testing with a qualified healthcare
+    professional.
   </p>
 
   <RelatedTools currentToolId="body-fat-calculator" />
@@ -198,46 +624,170 @@ import RelatedTools from '../../../components/RelatedTools.astro';
 
     const unitIn = document.getElementById("unit-in");
     const unitCm = document.getElementById("unit-cm");
+
     const sexMale = document.getElementById("sex-male");
     const sexFemale = document.getElementById("sex-female");
+
     const hipField = document.getElementById("hip-field");
     const waistLabel = document.getElementById("waist-label");
-    const heightInput = document.getElementById("height") as HTMLInputElement | null;
-    const neckInput = document.getElementById("neck") as HTMLInputElement | null;
-    const waistInput = document.getElementById("waist") as HTMLInputElement | null;
-    const hipInput = document.getElementById("hip") as HTMLInputElement | null;
+    const heightLabel = document.getElementById("height-label");
+    const neckLabel = document.getElementById("neck-label");
+    const hipLabel = document.getElementById("hip-label");
+
+    const heightInput =
+      document.getElementById("height") as HTMLInputElement | null;
+
+    const neckInput =
+      document.getElementById("neck") as HTMLInputElement | null;
+
+    const waistInput =
+      document.getElementById("waist") as HTMLInputElement | null;
+
+    const hipInput =
+      document.getElementById("hip") as HTMLInputElement | null;
+
     const calcBtn = document.getElementById("calc-btn");
+
     const resultBf = document.getElementById("result-bf");
     const resultBox = document.getElementById("result-box");
 
-    if (unitIn) unitIn.addEventListener("click", () => setUnit("in"));
-    if (unitCm) unitCm.addEventListener("click", () => setUnit("cm"));
-    if (sexMale) sexMale.addEventListener("click", () => setSex("male"));
-    if (sexFemale) sexFemale.addEventListener("click", () => setSex("female"));
-
-    function setUnit(newUnit: string) {
-      if (newUnit === unit) return;
-      const inputs = [heightInput, neckInput, waistInput, hipInput];
-      for (const input of inputs) {
-        if (input) {
-          const val = parseFloat(input.value);
-          if (val && !isNaN(val)) {
-            input.value = newUnit === "cm" ? (val * 2.54).toFixed(1) : (val / 2.54).toFixed(1);
-          }
-        }
-      }
-      unit = newUnit;
-      if (unitIn) { unitIn.classList.toggle("active", unit === "in"); unitIn.setAttribute("aria-pressed", String(unit === "in")); }
-      if (unitCm) { unitCm.classList.toggle("active", unit === "cm"); unitCm.setAttribute("aria-pressed", String(unit === "cm")); }
+    if (unitIn) {
+      unitIn.addEventListener("click", () => setUnit("in"));
     }
 
-    function setSex(s: string) {
-      sex = s;
-      if (sexMale) { sexMale.classList.toggle("active", s === "male"); sexMale.setAttribute("aria-pressed", String(s === "male")); }
-      if (sexFemale) { sexFemale.classList.toggle("active", s === "female"); sexFemale.setAttribute("aria-pressed", String(s === "female")); }
-      if (hipField) (hipField as HTMLElement).style.display = s === "female" ? "block" : "none";
-      if (waistLabel) waistLabel.textContent = s === "male" ? "Waist (at navel)" : "Waist (narrowest point)";
-      if (resultBox) resultBox.classList.remove("show");
+    if (unitCm) {
+      unitCm.addEventListener("click", () => setUnit("cm"));
+    }
+
+    if (sexMale) {
+      sexMale.addEventListener("click", () => setSex("male"));
+    }
+
+    if (sexFemale) {
+      sexFemale.addEventListener("click", () => setSex("female"));
+    }
+
+    function setUnit(newUnit: string) {
+      if (newUnit !== "in" && newUnit !== "cm") return;
+      if (newUnit === unit) return;
+
+      const inputs = [
+        heightInput,
+        neckInput,
+        waistInput,
+        hipInput
+      ];
+
+      for (const input of inputs) {
+        if (!input) continue;
+
+        const val = parseFloat(input.value);
+
+        if (Number.isFinite(val) && val > 0) {
+          input.value =
+            newUnit === "cm"
+              ? (val * 2.54).toFixed(1)
+              : (val / 2.54).toFixed(1);
+        }
+      }
+
+      unit = newUnit;
+
+      if (unitIn) {
+        unitIn.classList.toggle("active", unit === "in");
+        unitIn.setAttribute(
+          "aria-pressed",
+          String(unit === "in")
+        );
+      }
+
+      if (unitCm) {
+        unitCm.classList.toggle("active", unit === "cm");
+        unitCm.setAttribute(
+          "aria-pressed",
+          String(unit === "cm")
+        );
+      }
+
+      updateMeasurementLabels();
+    }
+
+    function setSex(newSex: string) {
+      if (newSex !== "male" && newSex !== "female") return;
+
+      sex = newSex;
+
+      if (sexMale) {
+        sexMale.classList.toggle("active", sex === "male");
+        sexMale.setAttribute(
+          "aria-pressed",
+          String(sex === "male")
+        );
+      }
+
+      if (sexFemale) {
+        sexFemale.classList.toggle("active", sex === "female");
+        sexFemale.setAttribute(
+          "aria-pressed",
+          String(sex === "female")
+        );
+      }
+
+      if (hipField) {
+        (hipField as HTMLElement).style.display =
+          sex === "female" ? "block" : "none";
+      }
+
+      updateMeasurementLabels();
+
+      if (resultBox) {
+        resultBox.classList.remove("show");
+      }
+    }
+
+    function updateMeasurementLabels() {
+      const unitText = unit === "in" ? "inches" : "cm";
+
+      if (heightLabel) {
+        heightLabel.textContent = `Height (${unitText})`;
+      }
+
+      if (neckLabel) {
+        neckLabel.textContent =
+          `Neck (${unitText}, below larynx)`;
+      }
+
+      if (hipLabel) {
+        hipLabel.textContent =
+          `Hip (${unitText}, widest point)`;
+      }
+
+      if (waistLabel) {
+        waistLabel.textContent =
+          sex === "male"
+            ? `Waist (${unitText}, at navel)`
+            : `Waist (${unitText}, narrowest point)`;
+      }
+
+      if (heightInput) {
+        heightInput.placeholder =
+          unit === "in" ? "e.g. 70" : "e.g. 178";
+      }
+
+      if (neckInput) {
+        neckInput.placeholder =
+          unit === "in" ? "e.g. 15" : "e.g. 38";
+      }
+
+      if (waistInput) {
+        waistInput.placeholder =
+          unit === "in" ? "e.g. 34" : "e.g. 86";
+      }
+
+      if (hipInput) {
+        hipInput.placeholder =
+          unit === "in" ? "e.g. 38" : "e.g. 97";
+      }
     }
 
     if (calcBtn) {
@@ -247,49 +797,125 @@ import RelatedTools from '../../../components/RelatedTools.astro';
         const heightRaw = parseFloat(heightInput.value);
         const neckRaw = parseFloat(neckInput.value);
         const waistRaw = parseFloat(waistInput.value);
-        const hipRaw = sex === "female" ? parseFloat(hipInput?.value || "0") : 0;
 
-        if (!heightRaw || !neckRaw || !waistRaw || heightRaw <= 0 || neckRaw <= 0 || waistRaw <= 0) {
-          alert("Please enter valid measurements.");
+        const hipRaw =
+          sex === "female"
+            ? parseFloat(hipInput?.value || "0")
+            : 0;
+
+        if (
+          !Number.isFinite(heightRaw) ||
+          !Number.isFinite(neckRaw) ||
+          !Number.isFinite(waistRaw) ||
+          heightRaw <= 0 ||
+          neckRaw <= 0 ||
+          waistRaw <= 0
+        ) {
+          alert("Please enter valid height, neck, and waist measurements.");
           return;
         }
-        if (sex === "female" && (!hipRaw || hipRaw <= 0)) {
+
+        if (
+          sex === "female" &&
+          (!Number.isFinite(hipRaw) || hipRaw <= 0)
+        ) {
           alert("Please enter a valid hip measurement.");
           return;
         }
 
-        const toInches = (v: number) => unit === "cm" ? v / 2.54 : v;
+        const toInches = (value: number) =>
+          unit === "cm" ? value / 2.54 : value;
+
         const heightIn = toInches(heightRaw);
         const neckIn = toInches(neckRaw);
         const waistIn = toInches(waistRaw);
         const hipIn = toInches(hipRaw);
 
-        let bodyFat: number;
-        if (sex === "male") {
-          const diff = waistIn - neckIn;
-          if (diff <= 0) {
-            alert("Waist measurement must be greater than neck measurement.");
-            return;
-          }
-          bodyFat = 86.010 * Math.log10(diff) - 70.041 * Math.log10(heightIn) + 36.76;
-        } else {
-          const diff = waistIn + hipIn - neckIn;
-          if (diff <= 0) {
-            alert("Please check your measurements — the combined waist and hip must exceed the neck measurement.");
-            return;
-          }
-          bodyFat = 163.205 * Math.log10(diff) - 97.684 * Math.log10(heightIn) - 78.387;
-        }
-
-        if (!isFinite(bodyFat) || bodyFat < 0 || bodyFat > 75) {
-          alert("The measurements entered produced an unrealistic result. Please double-check your inputs.");
+        /*
+         * Basic plausibility checks prevent invalid logarithm inputs
+         * and obvious data-entry mistakes.
+         */
+        if (
+          heightIn < 48 ||
+          heightIn > 96 ||
+          neckIn < 8 ||
+          neckIn > 30 ||
+          waistIn < 15 ||
+          waistIn > 80
+        ) {
+          alert(
+            "Please check your measurements. The values entered are outside the calculator's expected adult range."
+          );
           return;
         }
 
-        const rounded = Math.round(bodyFat * 10) / 10;
-        if (resultBf) resultBf.textContent = `${rounded}%`;
-        if (resultBox) resultBox.classList.add("show");
+        if (
+          sex === "female" &&
+          (hipIn < 20 || hipIn > 90)
+        ) {
+          alert(
+            "Please check your hip measurement and enter a realistic circumference."
+          );
+          return;
+        }
+
+        let bodyFat: number;
+
+        if (sex === "male") {
+          const circumference = waistIn - neckIn;
+
+          if (circumference <= 0) {
+            alert(
+              "Waist measurement must be greater than neck measurement."
+            );
+            return;
+          }
+
+          bodyFat =
+            86.010 * Math.log10(circumference) -
+            70.041 * Math.log10(heightIn) +
+            36.76;
+        } else {
+          const circumference =
+            waistIn + hipIn - neckIn;
+
+          if (circumference <= 0) {
+            alert(
+              "Please check your measurements — the combined waist and hip must exceed the neck measurement."
+            );
+            return;
+          }
+
+          bodyFat =
+            163.205 * Math.log10(circumference) -
+            97.684 * Math.log10(heightIn) -
+            78.387;
+        }
+
+        if (
+          !Number.isFinite(bodyFat) ||
+          bodyFat < 0 ||
+          bodyFat > 75
+        ) {
+          alert(
+            "The measurements entered produced an unrealistic result. Please double-check your inputs and tape placement."
+          );
+          return;
+        }
+
+        const rounded =
+          Math.round(bodyFat * 10) / 10;
+
+        if (resultBf) {
+          resultBf.textContent = `${rounded}%`;
+        }
+
+        if (resultBox) {
+          resultBox.classList.add("show");
+        }
       });
     }
+
+    updateMeasurementLabels();
   </script>
 </Base>
