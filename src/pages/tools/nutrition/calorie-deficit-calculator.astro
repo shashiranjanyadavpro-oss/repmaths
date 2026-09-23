@@ -1,0 +1,1164 @@
+---
+import Base from '../../../layouts/Base.astro';
+import RelatedTools from '../../../components/RelatedTools.astro';
+
+const title = "Calorie Deficit Calculator — Weight Loss, Calories & Timeline";
+const description =
+  "Free calorie deficit calculator for weight loss. Estimate your BMR, TDEE, daily calorie target, calorie deficit, weekly weight-loss rate, and time to reach your goal weight.";
+
+const faqs = [
+  {
+    q: "What is a calorie deficit?",
+    a: "A calorie deficit occurs when you consume fewer calories than your body uses. Your estimated TDEE represents the calories needed to maintain your current weight, so eating below that level creates an estimated energy deficit."
+  },
+  {
+    q: "How do you calculate a calorie deficit?",
+    a: "First estimate your BMR, then estimate TDEE by applying an activity factor. Your estimated calorie deficit is the difference between TDEE and your planned daily calorie intake."
+  },
+  {
+    q: "Is a 500 calorie deficit good for weight loss?",
+    a: "A 500-calorie daily deficit is a commonly used planning benchmark and corresponds to about 3,500 calories per week. Using the simple 3,500-calorie rule gives an initial estimate of about 1 pound of weight loss per week, but real-world weight change varies as energy expenditure and body weight change."
+  },
+  {
+    q: "How long will it take to lose weight with a calorie deficit?",
+    a: "A simple planning estimate divides the calories associated with the weight you want to lose by your planned weekly calorie deficit. The result is only an estimate because real-world weight loss is not perfectly linear."
+  },
+  {
+    q: "How many calories should I eat to lose weight?",
+    a: "A useful starting point is to estimate your TDEE and choose a moderate calorie reduction rather than using the same calorie target for everyone. Your age, body size, sex, activity level, health status, and goal all affect your calorie needs."
+  },
+  {
+    q: "Is a large calorie deficit safe?",
+    a: "Larger calorie deficits can increase the risk of inadequate nutrition, fatigue, hunger, and loss of lean tissue. A more moderate approach is generally easier to sustain, and people with medical conditions or special nutritional needs should discuss calorie restriction with a qualified healthcare professional."
+  },
+  {
+    q: "Can I use this calculator for a 1 pound per week weight-loss goal?",
+    a: "Yes. Select the 1 lb per week option. The calculator uses the traditional 3,500-calorie-per-pound planning heuristic to estimate the required daily deficit and an approximate timeline."
+  },
+  {
+    q: "Can I use this calculator for a 2 pound per week goal?",
+    a: "Yes, but a 2 lb per week goal requires a substantially larger estimated calorie deficit. The calculator flags when the resulting intake becomes very low, and aggressive calorie restriction should not be treated as appropriate for everyone."
+  }
+];
+
+const faqSchema = faqs.map((item) => ({
+  "@type": "Question",
+  name: item.q,
+  acceptedAnswer: {
+    "@type": "Answer",
+    text: item.a
+  }
+}));
+
+const applicationSchema = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "SoftwareApplication",
+      name: title,
+      applicationCategory: "HealthApplication",
+      operatingSystem: "Web",
+      url: "https://repmaths.com/tools/nutrition/calorie-deficit-calculator",
+      description,
+      offers: {
+        "@type": "Offer",
+        price: "0",
+        priceCurrency: "USD"
+      },
+      featureList: [
+        "Calorie deficit calculation",
+        "BMR estimate",
+        "TDEE estimate",
+        "Daily calorie target",
+        "Weight-loss timeline estimate",
+        "Pounds and kilograms"
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      mainEntity: faqSchema
+    }
+  ]
+};
+---
+
+<Base
+  title={title}
+  description={description}
+>
+  <script
+    type="application/ld+json"
+    set:html={JSON.stringify(applicationSchema)}
+  />
+
+  <main class="tool-page">
+    <header class="tool-header">
+      <p class="eyebrow">Weight Loss &amp; Nutrition</p>
+      <h1>Calorie Deficit Calculator: Find Your Target for Healthy Weight Loss</h1>
+
+      <p class="intro">
+        A calorie deficit occurs when you consume fewer calories than your body
+        uses. Use this calculator to estimate your BMR, TDEE, daily calorie
+        target, calorie deficit, weekly weight-loss rate, and approximate
+        timeline for reaching your goal weight.
+      </p>
+    </header>
+
+    <section class="calculator-card" aria-labelledby="calculator-heading">
+      <h2 id="calculator-heading">Calculate Your Calorie Deficit</h2>
+
+      <div class="form-grid">
+        <div class="field">
+          <label for="sex">Sex</label>
+          <select id="sex">
+            <option value="male">Male</option>
+            <option value="female">Female</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label for="age">Age</label>
+          <div class="input-with-unit">
+            <input id="age" type="number" min="18" max="90" value="30" inputmode="numeric" />
+            <span>years</span>
+          </div>
+        </div>
+
+        <div class="field">
+          <label>Weight</label>
+          <div class="unit-toggle" role="group" aria-label="Weight unit">
+            <button type="button" class="unit-btn active" data-weight-unit="lb">lb</button>
+            <button type="button" class="unit-btn" data-weight-unit="kg">kg</button>
+          </div>
+          <div class="input-with-unit">
+            <input id="weight" type="number" min="66" max="660" value="180" step="0.1" inputmode="decimal" />
+            <span id="weight-unit-label">lb</span>
+          </div>
+        </div>
+
+        <div class="field">
+          <label>Height</label>
+          <div class="unit-toggle" role="group" aria-label="Height unit">
+            <button type="button" class="unit-btn active" data-height-unit="ft">ft/in</button>
+            <button type="button" class="unit-btn" data-height-unit="cm">cm</button>
+          </div>
+
+          <div id="imperial-height" class="height-row">
+            <div class="input-with-unit">
+              <input id="height-ft" type="number" min="4" max="8" value="5" inputmode="numeric" />
+              <span>ft</span>
+            </div>
+            <div class="input-with-unit">
+              <input id="height-in" type="number" min="0" max="11" value="10" inputmode="numeric" />
+              <span>in</span>
+            </div>
+          </div>
+
+          <div id="metric-height" class="input-with-unit hidden">
+            <input id="height-cm" type="number" min="122" max="244" value="178" step="0.1" inputmode="decimal" />
+            <span>cm</span>
+          </div>
+        </div>
+
+        <div class="field full">
+          <label for="activity">Activity level</label>
+          <select id="activity">
+            <option value="1.2">Sedentary — little or no exercise</option>
+            <option value="1.375">Lightly active — exercise 1–3 days/week</option>
+            <option value="1.55" selected>Moderately active — exercise 3–5 days/week</option>
+            <option value="1.725">Very active — hard exercise 6–7 days/week</option>
+            <option value="1.9">Extra active — very hard training / physical job</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label for="goal-weight">Goal weight</label>
+          <div class="input-with-unit">
+            <input id="goal-weight" type="number" min="66" max="660" value="160" step="0.1" inputmode="decimal" />
+            <span id="goal-unit-label">lb</span>
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="loss-rate">Weight-loss rate</label>
+          <select id="loss-rate">
+            <option value="0.5">0.5 lb / week</option>
+            <option value="1" selected>1 lb / week</option>
+            <option value="1.5">1.5 lb / week</option>
+            <option value="2">2 lb / week</option>
+          </select>
+        </div>
+      </div>
+
+      <div id="error" class="message error" role="alert" hidden></div>
+
+      <div id="results" class="results" aria-live="polite">
+        <div class="result-primary">
+          <span class="result-label">Estimated daily calorie target</span>
+          <strong id="calorie-target">—</strong>
+          <span class="result-unit">kcal/day</span>
+        </div>
+
+        <div class="result-grid">
+          <div class="result-box">
+            <span>BMR</span>
+            <strong id="bmr">—</strong>
+            <small>kcal/day</small>
+          </div>
+
+          <div class="result-box">
+            <span>TDEE</span>
+            <strong id="tdee">—</strong>
+            <small>kcal/day</small>
+          </div>
+
+          <div class="result-box">
+            <span>Daily deficit</span>
+            <strong id="daily-deficit">—</strong>
+            <small>kcal/day</small>
+          </div>
+
+          <div class="result-box">
+            <span>Weekly loss estimate</span>
+            <strong id="weekly-loss">—</strong>
+            <small>lb/week</small>
+          </div>
+        </div>
+
+        <div class="timeline">
+          <span class="result-label">Estimated time to goal</span>
+          <strong id="timeline">—</strong>
+          <p id="timeline-detail"></p>
+        </div>
+
+        <div id="warning" class="message warning" hidden></div>
+        <div id="goal-message" class="message info" hidden></div>
+      </div>
+
+      <p class="calculator-note">
+        This calculator provides estimates for adults and is not medical advice.
+        Actual weight change varies with adherence, activity, body composition,
+        metabolism, and changes in energy expenditure over time.
+      </p>
+    </section>
+
+    <section class="content-section">
+      <h2>What Exactly Is a Calorie Deficit?</h2>
+
+      <p>
+        A calorie deficit means your energy intake is lower than the energy your
+        body uses over time. Your estimated <strong>TDEE</strong> represents
+        the calories you may need to maintain your current weight under your
+        current activity pattern. Eating below that estimate creates a
+        theoretical calorie deficit.
+      </p>
+
+      <p>
+        The important word is <strong>estimate</strong>. TDEE is not a laboratory
+        measurement, and your energy needs can change as your body weight,
+        activity, and eating pattern change.
+      </p>
+    </section>
+
+    <section class="content-section">
+      <h2>How Is Your Calorie Deficit Calculated?</h2>
+
+      <p>
+        RepMaths uses a four-step calculation so you can see where the result
+        comes from.
+      </p>
+
+      <ol>
+        <li>
+          <strong>Calculate BMR.</strong>
+          Your basal metabolic rate is estimated with the Mifflin–St Jeor
+          equation.
+        </li>
+        <li>
+          <strong>Estimate TDEE.</strong>
+          BMR is multiplied by an activity factor to estimate daily energy
+          expenditure.
+        </li>
+        <li>
+          <strong>Apply the selected deficit.</strong>
+          A selected weekly weight-loss rate is converted into an estimated
+          daily calorie deficit using the traditional 3,500-calorie-per-pound
+          planning heuristic.
+        </li>
+        <li>
+          <strong>Estimate the timeline.</strong>
+          The amount of weight you want to lose is divided by the selected
+          weekly rate to produce an approximate number of weeks.
+        </li>
+      </ol>
+
+      <p>
+        The 3,500-calorie-per-pound figure is useful as a simple planning
+        heuristic, but it should not be interpreted as a precise biological
+        rule. NIDDK notes that real-world weight loss slows as the body adapts
+        and energy expenditure changes. 2
+      </p>
+    </section>
+
+    <section class="content-section">
+      <h2>How to Calculate a Calorie Deficit to Lose 1 lb a Week</h2>
+
+      <p>
+        A traditional planning model treats 1 pound as approximately 3,500
+        calories. Dividing that amount across seven days gives an estimated
+        <strong>500-calorie daily deficit</strong>.
+      </p>
+
+      <div class="formula-box">
+        <strong>Example:</strong>
+        TDEE 2,400 kcal − 500 kcal = approximately 1,900 kcal/day
+      </div>
+
+      <p>
+        This is a planning estimate, not a promise that exactly 1 pound of
+        body fat will be lost every week. NIH material describes 500–1,000
+        kcal/day deficits as a traditional approach associated with roughly
+        1–2 lb/week in appropriate weight-management settings. 3
+      </p>
+    </section>
+
+    <section class="content-section">
+      <h2>500 Calorie Deficit Calculator</h2>
+
+      <p>
+        A 500-calorie deficit is one of the most familiar starting points in
+        weight-loss planning. If your estimated TDEE is 2,400 calories,
+        subtracting 500 gives an initial target of 1,900 calories per day.
+      </p>
+
+      <p>
+        That does not mean 500 calories is automatically appropriate for every
+        person. A calorie target should also make sense for your body size,
+        activity, nutrition needs, health status, and ability to sustain it.
+      </p>
+    </section>
+
+    <section class="content-section">
+      <h2>Safe vs. Unhealthy Calorie Deficits: What You Need to Know</h2>
+
+      <p>
+        There is no single calorie deficit that is medically appropriate for
+        every adult. Larger deficits can make it harder to meet nutrient needs
+        and may increase hunger, fatigue, or loss of lean tissue.
+      </p>
+
+      <p>
+        Older NIH/NHLBI guidance describes approximately 1–2 pounds per week
+        as a commonly used weight-loss range, but individual needs vary.
+        4
+      </p>
+
+      <p>
+        If the calculator produces a very low calorie target, treat that as a
+        reason to reconsider the selected rate rather than as a target to
+        force. NIDDK also notes that calorie needs vary with factors including
+        age, body weight, height, sex, metabolism, and activity. 5
+      </p>
+
+      <div class="callout">
+        <strong>Important:</strong> Do not use this calculator to create an
+        aggressive calorie restriction plan if you are pregnant or
+        breastfeeding, under 18, have an eating disorder, or have a medical
+        condition that affects nutrition or weight. Speak with a qualified
+        healthcare professional for individualized guidance.
+      </div>
+    </section>
+
+    <section class="content-section">
+      <h2>Extreme vs. Moderate Calorie Deficit</h2>
+
+      <div class="comparison-table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Approach</th>
+              <th>Planning idea</th>
+              <th>What to consider</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Moderate</td>
+              <td>Smaller calorie reduction</td>
+              <td>Often easier to sustain and fit into a balanced diet</td>
+            </tr>
+            <tr>
+              <td>Higher</td>
+              <td>Larger calorie reduction</td>
+              <td>Requires more attention to hunger, nutrition, recovery, and adherence</td>
+            </tr>
+            <tr>
+              <td>Very aggressive</td>
+              <td>Large restriction</td>
+              <td>Should not be treated as a routine self-directed approach</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="content-section">
+      <h2>Minimum Daily Calories for Weight Loss</h2>
+
+      <p>
+        There is no universal minimum calorie intake that is safe for every
+        adult. Calorie needs depend on the individual, and very-low-calorie
+        diets may require clinical supervision.
+      </p>
+
+      <p>
+        For example, NIDDK advises that eating below 1,200 calories per day is
+        not advised in one of its weight-management programs, while older
+        clinical guidance used different calorie ranges depending on sex,
+        body size, and treatment context. 6
+      </p>
+
+      <p>
+        Therefore, RepMaths uses a warning when a calculated target becomes
+        unusually low rather than labeling a single number as universally
+        “safe.”
+      </p>
+    </section>
+
+    <section class="content-section">
+      <h2>Calorie Deficit Timeline Calculator</h2>
+
+      <p>
+        Your timeline depends on how much weight you want to lose and the
+        weekly rate selected. For example, a 20 lb goal at an estimated
+        1 lb/week rate gives a simple planning estimate of about 20 weeks.
+      </p>
+
+      <p>
+        Real progress rarely follows a perfectly straight line. Water
+        retention, changes in activity, appetite, body weight, and metabolic
+        adaptation can all affect the rate of weight change. NIDDK's Body
+        Weight Planner is specifically designed to account for changing
+        energy expenditure over time. 7
+      </p>
+    </section>
+
+    <section class="content-section">
+      <h2>Basal Metabolic Rate and Calorie Deficit</h2>
+
+      <p>
+        BMR is the estimated energy your body uses at rest. TDEE goes beyond
+        BMR by accounting for your activity level. A calorie deficit is
+        calculated from your estimated total daily energy expenditure rather
+        than from BMR alone.
+      </p>
+
+      <p>
+        For a more detailed breakdown of basal metabolic rate, use the
+        <a href="/tools/nutrition/bmr-calculator">BMR Calculator</a>.
+      </p>
+    </section>
+
+    <section class="content-section">
+      <h2>How to Use This Calculator</h2>
+
+      <ol>
+        <li>Enter your age and sex.</li>
+        <li>Enter your body weight in pounds or kilograms.</li>
+        <li>Enter your height.</li>
+        <li>Select the activity level that best represents your normal routine.</li>
+        <li>Enter your desired goal weight.</li>
+        <li>Select a weekly weight-loss rate.</li>
+        <li>Review your estimated BMR, TDEE, calorie target, deficit, and timeline.</li>
+      </ol>
+
+      <p>
+        For another approach to daily calorie needs, compare your result with
+        the <a href="/tools/nutrition/tdee-calculator">TDEE Calculator</a>.
+        You can then use the
+        <a href="/tools/nutrition/macro-calculator">Macro Calculator</a>
+        to turn a calorie target into protein, carbohydrate, and fat targets.
+      </p>
+    </section>
+
+    <section class="content-section">
+      <h2>Frequently Asked Questions</h2>
+
+      <div class="faq-list">
+        {faqs.map((faq) => (
+          <details>
+            <summary>{faq.q}</summary>
+            <p>{faq.a}</p>
+          </details>
+        ))}
+      </div>
+    </section>
+
+    <section class="content-section sources">
+      <h2>Sources &amp; Methodology</h2>
+
+      <ul>
+        <li>
+          <a href="https://www.niddk.nih.gov/health-information/weight-management/body-weight-planner" target="_blank" rel="noopener noreferrer">
+            NIDDK — Body Weight Planner
+          </a>
+        </li>
+        <li>
+          <a href="https://www.niddk.nih.gov/health-information/weight-management/just-enough-food-portions" target="_blank" rel="noopener noreferrer">
+            NIDDK — Food Portions and Calorie Needs
+          </a>
+        </li>
+        <li>
+          <a href="https://www.niddk.nih.gov/health-information/diabetes/overview/preventing-type-2-diabetes/game-plan" target="_blank" rel="noopener noreferrer">
+            NIDDK — Weight-Loss Goals and Calorie Guidance
+          </a>
+        </li>
+        <li>
+          <a href="https://www.nhlbi.nih.gov/files/docs/guidelines/obesity_guidelines_archive.pdf" target="_blank" rel="noopener noreferrer">
+            NHLBI — Clinical Guidelines for Weight Management
+          </a>
+        </li>
+      </ul>
+    </section>
+
+    <RelatedTools currentToolId="calorie-deficit-calculator" />
+  </main>
+
+  <script>
+    const sexEl = document.querySelector("#sex") as HTMLSelectElement;
+    const ageEl = document.querySelector("#age") as HTMLInputElement;
+    const weightEl = document.querySelector("#weight") as HTMLInputElement;
+    const goalWeightEl = document.querySelector("#goal-weight") as HTMLInputElement;
+    const heightFtEl = document.querySelector("#height-ft") as HTMLInputElement;
+    const heightInEl = document.querySelector("#height-in") as HTMLInputElement;
+    const heightCmEl = document.querySelector("#height-cm") as HTMLInputElement;
+    const activityEl = document.querySelector("#activity") as HTMLSelectElement;
+    const lossRateEl = document.querySelector("#loss-rate") as HTMLSelectElement;
+
+    const weightUnitLabel = document.querySelector("#weight-unit-label")!;
+    const goalUnitLabel = document.querySelector("#goal-unit-label")!;
+    const imperialHeight = document.querySelector("#imperial-height")!;
+    const metricHeight = document.querySelector("#metric-height")!;
+    const errorEl = document.querySelector("#error")!;
+    const warningEl = document.querySelector("#warning")!;
+    const goalMessageEl = document.querySelector("#goal-message")!;
+
+    const calorieTargetEl = document.querySelector("#calorie-target")!;
+    const bmrEl = document.querySelector("#bmr")!;
+    const tdeeEl = document.querySelector("#tdee")!;
+    const deficitEl = document.querySelector("#daily-deficit")!;
+    const weeklyLossEl = document.querySelector("#weekly-loss")!;
+    const timelineEl = document.querySelector("#timeline")!;
+    const timelineDetailEl = document.querySelector("#timeline-detail")!;
+
+    let weightUnit: "lb" | "kg" = "lb";
+    let heightUnit: "ft" | "cm" = "ft";
+
+    const round = (value: number) => Math.round(value);
+    const kgToLb = (kg: number) => kg * 2.2046226218;
+    const lbToKg = (lb: number) => lb / 2.2046226218;
+
+    function setError(message: string) {
+      errorEl.textContent = message;
+      errorEl.removeAttribute("hidden");
+    }
+
+    function clearMessages() {
+      errorEl.setAttribute("hidden", "");
+      warningEl.setAttribute("hidden", "");
+      goalMessageEl.setAttribute("hidden", "");
+    }
+
+    function getHeightCm() {
+      if (heightUnit === "cm") {
+        return Number(heightCmEl.value);
+      }
+
+      const ft = Number(heightFtEl.value);
+      const inches = Number(heightInEl.value);
+
+      return ((ft * 12) + inches) * 2.54;
+    }
+
+    function calculate() {
+      clearMessages();
+
+      const age = Number(ageEl.value);
+      const rawWeight = Number(weightEl.value);
+      const rawGoalWeight = Number(goalWeightEl.value);
+      const heightCm = getHeightCm();
+      const activity = Number(activityEl.value);
+      const weeklyLossLb = Number(lossRateEl.value);
+
+      if (!Number.isFinite(age) || age < 18 || age > 90) {
+        setError("Enter an age between 18 and 90.");
+        return;
+      }
+
+      if (!Number.isFinite(rawWeight) || rawWeight <= 0) {
+        setError("Enter a valid current weight.");
+        return;
+      }
+
+      if (!Number.isFinite(rawGoalWeight) || rawGoalWeight <= 0) {
+        setError("Enter a valid goal weight.");
+        return;
+      }
+
+      if (!Number.isFinite(heightCm) || heightCm < 122 || heightCm > 244) {
+        setError("Enter a realistic height between 122 and 244 cm.");
+        return;
+      }
+
+      const weightKg = weightUnit === "kg"
+        ? rawWeight
+        : lbToKg(rawWeight);
+
+      const goalWeightKg = weightUnit === "kg"
+        ? rawGoalWeight
+        : rawGoalWeight / 2.2046226218;
+
+      if (weightKg < 30 || weightKg > 300) {
+        setError("Enter a current weight between 30 and 300 kg.");
+        return;
+      }
+
+      if (goalWeightKg < 30 || goalWeightKg > 300) {
+        setError("Enter a goal weight between 30 and 300 kg.");
+        return;
+      }
+
+      if (goalWeightKg >= weightKg) {
+        setError("Your goal weight must be lower than your current weight for a weight-loss calculation.");
+        return;
+      }
+
+      const bmr = sexEl.value === "male"
+        ? (10 * weightKg) + (6.25 * heightCm) - (5 * age) + 5
+        : (10 * weightKg) + (6.25 * heightCm) - (5 * age) - 161;
+
+      const tdee = bmr * activity;
+
+      const dailyDeficit = (weeklyLossLb * 3500) / 7;
+      const calorieTarget = tdee - dailyDeficit;
+
+      const weightToLoseLb = kgToLb(weightKg - goalWeightKg);
+      const weeks = weightToLoseLb / weeklyLossLb;
+
+      calorieTargetEl.textContent = `${round(calorieTarget).toLocaleString()}`;
+      bmrEl.textContent = `${round(bmr).toLocaleString()}`;
+      tdeeEl.textContent = `${round(tdee).toLocaleString()}`;
+      deficitEl.textContent = `${round(dailyDeficit).toLocaleString()}`;
+      weeklyLossEl.textContent = `${weeklyLossLb.toFixed(1)}`;
+      timelineEl.textContent = `${weeks.toFixed(1)} weeks`;
+      timelineDetailEl.textContent =
+        `About ${Math.ceil(weeks)} weeks to lose approximately ${weightToLoseLb.toFixed(1)} lb at the selected planning rate.`;
+
+      if (calorieTarget < 1200) {
+        warningEl.textContent =
+          `Your calculated target is below 1,200 kcal/day. Treat this as a warning to reconsider the selected weight-loss rate rather than a recommended intake. Very low calorie targets may not provide enough energy or nutrients for many adults.`;
+        warningEl.removeAttribute("hidden");
+      } else if (
+        (sexEl.value === "male" && calorieTarget < 1500) ||
+        (sexEl.value === "female" && calorieTarget < 1200)
+      ) {
+        warningEl.textContent =
+          `Your calculated calorie target is relatively low. Consider a slower weight-loss rate and seek professional guidance if you are unsure whether this intake is appropriate for you.`;
+        warningEl.removeAttribute("hidden");
+      }
+
+      if (calorieTarget <= 0) {
+        warningEl.textContent =
+          "This selected weight-loss rate would require a calorie target at or below zero, which is not a usable plan. Choose a slower rate.";
+        warningEl.removeAttribute("hidden");
+      }
+
+      if (weeks < 8) {
+        goalMessageEl.textContent =
+          "Your selected timeline is relatively short. A slower rate may be easier to sustain and may make it easier to meet nutrition needs.";
+        goalMessageEl.removeAttribute("hidden");
+      }
+
+      if (weeks > 52) {
+        goalMessageEl.textContent =
+          "Longer timelines are normal for larger weight-loss goals. Real-world progress is rarely perfectly linear.";
+        goalMessageEl.removeAttribute("hidden");
+      }
+    }
+
+    document.querySelectorAll<HTMLButtonElement>("[data-weight-unit]").forEach((button) => {
+      button.addEventListener("click", () => {
+        const nextUnit = button.dataset.weightUnit as "lb" | "kg";
+
+        if (nextUnit === weightUnit) return;
+
+        const currentWeight = Number(weightEl.value);
+        const currentGoal = Number(goalWeightEl.value);
+
+        if (Number.isFinite(currentWeight) && currentWeight > 0) {
+          weightEl.value = nextUnit === "kg"
+            ? lbToKg(currentWeight).toFixed(1)
+            : kgToLb(currentWeight).toFixed(1);
+        }
+
+        if (Number.isFinite(currentGoal) && currentGoal > 0) {
+          goalWeightEl.value = nextUnit === "kg"
+            ? lbToKg(currentGoal).toFixed(1)
+            : kgToLb(currentGoal).toFixed(1);
+        }
+
+        weightUnit = nextUnit;
+        weightUnitLabel.textContent = nextUnit;
+        goalUnitLabel.textContent = nextUnit;
+
+        document.querySelectorAll("[data-weight-unit]").forEach((item) => {
+          item.classList.toggle("active", (item as HTMLElement).dataset.weightUnit === nextUnit);
+        });
+
+        calculate();
+      });
+    });
+
+    document.querySelectorAll<HTMLButtonElement>("[data-height-unit]").forEach((button) => {
+      button.addEventListener("click", () => {
+        const nextUnit = button.dataset.heightUnit as "ft" | "cm";
+
+        if (nextUnit === heightUnit) return;
+
+        const currentCm = getHeightCm();
+
+        if (nextUnit === "cm") {
+          heightCmEl.value = currentCm.toFixed(1);
+          imperialHeight.classList.add("hidden");
+          metricHeight.classList.remove("hidden");
+        } else {
+          const totalInches = currentCm / 2.54;
+          const ft = Math.floor(totalInches / 12);
+          const inches = totalInches - (ft * 12);
+
+          heightFtEl.value = String(ft);
+          heightInEl.value = inches.toFixed(1);
+          metricHeight.classList.add("hidden");
+          imperialHeight.classList.remove("hidden");
+        }
+
+        heightUnit = nextUnit;
+
+        document.querySelectorAll("[data-height-unit]").forEach((item) => {
+          item.classList.toggle("active", (item as HTMLElement).dataset.heightUnit === nextUnit);
+        });
+
+        calculate();
+      });
+    });
+
+    [
+      sexEl,
+      ageEl,
+      weightEl,
+      goalWeightEl,
+      heightFtEl,
+      heightInEl,
+      heightCmEl,
+      activityEl,
+      lossRateEl
+    ].forEach((element) => {
+      element.addEventListener("input", calculate);
+      element.addEventListener("change", calculate);
+    });
+
+    calculate();
+  </script>
+
+  <style>
+    .tool-page {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 24px 16px 56px;
+    }
+
+    .tool-header {
+      margin-bottom: 28px;
+    }
+
+    .eyebrow {
+      margin: 0 0 8px;
+      color: var(--accent);
+      font-size: 0.78rem;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .tool-header h1 {
+      margin: 0 0 16px;
+      font-size: clamp(1.8rem, 4vw, 2.55rem);
+      line-height: 1.12;
+    }
+
+    .intro {
+      max-width: 760px;
+      margin: 0;
+      color: var(--muted);
+      font-size: 1.02rem;
+      line-height: 1.7;
+    }
+
+    .calculator-card {
+      padding: 22px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.14);
+    }
+
+    .calculator-card h2 {
+      margin: 0 0 20px;
+      font-size: 1.3rem;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .field {
+      min-width: 0;
+    }
+
+    .field.full {
+      grid-column: 1 / -1;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 8px;
+      font-size: 0.9rem;
+      font-weight: 700;
+    }
+
+    input,
+    select {
+      width: 100%;
+      min-height: 46px;
+      padding: 10px 12px;
+      color: var(--text);
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      font: inherit;
+    }
+
+    input:focus,
+    select:focus,
+    button:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 2px;
+    }
+
+    .input-with-unit {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .input-with-unit input {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .input-with-unit span {
+      flex: 0 0 auto;
+      color: var(--muted);
+      font-size: 0.82rem;
+      font-weight: 700;
+    }
+
+    .height-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    .unit-toggle {
+      display: inline-flex;
+      margin-bottom: 8px;
+      padding: 3px;
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: 9px;
+    }
+
+    .unit-btn {
+      min-width: 58px;
+      padding: 5px 10px;
+      border: 0;
+      border-radius: 7px;
+      color: var(--muted);
+      background: transparent;
+      font: inherit;
+      font-size: 0.78rem;
+      font-weight: 800;
+      cursor: pointer;
+    }
+
+    .unit-btn.active {
+      color: var(--text);
+      background: var(--surface);
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.18);
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    .results {
+      margin-top: 22px;
+    }
+
+    .result-primary {
+      padding: 22px;
+      text-align: center;
+      background: var(--surface-2);
+      border: 1px solid var(--accent);
+      border-radius: 14px;
+    }
+
+    .result-label {
+      display: block;
+      margin-bottom: 6px;
+      color: var(--muted);
+      font-size: 0.82rem;
+      font-weight: 700;
+    }
+
+    .result-primary strong {
+      display: block;
+      font-size: clamp(2rem, 7vw, 3rem);
+      line-height: 1;
+    }
+
+    .result-unit {
+      display: block;
+      margin-top: 7px;
+      color: var(--muted);
+      font-size: 0.85rem;
+    }
+
+    .result-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 10px;
+      margin-top: 12px;
+    }
+
+    .result-box {
+      padding: 15px 10px;
+      text-align: center;
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+    }
+
+    .result-box span,
+    .result-box small {
+      display: block;
+      color: var(--muted);
+      font-size: 0.76rem;
+    }
+
+    .result-box strong {
+      display: block;
+      margin: 5px 0;
+      font-size: 1.18rem;
+    }
+
+    .timeline {
+      margin-top: 12px;
+      padding: 18px;
+      text-align: center;
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+    }
+
+    .timeline strong {
+      display: block;
+      font-size: 1.65rem;
+    }
+
+    .timeline p {
+      margin: 7px 0 0;
+      color: var(--muted);
+      font-size: 0.84rem;
+    }
+
+    .message {
+      margin-top: 14px;
+      padding: 13px 14px;
+      border-radius: 10px;
+      font-size: 0.88rem;
+      line-height: 1.55;
+    }
+
+    .message.error {
+      border: 1px solid #b94a48;
+      background: rgba(185, 74, 72, 0.12);
+    }
+
+    .message.warning {
+      border: 1px solid #b8860b;
+      background: rgba(184, 134, 11, 0.12);
+    }
+
+    .message.info {
+      border: 1px solid var(--border);
+      background: var(--surface-2);
+    }
+
+    .calculator-note {
+      margin: 16px 0 0;
+      color: var(--muted);
+      font-size: 0.78rem;
+      line-height: 1.6;
+    }
+
+    .content-section {
+      margin-top: 42px;
+    }
+
+    .content-section h2 {
+      margin: 0 0 14px;
+      font-size: 1.45rem;
+      line-height: 1.25;
+    }
+
+    .content-section h3 {
+      margin-top: 24px;
+    }
+
+    .content-section p,
+    .content-section li {
+      color: var(--text);
+      line-height: 1.72;
+    }
+
+    .content-section p {
+      margin: 0 0 15px;
+    }
+
+    .content-section ol,
+    .content-section ul {
+      padding-left: 22px;
+    }
+
+    .content-section a {
+      color: var(--accent);
+      font-weight: 650;
+    }
+
+    .formula-box,
+    .callout {
+      margin: 18px 0;
+      padding: 16px;
+      background: var(--surface-2);
+      border-left: 3px solid var(--accent);
+      border-radius: 8px;
+      line-height: 1.6;
+    }
+
+    .comparison-table-wrap {
+      overflow-x: auto;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 620px;
+    }
+
+    th,
+    td {
+      padding: 12px;
+      border: 1px solid var(--border);
+      text-align: left;
+      vertical-align: top;
+      line-height: 1.5;
+    }
+
+    th {
+      background: var(--surface-2);
+      font-size: 0.88rem;
+    }
+
+    td {
+      font-size: 0.88rem;
+    }
+
+    .faq-list {
+      display: grid;
+      gap: 10px;
+    }
+
+    .faq-list details {
+      padding: 14px 16px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+    }
+
+    .faq-list summary {
+      cursor: pointer;
+      font-weight: 700;
+      line-height: 1.5;
+    }
+
+    .faq-list p {
+      margin: 10px 0 0;
+      color: var(--muted);
+    }
+
+    .sources li {
+      margin-bottom: 8px;
+    }
+
+    @media (max-width: 680px) {
+      .tool-page {
+        padding: 20px 14px 48px;
+      }
+
+      .calculator-card {
+        padding: 17px;
+      }
+
+      .form-grid,
+      .result-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .field.full {
+        grid-column: 1 / -1;
+      }
+    }
+
+    @media (max-width: 460px) {
+      .form-grid,
+      .result-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .field.full {
+        grid-column: auto;
+      }
+
+      .height-row {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .result-primary {
+        padding: 19px 12px;
+      }
+    }
+  </style>
+</Base>
