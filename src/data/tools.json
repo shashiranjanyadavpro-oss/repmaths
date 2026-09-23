@@ -117,7 +117,7 @@
     "shortDesc": "Find your daily maintenance calories using the Mifflin-St Jeor equation.",
     "icon": "TDEE",
     "cluster": "nutrition",
-    "related": ["1rm-calculator", "bmr-calculator"]
+    "related": ["1rm-calculator", "bmr-calculator", "calorie-deficit-calculator"]
   },
   {
     "id": "bmr-calculator",
@@ -126,7 +126,7 @@
     "shortDesc": "Find your Basal Metabolic Rate using Mifflin-St Jeor or Harris-Benedict.",
     "icon": "BMR",
     "cluster": "nutrition",
-    "related": ["tdee-calculator"]
+    "related": ["tdee-calculator", "calorie-deficit-calculator"]
   },
   {
     "id": "macro-calculator",
@@ -135,7 +135,7 @@
     "shortDesc": "Convert your daily calories into protein, carb, and fat targets.",
     "icon": "MAC",
     "cluster": "nutrition",
-    "related": ["tdee-calculator", "bmr-calculator"]
+    "related": ["tdee-calculator", "bmr-calculator", "calorie-deficit-calculator"]
   },
   {
     "id": "protein-calculator",
@@ -144,7 +144,7 @@
     "shortDesc": "Find your daily protein range based on ISSN sports nutrition guidelines.",
     "icon": "PRO",
     "cluster": "nutrition",
-    "related": ["tdee-calculator", "macro-calculator"]
+    "related": ["tdee-calculator", "macro-calculator", "calorie-deficit-calculator"]
   },
   {
     "id": "water-intake-calculator",
@@ -171,7 +171,7 @@
     "shortDesc": "Estimate your body fat percentage using the US Navy tape-measure method.",
     "icon": "BF%",
     "cluster": "nutrition",
-    "related": ["tdee-calculator", "macro-calculator"]
+    "related": ["tdee-calculator", "macro-calculator", "calorie-deficit-calculator"]
   },
   {
   "id": "strength-standards-calculator",
