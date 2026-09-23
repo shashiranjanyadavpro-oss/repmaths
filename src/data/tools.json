@@ -156,6 +156,15 @@
     "related": ["tdee-calculator", "protein-calculator"]
   },
   {
+  "id": "calorie-deficit-calculator",
+  "name": "Calorie Deficit Calculator",
+  "url": "/tools/nutrition/calorie-deficit-calculator",
+  "shortDesc": "Calculate your daily calorie deficit, weight-loss target, and estimated timeline.",
+  "icon": "DEF",
+  "cluster": "nutrition",
+  "related": ["tdee-calculator","bmr-calculator","macro-calculator","protein-calculator"]
+  },
+  {
     "id": "body-fat-calculator",
     "name": "Body Fat Calculator",
     "url": "/tools/nutrition/body-fat-calculator",
