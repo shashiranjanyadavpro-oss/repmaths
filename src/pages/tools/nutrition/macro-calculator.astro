@@ -2,6 +2,7 @@
 import Base from '../../../layouts/Base.astro';
 import RelatedTools from '../../../components/RelatedTools.astro';
 ---
+
 <Base
   title="Macro Calculator — Protein, Carbs & Fat by Goal"
   description="Free macro calculator. Enter your daily calories and choose a goal — cutting, bulking, maintenance, or keto — to get your protein, carb, and fat targets in grams."
@@ -12,63 +13,12 @@ import RelatedTools from '../../../components/RelatedTools.astro';
     "name": "Macro Calculator",
     "applicationCategory": "HealthApplication",
     "operatingSystem": "Any",
-    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    },
     "description": "Free online calculator that converts daily calories into protein, carbohydrate, and fat targets based on a selected goal or custom ratio."
-  })} />
-
-  <script type="application/ld+json" set:html={JSON.stringify({
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    "mainEntity": [
-      {
-        "@type": "Question",
-        "name": "What is a good macro split for fat loss?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "There is no single macro split that works for everyone. A higher-protein approach is commonly used during a calorie deficit, while carbohydrate and fat amounts can be adjusted based on training demands, preferences, and dietary needs."
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "Why track macros instead of just counting calories?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "Total calorie intake is central to changes in body weight, while macronutrients determine where those calories come from. Protein supports tissue maintenance and repair, while carbohydrates and fat provide energy and help meet other nutritional needs."
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "How many calories are in each macronutrient?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "Protein provides about 4 calories per gram, carbohydrates provide about 4 calories per gram, and fat provides about 9 calories per gram. Alcohol provides about 7 calories per gram."
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "What macro split is used for a ketogenic diet?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "Ketogenic diets commonly keep carbohydrate intake at about 20 to 50 grams per day or no more than roughly 10% of total calories. Exact protein and fat targets vary, so a fixed percentage split does not guarantee nutritional ketosis."
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "Do I need to change my macros when I change my calorie intake?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "If you keep the same percentage split, changing your calorie target will change the gram targets for protein, carbohydrates, and fat. Your calorie target should be based on your overall goal and current needs."
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "Should I use my TDEE or calorie target in this calculator?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "Use the daily calorie target you actually want to plan your diet around. TDEE is an estimate of maintenance energy needs, while a cutting or bulking calorie target may be set above or below that estimate."
-        }
-      }
-    ]
   })} />
 
   <section class="hero">
@@ -78,7 +28,11 @@ import RelatedTools from '../../../components/RelatedTools.astro';
 
   <section class="calc-card">
     <p style="margin:0 0 16px; font-size:0.85rem; color:var(--text-muted);">
-      Don't know your daily calories? <a href="/tools/nutrition/tdee-calculator">Calculate your TDEE first</a>.
+      Don't know your daily calories?
+      <a href="/tools/nutrition/tdee-calculator">Calculate your TDEE first</a>
+      or use our
+      <a href="/tools/nutrition/calorie-deficit-calculator">Calorie Deficit Calculator</a>
+      if your goal is fat loss.
     </p>
 
     <div class="field">
@@ -99,7 +53,7 @@ import RelatedTools from '../../../components/RelatedTools.astro';
 
     <div class="field">
       <label>Goal / Split</label>
-      <div class="unit-toggle">
+      <div class="unit-toggle" role="group" aria-label="Macro goal">
         <button type="button" id="goal-cutting" class="active" aria-pressed="true">Cutting</button>
         <button type="button" id="goal-maintenance" aria-pressed="false">Maintenance</button>
         <button type="button" id="goal-bulking" aria-pressed="false">Bulking</button>
@@ -159,11 +113,14 @@ import RelatedTools from '../../../components/RelatedTools.astro';
       <div class="label" id="result-label">Your Daily Macro Targets</div>
 
       <table class="result-table" id="result-table">
+        <caption style="position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0;">
+          Daily protein, carbohydrate, and fat targets
+        </caption>
         <thead>
           <tr>
-            <th>Macro</th>
-            <th>Grams</th>
-            <th>Calories</th>
+            <th scope="col">Macro</th>
+            <th scope="col">Grams</th>
+            <th scope="col">Calories</th>
           </tr>
         </thead>
         <tbody id="result-table-body"></tbody>
@@ -183,34 +140,59 @@ import RelatedTools from '../../../components/RelatedTools.astro';
       to the selected percentages, then each calorie target is converted into
       grams.
     </p>
+
     <p>
       For example, if 2,000 calories are split 40% protein, 30% carbohydrates,
       and 30% fat, that gives 800 calories from protein, 600 from carbs, and
       600 from fat. Dividing by 4, 4, and 9 respectively gives the
       corresponding gram targets.
     </p>
+
+    <p>
+      These calculations use the standard energy values of approximately
+      4 kcal per gram for protein and carbohydrate and 9 kcal per gram for
+      fat. The calculator is a planning tool, so actual food labels and
+      dietary intake can vary slightly because of rounding and food composition.
+    </p>
   </article>
 
   <article class="article-section">
     <h2>Best Macro Splits by Goal</h2>
+
     <p>
-      These presets are practical starting points rather than universal rules.
-      Macro needs can vary with body size, training demands, food preferences,
-      and the overall calorie target.
+      There is no single macro ratio that is optimal for everyone. These
+      presets are practical starting examples rather than universal rules.
+      Your appropriate protein, carbohydrate, and fat intake can vary with
+      body size, training volume, calorie intake, dietary preferences, and
+      health needs.
     </p>
 
     <h3>Cutting (Fat Loss)</h3>
     <p>
       This calculator uses 40% protein, 30% carbs, and 30% fat as a sample
-      starting split. A higher protein intake is commonly used during a calorie
-      deficit, while the balance of carbohydrates and fat can be adjusted to
-      suit training and preference.
+      starting split. A higher-protein approach can be useful during a
+      calorie deficit, while carbohydrate and fat intake can be adjusted
+      around training demands and personal preference.
+    </p>
+
+    <p>
+      For a more individualized protein target, use our
+      <a href="/tools/nutrition/protein-calculator">Protein Calculator</a>.
+      If you still need to determine your calorie target, our
+      <a href="/tools/nutrition/calorie-deficit-calculator">
+        Calorie Deficit Calculator
+      </a>
+      can estimate a starting calorie target for weight loss.
     </p>
 
     <h3>Maintenance / Balanced</h3>
     <p>
       This calculator uses 30% protein, 40% carbs, and 30% fat as a general
-      example. There is no single required maintenance split.
+      example. There is no single required maintenance split. For context,
+      the established adult Acceptable Macronutrient Distribution Ranges are
+      10–35% of calories from protein, 45–65% from carbohydrate, and 20–35%
+      from fat. These reference ranges are not individualized training
+      prescriptions. 
     </p>
 
     <h3>Bulking (Muscle Gain)</h3>
@@ -221,45 +203,78 @@ import RelatedTools from '../../../components/RelatedTools.astro';
       and muscle gain.
     </p>
 
+    <p>
+      If you are planning a muscle-gain diet, start with an appropriate
+      calorie target and then adjust protein and the remaining calories
+      between carbohydrates and fat based on your training and preferences.
+    </p>
+
     <h3>Ketogenic</h3>
     <p>
       This calculator uses 25% protein, 5% carbs, and 70% fat as a simplified
-      example. Ketogenic diets are generally characterized by very low
-      carbohydrate intake, commonly around 20–50 grams per day or no more than
-      about 10% of calories. A percentage split alone does not guarantee
-      nutritional ketosis.
+      example. A ketogenic diet is generally characterized by very low
+      carbohydrate intake, commonly around 20–50 grams per day or less than
+      about 10% of calories. Individual carbohydrate thresholds for
+      nutritional ketosis can vary, so a percentage split alone does not
+      guarantee ketosis.
+    </p>
+
+    <p>
+      People with diabetes, people taking glucose-lowering medications, and
+      anyone using a ketogenic diet for a medical purpose should discuss the
+      approach with an appropriate healthcare professional before making
+      major dietary changes.
     </p>
   </article>
 
   <article class="article-section">
     <h2>Why Track Macros Instead of Just Calories?</h2>
+
     <p>
       Total calorie intake is central to changes in body weight, while
       macronutrients determine how those calories are distributed. Protein
       provides amino acids needed for tissue maintenance and repair, while
-      carbohydrates and fat provide energy and contribute to other nutritional
-      needs.
+      carbohydrates and fat provide energy and contribute to other
+      nutritional needs.
     </p>
+
     <p>
       For people who train regularly, macro tracking can make it easier to
       monitor protein intake and adjust carbohydrate and fat intake around
       their calorie target.
     </p>
+
+    <p>
+      Macro tracking is not required for everyone. Some people prefer to
+      focus on total calories, protein intake, food quality, portions, or
+      consistent eating habits instead of tracking every macronutrient.
+    </p>
   </article>
 
   <article class="article-section">
     <h2>Macro Calculator: What Should You Enter?</h2>
+
     <p>
       Enter the daily calorie target you actually want to use for your diet.
       If you are maintaining weight, this may be close to your estimated TDEE.
       For cutting or bulking, your target may be below or above estimated
       maintenance calories.
     </p>
+
     <p>
       If you do not know your maintenance calories, use our
       <a href="/tools/nutrition/tdee-calculator">TDEE Calculator</a>
       first. For a more specific protein target, you can also use the
       <a href="/tools/nutrition/protein-calculator">Protein Calculator</a>.
+    </p>
+
+    <p>
+      If your main goal is fat loss and you have not chosen a calorie target
+      yet, use our
+      <a href="/tools/nutrition/calorie-deficit-calculator">
+        Calorie Deficit Calculator
+      </a>
+      to estimate a starting target before calculating your macros.
     </p>
   </article>
 
@@ -269,10 +284,10 @@ import RelatedTools from '../../../components/RelatedTools.astro';
     <div class="faq-item">
       <h3>What is a good macro split for fat loss?</h3>
       <p>
-        There is no single macro split that works for everyone. A higher-protein
-        approach is commonly used during a calorie deficit, while carbohydrate
-        and fat amounts can be adjusted based on training demands, preferences,
-        and dietary needs.
+        There is no single macro split that works for everyone. A
+        higher-protein approach is commonly used during a calorie deficit,
+        while carbohydrate and fat amounts can be adjusted based on training
+        demands, preferences, and dietary needs.
       </p>
     </div>
 
@@ -298,7 +313,7 @@ import RelatedTools from '../../../components/RelatedTools.astro';
       <h3>What macro split works for keto?</h3>
       <p>
         Ketogenic diets commonly keep carbohydrate intake around 20–50 grams
-        per day or no more than roughly 10% of calories. Exact protein and fat
+        per day or below roughly 10% of calories. Exact protein and fat
         targets vary, so a fixed percentage split does not guarantee ketosis.
       </p>
     </div>
@@ -308,6 +323,8 @@ import RelatedTools from '../../../components/RelatedTools.astro';
       <p>
         If you keep the same percentage split, changing your calorie target
         will change the gram targets for protein, carbohydrates, and fat.
+        You can keep the ratio the same or choose a different split when your
+        goals or training needs change.
       </p>
     </div>
 
@@ -319,6 +336,53 @@ import RelatedTools from '../../../components/RelatedTools.astro';
         target may be set below or above that estimate.
       </p>
     </div>
+  </article>
+
+  <article class="article-section">
+    <h2>Sources & Methodology</h2>
+
+    <p>
+      RepMaths uses established calorie-per-gram conversion factors for
+      protein, carbohydrate, and fat. Goal presets are intentionally presented
+      as starting examples rather than individualized medical or dietary
+      prescriptions.
+    </p>
+
+    <ul>
+      <li>
+        <a
+          href="https://odphp.health.gov/our-work/nutrition-physical-activity/dietary-guidelines/current-dietary-guidelines"
+          rel="noopener noreferrer"
+          target="_blank"
+        >
+          U.S. Dietary Guidelines for Americans, 2025–2030
+        </a>
+      </li>
+      <li>
+        <a
+          href="https://odphp.health.gov/our-work/nutrition-physical-activity/dietary-guidelines/dietary-reference-intakes/review-macronutrients-and-energy"
+          rel="noopener noreferrer"
+          target="_blank"
+        >
+          U.S. and Canadian Dietary Reference Intakes: Macronutrients and Energy
+        </a>
+      </li>
+      <li>
+        <a
+          href="https://pubmed.ncbi.nlm.nih.gov/38934469/"
+          rel="noopener noreferrer"
+          target="_blank"
+        >
+          International Society of Sports Nutrition position stand on ketogenic diets
+        </a>
+      </li>
+    </ul>
+
+    <p style="font-size:0.85rem; color:var(--text-muted);">
+      Calculator outputs are estimates for planning and education. They are
+      not medical advice and should not be used to diagnose or treat a
+      medical condition.
+    </p>
   </article>
 
   <RelatedTools currentToolId="macro-calculator" />
@@ -342,10 +406,14 @@ import RelatedTools from '../../../components/RelatedTools.astro';
     };
 
     const customFields = document.getElementById("custom-fields");
-    const caloriesInput = document.getElementById("calories") as HTMLInputElement | null;
-    const customProtein = document.getElementById("custom-protein") as HTMLInputElement | null;
-    const customCarbs = document.getElementById("custom-carbs") as HTMLInputElement | null;
-    const customFat = document.getElementById("custom-fat") as HTMLInputElement | null;
+    const caloriesInput =
+      document.getElementById("calories") as HTMLInputElement | null;
+    const customProtein =
+      document.getElementById("custom-protein") as HTMLInputElement | null;
+    const customCarbs =
+      document.getElementById("custom-carbs") as HTMLInputElement | null;
+    const customFat =
+      document.getElementById("custom-fat") as HTMLInputElement | null;
     const calcBtn = document.getElementById("calc-btn");
     const resultTableBody = document.getElementById("result-table-body");
     const resultBox = document.getElementById("result-box");
