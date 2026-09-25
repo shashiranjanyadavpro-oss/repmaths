@@ -144,7 +144,7 @@
     "shortDesc": "Find your daily protein range based on ISSN sports nutrition guidelines.",
     "icon": "PRO",
     "cluster": "nutrition",
-    "related": ["tdee-calculator", "macro-calculator", "calorie-deficit-calculator","lean-body-mass-calculator"]
+    "related": ["tdee-calculator", "macro-calculator", "calorie-deficit-calculator","lean-body-mass-calculator", "ffmi-calculator"]
   },
   {
     "id": "water-intake-calculator",
@@ -171,7 +171,7 @@
     "shortDesc": "Estimate your body fat percentage using the US Navy tape-measure method.",
     "icon": "BF%",
     "cluster": "nutrition",
-    "related": ["tdee-calculator", "macro-calculator", "calorie-deficit-calculator","lean-body-mass-calculator"]
+    "related": ["tdee-calculator", "macro-calculator", "calorie-deficit-calculator","lean-body-mass-calculator", "ffmi-calculator"]
   },
   {
   "id": "bmi-calculator",
@@ -180,7 +180,7 @@
   "shortDesc": "Calculate your BMI and see your adult BMI category and BMI-based weight range.",
   "icon": "BMI",
   "cluster": "nutrition",
-  "related": ["bmr-calculator", "tdee-calculator", "body-fat-calculator", "calorie-deficit-calculator", "lean-body-mass-calculator"]
+  "related": ["bmr-calculator", "tdee-calculator", "body-fat-calculator", "calorie-deficit-calculator", "lean-body-mass-calculator", "ffmi-calculator"]
   },
   {
   "id": "lean-body-mass-calculator",
@@ -189,7 +189,21 @@
   "shortDesc": "Calculate lean body mass from body fat percentage or estimate it with the Boer, James, or Hume formula.",
   "icon": "LBM",
   "cluster": "nutrition",
-  "related": ["bmi-calculator", "body-fat-calculator", "protein-calculator", "bmr-calculator", "tdee-calculator"]
+  "related": ["bmi-calculator", "body-fat-calculator", "protein-calculator", "bmr-calculator", "tdee-calculator", "ffmi-calculator"]
+  },
+  {
+  "id": "ffmi-calculator",
+  "name": "FFMI Calculator",
+  "url": "/tools/nutrition/ffmi-calculator",
+  "shortDesc": "Calculate your fat-free mass index, normalized FFMI, and lean mass from body composition.",
+  "icon": "FFMI",
+  "cluster": "nutrition",
+  "related": [
+    "lean-body-mass-calculator",
+    "body-fat-calculator",
+    "bmi-calculator",
+    "protein-calculator",
+    "macro-calculator" ]
   },
   {
   "id": "strength-standards-calculator",
