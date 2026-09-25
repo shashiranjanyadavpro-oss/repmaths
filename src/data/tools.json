@@ -117,7 +117,7 @@
     "shortDesc": "Find your daily maintenance calories using the Mifflin-St Jeor equation.",
     "icon": "TDEE",
     "cluster": "nutrition",
-    "related": ["1rm-calculator", "bmr-calculator", "calorie-deficit-calculator", "bmi-calculator"]
+    "related": ["1rm-calculator", "bmr-calculator", "calorie-deficit-calculator", "bmi-calculator", "lean-body-mass-calculator"]
   },
   {
     "id": "bmr-calculator",
@@ -126,7 +126,7 @@
     "shortDesc": "Find your Basal Metabolic Rate using Mifflin-St Jeor or Harris-Benedict.",
     "icon": "BMR",
     "cluster": "nutrition",
-    "related": ["tdee-calculator", "calorie-deficit-calculator", "bmi-calculator"]
+    "related": ["tdee-calculator", "calorie-deficit-calculator", "bmi-calculator","lean-body-mass-calculator"]
   },
   {
     "id": "macro-calculator",
@@ -144,7 +144,7 @@
     "shortDesc": "Find your daily protein range based on ISSN sports nutrition guidelines.",
     "icon": "PRO",
     "cluster": "nutrition",
-    "related": ["tdee-calculator", "macro-calculator", "calorie-deficit-calculator"]
+    "related": ["tdee-calculator", "macro-calculator", "calorie-deficit-calculator","lean-body-mass-calculator"]
   },
   {
     "id": "water-intake-calculator",
@@ -171,7 +171,7 @@
     "shortDesc": "Estimate your body fat percentage using the US Navy tape-measure method.",
     "icon": "BF%",
     "cluster": "nutrition",
-    "related": ["tdee-calculator", "macro-calculator", "calorie-deficit-calculator"]
+    "related": ["tdee-calculator", "macro-calculator", "calorie-deficit-calculator","lean-body-mass-calculator"]
   },
   {
   "id": "bmi-calculator",
@@ -180,7 +180,7 @@
   "shortDesc": "Calculate your BMI and see your adult BMI category and BMI-based weight range.",
   "icon": "BMI",
   "cluster": "nutrition",
-  "related": ["bmr-calculator", "tdee-calculator", "body-fat-calculator", "calorie-deficit-calculator"]
+  "related": ["bmr-calculator", "tdee-calculator", "body-fat-calculator", "calorie-deficit-calculator", "lean-body-mass-calculator"]
   },
   {
   "id": "lean-body-mass-calculator",
@@ -189,7 +189,7 @@
   "shortDesc": "Calculate lean body mass from body fat percentage or estimate it with the Boer, James, or Hume formula.",
   "icon": "LBM",
   "cluster": "nutrition",
-  "related": ["bmi-calculator", "body-fat-calculator", "protein-calculator", "bmr-calculator", "tdee-calculator", "ffmi-calculator"]
+  "related": ["bmi-calculator", "body-fat-calculator", "protein-calculator", "bmr-calculator", "tdee-calculator"]
   },
   {
   "id": "strength-standards-calculator",
