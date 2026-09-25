@@ -174,6 +174,15 @@
     "related": ["tdee-calculator", "macro-calculator", "calorie-deficit-calculator"]
   },
   {
+  "id": "bmi-calculator",
+  "name": "BMI Calculator",
+  "url": "/tools/nutrition/bmi-calculator",
+  "shortDesc": "Calculate your BMI and see your adult BMI category and BMI-based weight range.",
+  "icon": "BMI",
+  "cluster": "nutrition",
+  "related": ["bmr-calculator", "tdee-calculator", "body-fat-calculator", "calorie-deficit-calculator"]
+  },
+  {
   "id": "strength-standards-calculator",
   "name": "Strength Standards Calculator",
   "url": "/tools/strength/strength-standards-calculator",
