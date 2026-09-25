@@ -117,7 +117,7 @@
     "shortDesc": "Find your daily maintenance calories using the Mifflin-St Jeor equation.",
     "icon": "TDEE",
     "cluster": "nutrition",
-    "related": ["1rm-calculator", "bmr-calculator", "calorie-deficit-calculator"]
+    "related": ["1rm-calculator", "bmr-calculator", "calorie-deficit-calculator", "bmi-calculator"]
   },
   {
     "id": "bmr-calculator",
@@ -126,7 +126,7 @@
     "shortDesc": "Find your Basal Metabolic Rate using Mifflin-St Jeor or Harris-Benedict.",
     "icon": "BMR",
     "cluster": "nutrition",
-    "related": ["tdee-calculator", "calorie-deficit-calculator"]
+    "related": ["tdee-calculator", "calorie-deficit-calculator", "bmi-calculator"]
   },
   {
     "id": "macro-calculator",
@@ -162,7 +162,7 @@
   "shortDesc": "Calculate your daily calorie deficit, weight-loss target, and estimated timeline.",
   "icon": "DEF",
   "cluster": "nutrition",
-  "related": ["tdee-calculator","bmr-calculator","macro-calculator","protein-calculator"]
+  "related": ["tdee-calculator","bmr-calculator","macro-calculator","protein-calculator", "bmi-calculator"]
   },
   {
     "id": "body-fat-calculator",
