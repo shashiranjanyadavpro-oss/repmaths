@@ -183,6 +183,15 @@
   "related": ["bmr-calculator", "tdee-calculator", "body-fat-calculator", "calorie-deficit-calculator"]
   },
   {
+  "id": "lean-body-mass-calculator",
+  "name": "Lean Body Mass Calculator",
+  "url": "/tools/nutrition/lean-body-mass-calculator",
+  "shortDesc": "Calculate lean body mass from body fat percentage or estimate it with the Boer, James, or Hume formula.",
+  "icon": "LBM",
+  "cluster": "nutrition",
+  "related": ["bmi-calculator", "body-fat-calculator", "protein-calculator", "bmr-calculator", "tdee-calculator", "ffmi-calculator"]
+  },
+  {
   "id": "strength-standards-calculator",
   "name": "Strength Standards Calculator",
   "url": "/tools/strength/strength-standards-calculator",
