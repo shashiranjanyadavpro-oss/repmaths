@@ -117,7 +117,7 @@
     "shortDesc": "Find your daily maintenance calories using the Mifflin-St Jeor equation.",
     "icon": "TDEE",
     "cluster": "nutrition",
-    "related": ["1rm-calculator", "bmr-calculator", "calorie-deficit-calculator", "bmi-calculator", "lean-body-mass-calculator"]
+    "related": ["1rm-calculator", "bmr-calculator", "calorie-deficit-calculator", "bmi-calculator", "lean-body-mass-calculator", "calories-burned-calculator"]
   },
   {
     "id": "bmr-calculator",
@@ -126,7 +126,7 @@
     "shortDesc": "Find your Basal Metabolic Rate using Mifflin-St Jeor or Harris-Benedict.",
     "icon": "BMR",
     "cluster": "nutrition",
-    "related": ["tdee-calculator", "calorie-deficit-calculator", "bmi-calculator","lean-body-mass-calculator"]
+    "related": ["tdee-calculator", "calorie-deficit-calculator", "bmi-calculator","lean-body-mass-calculator","calories-burned-calculator"]
   },
   {
     "id": "macro-calculator",
@@ -135,7 +135,7 @@
     "shortDesc": "Convert your daily calories into protein, carb, and fat targets.",
     "icon": "MAC",
     "cluster": "nutrition",
-    "related": ["tdee-calculator", "bmr-calculator", "calorie-deficit-calculator"]
+    "related": ["tdee-calculator", "bmr-calculator", "calorie-deficit-calculator","calories-burned-calculator"]
   },
   {
     "id": "protein-calculator",
@@ -144,7 +144,7 @@
     "shortDesc": "Find your daily protein range based on ISSN sports nutrition guidelines.",
     "icon": "PRO",
     "cluster": "nutrition",
-    "related": ["tdee-calculator", "macro-calculator", "calorie-deficit-calculator","lean-body-mass-calculator", "ffmi-calculator"]
+    "related": ["tdee-calculator", "macro-calculator", "calorie-deficit-calculator","lean-body-mass-calculator", "ffmi-calculator","calories-burned-calculator"]
   },
   {
     "id": "water-intake-calculator",
@@ -162,7 +162,7 @@
   "shortDesc": "Calculate your daily calorie deficit, weight-loss target, and estimated timeline.",
   "icon": "DEF",
   "cluster": "nutrition",
-  "related": ["tdee-calculator","bmr-calculator","macro-calculator","protein-calculator", "bmi-calculator", "ideal-weight-calculator"]
+  "related": ["tdee-calculator","bmr-calculator","macro-calculator","protein-calculator", "bmi-calculator", "ideal-weight-calculator","calories-burned-calculator"]
   },
   {
     "id": "body-fat-calculator",
@@ -218,8 +218,21 @@
     "body-fat-calculator",
     "lean-body-mass-calculator",
     "ffmi-calculator",
-    "calorie-deficit-calculator"
-  ]
+    "calorie-deficit-calculator"]
+  },
+  {
+  "id": "calories-burned-calculator",
+  "name": "Calories Burned Calculator",
+  "url": "/tools/nutrition/calories-burned-calculator",
+  "shortDesc": "Estimate calories burned from walking, running, lifting, cycling, cardio, and other activities using MET values.",
+  "icon": "CAL",
+  "cluster": "nutrition",
+  "related": [
+    "tdee-calculator",
+    "calorie-deficit-calculator",
+    "macro-calculator",
+    "protein-calculator",
+    "bmr-calculator"]
   },
   {
   "id": "strength-standards-calculator",
