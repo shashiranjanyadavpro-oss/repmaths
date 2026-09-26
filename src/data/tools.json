@@ -162,7 +162,7 @@
   "shortDesc": "Calculate your daily calorie deficit, weight-loss target, and estimated timeline.",
   "icon": "DEF",
   "cluster": "nutrition",
-  "related": ["tdee-calculator","bmr-calculator","macro-calculator","protein-calculator", "bmi-calculator"]
+  "related": ["tdee-calculator","bmr-calculator","macro-calculator","protein-calculator", "bmi-calculator", "ideal-weight-calculator"]
   },
   {
     "id": "body-fat-calculator",
@@ -171,7 +171,7 @@
     "shortDesc": "Estimate your body fat percentage using the US Navy tape-measure method.",
     "icon": "BF%",
     "cluster": "nutrition",
-    "related": ["tdee-calculator", "macro-calculator", "calorie-deficit-calculator","lean-body-mass-calculator", "ffmi-calculator"]
+    "related": ["tdee-calculator", "macro-calculator", "calorie-deficit-calculator","lean-body-mass-calculator", "ffmi-calculator", "ideal-weight-calculator"]
   },
   {
   "id": "bmi-calculator",
@@ -180,7 +180,7 @@
   "shortDesc": "Calculate your BMI and see your adult BMI category and BMI-based weight range.",
   "icon": "BMI",
   "cluster": "nutrition",
-  "related": ["bmr-calculator", "tdee-calculator", "body-fat-calculator", "calorie-deficit-calculator", "lean-body-mass-calculator", "ffmi-calculator"]
+  "related": ["bmr-calculator", "tdee-calculator", "body-fat-calculator", "calorie-deficit-calculator", "lean-body-mass-calculator", "ffmi-calculator", "ideal-weight-calculator"]
   },
   {
   "id": "lean-body-mass-calculator",
@@ -189,7 +189,7 @@
   "shortDesc": "Calculate lean body mass from body fat percentage or estimate it with the Boer, James, or Hume formula.",
   "icon": "LBM",
   "cluster": "nutrition",
-  "related": ["bmi-calculator", "body-fat-calculator", "protein-calculator", "bmr-calculator", "tdee-calculator", "ffmi-calculator"]
+  "related": ["bmi-calculator", "body-fat-calculator", "protein-calculator", "bmr-calculator", "tdee-calculator", "ffmi-calculator", "ideal-weight-calculator"]
   },
   {
   "id": "ffmi-calculator",
@@ -203,7 +203,23 @@
     "body-fat-calculator",
     "bmi-calculator",
     "protein-calculator",
-    "macro-calculator" ]
+    "macro-calculator",
+    "ideal-weight-calculator"]
+  },
+  {
+  "id": "ideal-weight-calculator",
+  "name": "Ideal Weight Calculator",
+  "url": "/tools/nutrition/ideal-weight-calculator",
+  "shortDesc": "Compare Devine, Robinson, Miller, and Hamwi ideal body weight estimates with a BMI-based healthy weight range.",
+  "icon": "IBW",
+  "cluster": "nutrition",
+  "related": [
+    "bmi-calculator",
+    "body-fat-calculator",
+    "lean-body-mass-calculator",
+    "ffmi-calculator",
+    "calorie-deficit-calculator"
+  ]
   },
   {
   "id": "strength-standards-calculator",
