@@ -17,7 +17,7 @@ import RelatedTools from '../../../components/RelatedTools.astro';
       "price": "0",
       "priceCurrency": "USD"
     },
-    "description": "Free online BMR calculator that estimates basal metabolic rate using the Mifflin-St Jeor or revised Harris-Benedict equation."
+    description="Free BMR calculator using the Mifflin-St Jeor and Harris-Benedict equations. Calculate your basal metabolic rate and resting calorie needs using pounds and inches or kilograms and centimeters."
   })} />
 
   <script type="application/ld+json" set:html={JSON.stringify({
@@ -94,9 +94,10 @@ import RelatedTools from '../../../components/RelatedTools.astro';
   <section class="hero">
     <h1>BMR Calculator</h1>
     <p>
-      Estimate your Basal Metabolic Rate — the energy your body uses to
-      support essential functions at rest.
-    </p>
+  Calculate your Basal Metabolic Rate (BMR) using the Mifflin-St Jeor or
+  Harris-Benedict equation. Enter your weight in pounds or kilograms and
+  height in feet/inches or centimeters.
+</p>
   </section>
 
   <section class="calc-card">
@@ -273,7 +274,7 @@ import RelatedTools from '../../../components/RelatedTools.astro';
   </article>
 
   <article class="article-section">
-    <h2>BMR vs. TDEE</h2>
+    <h2>From BMR to TDEE: Understanding Your Daily Calorie Needs</h2>
 
     <ul>
       <li>
@@ -302,16 +303,16 @@ import RelatedTools from '../../../components/RelatedTools.astro';
   </article>
 
   <article class="article-section">
-    <h2>Mifflin-St Jeor vs. Harris-Benedict</h2>
+    <h2>Comparing BMR Formulas: Mifflin-St Jeor and Harris-Benedict</h2>
 
     <p>
-      This calculator provides two commonly used predictive equations for
-      estimating resting energy expenditure. Mifflin-St Jeor is widely
-      used in modern nutrition practice and performed well compared with
-      several other commonly used equations in a systematic review.
-      However, predictive accuracy varies by population and no equation
-      gives an exact result for every individual.
-    </p>
+  This calculator provides two commonly used predictive equations for
+  estimating resting energy expenditure. Mifflin-St Jeor was developed
+  from measured resting energy expenditure in healthy adults and is widely
+  used as a predictive equation. Harris-Benedict is an older alternative.
+  Predictive accuracy can vary between populations, so neither equation
+  should be treated as an exact measurement for every individual.
+</p>
 
     <table class="result-table">
       <thead>
@@ -399,7 +400,7 @@ import RelatedTools from '../../../components/RelatedTools.astro';
   </article>
 
   <article class="article-section">
-    <h2>BMR Calculator for Weight Loss</h2>
+    <h2>Using BMR as a Starting Point for Weight Loss</h2>
 
     <p>
       Your BMR can be useful as a starting point for understanding your
@@ -449,6 +450,48 @@ import RelatedTools from '../../../components/RelatedTools.astro';
       than a direct measurement of your metabolism.
     </p>
   </article>
+
+<article class="article-section">
+  <h2>Sources & References</h2>
+
+  <p>
+    The equations used on this page come from published research on
+    predictive resting-energy equations. Calculator results are estimates
+    and can differ from measured resting energy expenditure.
+  </p>
+
+  <ul>
+    <li>
+      Mifflin MD, St Jeor ST, Hill LA, Scott BJ, Daugherty SA, Koh YO.
+      <a
+        href="https://pubmed.ncbi.nlm.nih.gov/2305711/"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        A new predictive equation for resting energy expenditure in healthy individuals
+      </a>.
+      <em>American Journal of Clinical Nutrition</em>. 1990.
+    </li>
+
+    <li>
+      Roza AM, Shizgal HM.
+      <a
+        href="https://pubmed.ncbi.nlm.nih.gov/6741850/"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        The Harris Benedict equation reevaluated: resting energy requirements and the body cell mass
+      </a>.
+      <em>American Journal of Clinical Nutrition</em>. 1984.
+    </li>
+  </ul>
+
+  <p>
+    Predictive equations should be interpreted as estimates rather than
+    direct measurements. Individual accuracy can vary across populations
+    and circumstances.
+  </p>
+</article>
 
   <article class="article-section">
     <h2>Frequently Asked Questions</h2>
