@@ -632,42 +632,52 @@ import RelatedTools from '../../../components/RelatedTools.astro';
     }
 
     function setUnit(newUnit: Unit) {
-      if (newUnit === unit) return;
+  if (newUnit === unit) return;
 
-      if (unit === "lb" && newUnit === "kg") {
-        if (
-          heightFt &&
-          heightIn &&
-          heightCm &&
-          Number.isFinite(parseFloat(heightFt.value)) &&
-          Number.isFinite(parseFloat(heightIn.value))
-        ) {
-          const totalInches =
-            parseFloat(heightFt.value) + parseFloat(heightIn.value) / 12;
+  if (unit === "lb" && newUnit === "kg") {
+    if (heightFt && heightIn && heightCm) {
+      const feet = parseFloat(heightFt.value);
+      const inches = parseFloat(heightIn.value);
 
-          heightCm.value = (totalInches * 2.54).toFixed(1);
-        }
+      if (
+        Number.isFinite(feet) &&
+        Number.isFinite(inches) &&
+        feet >= 0 &&
+        inches >= 0 &&
+        inches < 12
+      ) {
+        // Convert the complete height to total inches first.
+        const totalInches = feet * 12 + inches;
+
+        // Then convert total inches to centimeters.
+        heightCm.value = (totalInches * 2.54).toFixed(1);
       }
-
-      if (unit === "kg" && newUnit === "lb") {
-        if (
-          heightCm &&
-          heightFt &&
-          heightIn &&
-          Number.isFinite(parseFloat(heightCm.value))
-        ) {
-          const totalInches = parseFloat(heightCm.value) / 2.54;
-          const feet = Math.floor(totalInches / 12);
-          const inches = totalInches - feet * 12;
-
-          heightFt.value = String(feet);
-          heightIn.value = inches.toFixed(1);
-        }
-      }
-
-      unit = newUnit;
-      updateUnitUI();
     }
+  }
+
+  if (unit === "kg" && newUnit === "lb") {
+    if (heightCm && heightFt && heightIn) {
+      const cm = parseFloat(heightCm.value);
+
+      if (Number.isFinite(cm) && cm > 0) {
+        // Convert centimeters to total inches first.
+        const totalInches = cm / 2.54;
+
+        // Keep feet as the integer part.
+        const feet = Math.floor(totalInches / 12);
+
+        // Remaining inches belong to the inches field.
+        const inches = totalInches - feet * 12;
+
+        heightFt.value = String(feet);
+        heightIn.value = inches.toFixed(1);
+      }
+    }
+  }
+
+  unit = newUnit;
+  updateUnitUI();
+}
 
     function updateUnitUI() {
       if (unitLb) {
@@ -717,27 +727,30 @@ import RelatedTools from '../../../components/RelatedTools.astro';
     }
 
     function getHeightCm(): number | null {
-      if (unit === "kg") {
-        const cm = parseFloat(heightCm?.value || "");
+  if (unit === "kg") {
+    const cm = parseFloat(heightCm?.value || "");
 
-        if (!Number.isFinite(cm)) return null;
+    if (!Number.isFinite(cm)) return null;
 
-        return cm;
-      }
+    return cm;
+  }
 
-      const feet = parseFloat(heightFt?.value || "");
-      const inches = parseFloat(heightIn?.value || "");
+  const feet = parseFloat(heightFt?.value || "");
+  const inches = parseFloat(heightIn?.value || "");
 
-      if (!Number.isFinite(feet) || !Number.isFinite(inches)) {
-        return null;
-      }
+  if (!Number.isFinite(feet) || !Number.isFinite(inches)) {
+    return null;
+  }
 
-      if (feet < 4 || feet > 8 || inches < 0 || inches >= 12) {
-        return null;
-      }
+  if (feet < 4 || feet > 8 || inches < 0 || inches >= 12) {
+    return null;
+  }
 
-      return (feet * 12 + inches) * 2.54;
-    }
+  // Convert the complete imperial height to centimeters.
+  const totalInches = feet * 12 + inches;
+
+  return totalInches * 2.54;
+}
 
     function formatWeight(kg: number): string {
       if (unit === "kg") {
