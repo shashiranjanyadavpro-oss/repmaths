@@ -2,9 +2,10 @@
 import Base from '../../../layouts/Base.astro';
 import RelatedTools from '../../../components/RelatedTools.astro';
 ---
+
 <Base
   title="BMI Calculator — Check Your Body Mass Index & Target Weight"
-  description="Calculate your BMI using height and weight in pounds or kilograms. See your BMI category, healthy BMI range, and estimated weight range for adults."
+  description="Calculate your BMI using pounds and inches or kilograms and centimeters. Check your adult BMI category, healthy BMI range, and estimated weight range for adults 20 and older."
 >
   <script type="application/ld+json" set:html={JSON.stringify({
     "@context": "https://schema.org",
@@ -17,76 +18,27 @@ import RelatedTools from '../../../components/RelatedTools.astro';
       "price": "0",
       "priceCurrency": "USD"
     },
-    "description": "Free adult BMI calculator using height and weight in US customary or metric units, with BMI category and BMI-based weight range estimates."
-  })} />
-
-  <script type="application/ld+json" set:html={JSON.stringify({
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    "mainEntity": [
-      {
-        "@type": "Question",
-        "name": "What is a normal BMI for my age and height?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "For adults, a BMI from 18.5 to 24.9 is commonly classified as healthy weight. BMI uses height and weight, so your height determines the weight range corresponding to that BMI range. Children and teens require age- and sex-specific BMI interpretation."
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "What are the limitations of BMI?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "BMI is a screening measure based on height and weight. It does not directly measure body fat and cannot distinguish fat mass from lean mass such as muscle and bone."
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "Does muscle mass make BMI inaccurate?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "High muscularity can make BMI less informative because muscle contributes to body weight. A muscular person can have a BMI in the overweight or obesity range without having the same body-fat level as someone with less lean mass."
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "How is BMI calculated?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "BMI is weight in kilograms divided by height in meters squared. When pounds and inches are used, BMI equals 703 times weight in pounds divided by height in inches squared."
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "Are there different BMI standards for men and women?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "The standard adult BMI calculation and the commonly used adult category cutoffs do not change by sex. BMI can still have different relationships with body composition between individuals, so it should be interpreted with other health information."
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "What should my target weight be for a healthy BMI?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "For adults, the commonly used healthy BMI reference range is 18.5 to 24.9. A BMI calculator can convert that range into a height-specific weight range, but it should be treated as a reference rather than a personalized ideal-weight prescription."
-        }
-      }
-    ]
+    "description": "Free adult BMI calculator for adults 20 and older using pounds and inches or kilograms and centimeters, with BMI category and BMI-based weight range estimates."
   })} />
 
   <section class="hero">
     <h1>BMI Calculator — Check Your Body Mass Index &amp; Target Weight</h1>
     <p>
-      Calculate your BMI from your height and weight, check your adult BMI
-      category, and see the weight range corresponding to a BMI of 18.5–24.9.
+      Calculate your BMI using pounds and inches or kilograms and centimeters,
+      check your adult BMI category, and see the weight range corresponding
+      to a BMI of 18.5–24.9.
     </p>
   </section>
 
   <section class="calc-card" aria-label="BMI calculator">
     <div class="field">
       <label>Unit</label>
-      <div class="unit-toggle" role="group" aria-label="Choose measurement units">
+
+      <div
+        class="unit-toggle"
+        role="group"
+        aria-label="Choose measurement units"
+      >
         <button
           type="button"
           id="unit-us"
@@ -109,12 +61,14 @@ import RelatedTools from '../../../components/RelatedTools.astro';
     <div id="us-fields">
       <div class="field">
         <label for="weight-lb">Weight (lb)</label>
+
         <input
           type="number"
           id="weight-lb"
           placeholder="e.g. 185"
           inputmode="decimal"
-          min="1"
+          min="55"
+          max="1000"
           step="0.1"
           autocomplete="off"
         />
@@ -123,13 +77,14 @@ import RelatedTools from '../../../components/RelatedTools.astro';
       <div class="height-grid">
         <div class="field">
           <label for="height-ft">Height (ft)</label>
+
           <input
             type="number"
             id="height-ft"
             placeholder="e.g. 5"
             inputmode="numeric"
-            min="1"
-            max="8"
+            min="3"
+            max="9"
             step="1"
             autocomplete="off"
           />
@@ -137,6 +92,7 @@ import RelatedTools from '../../../components/RelatedTools.astro';
 
         <div class="field">
           <label for="height-in">Height (in)</label>
+
           <input
             type="number"
             id="height-in"
@@ -154,12 +110,14 @@ import RelatedTools from '../../../components/RelatedTools.astro';
     <div id="metric-fields" hidden>
       <div class="field">
         <label for="weight-kg">Weight (kg)</label>
+
         <input
           type="number"
           id="weight-kg"
           placeholder="e.g. 84"
           inputmode="decimal"
-          min="1"
+          min="25"
+          max="453.592"
           step="0.1"
           autocomplete="off"
         />
@@ -167,24 +125,59 @@ import RelatedTools from '../../../components/RelatedTools.astro';
 
       <div class="field">
         <label for="height-cm">Height (cm)</label>
+
         <input
           type="number"
           id="height-cm"
           placeholder="e.g. 178"
           inputmode="decimal"
-          min="50"
-          max="250"
+          min="91.44"
+          max="274.32"
           step="0.1"
           autocomplete="off"
         />
       </div>
     </div>
 
+    <div
+      id="input-error"
+      class="input-error"
+      role="alert"
+      aria-live="assertive"
+      hidden
+    ></div>
+
     <div class="result-box" id="result-box" aria-live="polite">
       <div class="big-number" id="bmi-value">–</div>
 
       <div class="label" id="bmi-category">
         Enter your height and weight
+      </div>
+
+      <div
+        class="bmi-scale"
+        role="img"
+        aria-label="BMI reference scale showing underweight, healthy weight, overweight, and obesity categories"
+      >
+        <div class="scale-track">
+          <span class="scale-segment underweight"></span>
+          <span class="scale-segment healthy"></span>
+          <span class="scale-segment overweight"></span>
+          <span class="scale-segment obesity"></span>
+
+          <span
+            class="scale-marker"
+            id="scale-marker"
+            aria-hidden="true"
+          ></span>
+        </div>
+
+        <div class="scale-labels" aria-hidden="true">
+          <span>Underweight</span>
+          <span>Healthy</span>
+          <span>Overweight</span>
+          <span>Obesity</span>
+        </div>
       </div>
 
       <div class="bmi-details">
@@ -226,13 +219,19 @@ import RelatedTools from '../../../components/RelatedTools.astro';
       Body mass index (BMI) is a calculated measure of weight relative to
       height. For adults, it is commonly used as a screening measure to
       classify weight status into underweight, healthy weight, overweight,
-      or obesity. BMI is useful for population-level and initial screening,
-      but it is not a direct measurement of body fat or a diagnosis of health.
+      or obesity. BMI is useful for screening, but it is not a direct
+      measurement of body fat or a diagnosis of health.
+    </p>
+
+    <p>
+      The adult BMI categories used by this calculator are intended for
+      adults age 20 and older. Children and teenagers require
+      age- and sex-specific BMI-for-age interpretation.
     </p>
   </article>
 
   <article class="article-section">
-    <h2>How Is BMI Calculated?</h2>
+    <h2>The Mathematical Formula Behind BMI</h2>
 
     <p>
       In metric units, BMI is calculated by dividing body weight in kilograms
@@ -255,7 +254,8 @@ import RelatedTools from '../../../components/RelatedTools.astro';
     <p>
       For example, someone who is 5 ft 10 in tall and weighs 175 lb has a BMI
       of about 25.1. The calculator above performs the same calculation
-      automatically and handles the unit conversion for you.
+      automatically and handles the conversion between US customary and
+      metric units.
     </p>
   </article>
 
@@ -310,16 +310,15 @@ import RelatedTools from '../../../components/RelatedTools.astro';
     <h2>What Is a Normal BMI for My Age and Height?</h2>
 
     <p>
-      For adults, the commonly used healthy-weight BMI range is 18.5 to 24.9.
-      Height matters because the same BMI corresponds to different body
-      weights at different heights. Your age does not change the standard
-      adult BMI calculation, but BMI is interpreted differently for children
-      and teenagers because their body composition changes during growth.
+      For adults age 20 and older, the commonly used healthy-weight BMI range
+      is 18.5 to 24.9. Height matters because the same BMI corresponds to
+      different body weights at different heights.
     </p>
 
     <p>
-      This calculator is intended for adult use. Children and teens need
-      age- and sex-specific BMI-for-age interpretation rather than the adult
+      Age does not change the standard adult BMI categories. However, children
+      and teenagers are still growing, so their BMI is interpreted using
+      age- and sex-specific BMI-for-age percentiles rather than the adult
       categories shown here.
     </p>
   </article>
@@ -338,7 +337,7 @@ import RelatedTools from '../../../components/RelatedTools.astro';
       This can help answer searches such as “ideal weight for height,” but BMI
       alone cannot determine an individual's ideal or healthiest body weight.
       Muscle mass, fat distribution, medical history, waist size, and other
-      factors can matter too.
+      factors can provide additional context.
     </p>
 
     <p>
@@ -470,12 +469,38 @@ import RelatedTools from '../../../components/RelatedTools.astro';
     <p>
       RepMaths uses the standard adult BMI calculation and the commonly used
       adult BMI categories of below 18.5, 18.5–24.9, 25.0–29.9, and 30.0 or
-      higher. The BMI formula and category ranges are consistent with
-      guidance published by the U.S. Centers for Disease Control and
-      Prevention (CDC) and National Heart, Lung, and Blood Institute (NHLBI).
-      The limitations wording reflects CDC and NIDDK guidance that BMI is a
-      screening measure and does not directly distinguish fat mass from lean
-      mass.
+      higher. These categories and the BMI formula are consistent with
+      guidance from the
+      <a
+        href="https://www.cdc.gov/bmi/adult-calculator/bmi-categories.html"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        U.S. Centers for Disease Control and Prevention (CDC)
+      </a>
+      and
+      <a
+        href="https://www.nhlbi.nih.gov/calculate-your-bmi"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        National Heart, Lung, and Blood Institute (NHLBI)
+      </a>.
+    </p>
+
+    <p>
+      The calculator is intended for adults age 20 and older. CDC describes
+      BMI as a screening measure that should be considered alongside other
+      health information rather than used as a diagnosis or complete measure
+      of individual health.
+      <a
+        href="https://www.cdc.gov/bmi/about/index.html"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        CDC's BMI methodology and limitations
+      </a>
+      provide additional background.
     </p>
 
     <p>
@@ -489,58 +514,68 @@ import RelatedTools from '../../../components/RelatedTools.astro';
     <h2>Frequently Asked Questions</h2>
 
     <div class="faq-item">
-      <h3>What is a normal BMI for my age and height?</h3>
+      <h3>Is BMI a good indicator of overall health?</h3>
+
       <p>
-        For adults, a BMI from 18.5 to 24.9 is commonly classified as healthy
-        weight. Your height determines which body-weight values correspond to
-        that BMI range. Children and teens need age- and sex-specific BMI
-        interpretation.
+        BMI is useful as a screening measure, but it is not a complete
+        assessment of health. It does not directly measure body fat or show
+        where fat is distributed. Other information such as medical history,
+        physical findings, health behaviors, and laboratory results can add
+        important context.
       </p>
     </div>
 
     <div class="faq-item">
-      <h3>What are the limitations of BMI?</h3>
+      <h3>Can I have a high BMI and still be healthy?</h3>
+
       <p>
-        BMI is a screening measure based on height and weight. It does not
-        directly measure body fat and cannot distinguish fat mass from lean
-        mass such as muscle and bone.
+        A high BMI does not by itself describe a person's complete health
+        status. People with substantial muscle mass can have a high BMI
+        because BMI cannot distinguish muscle from fat. BMI should therefore
+        be considered alongside other relevant health measures.
       </p>
     </div>
 
     <div class="faq-item">
-      <h3>Does muscle mass make BMI inaccurate?</h3>
+      <h3>Why can waist circumference add information beyond BMI?</h3>
+
       <p>
-        High muscularity can make BMI less informative because muscle
-        contributes to body weight. A muscular person can have a high BMI
-        without having the same body-fat level as someone with less lean mass.
+        BMI measures weight relative to height but does not show where body
+        fat is stored. Waist circumference can provide additional information
+        about body-fat distribution and may help put a BMI result into a
+        broader health context.
       </p>
     </div>
 
     <div class="faq-item">
-      <h3>How is BMI calculated?</h3>
+      <h3>What BMI range is considered healthy for adults?</h3>
+
       <p>
-        BMI is weight in kilograms divided by height in meters squared. With
-        pounds and inches, BMI equals 703 times weight in pounds divided by
-        height in inches squared.
+        For adults age 20 and older, the commonly used healthy-weight BMI
+        range is 18.5 to less than 25.0. RepMaths displays this as 18.5–24.9
+        in the calculator and reference table.
       </p>
     </div>
 
     <div class="faq-item">
-      <h3>Are there different BMI standards for men and women?</h3>
+      <h3>Does BMI work differently for men and women?</h3>
+
       <p>
         The standard adult BMI calculation and commonly used adult category
-        cutoffs are the same for men and women. BMI should still be interpreted
-        with other relevant health information.
+        cutoffs are the same for men and women. However, BMI can have
+        different relationships with body composition between individuals,
+        so BMI should not be interpreted in isolation.
       </p>
     </div>
 
     <div class="faq-item">
-      <h3>What should my target weight be for a healthy BMI?</h3>
+      <h3>Does BMI work for children and teenagers?</h3>
+
       <p>
-        For adults, the commonly used healthy BMI reference range is 18.5 to
-        24.9. A BMI calculator can convert that range into a height-specific
-        weight range, but it should be treated as a reference rather than a
-        personalized ideal-weight prescription.
+        Not in the same way as the adult calculator. Children and teenagers
+        are growing, so their BMI is interpreted using age- and sex-specific
+        BMI-for-age percentiles. This calculator is intended for adults age
+        20 and older.
       </p>
     </div>
   </article>
@@ -575,8 +610,27 @@ import RelatedTools from '../../../components/RelatedTools.astro';
     const bmiCategory = document.getElementById("bmi-category");
     const healthyWeightRange =
       document.getElementById("healthy-weight-range");
-
     const upperWeight = document.getElementById("upper-weight");
+    const inputError = document.getElementById("input-error");
+    const scaleMarker = document.getElementById("scale-marker");
+
+    function showError(message: string) {
+      if (inputError) {
+        inputError.textContent = message;
+        inputError.hidden = false;
+      }
+
+      if (resultBox) {
+        resultBox.classList.remove("show");
+      }
+    }
+
+    function clearError() {
+      if (inputError) {
+        inputError.textContent = "";
+        inputError.hidden = true;
+      }
+    }
 
     function setUnit(newUnit: string) {
       if (newUnit === unit) return;
@@ -594,9 +648,12 @@ import RelatedTools from '../../../components/RelatedTools.astro';
           Number.isFinite(ft) &&
           Number.isFinite(inches) &&
           ft > 0 &&
+          inches >= 0 &&
+          inches < 12 &&
           heightCm
         ) {
-          heightCm.value = ((ft * 12 + inches) * 2.54).toFixed(1);
+          heightCm.value =
+            ((ft * 12 + inches) * 2.54).toFixed(1);
         }
       }
 
@@ -637,7 +694,10 @@ import RelatedTools from '../../../components/RelatedTools.astro';
 
       if (unitMetric) {
         unitMetric.classList.toggle("active", !isUs);
-        unitMetric.setAttribute("aria-pressed", String(!isUs));
+        unitMetric.setAttribute(
+          "aria-pressed",
+          String(!isUs)
+        );
       }
 
       calculate();
@@ -650,10 +710,33 @@ import RelatedTools from '../../../components/RelatedTools.astro';
       return "Obesity";
     }
 
+    function updateScale(bmi: number) {
+      if (!scaleMarker) return;
+
+      /*
+       * The visual scale is intentionally illustrative rather than a
+       * continuous medical risk chart. Category boundaries are represented
+       * by the standard adult BMI cutoffs.
+       */
+      const min = 15;
+      const max = 40;
+
+      let clamped = bmi;
+
+      if (clamped < min) clamped = min;
+      if (clamped > max) clamped = max;
+
+      const position =
+        ((clamped - min) / (max - min)) * 100;
+
+      scaleMarker.style.left = `${position}%`;
+    }
+
     function calculate() {
+      clearError();
+
       let bmi: number | null = null;
       let heightMeters = 0;
-      const weightUnit = unit === "us" ? "lb" : "kg";
 
       if (unit === "us") {
         const lb = parseFloat(weightLb?.value || "");
@@ -675,18 +758,24 @@ import RelatedTools from '../../../components/RelatedTools.astro';
 
         const totalInches = ft * 12 + inches;
 
-        if (
-          totalInches < 36 ||
-          totalInches > 108 ||
-          lb < 40 ||
-          lb > 1000
-        ) {
-          if (resultBox) resultBox.classList.remove("show");
+        if (totalInches < 36 || totalInches > 108) {
+          showError(
+            "Please enter a height between 3 ft and 9 ft."
+          );
+          return;
+        }
+
+        if (lb < 55 || lb > 1000) {
+          showError(
+            "Please enter a weight between 55 lb and 1,000 lb."
+          );
           return;
         }
 
         heightMeters = totalInches * 0.0254;
-        bmi = (lb * 703) / (totalInches * totalInches);
+        bmi =
+          (lb * 703) /
+          (totalInches * totalInches);
       } else {
         const kg = parseFloat(weightKg?.value || "");
         const cm = parseFloat(heightCm?.value || "");
@@ -695,30 +784,50 @@ import RelatedTools from '../../../components/RelatedTools.astro';
           !Number.isFinite(kg) ||
           kg <= 0 ||
           !Number.isFinite(cm) ||
-          cm <= 0 ||
-          cm < 91.44 ||
-          cm > 274.32 ||
-          kg < 25 ||
-          kg > 453.592
+          cm <= 0
         ) {
           if (resultBox) resultBox.classList.remove("show");
           return;
         }
 
+        if (cm < 91.44 || cm > 274.32) {
+          showError(
+            "Please enter a height between 91.44 cm and 274.32 cm."
+          );
+          return;
+        }
+
+        if (kg < 25 || kg > 453.592) {
+          showError(
+            "Please enter a weight between 25 kg and 453.592 kg."
+          );
+          return;
+        }
+
         heightMeters = cm / 100;
-        bmi = kg / (heightMeters * heightMeters);
+        bmi =
+          kg /
+          (heightMeters * heightMeters);
       }
 
-      if (!bmi || !Number.isFinite(bmi) || bmi <= 0) {
+      if (
+        bmi === null ||
+        !Number.isFinite(bmi) ||
+        bmi <= 0
+      ) {
         if (resultBox) resultBox.classList.remove("show");
         return;
       }
 
       const lowerWeightKg =
-        18.5 * heightMeters * heightMeters;
+        18.5 *
+        heightMeters *
+        heightMeters;
 
       const upperWeightKg =
-        24.9 * heightMeters * heightMeters;
+        24.9 *
+        heightMeters *
+        heightMeters;
 
       if (bmiValue) {
         bmiValue.textContent = bmi.toFixed(1);
@@ -728,9 +837,16 @@ import RelatedTools from '../../../components/RelatedTools.astro';
         bmiCategory.textContent = getCategory(bmi);
       }
 
-      if (weightUnit === "lb") {
-        const lowerLb = lowerWeightKg * 2.2046226218;
-        const upperLb = upperWeightKg * 2.2046226218;
+      updateScale(bmi);
+
+      if (unit === "us") {
+        const lowerLb =
+          lowerWeightKg *
+          2.2046226218;
+
+        const upperLb =
+          upperWeightKg *
+          2.2046226218;
 
         if (healthyWeightRange) {
           healthyWeightRange.textContent =
@@ -758,8 +874,15 @@ import RelatedTools from '../../../components/RelatedTools.astro';
       }
     }
 
-    unitUs?.addEventListener("click", () => setUnit("us"));
-    unitMetric?.addEventListener("click", () => setUnit("metric"));
+    unitUs?.addEventListener(
+      "click",
+      () => setUnit("us")
+    );
+
+    unitMetric?.addEventListener(
+      "click",
+      () => setUnit("metric")
+    );
 
     [
       weightLb,
@@ -768,8 +891,15 @@ import RelatedTools from '../../../components/RelatedTools.astro';
       weightKg,
       heightCm
     ].forEach((input) => {
-      input?.addEventListener("input", calculate);
-      input?.addEventListener("change", calculate);
+      input?.addEventListener(
+        "input",
+        calculate
+      );
+
+      input?.addEventListener(
+        "change",
+        calculate
+      );
     });
   </script>
 
@@ -786,6 +916,94 @@ import RelatedTools from '../../../components/RelatedTools.astro';
 
     .result-box .big-number {
       font-size: 3rem;
+    }
+
+    .input-error {
+      margin-top: 12px;
+      padding: 10px 12px;
+      border: 1px solid #b83a2b;
+      border-radius: 8px;
+      background: rgba(184, 58, 43, 0.1);
+      color: #e6b3ad;
+      text-align: left;
+      font-size: 0.85rem;
+      line-height: 1.45;
+    }
+
+    .bmi-scale {
+      margin-top: 20px;
+      text-align: left;
+    }
+
+    .scale-track {
+      position: relative;
+      display: grid;
+      grid-template-columns: 3.5fr 6.5fr 5fr 10fr;
+      height: 12px;
+      overflow: visible;
+      border-radius: 999px;
+      background: var(--surface-2);
+    }
+
+    .scale-segment {
+      display: block;
+      height: 12px;
+    }
+
+    .scale-segment:first-child {
+      border-radius: 999px 0 0 999px;
+    }
+
+    .scale-segment:last-of-type {
+      border-radius: 0 999px 999px 0;
+    }
+
+    .scale-segment.underweight {
+      background: #4b83d1;
+    }
+
+    .scale-segment.healthy {
+      background: #3e9b62;
+    }
+
+    .scale-segment.overweight {
+      background: #d5a83a;
+    }
+
+    .scale-segment.obesity {
+      background: #c95548;
+    }
+
+    .scale-marker {
+      position: absolute;
+      top: 50%;
+      width: 16px;
+      height: 16px;
+      border: 2px solid #fff;
+      border-radius: 50%;
+      background: var(--accent);
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.45);
+      transform: translate(-50%, -50%);
+      transition: left 120ms ease;
+    }
+
+    .scale-labels {
+      display: grid;
+      grid-template-columns: 3.5fr 6.5fr 5fr 10fr;
+      gap: 4px;
+      margin-top: 7px;
+      color: var(--text-muted);
+      font-size: 0.68rem;
+      line-height: 1.2;
+    }
+
+    .scale-labels span:nth-child(2),
+    .scale-labels span:nth-child(3) {
+      text-align: center;
+    }
+
+    .scale-labels span:last-child {
+      text-align: right;
     }
 
     .bmi-details {
@@ -847,6 +1065,7 @@ import RelatedTools from '../../../components/RelatedTools.astro';
       color: #c7cbd2;
       text-align: left;
       font-size: 0.86rem;
+      line-height: 1.5;
     }
 
     .category-table caption {
@@ -866,6 +1085,10 @@ import RelatedTools from '../../../components/RelatedTools.astro';
 
       .bmi-details .metric-card {
         margin-top: 10px;
+      }
+
+      .scale-labels {
+        font-size: 0.6rem;
       }
     }
   </style>
