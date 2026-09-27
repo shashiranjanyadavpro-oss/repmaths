@@ -218,7 +218,8 @@
     "body-fat-calculator",
     "lean-body-mass-calculator",
     "ffmi-calculator",
-    "calorie-deficit-calculator"]
+    "calorie-deficit-calculator",
+    "macro-calculator"]
   },
   {
   "id": "calories-burned-calculator",
