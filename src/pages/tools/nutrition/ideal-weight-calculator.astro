@@ -2,6 +2,7 @@
 import Base from '../../../layouts/Base.astro';
 import RelatedTools from '../../../components/RelatedTools.astro';
 ---
+
 <Base
   title="Ideal Weight Calculator — Find Your Target Weight (4 Formulas)"
   description="Free ideal weight calculator using Devine, Robinson, Miller, and Hamwi formulas. Compare reference body weights with a healthy BMI weight range in lb or kg."
@@ -18,61 +19,6 @@ import RelatedTools from '../../../components/RelatedTools.astro';
       "priceCurrency": "USD"
     },
     "description": "Free ideal weight calculator that compares four commonly used ideal body weight formulas with a BMI-based healthy weight range."
-  })} />
-
-  <script type="application/ld+json" set:html={JSON.stringify({
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    "mainEntity": [
-      {
-        "@type": "Question",
-        "name": "What is my ideal weight for my height and age?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "For the adult IBW formulas used by this calculator, height and sex are the main inputs. Devine, Robinson, Miller, and Hamwi do not use age in their equations. A healthy weight target should also consider body composition, health status, and individual circumstances."
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "Which ideal body weight formula is most accurate?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "There is no universally most accurate IBW formula. Devine, Robinson, Miller, and Hamwi produce somewhat different reference estimates because they were developed from different datasets and approaches. Comparing several formulas alongside a BMI-based weight range provides more context than relying on one number."
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "How much should a 5'5 woman weigh?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "There is no single ideal weight for every 5'5 woman. This calculator shows four reference IBW estimates and a BMI-based healthy weight range so you can compare the different approaches."
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "Does ideal weight include muscle mass?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "No. Traditional IBW formulas are based primarily on height and sex and do not directly account for above-average muscle mass. This is particularly important for strength athletes, bodybuilders, and other muscular lifters."
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "What is the difference between BMI and Ideal Body Weight?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "IBW formulas estimate a reference body weight from height and sex. BMI relates body weight to height and provides a range rather than one target number. Neither measure directly distinguishes muscle from fat."
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "Are ideal weight formulas outdated?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "The classic formulas are old and have limitations, but they are still used as reference equations in clinical and fitness contexts. They should be treated as estimates rather than a universal definition of the weight a person should reach."
-        }
-      }
-    ]
   })} />
 
   <section class="hero">
@@ -129,6 +75,7 @@ import RelatedTools from '../../../components/RelatedTools.astro';
     <div id="imperial-height">
       <div class="field">
         <label for="height-ft">Height</label>
+
         <div class="height-grid">
           <input
             type="number"
@@ -140,6 +87,7 @@ import RelatedTools from '../../../components/RelatedTools.astro';
             step="1"
             aria-label="Height in feet"
           />
+
           <span>ft</span>
 
           <input
@@ -152,6 +100,7 @@ import RelatedTools from '../../../components/RelatedTools.astro';
             step="0.1"
             aria-label="Height in inches"
           />
+
           <span>in</span>
         </div>
       </div>
@@ -160,6 +109,7 @@ import RelatedTools from '../../../components/RelatedTools.astro';
     <div id="metric-height" hidden>
       <div class="field">
         <label for="height-cm">Height</label>
+
         <div class="height-single">
           <input
             type="number"
@@ -171,6 +121,7 @@ import RelatedTools from '../../../components/RelatedTools.astro';
             step="0.1"
             aria-label="Height in centimeters"
           />
+
           <span>cm</span>
         </div>
       </div>
@@ -181,34 +132,42 @@ import RelatedTools from '../../../components/RelatedTools.astro';
     </button>
 
     <div class="result-box" id="result-box">
-      <div class="big-number" id="result-average">–</div>
-      <div class="label">Average of 4 IBW Reference Estimates</div>
+
+      <div class="big-number" id="result-range">–</div>
+
+      <div class="label">
+        Four-Formula IBW Reference Range
+      </div>
 
       <div class="lifter-note">
         <strong>Note for lifters:</strong>
-        Traditional IBW formulas do not account for above-average muscle
-        mass. If you train regularly, your healthy body weight may be
-        higher than these reference estimates.
+        Traditional ideal body weight formulas do not measure muscle mass
+        or body fat. If you lift regularly or have above-average lean mass,
+        your healthy body weight may be higher than these reference estimates.
       </div>
 
       <table class="result-table">
         <caption>Ideal body weight estimates</caption>
+
         <thead>
           <tr>
             <th scope="col">Formula</th>
-            <th scope="col">Weight</th>
+            <th scope="col">Reference Weight</th>
           </tr>
         </thead>
+
         <tbody id="formula-results"></tbody>
       </table>
 
       <div class="bmi-result">
         <h3>Healthy BMI Weight Range</h3>
+
         <div class="bmi-range" id="bmi-range">–</div>
+
         <p>
-          This range corresponds to a BMI of 18.5–24.9 for adults.
-          BMI is a screening measure and does not directly measure body fat
-          or muscle mass.
+          This range corresponds to an adult BMI of 18.5–24.9.
+          BMI is a screening measure and does not directly measure body fat,
+          muscle mass, or fat distribution.
         </p>
       </div>
 
@@ -221,21 +180,23 @@ import RelatedTools from '../../../components/RelatedTools.astro';
 
     <p>
       An ideal weight calculator estimates a reference body weight from
-      your height and sex. Instead of presenting one number as a universal
-      target, this calculator compares four commonly used ideal body weight
-      (IBW) formulas: Devine, Robinson, Miller, and Hamwi.
+      height and sex. Instead of presenting one number as a universal target,
+      this calculator compares four commonly used ideal body weight (IBW)
+      formulas: Devine, Robinson, Miller, and Hamwi.
     </p>
 
     <p>
-      It also shows a BMI-based healthy weight range. That gives you two
-      different ways to interpret your result: traditional IBW equations
-      provide reference estimates, while BMI provides a range of body
-      weights corresponding to the adult BMI range of 18.5–24.9.
+      It also shows a BMI-based healthy weight range. This gives you two
+      different reference points: traditional IBW equations provide
+      formula-based estimates, while BMI provides a range of body weights
+      corresponding to an adult BMI of 18.5–24.9.
     </p>
 
     <p>
-      These approaches are not interchangeable and neither one should be
-      treated as a precise definition of your personally ideal body weight.
+      These approaches are not interchangeable, and neither should be treated
+      as a precise definition of the weight every person should reach.
+      Research and clinical reviews have highlighted important limitations
+      in traditional IBW equations. 
     </p>
   </article>
 
@@ -243,59 +204,75 @@ import RelatedTools from '../../../components/RelatedTools.astro';
     <h2>How Is Ideal Body Weight Calculated?</h2>
 
     <p>
-      The four formulas used here estimate body weight from height and sex.
-      They use a base weight at 5 feet and then add a fixed amount for
-      each inch above 5 feet. The equations produce slightly different
-      estimates because they were developed using different historical
-      datasets and methods.
+      The four formulas used here are traditional height-based equations.
+      Most use a base weight at 5 feet and add a fixed amount for each inch
+      above 5 feet. The equations produce different estimates because they
+      were developed from different historical data and approaches.
     </p>
 
     <h3>Devine Formula</h3>
 
     <p>
       The Devine formula was published in 1974 and became widely used for
-      estimating ideal body weight in clinical and drug-dosing contexts.
+      ideal body weight estimation in clinical and drug-dosing contexts.
     </p>
 
     <ul>
-      <li><strong>Men:</strong> 50.0 kg + 2.3 kg × each inch over 5 ft</li>
-      <li><strong>Women:</strong> 45.5 kg + 2.3 kg × each inch over 5 ft</li>
+      <li>
+        <strong>Men:</strong> 50.0 kg + 2.3 kg × each inch over 5 ft
+      </li>
+      <li>
+        <strong>Women:</strong> 45.5 kg + 2.3 kg × each inch over 5 ft
+      </li>
     </ul>
 
     <h3>Hamwi Formula</h3>
 
     <p>
-      The Hamwi formula dates to 1964 and is another traditional reference
-      equation for estimating desirable body weight.
+      The Hamwi method is traditionally expressed in pounds. This calculator
+      calculates it in its common imperial form and converts the result to
+      kilograms when metric output is selected.
     </p>
 
     <ul>
-      <li><strong>Men:</strong> 48.0 kg + 2.7 kg × each inch over 5 ft</li>
-      <li><strong>Women:</strong> 45.5 kg + 2.2 kg × each inch over 5 ft</li>
+      <li>
+        <strong>Men:</strong> 106 lb + 6 lb × each inch over 5 ft
+      </li>
+      <li>
+        <strong>Women:</strong> 100 lb + 5 lb × each inch over 5 ft
+      </li>
     </ul>
 
     <h3>Robinson Formula</h3>
 
     <p>
-      The Robinson formula was published in 1983 using height-weight data
-      to derive sex-specific ideal body weight equations.
+      The Robinson equation was published in 1983 using height-weight data
+      derived from Metropolitan Life Insurance Company tables.
     </p>
 
     <ul>
-      <li><strong>Men:</strong> 52.0 kg + 1.9 kg × each inch over 5 ft</li>
-      <li><strong>Women:</strong> 49.0 kg + 1.7 kg × each inch over 5 ft</li>
+      <li>
+        <strong>Men:</strong> 52.0 kg + 1.9 kg × each inch over 5 ft
+      </li>
+      <li>
+        <strong>Women:</strong> 49.0 kg + 1.7 kg × each inch over 5 ft
+      </li>
     </ul>
 
     <h3>Miller Formula</h3>
 
     <p>
-      The Miller formula is another 1983 reference equation and uses
-      different coefficients from the Devine, Hamwi, and Robinson methods.
+      The Miller equation is another 1983 reference equation with different
+      coefficients from Devine, Hamwi, and Robinson.
     </p>
 
     <ul>
-      <li><strong>Men:</strong> 56.2 kg + 1.41 kg × each inch over 5 ft</li>
-      <li><strong>Women:</strong> 53.1 kg + 1.36 kg × each inch over 5 ft</li>
+      <li>
+        <strong>Men:</strong> 56.2 kg + 1.41 kg × each inch over 5 ft
+      </li>
+      <li>
+        <strong>Women:</strong> 53.1 kg + 1.36 kg × each inch over 5 ft
+      </li>
     </ul>
   </article>
 
@@ -306,20 +283,21 @@ import RelatedTools from '../../../components/RelatedTools.astro';
       There is no universally accepted “most accurate” IBW formula.
       Devine, Hamwi, Robinson, and Miller can produce different results for
       the same height because they were developed from different historical
-      data and approaches.
+      datasets and methods.
     </p>
 
     <p>
-      Research comparing IBW equations has found that the formulas do not
-      always align with the same BMI value across different heights.
-      For that reason, comparing multiple equations and looking at a
-      healthy BMI-based range can provide more context than choosing one
-      formula as the definitive answer.
+      Research comparing traditional IBW equations with BMI-based ranges
+      has found that the formulas do not always align with the same BMI
+      value across different heights. This is one reason a BMI-based range
+      can provide useful additional context rather than relying on one
+      formula alone.
     </p>
 
     <p>
-      The four-formula comparison above is therefore a reference tool,
-      not a ranking of which equation is universally correct.
+      RepMaths therefore shows the four equations separately and reports
+      their overall range. The calculator does not rank one formula as the
+      universally correct answer.
     </p>
   </article>
 
@@ -333,18 +311,18 @@ import RelatedTools from '../../../components/RelatedTools.astro';
     </p>
 
     <p>
-      That means a search such as “ideal weight by age” should not be
-      interpreted as though every adult age has a separate IBW number.
-      Age can matter when assessing health, body composition, or other
-      clinical factors, but it is not an input to these four classic IBW
-      equations.
+      So a search such as “ideal weight by age” should not be interpreted
+      as though every adult age has a separate IBW number from these
+      equations. Age can matter when assessing health, body composition,
+      or other individual factors, but it is not an input to these four
+      classic IBW formulas.
     </p>
 
     <p>
       For adults, you can use the
       <a href="/tools/nutrition/bmi-calculator">BMI Calculator</a>
-      alongside this tool to see how your weight relates to height using
-      a BMI-based range.
+      alongside this tool to see how weight relates to height using a
+      BMI-based reference range.
     </p>
   </article>
 
@@ -353,9 +331,10 @@ import RelatedTools from '../../../components/RelatedTools.astro';
 
     <p>
       “Ideal weight” and “healthy weight” are not interchangeable terms.
-      Traditional IBW formulas return a mathematical reference estimate,
-      while a healthy-weight assessment can involve BMI, body composition,
-      health history, physical activity, and other individual factors.
+      Traditional IBW formulas return mathematical reference estimates,
+      while a broader healthy-weight assessment can involve BMI, body
+      composition, health history, physical activity, and other individual
+      factors.
     </p>
 
     <p>
@@ -371,8 +350,8 @@ import RelatedTools from '../../../components/RelatedTools.astro';
 
     <p>
       No. Traditional IBW equations do not directly measure muscle mass,
-      fat mass, skeletal size, or other components of body composition.
-      They primarily use height and sex.
+      fat mass, skeletal size, or fat distribution. They primarily use
+      height and sex.
     </p>
 
     <p>
@@ -386,7 +365,9 @@ import RelatedTools from '../../../components/RelatedTools.astro';
     <p>
       If you are a lifter, use the result as a reference rather than as a
       mandatory target. Our
-      <a href="/tools/nutrition/body-fat-calculator">Body Fat Calculator</a>
+      <a href="/tools/nutrition/body-fat-calculator">
+        Body Fat Calculator
+      </a>
       can provide additional body-composition context.
     </p>
 
@@ -396,7 +377,9 @@ import RelatedTools from '../../../components/RelatedTools.astro';
         Lean Body Mass Calculator
       </a>
       to estimate fat-free mass, or the
-      <a href="/tools/nutrition/ffmi-calculator">FFMI Calculator</a>
+      <a href="/tools/nutrition/ffmi-calculator">
+        FFMI Calculator
+      </a>
       to put lean mass into a height-adjusted context.
     </p>
   </article>
@@ -412,7 +395,7 @@ import RelatedTools from '../../../components/RelatedTools.astro';
 
     <p>
       Traditional IBW equations were not designed to identify the ideal
-      scale weight for a muscular athlete. They also do not account for
+      scale weight for a muscular athlete. They also do not distinguish
       how much of your body weight comes from muscle versus fat.
     </p>
 
@@ -427,9 +410,14 @@ import RelatedTools from '../../../components/RelatedTools.astro';
       <a href="/tools/nutrition/calorie-deficit-calculator">
         Calorie Deficit Calculator
       </a>
-      can help estimate a calorie target and projected timeline. If your
-      goal is nutrition planning rather than weight loss, the
-      <a href="/tools/nutrition/macro-calculator">Macro Calculator</a>
+      can help estimate a calorie target and projected timeline.
+    </p>
+
+    <p>
+      If your goal is nutrition planning rather than weight loss, the
+      <a href="/tools/nutrition/macro-calculator">
+        Macro Calculator
+      </a>
       can help you set starting protein, carbohydrate, and fat targets.
     </p>
   </article>
@@ -439,8 +427,8 @@ import RelatedTools from '../../../components/RelatedTools.astro';
 
     <p>
       For adults, a BMI of 18.5 through 24.9 is commonly used as the
-      “healthy weight” BMI category. Converting those BMI values back into
-      body weight creates a height-specific weight range.
+      healthy-weight BMI category. Converting those BMI values back into
+      body weight creates a height-specific reference range.
     </p>
 
     <p>
@@ -450,14 +438,14 @@ import RelatedTools from '../../../components/RelatedTools.astro';
     </p>
 
     <p>
-      Unlike the traditional IBW formulas, a BMI range gives you more than
-      one target weight. However, BMI also has an important limitation:
-      it cannot distinguish muscle mass from fat mass.
+      Unlike traditional IBW formulas, a BMI range gives you more than one
+      target weight. However, BMI is a screening measure and cannot
+      distinguish muscle mass from fat mass.
     </p>
 
     <p>
-      For that reason, muscular athletes should not interpret either BMI
-      or traditional IBW as a complete body-composition assessment.
+      For that reason, muscular athletes should not interpret BMI or
+      traditional IBW as a complete body-composition assessment.
     </p>
   </article>
 
@@ -473,7 +461,7 @@ import RelatedTools from '../../../components/RelatedTools.astro';
     <p>
       Even when two calculators use the same formula, differences can
       appear because of rounding, height conversion, unit conversion,
-      or how heights below and above 5 feet are handled.
+      or how heights around the 5-foot baseline are handled.
     </p>
 
     <p>
@@ -487,30 +475,40 @@ import RelatedTools from '../../../components/RelatedTools.astro';
     <h2>Sources & Methodology</h2>
 
     <p>
-      RepMaths uses the commonly published Devine, Hamwi, Robinson, and
-      Miller ideal body weight equations and calculates a separate BMI
-      weight range using BMI values of 18.5 and 24.9.
+      RepMaths uses four commonly published adult ideal body weight
+      reference equations: Devine, Hamwi, Robinson, and Miller. It also
+      calculates a separate BMI-based weight range using BMI values of
+      18.5 and 24.9.
     </p>
 
     <ul>
       <li>
-        Robinson et al. (1983), ideal body weight equations derived from
-        height-weight data.
+        Devine BJ. Gentamicin therapy. Drug Intelligence and Clinical
+        Pharmacy, 1974.
       </li>
+
       <li>
-        Pai & Paloucek (2000), historical review of the origin and use of
-        ideal body weight equations.
+        Robinson JD, Lupkiewicz SM, Palenik L, Lopez LM, Ariet M.
+        Determination of ideal body weight for drug dosage calculations,
+        1983.
       </li>
+
       <li>
-        Peterson et al. (2016), research comparing IBW equations with BMI
-        and proposing a universal height/BMI-based equation.
+        Pai MP, Paloucek FP. The origin of the “ideal” body weight
+        equations, 2000.
+      </li>
+
+      <li>
+        Peterson CM et al. Comparison of ideal body weight equations and
+        BMI-based weight ranges, 2016.
       </li>
     </ul>
 
     <p>
-      These equations are presented for educational and fitness-planning
-      purposes. They are not a diagnosis and should not be used as a
-      substitute for individualized medical advice.
+      The formulas are presented as reference estimates for educational and
+      fitness-planning purposes. They are not a diagnosis and should not be
+      treated as a universal target or a substitute for individualized
+      medical advice.
     </p>
   </article>
 
@@ -519,34 +517,37 @@ import RelatedTools from '../../../components/RelatedTools.astro';
 
     <div class="faq-item">
       <h3>What is my ideal weight for my height and age?</h3>
+
       <p>
-        The adult IBW formulas used here do not use age. They estimate a
-        reference weight from height and sex. Your health and appropriate
-        target weight can depend on additional factors.
+        The four adult IBW formulas used here do not use age. They estimate
+        a reference weight from height and sex. Your appropriate health or
+        fitness target can depend on additional factors.
       </p>
     </div>
 
     <div class="faq-item">
       <h3>Which ideal body weight formula is most accurate?</h3>
+
       <p>
         There is no universally most accurate formula. Devine, Hamwi,
         Robinson, and Miller can produce different estimates, so comparing
-        the four results gives more context than treating one formula as
-        definitive.
+        all four gives more context than treating one formula as definitive.
       </p>
     </div>
 
     <div class="faq-item">
       <h3>How much should a 5'5 woman weigh?</h3>
+
       <p>
         There is no single ideal weight for every 5'5 woman. This calculator
         provides four reference IBW estimates plus a BMI-based healthy
-        weight range.
+        weight range for comparison.
       </p>
     </div>
 
     <div class="faq-item">
       <h3>Does ideal weight include muscle mass?</h3>
+
       <p>
         No. Traditional IBW formulas do not directly account for above-
         average muscle mass. This is especially important for bodybuilders
@@ -556,6 +557,7 @@ import RelatedTools from '../../../components/RelatedTools.astro';
 
     <div class="faq-item">
       <h3>What is the difference between BMI and Ideal Body Weight?</h3>
+
       <p>
         IBW formulas estimate a reference weight from height and sex.
         BMI relates weight to height and can be used to calculate a range
@@ -566,6 +568,7 @@ import RelatedTools from '../../../components/RelatedTools.astro';
 
     <div class="faq-item">
       <h3>Are ideal weight formulas outdated?</h3>
+
       <p>
         The classic equations are old and have known limitations, but they
         remain useful as reference equations. They should not be treated
@@ -607,7 +610,7 @@ import RelatedTools from '../../../components/RelatedTools.astro';
     const calcBtn = document.getElementById("calc-btn");
 
     const resultBox = document.getElementById("result-box");
-    const resultAverage = document.getElementById("result-average");
+    const resultRange = document.getElementById("result-range");
     const formulaResults = document.getElementById("formula-results");
     const bmiRange = document.getElementById("bmi-range");
     const resultSummary = document.getElementById("result-summary");
@@ -760,15 +763,29 @@ import RelatedTools from '../../../components/RelatedTools.astro';
       let miller: number;
 
       if (selectedSex === "male") {
-        devine = 50.0 + 2.3 * inchesOverFiveFeet;
-        hamwi = 48.0 + 2.7 * inchesOverFiveFeet;
-        robinson = 52.0 + 1.9 * inchesOverFiveFeet;
-        miller = 56.2 + 1.41 * inchesOverFiveFeet;
+        devine =
+          50.0 + 2.3 * inchesOverFiveFeet;
+
+        hamwi =
+          lbToKg(106 + 6 * inchesOverFiveFeet);
+
+        robinson =
+          52.0 + 1.9 * inchesOverFiveFeet;
+
+        miller =
+          56.2 + 1.41 * inchesOverFiveFeet;
       } else {
-        devine = 45.5 + 2.3 * inchesOverFiveFeet;
-        hamwi = 45.5 + 2.2 * inchesOverFiveFeet;
-        robinson = 49.0 + 1.7 * inchesOverFiveFeet;
-        miller = 53.1 + 1.36 * inchesOverFiveFeet;
+        devine =
+          45.5 + 2.3 * inchesOverFiveFeet;
+
+        hamwi =
+          lbToKg(100 + 5 * inchesOverFiveFeet);
+
+        robinson =
+          49.0 + 1.7 * inchesOverFiveFeet;
+
+        miller =
+          53.1 + 1.36 * inchesOverFiveFeet;
       }
 
       return {
@@ -818,20 +835,31 @@ import RelatedTools from '../../../components/RelatedTools.astro';
           ibw.miller
         ];
 
-        if (values.some((value) => !Number.isFinite(value) || value <= 0)) {
+        if (
+          values.some(
+            (value) => !Number.isFinite(value) || value <= 0
+          )
+        ) {
           showError(
             "This height does not produce a valid reference estimate."
           );
           return;
         }
 
+        const minimum = Math.min(...values);
+        const maximum = Math.max(...values);
+
         const average =
-          values.reduce((sum, value) => sum + value, 0) / values.length;
+          values.reduce(
+            (sum, value) => sum + value,
+            0
+          ) / values.length;
 
         const bmi = calculateBMIWeightRange(heightM);
 
-        if (resultAverage) {
-          resultAverage.textContent = formatWeight(average);
+        if (resultRange) {
+          resultRange.textContent =
+            `${formatWeight(minimum)} – ${formatWeight(maximum)}`;
         }
 
         if (formulaResults) {
@@ -840,14 +868,17 @@ import RelatedTools from '../../../components/RelatedTools.astro';
               <td>Devine</td>
               <td>${formatDualWeight(ibw.devine)}</td>
             </tr>
+
             <tr>
               <td>Hamwi</td>
               <td>${formatDualWeight(ibw.hamwi)}</td>
             </tr>
+
             <tr>
               <td>Robinson</td>
               <td>${formatDualWeight(ibw.robinson)}</td>
             </tr>
+
             <tr>
               <td>Miller</td>
               <td>${formatDualWeight(ibw.miller)}</td>
@@ -863,12 +894,14 @@ import RelatedTools from '../../../components/RelatedTools.astro';
         if (resultSummary) {
           resultSummary.innerHTML = `
             <p>
-              The four IBW formulas give a reference range of
-              <strong>${formatWeight(Math.min(...values))}</strong>
+              The four formulas produce a reference range of
+              <strong>${formatWeight(minimum)}</strong>
               to
-              <strong>${formatWeight(Math.max(...values))}</strong>.
-              The arithmetic average is shown above for comparison, not as
-              a medically validated “ideal” target.
+              <strong>${formatWeight(maximum)}</strong>.
+              Their arithmetic average is
+              <strong>${formatWeight(average)}</strong>,
+              but that average is shown only as a mathematical comparison,
+              not as a medically validated “ideal” target.
             </p>
           `;
         }
