@@ -221,8 +221,12 @@ import RelatedTools from '../../../components/RelatedTools.astro';
         Estimated Lean Body Mass
       </div>
 
-      <div class="composition-visual" aria-label="Body composition estimate">
-        <div class="composition-bar">
+      <div
+        class="composition-visual"
+        role="img"
+        aria-label="Estimated lean mass and fat mass composition"
+      >
+        <div class="composition-bar" aria-hidden="true">
           <div
             class="composition-lean"
             id="composition-lean"
@@ -236,13 +240,19 @@ import RelatedTools from '../../../components/RelatedTools.astro';
 
         <div class="composition-legend">
           <span>
-            <i class="legend-dot lean-dot"></i>
+            <i
+              class="legend-dot lean-dot"
+              aria-hidden="true"
+            ></i>
             Lean Mass
             <strong id="visual-lean-percent">–</strong>
           </span>
 
           <span>
-            <i class="legend-dot fat-dot"></i>
+            <i
+              class="legend-dot fat-dot"
+              aria-hidden="true"
+            ></i>
             Fat Mass
             <strong id="visual-fat-percent">–</strong>
           </span>
@@ -366,20 +376,21 @@ import RelatedTools from '../../../components/RelatedTools.astro';
     <p>
       The Boer equation estimates lean body mass from body weight and height.
       The original work examined estimated lean body mass as an index for
-      normalizing body-fluid volumes. 3
+      normalizing body-fluid volumes.
     </p>
 
     <h3>James Formula</h3>
 
     <p>
-      The James equation uses body weight in kilograms and height in meters.
+      The James equation uses body weight in kilograms and height in
+      centimeters:
     </p>
 
     <p>
       For men:
       <br />
       <code>
-        LBM = 1.10 × weight(kg) − 128 × (weight(kg) / height(m))²
+        LBM = 1.10 × weight(kg) − 128 × (weight(kg) / height(cm))²
       </code>
     </p>
 
@@ -387,14 +398,14 @@ import RelatedTools from '../../../components/RelatedTools.astro';
       For women:
       <br />
       <code>
-        LBM = 1.07 × weight(kg) − 148 × (weight(kg) / height(m))²
+        LBM = 1.07 × weight(kg) − 148 × (weight(kg) / height(cm))²
       </code>
     </p>
 
     <p>
-      The unit conversion is important: using height in centimeters directly
-      in the James equation produces an incorrect result. Published versions
-      of the equation specify height in meters. 4
+      The height unit matters. In the James equation used here, height is
+      expressed in centimeters. Using meters in the ratio without adjusting
+      the equation's scale would produce an incorrect result.
     </p>
 
     <h3>Hume Formula</h3>
@@ -417,7 +428,7 @@ import RelatedTools from '../../../components/RelatedTools.astro';
 
     <p>
       Hume's original study developed sex-specific equations for estimating
-      lean body mass from height and weight. 5
+      lean body mass from height and weight.
     </p>
   </article>
 
@@ -449,7 +460,7 @@ import RelatedTools from '../../../components/RelatedTools.astro';
     <p>
       Modern body-composition standards recommend using precise terminology
       because fat-free mass, lean mass, lean soft tissue, and skeletal muscle
-      represent different concepts. 6
+      represent different concepts.
     </p>
 
     <p>
@@ -554,13 +565,12 @@ import RelatedTools from '../../../components/RelatedTools.astro';
       In one study comparing Hume, Boer, and James estimates with CT-derived
       measurements, none of the height-weight formulas was practically
       equivalent to direct CT measurement for individual estimates.
-      7
     </p>
 
     <p>
       Hume's equation has also been compared with DXA, showing strong
       correlation but some systematic difference between estimated and
-      measured lean body mass. 8
+      measured lean body mass.
     </p>
 
     <p>
@@ -631,6 +641,17 @@ import RelatedTools from '../../../components/RelatedTools.astro';
           rel="noopener noreferrer"
         >
           PubMed
+        </a>.
+      </li>
+
+      <li>
+        James equation reference and unit specification:
+        <a
+          href="https://qmic.org/wp-content/uploads/2025/11/QIBA_FDG-PET_Profile_v114.pdf"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          QIBA FDG-PET Profile
         </a>.
       </li>
     </ul>
@@ -739,6 +760,23 @@ import RelatedTools from '../../../components/RelatedTools.astro';
   <RelatedTools currentToolId="lean-body-mass-calculator" />
 
   <style>
+    /*
+     * Accessibility utility used by the Feet/Inches labels.
+     * Keeps the labels available to screen readers without
+     * displaying redundant text visually.
+     */
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+
     .method-toggle {
       flex-wrap: wrap;
     }
@@ -769,6 +807,17 @@ import RelatedTools from '../../../components/RelatedTools.astro';
       border-radius: 0 8px 8px 0;
       background: var(--surface-2);
       font-weight: 700;
+    }
+
+    .input-error {
+      margin: 12px 0 0;
+      padding: 10px 12px;
+      border: 1px solid #dc2626;
+      border-radius: 8px;
+      background: rgba(220, 38, 38, 0.08);
+      color: var(--text);
+      line-height: 1.45;
+      font-size: 0.92rem;
     }
 
     .lbm-details {
@@ -905,10 +954,17 @@ import RelatedTools from '../../../components/RelatedTools.astro';
     const unitLb = document.getElementById("unit-lb");
     const unitKg = document.getElementById("unit-kg");
 
-    const methodBodyFat = document.getElementById("method-bodyfat");
-    const methodBoer = document.getElementById("method-boer");
-    const methodJames = document.getElementById("method-james");
-    const methodHume = document.getElementById("method-hume");
+    const methodBodyFat =
+      document.getElementById("method-bodyfat");
+
+    const methodBoer =
+      document.getElementById("method-boer");
+
+    const methodJames =
+      document.getElementById("method-james");
+
+    const methodHume =
+      document.getElementById("method-hume");
 
     const sexInput =
       document.getElementById("sex") as HTMLSelectElement | null;
@@ -928,13 +984,23 @@ import RelatedTools from '../../../components/RelatedTools.astro';
     const heightCmInput =
       document.getElementById("height-cm") as HTMLInputElement | null;
 
-    const sexField = document.getElementById("sex-field");
-    const bodyFatField = document.getElementById("bodyfat-field");
-    const heightFields = document.getElementById("height-fields");
-    const heightImperial = document.getElementById("height-imperial");
-    const heightMetric = document.getElementById("height-metric");
+    const sexField =
+      document.getElementById("sex-field");
 
-    const calcBtn = document.getElementById("calc-btn");
+    const bodyFatField =
+      document.getElementById("bodyfat-field");
+
+    const heightFields =
+      document.getElementById("height-fields");
+
+    const heightImperial =
+      document.getElementById("height-imperial");
+
+    const heightMetric =
+      document.getElementById("height-metric");
+
+    const calcBtn =
+      document.getElementById("calc-btn");
 
     const inputError =
       document.getElementById("input-error");
@@ -988,6 +1054,11 @@ import RelatedTools from '../../../components/RelatedTools.astro';
         }
       }
 
+      /*
+       * Convert the stored height when switching between
+       * imperial and metric so the user's entered height
+       * does not silently change.
+       */
       if (newUnit === "kg") {
         const feet =
           parseFloat(heightFtInput?.value || "");
@@ -1259,24 +1330,30 @@ import RelatedTools from '../../../components/RelatedTools.astro';
       sex: string
     ): number {
       /*
-       * James formula uses height in meters.
-       * The previous implementation incorrectly used
-       * centimeters directly, which materially distorted results.
+       * James equation uses:
+       * W = body weight in kilograms
+       * H = standing height in centimeters
+       *
+       * Male:
+       * LBM = 1.10W - 128(W/H)^2
+       *
+       * Female:
+       * LBM = 1.07W - 148(W/H)^2
+       *
+       * Do NOT convert height to meters here.
+       * The published equation uses the kg/cm form.
        */
 
-      const heightM =
-        heightCm / 100;
-
       if (
-        !Number.isFinite(heightM) ||
-        heightM <= 0
+        !Number.isFinite(heightCm) ||
+        heightCm <= 0
       ) {
         return NaN;
       }
 
       const ratioSquared =
         Math.pow(
-          weightKg / heightM,
+          weightKg / heightCm,
           2
         );
 
@@ -1465,9 +1542,7 @@ import RelatedTools from '../../../components/RelatedTools.astro';
               return;
             }
 
-            if (
-              unit === "lb"
-            ) {
+            if (unit === "lb") {
               const feet =
                 parseFloat(
                   heightFtInput?.value || ""
