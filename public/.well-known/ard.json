@@ -1,0 +1,27 @@
+{
+  "entries": [
+    {
+      "identifier": "urn:air:repmaths.com:fitness:calculator-suite",
+      "displayName": "RepMaths Fitness Calculator Suite",
+      "type": "application/ai-skill+md",
+      "url": "https://repmaths.com/.well-known/repmaths-calculators.md",
+      "description": "Machine-readable guide to RepMaths fitness calculators for strength, training, nutrition, equipment, and body composition.",
+      "tags": [
+        "fitness",
+        "calculators",
+        "strength",
+        "training",
+        "nutrition",
+        "equipment",
+        "body-composition"
+      ],
+      "representativeQueries": [
+        "find a fitness calculator for strength or nutrition",
+        "calculate 1RM, BMI, BMR, TDEE, body fat, or protein needs",
+        "find a calculator for gym training, nutrition, or body composition"
+      ],
+      "version": "1.0",
+      "updatedAt": "2026-09-29T00:00:00Z"
+    }
+  ]
+}
