@@ -1,10 +1,15 @@
 ---
 import Base from '../../../layouts/Base.astro';
 import RelatedTools from '../../../components/RelatedTools.astro';
+
+const pageTitle = "BMR Calculator (Mifflin-St Jeor) — Basal Metabolic Rate";
+const pageDescription =
+  "Free BMR calculator using the Mifflin-St Jeor and Harris-Benedict equations. Calculate your basal metabolic rate and resting calorie needs using pounds and inches or kilograms and centimeters.";
 ---
+
 <Base
-  title="BMR Calculator (Mifflin-St Jeor) — Basal Metabolic Rate"
-  description="Free BMR calculator using the Mifflin-St Jeor and Harris-Benedict equations. Estimate your basal metabolic rate and resting calorie needs from your age, sex, height, and weight."
+  title={pageTitle}
+  description={pageDescription}
 >
   <script type="application/ld+json" set:html={JSON.stringify({
     "@context": "https://schema.org",
@@ -17,93 +22,28 @@ import RelatedTools from '../../../components/RelatedTools.astro';
       "price": "0",
       "priceCurrency": "USD"
     },
-    description="Free BMR calculator using the Mifflin-St Jeor and Harris-Benedict equations. Calculate your basal metabolic rate and resting calorie needs using pounds and inches or kilograms and centimeters."
-  })} />
-
-  <script type="application/ld+json" set:html={JSON.stringify({
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    "mainEntity": [
-      {
-        "@type": "Question",
-        "name": "What is a good BMR?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "There is no single good BMR. Your estimated BMR depends mainly on body size, height, weight, age, and sex. A larger body generally requires more energy at rest, but individual values vary substantially."
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "How is BMR different from TDEE?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "BMR is an estimate of the energy your body requires for basic physiological functions under resting conditions. TDEE is your estimated total daily energy expenditure after accounting for activity, exercise, and the thermic effect of food."
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "Which BMR formula should I use?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "Mifflin-St Jeor is a widely used predictive equation for resting energy expenditure and performs well in many adult populations. Harris-Benedict is an older alternative. Neither equation is exact for every individual, so results should be treated as estimates."
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "Can I use BMR to calculate calories for weight loss?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "BMR is a resting estimate, not a complete daily calorie requirement. For weight-loss or maintenance planning, estimate TDEE first and then consider an appropriate calorie target based on your goals and individual circumstances."
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "Does building muscle increase BMR?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "Increasing lean mass can increase resting energy expenditure, although the size of the change varies between individuals. Muscle mass is one factor that contributes to resting calorie needs."
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "Can BMR be measured instead of calculated?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "Yes. Resting energy expenditure can be measured with indirect calorimetry under controlled conditions. Calculator formulas estimate resting energy needs from characteristics such as age, sex, height, and weight."
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "Does BMR decrease when you lose weight?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "BMR can decrease as body weight and lean mass change because a smaller body generally requires less energy to maintain at rest. The amount of change varies between individuals."
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "What should I calculate after BMR?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "If your goal is calorie planning, calculate your TDEE next. You can then use a macro calculator to estimate macronutrient targets and a protein calculator to focus specifically on daily protein intake."
-        }
-      }
-    ]
+    "description": pageDescription
   })} />
 
   <section class="hero">
-    <h1>BMR Calculator</h1>
+    <h1>BMR Calculator (Mifflin-St Jeor)</h1>
+
     <p>
-  Calculate your Basal Metabolic Rate (BMR) using the Mifflin-St Jeor or
-  Harris-Benedict equation. Enter your weight in pounds or kilograms and
-  height in feet/inches or centimeters.
-</p>
+      Calculate your Basal Metabolic Rate (BMR) using the Mifflin-St Jeor or
+      Harris-Benedict equation. Enter your weight in pounds or kilograms and
+      height in feet/inches or centimeters.
+    </p>
   </section>
 
-  <section class="calc-card">
+  <section class="calc-card" aria-labelledby="calculator-heading">
+    <h2 id="calculator-heading" class="sr-only">
+      Calculate Your Basal Metabolic Rate
+    </h2>
+
     <div class="field">
-      <label>Units</label>
-      <div class="unit-toggle">
+      <label>Unit</label>
+
+      <div class="unit-toggle" role="group" aria-label="Choose measurement unit">
         <button
           type="button"
           id="unit-imperial"
@@ -112,6 +52,7 @@ import RelatedTools from '../../../components/RelatedTools.astro';
         >
           lb / ft-in
         </button>
+
         <button
           type="button"
           id="unit-metric"
@@ -123,29 +64,22 @@ import RelatedTools from '../../../components/RelatedTools.astro';
     </div>
 
     <div class="field">
-      <label>Sex</label>
-      <div class="unit-toggle">
-        <button
-          type="button"
-          id="sex-male"
-          class="active"
-          aria-pressed="true"
-        >
-          Male
-        </button>
-        <button
-          type="button"
-          id="sex-female"
-          aria-pressed="false"
-        >
-          Female
-        </button>
-      </div>
+      <label for="sex">Sex</label>
+
+      <select id="sex">
+        <option value="male">Male</option>
+        <option value="female">Female</option>
+      </select>
     </div>
 
     <div class="field">
       <label>Formula</label>
-      <div class="unit-toggle">
+
+      <div
+        class="unit-toggle"
+        role="group"
+        aria-label="Choose BMR formula"
+      >
         <button
           type="button"
           id="formula-mifflin"
@@ -154,6 +88,7 @@ import RelatedTools from '../../../components/RelatedTools.astro';
         >
           Mifflin-St Jeor
         </button>
+
         <button
           type="button"
           id="formula-harris"
@@ -165,92 +100,143 @@ import RelatedTools from '../../../components/RelatedTools.astro';
     </div>
 
     <div class="field">
-      <label for="age">Age (18-90)</label>
+      <label for="age">Age</label>
+
       <input
         type="number"
         id="age"
-        placeholder="e.g. 28"
+        placeholder="e.g. 30"
         inputmode="numeric"
         min="18"
         max="90"
+        step="1"
       />
+
+      <small>Adults 18–90</small>
     </div>
 
-    <div class="field">
-      <label for="weight">Weight</label>
-      <input
-        type="number"
-        id="weight"
-        placeholder="e.g. 180"
-        inputmode="decimal"
-        min="1"
-      />
-    </div>
+    <div id="imperial-fields">
+      <div class="field">
+        <label for="weight-lb">Weight (lb)</label>
 
-    <div id="imperial-height" class="field">
-      <label>Height</label>
-      <div style="display:flex; gap:8px;">
         <input
           type="number"
-          id="height-ft"
-          placeholder="ft"
-          inputmode="numeric"
-          min="0"
-          max="8"
-          style="flex:1;"
+          id="weight-lb"
+          placeholder="e.g. 175"
+          inputmode="decimal"
+          min="44"
+          max="1102"
+          step="0.1"
         />
+      </div>
+
+      <div class="field">
+        <label>Height</label>
+
+        <div class="height-row">
+          <div>
+            <label for="height-ft" class="sr-only">Feet</label>
+
+            <input
+              type="number"
+              id="height-ft"
+              placeholder="ft"
+              inputmode="numeric"
+              min="4"
+              max="8"
+              step="1"
+            />
+          </div>
+
+          <div>
+            <label for="height-in" class="sr-only">Inches</label>
+
+            <input
+              type="number"
+              id="height-in"
+              placeholder="in"
+              inputmode="decimal"
+              min="0"
+              max="11.99"
+              step="0.1"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="metric-fields" hidden>
+      <div class="field">
+        <label for="weight-kg">Weight (kg)</label>
+
         <input
           type="number"
-          id="height-in"
-          placeholder="in (0-11)"
-          inputmode="numeric"
-          min="0"
-          max="11"
-          style="flex:1;"
+          id="weight-kg"
+          placeholder="e.g. 79.4"
+          inputmode="decimal"
+          min="20"
+          max="500"
+          step="0.1"
+        />
+      </div>
+
+      <div class="field">
+        <label for="height-cm">Height (cm)</label>
+
+        <input
+          type="number"
+          id="height-cm"
+          placeholder="e.g. 178"
+          inputmode="decimal"
+          min="122"
+          max="244"
+          step="0.1"
         />
       </div>
     </div>
 
     <div
-      id="metric-height"
-      class="field"
-      style="display:none;"
-    >
-      <label for="height-cm">Height (cm)</label>
-      <input
-        type="number"
-        id="height-cm"
-        placeholder="e.g. 178"
-        inputmode="decimal"
-        min="1"
-      />
-    </div>
+      id="input-error"
+      class="input-error"
+      role="alert"
+      aria-live="assertive"
+      hidden
+    ></div>
 
     <button class="btn-primary" id="calc-btn">
       Calculate BMR
     </button>
 
-    <div class="result-box" id="result-box">
+    <div
+      class="result-box"
+      id="result-box"
+      aria-live="polite"
+      hidden
+    >
       <div class="big-number" id="result-bmr">–</div>
 
-      <div class="label" id="result-label">
-        Estimated Basal Metabolic Rate
+      <div class="label">
+        Estimated BMR
       </div>
 
       <p
-        id="result-note"
-        style="margin:10px 0 0; font-size:0.9rem; opacity:0.85;"
+        id="result-kj"
+        style="margin:6px 0 0; font-size:0.85rem; opacity:0.75;"
       >
-        This is an estimate of resting energy needs, not a personalized
-        daily calorie target.
+        Approx. 0 kJ/day
+      </p>
+
+      <p class="result-note">
+        BMR is an estimate of the energy your body uses at rest to support
+        essential physiological functions. It is not your total daily calorie
+        requirement.
       </p>
 
       <a
         href="/tools/nutrition/tdee-calculator"
-        class="btn-primary"
-        style="display:block; text-decoration:none; margin-top:14px;"
+        class="btn-secondary"
       >
-        Calculate Your Full TDEE →
+        Calculate Your TDEE →
       </a>
     </div>
   </section>
@@ -259,46 +245,52 @@ import RelatedTools from '../../../components/RelatedTools.astro';
     <h2>What Is Basal Metabolic Rate (BMR)?</h2>
 
     <p>
-      Basal Metabolic Rate (BMR) is an estimate of the energy your body
-      requires to support essential physiological functions at rest, such
-      as breathing, circulation, and maintaining normal cellular activity.
-      It does not represent the calories you burn from exercise, walking,
-      daily movement, or digestion.
+      Basal Metabolic Rate, or BMR, is an estimate of how much energy your
+      body needs at rest to support essential functions such as breathing,
+      circulation, and maintaining normal body processes.
     </p>
 
     <p>
-      Online BMR calculators use predictive equations rather than directly
-      measuring your metabolism. Your result is therefore an estimate based
-      on factors such as age, sex, height, and body weight.
+      Your BMR is only one part of your overall energy needs. Daily movement,
+      exercise, digestion, and other activities require additional energy.
+      That is why BMR should not be treated as your maintenance calorie
+      intake.
+    </p>
+
+    <p>
+      This calculator is designed for adults ages 18–90 and provides
+      estimates using two commonly used predictive equations.
     </p>
   </article>
 
   <article class="article-section">
     <h2>From BMR to TDEE: Understanding Your Daily Calorie Needs</h2>
 
-    <ul>
-      <li>
-        <strong>BMR:</strong> Estimated energy required for essential
-        functions under resting conditions.
-      </li>
-      <li>
-        <strong>TDEE:</strong> Estimated total daily energy expenditure,
-        including activity, exercise, and the thermic effect of food.
-      </li>
-    </ul>
-
     <p>
-      BMR is only one part of your overall daily energy expenditure.
-      If you're trying to estimate calories for maintenance, fat loss,
-      or muscle gain, your
-      <a href="/tools/nutrition/tdee-calculator">TDEE Calculator</a>
-      is more useful because it accounts for your activity level.
+      BMR estimates resting energy expenditure, while
+      <a href="/tools/nutrition/tdee-calculator">TDEE</a>
+      estimates total daily energy expenditure after accounting for your
+      activity level.
     </p>
 
     <p>
-      You can then use your estimated TDEE together with your individual
-      goal, food intake, training, and progress over time rather than
-      treating your BMR as a daily calorie target.
+      In practical calorie planning, TDEE is usually more useful than BMR
+      because it is intended to represent your total daily energy needs.
+      Your actual energy requirements can still differ from any calculator
+      estimate.
+    </p>
+
+    <p>
+      If your goal is weight loss, you can use your estimated TDEE as a
+      starting point and then use real-world changes in body weight,
+      activity, nutrition, and performance to adjust your intake.
+    </p>
+
+    <p>
+      For a more detailed estimate, use our
+      <a href="/tools/nutrition/tdee-calculator">
+        TDEE Calculator
+      </a>.
     </p>
   </article>
 
@@ -306,129 +298,110 @@ import RelatedTools from '../../../components/RelatedTools.astro';
     <h2>Comparing BMR Formulas: Mifflin-St Jeor and Harris-Benedict</h2>
 
     <p>
-  This calculator provides two commonly used predictive equations for
-  estimating resting energy expenditure. Mifflin-St Jeor was developed
-  from measured resting energy expenditure in healthy adults and is widely
-  used as a predictive equation. Harris-Benedict is an older alternative.
-  Predictive accuracy can vary between populations, so neither equation
-  should be treated as an exact measurement for every individual.
-</p>
+      This calculator provides two commonly used predictive equations for
+      estimating resting energy expenditure.
+    </p>
 
-    <table class="result-table">
-      <thead>
-        <tr>
-          <th>Equation</th>
-          <th>Notes</th>
-        </tr>
-      </thead>
-
-      <tbody>
-        <tr>
-          <td>Mifflin-St Jeor (1990)</td>
-          <td>
-            Widely used predictive equation for adult resting energy
-            expenditure.
-          </td>
-        </tr>
-
-        <tr>
-          <td>Harris-Benedict (revised 1984)</td>
-          <td>
-            Older predictive equation that remains widely referenced
-            and used as an alternative estimate.
-          </td>
-        </tr>
-      </tbody>
-    </table>
-
-    <h3>Mifflin-St Jeor Formula</h3>
+    <h3>Mifflin-St Jeor Equation</h3>
 
     <p>
-      <strong>Men:</strong><br />
-      10 × weight(kg) + 6.25 × height(cm) − 5 × age + 5
+      The Mifflin-St Jeor equation was developed from measured resting
+      energy expenditure in healthy adults and is widely used as a
+      predictive equation.
     </p>
 
     <p>
-      <strong>Women:</strong><br />
-      10 × weight(kg) + 6.25 × height(cm) − 5 × age − 161
-    </p>
-
-    <h3>Revised Harris-Benedict Formula</h3>
-
-    <p>
-      <strong>Men:</strong><br />
-      13.397 × weight(kg) + 4.799 × height(cm) − 5.677 × age + 88.362
+      For men:
+      <code>BMR = 10 × weight(kg) + 6.25 × height(cm) − 5 × age + 5</code>
     </p>
 
     <p>
-      <strong>Women:</strong><br />
-      9.247 × weight(kg) + 3.098 × height(cm) − 4.330 × age + 447.593
+      For women:
+      <code>BMR = 10 × weight(kg) + 6.25 × height(cm) − 5 × age − 161</code>
+    </p>
+
+    <h3>Revised Harris-Benedict Equation</h3>
+
+    <p>
+      The revised Harris-Benedict equation is an older predictive approach
+      that is also widely referenced for estimating resting energy
+      requirements.
+    </p>
+
+    <p>
+      For men:
+      <code>
+        BMR = 13.397 × weight(kg) + 4.799 × height(cm) − 5.677 × age + 88.362
+      </code>
+    </p>
+
+    <p>
+      For women:
+      <code>
+        BMR = 9.247 × weight(kg) + 3.098 × height(cm) − 4.330 × age + 447.593
+      </code>
+    </p>
+
+    <p>
+      Predictive accuracy can vary between populations and individuals.
+      Neither equation should be treated as an exact measurement of your
+      personal resting energy expenditure.
     </p>
   </article>
 
   <article class="article-section">
     <h2>Factors That Affect Your BMR</h2>
 
+    <p>
+      BMR varies between individuals because resting energy needs depend on
+      multiple characteristics rather than body weight alone.
+    </p>
+
     <ul>
-      <li>
-        <strong>Body size:</strong> Larger bodies generally require more
-        energy to maintain basic physiological functions.
-      </li>
-
-      <li>
-        <strong>Lean mass:</strong> Muscle and other metabolically active
-        tissues contribute to resting energy expenditure.
-      </li>
-
-      <li>
-        <strong>Age:</strong> Resting energy needs often change with age,
-        partly because body composition and lean mass can change.
-      </li>
-
-      <li>
-        <strong>Sex:</strong> Sex is included as a variable in commonly
-        used BMR equations because average body composition and energy
-        requirements differ between populations.
-      </li>
-
-      <li>
-        <strong>Body composition:</strong> Two people with the same
-        body weight can have different resting energy needs because
-        their lean and fat mass can differ.
-      </li>
+      <li><strong>Body size:</strong> Larger bodies generally require more energy at rest.</li>
+      <li><strong>Height:</strong> Height contributes to the predictive equations used by this calculator.</li>
+      <li><strong>Age:</strong> Estimated resting energy needs generally change as people age.</li>
+      <li><strong>Sex:</strong> The equations use different constants for men and women.</li>
+      <li><strong>Body composition:</strong> Lean tissue is metabolically active and contributes to resting energy expenditure.</li>
+      <li><strong>Individual variation:</strong> Predictive equations cannot capture every factor affecting an individual's measured energy expenditure.</li>
     </ul>
+
+    <p>
+      Because of this variation, two people with the same height and weight
+      can have different actual resting energy requirements.
+    </p >
   </article>
 
   <article class="article-section">
     <h2>Using BMR as a Starting Point for Weight Loss</h2>
 
     <p>
-      Your BMR can be useful as a starting point for understanding your
-      resting calorie needs, but it should not be treated as your complete
-      daily calorie requirement.
+      BMR should not be used by itself to determine a weight-loss calorie
+      target. Your total daily energy expenditure is higher than your BMR
+      because it also reflects movement, exercise, and other daily energy
+      costs.
     </p>
 
     <p>
-  A common approach is to estimate your
-  <a href="/tools/nutrition/tdee-calculator">TDEE</a>
-  first, then use your goals and real-world progress to determine an
-  appropriate calorie intake. Your actual energy needs can differ from
-  a calculator estimate, so changes in body weight and performance over
-  time provide useful feedback.
-</p>
-
-<p>
-  If your goal is fat loss, you can then use our
-  <a href="/tools/nutrition/calorie-deficit-calculator">
-    Calorie Deficit Calculator
-  </a>
-  to estimate a daily calorie target and projected weight-loss timeline.
-</p>
+      A practical approach is to estimate your
+      <a href="/tools/nutrition/tdee-calculator">TDEE</a>
+      first, then choose a calorie intake that fits your goals and
+      circumstances.
+    </p>
 
     <p>
-      For a broader nutrition plan, you can also use the
-      <a href="/tools/nutrition/macro-calculator">Macro Calculator</a>
-      to estimate protein, carbohydrate, and fat targets.
+      If your goal is specifically fat loss, our
+      <a href="/tools/nutrition/calorie-deficit-calculator">
+        Calorie Deficit Calculator
+      </a>
+      can estimate a daily calorie target and projected weight-loss
+      timeline.
+    </p>
+
+    <p>
+      Calculator results are starting estimates. Your actual weight trend
+      over several weeks can provide useful feedback when deciding whether
+      your calorie intake needs adjustment.
     </p>
   </article>
 
@@ -436,142 +409,163 @@ import RelatedTools from '../../../components/RelatedTools.astro';
     <h2>BMR vs. RMR: Are They the Same?</h2>
 
     <p>
-      BMR and Resting Metabolic Rate (RMR) are closely related concepts,
-      but they are not technically identical. BMR refers to energy
-      expenditure measured under strict basal conditions, while RMR is
-      generally measured under somewhat less restrictive resting
-      conditions.
+      BMR and RMR are related concepts, but they are not identical
+      measurements. Both describe resting energy expenditure, while the
+      testing conditions used to measure basal and resting metabolic rates
+      can differ.
     </p>
 
     <p>
-      Many online calculators use the terms interchangeably because both
-      describe resting energy expenditure. For practical calorie-planning
-      purposes, remember that a calculator result is an estimate rather
-      than a direct measurement of your metabolism.
+      Online calculators such as this one provide predictive estimates rather
+      than laboratory measurements. If you need a measured value, resting
+      energy expenditure can be assessed using indirect calorimetry under
+      controlled conditions.
     </p>
   </article>
 
-<article class="article-section">
-  <h2>Sources & References</h2>
+  <article class="article-section">
+    <h2>Sources & References</h2>
 
-  <p>
-    The equations used on this page come from published research on
-    predictive resting-energy equations. Calculator results are estimates
-    and can differ from measured resting energy expenditure.
-  </p>
+    <p>
+      The equations used on this page are based on published research on
+      predictive resting-energy equations. Calculator results are estimates
+      and can differ from measured resting energy expenditure.
+    </p>
 
-  <ul>
-    <li>
-      Mifflin MD, St Jeor ST, Hill LA, Scott BJ, Daugherty SA, Koh YO.
-      <a
-        href="https://pubmed.ncbi.nlm.nih.gov/2305711/"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        A new predictive equation for resting energy expenditure in healthy individuals
-      </a>.
-      <em>American Journal of Clinical Nutrition</em>. 1990.
-    </li>
+    <ul>
+      <li>
+        Mifflin MD, St Jeor ST, Hill LA, Scott BJ, Daugherty SA, Koh YO.
+        <a
+          href="https://pubmed.ncbi.nlm.nih.gov/2305711/"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          A new predictive equation for resting energy expenditure in healthy individuals
+        </a>.
+        <em>American Journal of Clinical Nutrition</em>. 1990.
+      </li>
 
-    <li>
-      Roza AM, Shizgal HM.
-      <a
-        href="https://pubmed.ncbi.nlm.nih.gov/6741850/"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        The Harris Benedict equation reevaluated: resting energy requirements and the body cell mass
-      </a>.
-      <em>American Journal of Clinical Nutrition</em>. 1984.
-    </li>
-  </ul>
+      <li>
+        Roza AM, Shizgal HM.
+        <a
+          href="https://pubmed.ncbi.nlm.nih.gov/6741850/"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          The Harris Benedict equation reevaluated: resting energy requirements and the body cell mass
+        </a>.
+        <em>American Journal of Clinical Nutrition</em>. 1984.
+      </li>
+    </ul>
 
-  <p>
-    Predictive equations should be interpreted as estimates rather than
-    direct measurements. Individual accuracy can vary across populations
-    and circumstances.
-  </p>
-</article>
+    <p>
+      Predictive equations should be interpreted as estimates rather than
+      direct measurements. Individual accuracy can vary across populations
+      and circumstances.
+    </p>
+  </article>
 
   <article class="article-section">
     <h2>Frequently Asked Questions</h2>
 
     <div class="faq-item">
       <h3>What is a good BMR?</h3>
+
       <p>
-        There is no single "good" BMR. Your estimated resting calorie
-        needs depend on factors such as body size, height, weight, age,
-        sex, and body composition. Two people of the same age can have
-        very different BMR values.
+        There is no single BMR value that is considered good or bad for
+        everyone. BMR varies with factors such as body size, height, weight,
+        age, sex, and body composition. A calculator estimate should be
+        interpreted in the context of the individual rather than as a health
+        score.
       </p>
     </div>
 
     <div class="faq-item">
-      <h3>How is BMR different from TDEE?</h3>
+      <h3>Should I eat my BMR or my TDEE to lose weight?</h3>
+
       <p>
-        BMR estimates energy required for essential functions at rest.
-        TDEE estimates your total daily energy expenditure after adding
-        activity, exercise, and the thermic effect of food.
+        BMR estimates resting energy expenditure, while TDEE estimates total
+        daily energy expenditure. For calorie planning, TDEE is generally the
+        more useful starting point because it accounts for daily activity and
+        exercise. Your appropriate calorie intake depends on your goals,
+        circumstances, and real-world progress.
+      </p>
+    </div>
+
+    <div class="faq-item">
+      <h3>Is a BMR of 1500 good or bad?</h3>
+
+      <p>
+        A BMR of 1500 kcal/day is not inherently good or bad. Resting energy
+        needs vary substantially between people, so a single BMR number
+        cannot be used as a general health rating.
       </p>
     </div>
 
     <div class="faq-item">
       <h3>Which BMR formula should I use?</h3>
+
       <p>
-        Mifflin-St Jeor is a widely used predictive equation and has
-        performed well in many adult populations. Harris-Benedict is an
-        older alternative. Neither formula is exact for every individual.
+        There is no formula that is guaranteed to be the most accurate for
+        every person. This calculator provides both Mifflin-St Jeor and
+        revised Harris-Benedict estimates so you can compare commonly used
+        predictive approaches.
       </p>
     </div>
 
     <div class="faq-item">
       <h3>Can I use BMR to calculate calories for weight loss?</h3>
+
       <p>
-        BMR alone does not account for your daily movement and exercise.
-        Estimate your TDEE first, then use your goals and real-world
-        progress to guide your calorie intake.
+        BMR alone does not represent your total daily calorie needs. A more
+        useful approach is to estimate your
+        <a href="/tools/nutrition/tdee-calculator">TDEE</a>
+        and use that estimate as a starting point for calorie planning.
+      </p>
+    </div>
+
+    <div class="faq-item">
+      <h3>Why can my BMR change when I lose weight?</h3>
+
+      <p>
+        Your estimated resting energy needs can change as your body weight
+        and body composition change. A smaller body generally requires less
+        energy to maintain at rest, although the amount of change varies
+        between individuals.
       </p>
     </div>
 
     <div class="faq-item">
       <h3>Does building muscle increase BMR?</h3>
+
       <p>
-        Increasing lean mass can increase resting energy expenditure,
-        although the size of the change varies between individuals.
-        Muscle mass is one of several factors affecting resting calorie
-        needs.
+        Changes in body composition can affect resting energy expenditure
+        because different tissues have different metabolic demands. However,
+        the effect of gaining muscle on total daily calorie needs varies by
+        person and should not be treated as a precise calorie multiplier.
       </p>
     </div>
 
     <div class="faq-item">
       <h3>Can BMR be measured instead of calculated?</h3>
-      <p>
-        Yes. Resting energy expenditure can be measured with indirect
-        calorimetry under controlled conditions. A calculator instead
-        estimates energy needs from characteristics such as age, sex,
-        height, and weight.
-      </p>
-    </div>
 
-    <div class="faq-item">
-      <h3>Does BMR decrease when you lose weight?</h3>
       <p>
-        BMR can decrease as body weight and lean mass change because a
-        smaller body generally requires less energy to maintain at rest.
-        The amount of change varies between individuals.
+        Yes. Resting energy expenditure can be measured using methods such as
+        indirect calorimetry under controlled conditions. Online BMR
+        calculators instead provide predictive estimates from variables such
+        as age, sex, height, and weight.
       </p>
     </div>
 
     <div class="faq-item">
       <h3>What should I calculate after BMR?</h3>
+
       <p>
-        If your goal is calorie planning, calculate your
-        <a href="/tools/nutrition/tdee-calculator">TDEE</a>
-        next. You can then use the
-        <a href="/tools/nutrition/macro-calculator">Macro Calculator</a>
-        to estimate macronutrient targets and the
-        <a href="/tools/nutrition/protein-calculator">Protein Calculator</a>
-        to focus specifically on daily protein intake.
+        The next practical step is usually estimating your
+        <a href="/tools/nutrition/tdee-calculator">TDEE</a>,
+        because TDEE accounts for daily activity and exercise. From there,
+        you can explore calorie targets, macros, and protein based on your
+        goal.
       </p>
     </div>
   </article>
@@ -586,20 +580,17 @@ import RelatedTools from '../../../components/RelatedTools.astro';
     const unitImperial = document.getElementById("unit-imperial");
     const unitMetric = document.getElementById("unit-metric");
 
-    const sexMale = document.getElementById("sex-male");
-    const sexFemale = document.getElementById("sex-female");
-
     const formulaMifflin = document.getElementById("formula-mifflin");
     const formulaHarris = document.getElementById("formula-harris");
 
-    const imperialHeight = document.getElementById("imperial-height");
-    const metricHeight = document.getElementById("metric-height");
+    const sexInput =
+      document.getElementById("sex") as HTMLSelectElement | null;
 
     const ageInput =
       document.getElementById("age") as HTMLInputElement | null;
 
-    const weightInput =
-      document.getElementById("weight") as HTMLInputElement | null;
+    const weightLbInput =
+      document.getElementById("weight-lb") as HTMLInputElement | null;
 
     const heightFtInput =
       document.getElementById("height-ft") as HTMLInputElement | null;
@@ -607,19 +598,33 @@ import RelatedTools from '../../../components/RelatedTools.astro';
     const heightInInput =
       document.getElementById("height-in") as HTMLInputElement | null;
 
+    const weightKgInput =
+      document.getElementById("weight-kg") as HTMLInputElement | null;
+
     const heightCmInput =
       document.getElementById("height-cm") as HTMLInputElement | null;
 
-    const calcBtn = document.getElementById("calc-btn");
+    const imperialFields =
+      document.getElementById("imperial-fields");
 
-    const resultBmr =
-      document.getElementById("result-bmr");
+    const metricFields =
+      document.getElementById("metric-fields");
+
+    const calcBtn =
+      document.getElementById("calc-btn");
 
     const resultBox =
       document.getElementById("result-box");
 
-    const resultNote =
-      document.getElementById("result-note");
+    const resultBmr =
+      document.getElementById("result-bmr");
+
+    const resultKj =
+      document.getElementById("result-kj");
+
+    const inputError =
+      document.getElementById("input-error");
+
 
     if (unitImperial) {
       unitImperial.addEventListener("click", () => {
@@ -630,18 +635,6 @@ import RelatedTools from '../../../components/RelatedTools.astro';
     if (unitMetric) {
       unitMetric.addEventListener("click", () => {
         setUnitSystem("metric");
-      });
-    }
-
-    if (sexMale) {
-      sexMale.addEventListener("click", () => {
-        setSex("male");
-      });
-    }
-
-    if (sexFemale) {
-      sexFemale.addEventListener("click", () => {
-        setSex("female");
       });
     }
 
@@ -657,253 +650,308 @@ import RelatedTools from '../../../components/RelatedTools.astro';
       });
     }
 
-    function setUnitSystem(sys: string) {
-      unitSystem = sys;
+    if (sexInput) {
+      sexInput.addEventListener("change", () => {
+        sex = sexInput.value;
+      });
+    }
+
+
+    function setUnitSystem(newSystem: string) {
+      if (newSystem === unitSystem) return;
+
+      if (newSystem === "metric") {
+        const currentLb = parseFloat(weightLbInput?.value || "");
+
+        if (Number.isFinite(currentLb) && currentLb > 0 && weightKgInput) {
+          weightKgInput.value =
+            (currentLb / 2.20462).toFixed(1);
+        }
+
+        const ft = parseFloat(heightFtInput?.value || "");
+        const inches = parseFloat(heightInInput?.value || "");
+
+        if (
+          Number.isFinite(ft) &&
+          Number.isFinite(inches) &&
+          heightCmInput
+        ) {
+          const totalInches = (ft * 12) + inches;
+
+          heightCmInput.value =
+            (totalInches * 2.54).toFixed(1);
+        }
+      } else {
+        const currentKg = parseFloat(weightKgInput?.value || "");
+
+        if (Number.isFinite(currentKg) && currentKg > 0 && weightLbInput) {
+          weightLbInput.value =
+            (currentKg * 2.20462).toFixed(1);
+        }
+
+        const cm = parseFloat(heightCmInput?.value || "");
+
+        if (Number.isFinite(cm) && cm > 0) {
+          const totalInches = cm / 2.54;
+          const ft = Math.floor(totalInches / 12);
+          const inches = totalInches - (ft * 12);
+
+          if (heightFtInput) {
+            heightFtInput.value = String(ft);
+          }
+
+          if (heightInInput) {
+            heightInInput.value = inches.toFixed(1);
+          }
+        }
+      }
+
+      unitSystem = newSystem;
+
+      updateUnitUI();
+      clearError();
+    }
+
+
+    function updateUnitUI() {
+      const isImperial = unitSystem === "imperial";
 
       if (unitImperial) {
-        unitImperial.classList.toggle(
-          "active",
-          sys === "imperial"
-        );
-
+        unitImperial.classList.toggle("active", isImperial);
         unitImperial.setAttribute(
           "aria-pressed",
-          String(sys === "imperial")
+          String(isImperial)
         );
       }
 
       if (unitMetric) {
-        unitMetric.classList.toggle(
-          "active",
-          sys === "metric"
-        );
-
+        unitMetric.classList.toggle("active", !isImperial);
         unitMetric.setAttribute(
           "aria-pressed",
-          String(sys === "metric")
+          String(!isImperial)
         );
       }
 
-      if (imperialHeight) {
-        (imperialHeight as HTMLElement).style.display =
-          sys === "imperial" ? "block" : "none";
+      if (imperialFields) {
+        imperialFields.hidden = !isImperial;
       }
 
-      if (metricHeight) {
-        (metricHeight as HTMLElement).style.display =
-          sys === "metric" ? "block" : "none";
+      if (metricFields) {
+        metricFields.hidden = isImperial;
       }
     }
 
-    function setSex(s: string) {
-      sex = s;
 
-      if (sexMale) {
-        sexMale.classList.toggle(
-          "active",
-          s === "male"
-        );
+    function setFormula(newFormula: string) {
+      formula = newFormula;
 
-        sexMale.setAttribute(
-          "aria-pressed",
-          String(s === "male")
-        );
-      }
-
-      if (sexFemale) {
-        sexFemale.classList.toggle(
-          "active",
-          s === "female"
-        );
-
-        sexFemale.setAttribute(
-          "aria-pressed",
-          String(s === "female")
-        );
-      }
-    }
-
-    function setFormula(f: string) {
-      formula = f;
+      const isMifflin = formula === "mifflin";
 
       if (formulaMifflin) {
-        formulaMifflin.classList.toggle(
-          "active",
-          f === "mifflin"
-        );
-
+        formulaMifflin.classList.toggle("active", isMifflin);
         formulaMifflin.setAttribute(
           "aria-pressed",
-          String(f === "mifflin")
+          String(isMifflin)
         );
       }
 
       if (formulaHarris) {
-        formulaHarris.classList.toggle(
-          "active",
-          f === "harris"
-        );
-
+        formulaHarris.classList.toggle("active", !isMifflin);
         formulaHarris.setAttribute(
           "aria-pressed",
-          String(f === "harris")
+          String(!isMifflin)
         );
       }
     }
 
-    if (calcBtn) {
-      calcBtn.addEventListener("click", () => {
-        if (!ageInput || !weightInput) return;
 
-        const age = parseFloat(ageInput.value);
-        const weightRaw = parseFloat(weightInput.value);
+    function showError(message: string) {
+      if (!inputError) return;
 
-        if (!Number.isFinite(age) || age < 18 || age > 90) {
-          alert("Please enter a valid adult age between 18 and 90.");
-          return;
+      inputError.textContent = message;
+      inputError.hidden = false;
+
+      if (resultBox) {
+        resultBox.hidden = true;
+      }
+    }
+
+
+    function clearError() {
+      if (!inputError) return;
+
+      inputError.textContent = "";
+      inputError.hidden = true;
+    }
+
+
+    function getWeightKg(): number {
+      if (unitSystem === "metric") {
+        return parseFloat(weightKgInput?.value || "");
+      }
+
+      const weightLb = parseFloat(weightLbInput?.value || "");
+
+      return weightLb / 2.20462;
+    }
+
+
+    function getHeightCm(): number {
+      if (unitSystem === "metric") {
+        return parseFloat(heightCmInput?.value || "");
+      }
+
+      const feet = parseFloat(heightFtInput?.value || "");
+      const inches = parseFloat(heightInInput?.value || "");
+
+      return ((feet * 12) + inches) * 2.54;
+    }
+
+
+    function calculateBmr(
+      weightKg: number,
+      heightCm: number,
+      age: number
+    ): number {
+      if (formula === "mifflin") {
+        if (sex === "male") {
+          return (
+            (10 * weightKg) +
+            (6.25 * heightCm) -
+            (5 * age) +
+            5
+          );
         }
+
+        return (
+          (10 * weightKg) +
+          (6.25 * heightCm) -
+          (5 * age) -
+          161
+        );
+      }
+
+      if (sex === "male") {
+        return (
+          (13.397 * weightKg) +
+          (4.799 * heightCm) -
+          (5.677 * age) +
+          88.362
+        );
+      }
+
+      return (
+        (9.247 * weightKg) +
+        (3.098 * heightCm) -
+        (4.330 * age) +
+        447.593
+      );
+    }
+
+
+    function validateInputs(
+      age: number,
+      weightKg: number,
+      heightCm: number
+    ): boolean {
+      if (
+        !Number.isFinite(age) ||
+        !Number.isInteger(age) ||
+        age < 18 ||
+        age > 90
+      ) {
+        showError(
+          "Please enter an age from 18 to 90."
+        );
+        return false;
+      }
+
+      if (
+        !Number.isFinite(weightKg) ||
+        weightKg < 20 ||
+        weightKg > 500
+      ) {
+        showError(
+          "Please enter a valid body weight between 20 and 500 kg (about 44–1,102 lb)."
+        );
+        return false;
+      }
+
+      if (
+        !Number.isFinite(heightCm) ||
+        heightCm < 122 ||
+        heightCm > 244
+      ) {
+        showError(
+          "Please enter a valid height between 122 and 244 cm (about 4 ft and 8 ft)."
+        );
+        return false;
+      }
+
+      if (unitSystem === "imperial") {
+        const feet = parseFloat(heightFtInput?.value || "");
+        const inches = parseFloat(heightInInput?.value || "");
 
         if (
-          !Number.isFinite(weightRaw) ||
-          weightRaw <= 0
+          !Number.isFinite(feet) ||
+          !Number.isFinite(inches) ||
+          feet < 4 ||
+          feet > 8 ||
+          inches < 0 ||
+          inches >= 12
         ) {
-          alert("Please enter a valid weight.");
+          showError(
+            "Please enter a valid height using feet and inches."
+          );
+          return false;
+        }
+      }
+
+      return true;
+    }
+
+
+    if (calcBtn) {
+      calcBtn.addEventListener("click", () => {
+        clearError();
+
+        const age = parseFloat(ageInput?.value || "");
+        const weightKg = getWeightKg();
+        const heightCm = getHeightCm();
+
+        if (!validateInputs(age, weightKg, heightCm)) {
           return;
         }
 
-        let weightKg: number;
-        let heightCm: number;
+        const bmr = calculateBmr(
+          weightKg,
+          heightCm,
+          age
+        );
 
-        if (unitSystem === "imperial") {
-          const ft = parseFloat(
-            heightFtInput?.value || "0"
+        if (!Number.isFinite(bmr) || bmr <= 0) {
+          showError(
+            "We could not calculate a valid BMR from those inputs. Please check your values and try again."
           );
-
-          const inch = parseFloat(
-            heightInInput?.value || "0"
-          );
-
-          if (
-            !Number.isFinite(ft) ||
-            !Number.isFinite(inch) ||
-            (ft <= 0 && inch <= 0)
-          ) {
-            alert("Please enter a valid height.");
-            return;
-          }
-
-          if (ft < 0 || ft > 8) {
-            alert("Feet must be between 0 and 8.");
-            return;
-          }
-
-          if (inch < 0 || inch > 11) {
-            alert("Inches must be between 0 and 11.");
-            return;
-          }
-
-          const totalInches =
-            ft * 12 + inch;
-
-          if (
-            totalInches < 48 ||
-            totalInches > 96
-          ) {
-            alert("Please enter a realistic height between 4 ft and 8 ft.");
-            return;
-          }
-
-          weightKg =
-            weightRaw / 2.20462;
-
-          heightCm =
-            totalInches * 2.54;
-
-          if (
-            weightKg < 20 ||
-            weightKg > 500
-          ) {
-            alert("Please enter a realistic body weight.");
-            return;
-          }
-        } else {
-          const cm = parseFloat(
-            heightCmInput?.value || "0"
-          );
-
-          if (
-            !Number.isFinite(cm) ||
-            cm <= 0
-          ) {
-            alert("Please enter a valid height.");
-            return;
-          }
-
-          if (cm < 122 || cm > 244) {
-            alert("Please enter a realistic height between 122 and 244 cm.");
-            return;
-          }
-
-          weightKg = weightRaw;
-          heightCm = cm;
-
-          if (
-            weightKg < 20 ||
-            weightKg > 500
-          ) {
-            alert("Please enter a realistic body weight.");
-            return;
-          }
-        }
-
-        let bmr: number;
-
-        if (formula === "mifflin") {
-          bmr =
-            sex === "male"
-              ? (
-                  10 * weightKg +
-                  6.25 * heightCm -
-                  5 * age +
-                  5
-                )
-              : (
-                  10 * weightKg +
-                  6.25 * heightCm -
-                  5 * age -
-                  161
-                );
-        } else {
-          bmr =
-            sex === "male"
-              ? (
-                  13.397 * weightKg +
-                  4.799 * heightCm -
-                  5.677 * age +
-                  88.362
-                )
-              : (
-                  9.247 * weightKg +
-                  3.098 * heightCm -
-                  4.330 * age +
-                  447.593
-                );
+          return;
         }
 
         const rounded = Math.round(bmr);
 
         if (resultBmr) {
           resultBmr.textContent =
-            `${rounded} kcal/day`;
+            `${rounded.toLocaleString()} kcal/day`;
         }
 
-        if (resultNote) {
-          resultNote.textContent =
-            `${formula === "mifflin" ? "Mifflin-St Jeor" : "Revised Harris-Benedict"} estimate. This is a resting-energy estimate, not a personalized daily calorie target.`;
+        if (resultKj) {
+          resultKj.textContent =
+            `Approx. ${Math.round(
+              rounded * 4.184
+            ).toLocaleString()} kJ/day`;
         }
 
         if (resultBox) {
-          resultBox.classList.add("show");
+          resultBox.hidden = false;
         }
       });
     }
