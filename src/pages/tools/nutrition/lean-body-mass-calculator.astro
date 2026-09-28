@@ -2,9 +2,10 @@
 import Base from '../../../layouts/Base.astro';
 import RelatedTools from '../../../components/RelatedTools.astro';
 ---
+
 <Base
   title="Lean Body Mass Calculator (LBM) — Calculate Lean Body Mass"
-  description="Calculate lean body mass (LBM) from body fat percentage or estimate it with the Boer, James, or Hume formulas. See fat mass, lean mass percentage, and fat-free weight in lb or kg."
+  description="Calculate lean body mass (LBM) using pounds and inches or kilograms and centimeters. Estimate lean mass from body fat percentage or with the Boer, James, or Hume formula."
 >
   <script type="application/ld+json" set:html={JSON.stringify({
     "@context": "https://schema.org",
@@ -20,67 +21,13 @@ import RelatedTools from '../../../components/RelatedTools.astro';
     "description": "Free calculator for estimating lean body mass from body fat percentage or using the Boer, James, and Hume predictive equations."
   })} />
 
-  <script type="application/ld+json" set:html={JSON.stringify({
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    "mainEntity": [
-      {
-        "@type": "Question",
-        "name": "Is lean body mass the same as muscle mass?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "No. Lean body mass includes muscle along with other non-fat tissues such as organs, bones, body water, skin, and connective tissue. Skeletal muscle is only one component of lean body mass."
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "What is a normal lean body mass percentage?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "Lean mass percentage is simply the portion of body weight that is not estimated body fat. For example, a person with 20% body fat has an estimated lean mass percentage of about 80%. There is no single lean-mass percentage that is ideal for every adult because body-fat levels vary with sex, age, training status, and measurement method."
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "Which formula should I use to calculate lean body mass?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "If you have a reasonably accurate body-fat percentage, calculating lean body mass as body weight minus fat mass is a direct method. If body-fat percentage is unavailable, predictive equations such as Boer, James, and Hume can provide estimates from height, weight, and sex. These equations are estimates and can differ from measured body composition."
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "Why is lean body mass useful for nutrition planning?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "Lean body mass provides additional context beyond scale weight because it separates estimated fat mass from the remainder of body weight. It can be useful when interpreting body composition and when comparing nutrition or training metrics, but protein targets do not have to be calculated from lean body mass."
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "Is lean body mass the same as fat-free mass?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "The terms are often used interchangeably, but technical definitions can differ. Fat-free mass generally refers to everything except body fat, while lean body mass may be defined slightly differently in some body-composition methods. Always check the definition used by a particular measurement method."
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "Can I use lean body mass to calculate my BMR?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "Some BMR equations use lean body mass, including the Katch-McArdle equation. However, an estimated lean body mass produces an estimated BMR, so it should not be treated as a directly measured metabolic rate."
-        }
-      }
-    ]
-  })} />
-
   <section class="hero">
-    <h1>Lean Body Mass Calculator (LBM): Find Your Fat-Free Weight</h1>
+    <h1>Lean Body Mass Calculator (LBM)</h1>
+
     <p>
-      Calculate lean body mass from your body fat percentage, or estimate
-      LBM with the Boer, James, or Hume formula using your height, weight,
-      and sex.
+      Calculate your lean body mass using pounds and inches or kilograms and
+      centimeters. Use your body-fat percentage for a direct estimate, or
+      estimate LBM with the Boer, James, or Hume formula.
     </p>
   </section>
 
@@ -89,7 +36,12 @@ import RelatedTools from '../../../components/RelatedTools.astro';
 
     <div class="field">
       <label>Unit</label>
-      <div class="unit-toggle">
+
+      <div
+        class="unit-toggle"
+        role="group"
+        aria-label="Choose measurement unit"
+      >
         <button
           type="button"
           id="unit-lb"
@@ -98,6 +50,7 @@ import RelatedTools from '../../../components/RelatedTools.astro';
         >
           lb
         </button>
+
         <button
           type="button"
           id="unit-kg"
@@ -110,7 +63,12 @@ import RelatedTools from '../../../components/RelatedTools.astro';
 
     <div class="field">
       <label>Calculation Method</label>
-      <div class="unit-toggle method-toggle">
+
+      <div
+        class="unit-toggle method-toggle"
+        role="group"
+        aria-label="Choose lean body mass calculation method"
+      >
         <button
           type="button"
           id="method-bodyfat"
@@ -119,6 +77,7 @@ import RelatedTools from '../../../components/RelatedTools.astro';
         >
           Body Fat %
         </button>
+
         <button
           type="button"
           id="method-boer"
@@ -126,6 +85,7 @@ import RelatedTools from '../../../components/RelatedTools.astro';
         >
           Boer
         </button>
+
         <button
           type="button"
           id="method-james"
@@ -133,6 +93,7 @@ import RelatedTools from '../../../components/RelatedTools.astro';
         >
           James
         </button>
+
         <button
           type="button"
           id="method-hume"
@@ -143,8 +104,9 @@ import RelatedTools from '../../../components/RelatedTools.astro';
       </div>
     </div>
 
-    <div class="field" id="sex-field">
+    <div class="field" id="sex-field" hidden>
       <label for="sex">Sex</label>
+
       <select id="sex">
         <option value="male">Male</option>
         <option value="female">Female</option>
@@ -153,6 +115,7 @@ import RelatedTools from '../../../components/RelatedTools.astro';
 
     <div class="field">
       <label for="weight">Body Weight</label>
+
       <input
         type="number"
         id="weight"
@@ -160,12 +123,13 @@ import RelatedTools from '../../../components/RelatedTools.astro';
         inputmode="decimal"
         min="25"
         max="660"
-        step="any"
+        step="0.1"
       />
     </div>
 
     <div class="field" id="bodyfat-field">
       <label for="bodyfat">Body Fat Percentage</label>
+
       <div class="input-with-suffix">
         <input
           type="number"
@@ -173,40 +137,51 @@ import RelatedTools from '../../../components/RelatedTools.astro';
           placeholder="e.g. 20"
           inputmode="decimal"
           min="1"
-          max="70"
+          max="69.9"
           step="0.1"
         />
         <span>%</span>
       </div>
     </div>
 
-    <div id="height-fields">
+    <div id="height-fields" hidden>
       <div class="field" id="height-imperial">
         <label>Height</label>
+
         <div class="height-grid">
-          <input
-            type="number"
-            id="height-ft"
-            placeholder="ft"
-            inputmode="numeric"
-            min="3"
-            max="8"
-            step="1"
-          />
-          <input
-            type="number"
-            id="height-in"
-            placeholder="in"
-            inputmode="decimal"
-            min="0"
-            max="11.99"
-            step="0.1"
-          />
+          <div>
+            <label for="height-ft" class="sr-only">Feet</label>
+
+            <input
+              type="number"
+              id="height-ft"
+              placeholder="ft"
+              inputmode="numeric"
+              min="3"
+              max="8"
+              step="1"
+            />
+          </div>
+
+          <div>
+            <label for="height-in" class="sr-only">Inches</label>
+
+            <input
+              type="number"
+              id="height-in"
+              placeholder="in"
+              inputmode="decimal"
+              min="0"
+              max="11.99"
+              step="0.1"
+            />
+          </div>
         </div>
       </div>
 
       <div class="field" id="height-metric" hidden>
         <label for="height-cm">Height</label>
+
         <div class="input-with-suffix">
           <input
             type="number"
@@ -222,14 +197,56 @@ import RelatedTools from '../../../components/RelatedTools.astro';
       </div>
     </div>
 
+    <div
+      id="input-error"
+      class="input-error"
+      role="alert"
+      aria-live="assertive"
+      hidden
+    ></div>
+
     <button class="btn-primary" id="calc-btn">
       Calculate Lean Body Mass
     </button>
 
-    <div class="result-box" id="result-box" aria-live="polite">
+    <div
+      class="result-box"
+      id="result-box"
+      aria-live="polite"
+      hidden
+    >
       <div class="big-number" id="result-lbm">–</div>
+
       <div class="label" id="result-label">
         Estimated Lean Body Mass
+      </div>
+
+      <div class="composition-visual" aria-label="Body composition estimate">
+        <div class="composition-bar">
+          <div
+            class="composition-lean"
+            id="composition-lean"
+          ></div>
+
+          <div
+            class="composition-fat"
+            id="composition-fat"
+          ></div>
+        </div>
+
+        <div class="composition-legend">
+          <span>
+            <i class="legend-dot lean-dot"></i>
+            Lean Mass
+            <strong id="visual-lean-percent">–</strong>
+          </span>
+
+          <span>
+            <i class="legend-dot fat-dot"></i>
+            Fat Mass
+            <strong id="visual-fat-percent">–</strong>
+          </span>
+        </div>
       </div>
 
       <div class="lbm-details">
@@ -255,9 +272,10 @@ import RelatedTools from '../../../components/RelatedTools.astro';
       </div>
 
       <div class="lifter-note">
-        <strong>Remember:</strong> Lean body mass is not the same thing as
-        skeletal muscle mass. It also includes water, organs, bones, skin,
-        and other non-fat tissues.
+        <strong>Important:</strong>
+        Lean body mass is not the same thing as skeletal muscle mass.
+        It includes non-fat tissues such as body water, organs, bones,
+        skin, connective tissue, and muscle.
       </div>
     </div>
   </section>
@@ -266,43 +284,46 @@ import RelatedTools from '../../../components/RelatedTools.astro';
     <h2>What Exactly Is Lean Body Mass?</h2>
 
     <p>
-      <strong>Lean body mass (LBM)</strong> is an estimate of the part of
-      your body weight that is not body fat. It includes skeletal muscle,
-      body water, bones, organs, connective tissue, and other non-fat
-      tissues.
+      <strong>Lean body mass (LBM)</strong> is commonly used to describe
+      the part of body weight that is not body fat. Depending on the
+      measurement method and terminology used, related terms such as
+      <strong>fat-free mass</strong> and <strong>lean mass</strong> may be
+      defined differently.
     </p>
 
     <p>
-      A simple body-composition calculation is:
+      For this calculator, the practical calculation is:
       <strong>lean body mass = total body weight − estimated fat mass.</strong>
-      For example, if someone weighs 180 lb and has an estimated 20% body
-      fat, their estimated fat mass is 36 lb and their lean body mass is
-      about 144 lb.
     </p>
 
     <p>
-      LBM is therefore different from simply asking how much muscle you
-      have. A scale or body-composition calculator cannot separate every
-      individual lean tissue compartment with perfect accuracy.
+      For example, if someone weighs 180 lb and has an estimated 20% body
+      fat, their estimated fat mass is 36 lb and their estimated lean body
+      mass is about 144 lb.
+    </p>
+
+    <p>
+      LBM should not be interpreted as a measurement of skeletal muscle
+      alone. Muscle is only one component of the non-fat portion of body
+      weight.
     </p>
   </article>
 
   <article class="article-section">
-    <h2>How Is Lean Body Mass Calculated?</h2>
+    <h2>The Math Behind Lean Body Mass Estimates</h2>
 
     <p>
-      There are two useful approaches. If you already have a body-fat
-      estimate, you can calculate LBM directly from your body weight and
-      estimated fat mass. If you do not know your body-fat percentage,
-      predictive equations can estimate lean body mass from measurements
-      such as height, weight, and sex.
+      There are two main approaches available in this calculator. If you
+      already have a body-fat estimate, lean mass can be calculated directly
+      from body weight and estimated fat mass. If body-fat percentage is not
+      available, predictive equations can estimate lean body mass from
+      measurements such as height, weight, and sex.
     </p>
 
-    <h3>Method 1: Using Your Body Fat Percentage</h3>
+    <h3>Using Body Fat Percentage</h3>
 
     <p>
-      When an estimated body-fat percentage is available, the calculation
-      is straightforward:
+      When an estimated body-fat percentage is available:
     </p>
 
     <p>
@@ -312,9 +333,8 @@ import RelatedTools from '../../../components/RelatedTools.astro';
 
     <p>
       This method is only as accurate as the body-fat estimate used as its
-      input. For example, a DEXA-derived body-composition measurement,
-      tape-measure estimate, skinfold estimate, and consumer BIA device can
-      produce different results.
+      input. Different methods, including DEXA, skinfolds, tape-measure
+      equations, and consumer BIA devices, can produce different estimates.
     </p>
 
     <p>
@@ -322,132 +342,142 @@ import RelatedTools from '../../../components/RelatedTools.astro';
       <a href="/tools/nutrition/body-fat-calculator">
         Body Fat Calculator
       </a>
-      to get a tape-measure-based estimate.
+      to obtain a tape-measure-based estimate.
     </p>
 
-    <h3>Method 2: Predictive Formulas — Boer, James, and Hume</h3>
-
-    <p>
-      Predictive equations estimate lean body mass without requiring a
-      body-fat percentage. This page includes three established equations:
-      Boer, James, and Hume.
-    </p>
-
-    <h4>Boer Formula</h4>
+    <h3>Boer Formula</h3>
 
     <p>
       For men:
       <br />
-      <code>LBM = 0.407 × weight(kg) + 0.267 × height(cm) − 19.2</code>
+      <code>
+        LBM = 0.407 × weight(kg) + 0.267 × height(cm) − 19.2
+      </code>
     </p>
 
     <p>
       For women:
       <br />
-      <code>LBM = 0.252 × weight(kg) + 0.473 × height(cm) − 48.3</code>
+      <code>
+        LBM = 0.252 × weight(kg) + 0.473 × height(cm) − 48.3
+      </code>
     </p>
 
     <p>
-      The Boer equation was developed as a lean-body-mass estimation method.
-      It is useful as a predictive equation, but it should not be interpreted
-      as a direct measurement of body composition.
+      The Boer equation estimates lean body mass from body weight and height.
+      The original work examined estimated lean body mass as an index for
+      normalizing body-fluid volumes. 3
     </p>
 
-    <h4>James Formula</h4>
+    <h3>James Formula</h3>
+
+    <p>
+      The James equation uses body weight in kilograms and height in meters.
+    </p>
 
     <p>
       For men:
       <br />
-      <code>LBM = 1.10 × weight − 128 × (weight / height)²</code>
+      <code>
+        LBM = 1.10 × weight(kg) − 128 × (weight(kg) / height(m))²
+      </code>
     </p>
 
     <p>
       For women:
       <br />
-      <code>LBM = 1.07 × weight − 148 × (weight / height)²</code>
+      <code>
+        LBM = 1.07 × weight(kg) − 148 × (weight(kg) / height(m))²
+      </code>
     </p>
 
     <p>
-      The James equation is another predictive model. Like other
-      anthropometric equations, its estimate can differ from a measured
-      body-composition value.
+      The unit conversion is important: using height in centimeters directly
+      in the James equation produces an incorrect result. Published versions
+      of the equation specify height in meters. 4
     </p>
 
-    <h4>Hume Formula</h4>
+    <h3>Hume Formula</h3>
 
     <p>
       For men:
       <br />
-      <code>LBM = 0.32810 × weight(kg) + 0.33929 × height(cm) − 29.5336</code>
+      <code>
+        LBM = 0.32810 × weight(kg) + 0.33929 × height(cm) − 29.5336
+      </code>
     </p>
 
     <p>
       For women:
       <br />
-      <code>LBM = 0.29569 × weight(kg) + 0.41813 × height(cm) − 43.2933</code>
+      <code>
+        LBM = 0.29569 × weight(kg) + 0.41813 × height(cm) − 43.2933
+      </code>
     </p>
 
     <p>
-      Hume's original work developed equations for predicting lean body
-      mass from height and weight. Later validation research has compared
-      Hume estimates with DXA measurements, showing useful correlation but
-      also individual differences between estimated and measured values.
-    </p>
-  </article>
-
-  <article class="article-section">
-    <h2>Lean Body Mass vs. Muscle Mass: What's the Difference?</h2>
-
-    <p>
-      <strong>Lean body mass is not the same as muscle mass.</strong>
-      Muscle is one component of your lean tissues. LBM also includes
-      water, organs, bones, skin, connective tissue, and other tissues that
-      are not classified as body fat.
-    </p>
-
-    <p>
-      This distinction matters when interpreting a body-composition result.
-      Someone can have a relatively high LBM without all of that lean mass
-      being skeletal muscle.
+      Hume's original study developed sex-specific equations for estimating
+      lean body mass from height and weight. 5
     </p>
   </article>
 
   <article class="article-section">
-    <h2>LBM vs. Fat-Free Mass</h2>
+    <h2>Lean Body Mass, Fat-Free Mass, and Muscle Mass</h2>
 
     <p>
-      <strong>Lean body mass</strong> and <strong>fat-free mass</strong>
-      are often used as if they mean the same thing, but technical
-      definitions can vary between methods.
+      These terms are related but should not automatically be treated as
+      identical measurements.
+    </p>
+
+    <ul>
+      <li>
+        <strong>Muscle mass:</strong> refers to muscle tissue rather than
+        every non-fat component of the body.
+      </li>
+
+      <li>
+        <strong>Fat-free mass:</strong> generally refers to body mass other
+        than body fat.
+      </li>
+
+      <li>
+        <strong>Lean mass / LBM:</strong> terminology varies by measurement
+        method, calculator, study, and body-composition model.
+      </li>
+    </ul>
+
+    <p>
+      Modern body-composition standards recommend using precise terminology
+      because fat-free mass, lean mass, lean soft tissue, and skeletal muscle
+      represent different concepts. 6
     </p>
 
     <p>
-      Fat-free mass generally refers to everything other than body fat.
-      Some definitions of lean body mass may allow for a small amount of
-      essential lipid within the lean compartment. Because terminology
-      varies, the definition used by the measurement device or study should
-      be checked when precision matters.
+      RepMaths uses the familiar term <strong>Lean Body Mass (LBM)</strong>
+      because it is widely used in fitness searches and calculator queries,
+      while explaining these terminology limitations rather than presenting
+      LBM as a direct measurement of muscle.
     </p>
   </article>
 
   <article class="article-section">
-    <h2>Why Knowing Your LBM Can Help With Nutrition Planning</h2>
+    <h2>Applying LBM to Your Nutrition Strategy</h2>
 
     <p>
-      Body weight alone does not tell you how much of that weight comes
-      from fat versus lean tissues. LBM provides another way to describe
-      body composition and can be useful when monitoring changes over time.
+      Body weight alone does not show how much of that weight comes from fat
+      versus non-fat tissues. LBM provides additional body-composition
+      context and can be useful when tracking changes over time.
     </p>
 
     <p>
-      LBM is also relevant to some metabolic equations. For example, the
+      LBM is also used in some metabolic equations. For example, the
       Katch-McArdle equation estimates resting energy expenditure using
-      lean body mass. Because the LBM itself may be estimated, the resulting
-      calorie number should also be treated as an estimate.
+      lean body mass. When LBM is estimated rather than directly measured,
+      the resulting calorie estimate is also an estimate.
     </p>
 
     <p>
-      For practical calorie planning, you can compare this result with our
+      For practical calorie planning, compare your result with our
       <a href="/tools/nutrition/bmr-calculator">BMR Calculator</a>
       and
       <a href="/tools/nutrition/tdee-calculator">TDEE Calculator</a>.
@@ -455,13 +485,12 @@ import RelatedTools from '../../../components/RelatedTools.astro';
 
     <p>
       LBM can also provide context when setting protein targets. However,
-      protein recommendations can be based on total body weight and
-      training goal as well, so LBM is not a requirement for calculating
-      your daily protein intake. Use our
+      protein recommendations can be based on total body weight and training
+      goal as well. Use our
       <a href="/tools/nutrition/protein-calculator">
         Protein Intake Calculator
       </a>
-      for a goal-based protein range.
+      for a goal-based protein estimate.
     </p>
   </article>
 
@@ -469,19 +498,25 @@ import RelatedTools from '../../../components/RelatedTools.astro';
     <h2>Lean Mass Percentage</h2>
 
     <p>
-      Lean mass percentage is the estimated percentage of your body weight
-      that is lean rather than body fat:
+      Lean mass percentage represents the estimated portion of your body
+      weight that is lean rather than body fat:
     </p>
 
     <p>
-      <code>Lean Mass % = (Lean Body Mass ÷ Body Weight) × 100</code>
+      <code>
+        Lean Mass % = (Lean Body Mass ÷ Body Weight) × 100
+      </code>
     </p>
 
     <p>
-      Because lean mass percentage is closely related to body-fat
-      percentage, there is no universal "ideal" value that applies to every
-      adult. Sex, age, training status, and the method used to estimate body
-      composition all affect interpretation.
+      For example, someone with an estimated 20% body fat has approximately
+      80% of their body weight classified as lean by this simple calculation.
+    </p>
+
+    <p>
+      There is no single universal "ideal" lean-mass percentage for every
+      adult. Interpretation varies with sex, age, training status, body
+      composition, and the method used to estimate body fat.
     </p>
   </article>
 
@@ -490,16 +525,16 @@ import RelatedTools from '../../../components/RelatedTools.astro';
 
     <p>
       <strong>Fat-Free Mass Index (FFMI)</strong> adjusts fat-free mass for
-      height, making it useful for comparing lean mass relative to body
-      size. FFMI is related to LBM, but it is a separate calculation.
+      height, making it useful for comparing lean mass relative to body size.
+      FFMI is related to LBM but is a separate calculation.
     </p>
 
     <p>
-      If you want to compare your lean mass with your height, our
+      If you want to compare your estimated lean mass with your height, use
+      our
       <a href="/tools/nutrition/ffmi-calculator">
         FFMI Calculator
-      </a>
-      can be used after estimating your body composition.
+      </a>.
     </p>
   </article>
 
@@ -507,24 +542,31 @@ import RelatedTools from '../../../components/RelatedTools.astro';
     <h2>How Accurate Is a Lean Body Mass Calculator?</h2>
 
     <p>
-      A calculator cannot directly measure your body's tissue composition.
-      The result depends on the method and the quality of the input data.
-      Predictive equations can be useful for estimates, but individual
-      differences can be substantial when compared with methods such as
-      DXA.
+      A calculator does not directly measure your body's tissue composition.
+      Its result depends on the calculation method and the quality of the
+      input data.
     </p>
 
     <p>
-      Research validating Hume's equation against DXA has found strong
-      correlation while also showing some bias and limits of agreement.
-      Other research has found that anthropometric equations can perform
-      differently across populations and clinical settings.
+      Research comparing height-and-weight equations with direct imaging
+      methods shows that predictive equations can correlate with measured
+      lean mass while still producing meaningful individual differences.
+      In one study comparing Hume, Boer, and James estimates with CT-derived
+      measurements, none of the height-weight formulas was practically
+      equivalent to direct CT measurement for individual estimates.
+      7
     </p>
 
     <p>
-      For tracking progress, using the same measurement method consistently
-      can be more useful than treating one calculator result as an exact
-      measurement.
+      Hume's equation has also been compared with DXA, showing strong
+      correlation but some systematic difference between estimated and
+      measured lean body mass. 8
+    </p>
+
+    <p>
+      For progress tracking, using the same measurement method consistently
+      can be more useful than treating a single calculator result as an
+      exact measurement.
     </p>
   </article>
 
@@ -532,50 +574,71 @@ import RelatedTools from '../../../components/RelatedTools.astro';
     <h2>Sources &amp; Methodology</h2>
 
     <p>
-      The predictive equations used on this page are established
-      anthropometric equations for estimating lean body mass. They are
-      presented as estimates rather than direct measurements.
+      RepMaths uses established anthropometric equations to provide
+      practical estimates. These equations are not substitutes for direct
+      body-composition measurement when precise measurement is required.
     </p>
 
     <ul>
       <li>
-        Hume, R. "Prediction of lean body mass from height and weight."
+        Hume, R.
+        <em>Prediction of lean body mass from height and weight.</em>
         <a
           href="https://pubmed.ncbi.nlm.nih.gov/5929341/"
           target="_blank"
           rel="noopener noreferrer"
         >
           PubMed
-        </a>
+        </a>.
       </li>
+
       <li>
-        Boer, P. "Estimated lean body mass as an index for normalization of
-        body fluid volumes in humans."
+        Boer, P.
+        <em>
+          Estimated lean body mass as an index for normalization of body
+          fluid volumes in humans.
+        </em>
         <a
           href="https://pubmed.ncbi.nlm.nih.gov/6496691/"
           target="_blank"
           rel="noopener noreferrer"
         >
           PubMed
-        </a>
+        </a>.
       </li>
+
       <li>
-        Carnevale et al. "Estimate of body composition by Hume's equation:
-        validation with DXA."
+        Carnevale V, Piscitelli PA, Minonne R, et al.
+        <em>
+          Estimate of body composition by Hume's equation: validation with
+          DXA.
+        </em>
         <a
           href="https://pubmed.ncbi.nlm.nih.gov/25209892/"
           target="_blank"
           rel="noopener noreferrer"
         >
           PubMed
-        </a>
+        </a>.
+      </li>
+
+      <li>
+        Research comparing Hume, Boer, and James equations with
+        CT-derived lean body mass:
+        <a
+          href="https://pubmed.ncbi.nlm.nih.gov/27688106/"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          PubMed
+        </a>.
       </li>
     </ul>
 
     <p>
-      These equations should not be used as a substitute for clinical
-      assessment or direct body-composition measurement when accurate
-      measurement is important.
+      These sources support the use of predictive equations as estimates,
+      while also demonstrating why calculator results should not be treated
+      as direct measurements for every individual.
     </p>
   </article>
 
@@ -583,62 +646,92 @@ import RelatedTools from '../../../components/RelatedTools.astro';
     <h2>Frequently Asked Questions</h2>
 
     <div class="faq-item">
-      <h3>Is lean body mass the same as muscle mass?</h3>
+      <h3>Can I lose body weight while increasing lean mass?</h3>
+
       <p>
-        No. Lean body mass includes muscle along with other non-fat tissues
-        such as organs, bones, body water, skin, and connective tissue.
-        Skeletal muscle is only one component of lean body mass.
+        Yes. Body weight can decrease while estimated lean mass increases if
+        fat mass decreases while lean tissue is maintained or gained. The
+        amount of change depends on training, nutrition, starting body
+        composition, and other individual factors.
       </p>
     </div>
 
     <div class="faq-item">
-      <h3>What is a normal lean body mass percentage?</h3>
+      <h3>Why does my smart scale show a different lean mass than this calculator?</h3>
+
       <p>
-        Lean mass percentage is the portion of body weight that is not
-        estimated body fat. For example, 20% body fat corresponds to an
-        estimated 80% lean mass. There is no single ideal lean-mass
-        percentage for every adult because body composition varies with sex,
-        age, training status, and measurement method.
+        The methods are different. Predictive equations estimate lean mass
+        mainly from inputs such as height, weight, and sex, while consumer
+        smart scales commonly use bioelectrical impedance. Both methods are
+        estimates and can produce different results.
       </p>
     </div>
 
     <div class="faq-item">
-      <h3>Which formula should I use to calculate lean body mass?</h3>
+      <h3>Can creatine change my estimated lean body mass?</h3>
+
       <p>
-        If you already have a reasonably accurate body-fat percentage,
-        calculating body weight minus estimated fat mass is a direct
-        approach. If body-fat percentage is unavailable, Boer, James, and
-        Hume can provide predictive estimates. No predictive equation
-        should be treated as a direct measurement.
+        Creatine supplementation can increase body water, particularly
+        intracellular water, and changes in body water can affect some body
+        composition measurements and estimates. An increase in calculated
+        lean mass should therefore not automatically be interpreted as an
+        equivalent increase in newly built skeletal muscle.
       </p>
     </div>
 
     <div class="faq-item">
-      <h3>Why is lean body mass useful for nutrition planning?</h3>
+      <h3>How much of lean body mass is water?</h3>
+
       <p>
-        LBM provides additional body-composition context beyond scale
-        weight. It can be relevant to some metabolic equations and can help
-        interpret nutrition and training changes, but protein targets can
-        also be calculated using total body weight and training goal.
+        Body water is a substantial component of fat-free and lean tissues,
+        but a single percentage should not be treated as a precise rule for
+        every person. Hydration status can also affect body-composition
+        measurements and estimates.
       </p>
     </div>
 
     <div class="faq-item">
-      <h3>Is lean body mass the same as fat-free mass?</h3>
+      <h3>Which LBM method should I use?</h3>
+
       <p>
-        The terms are often used interchangeably, but technical definitions
-        can differ. Fat-free mass generally means everything except body
-        fat, while lean body mass can be defined somewhat differently
-        depending on the measurement method.
+        If you have a reasonably accurate body-fat estimate, subtracting
+        estimated fat mass from total body weight is a straightforward way
+        to estimate lean mass. If body-fat percentage is unavailable, Boer,
+        James, and Hume provide alternative predictive estimates.
       </p>
     </div>
 
     <div class="faq-item">
       <h3>Can I use lean body mass to calculate my BMR?</h3>
+
       <p>
-        Some BMR equations, including Katch-McArdle, use lean body mass.
-        However, when LBM is estimated rather than directly measured, the
-        resulting BMR is also an estimate.
+        Some metabolic equations, including Katch-McArdle, use lean body
+        mass. Because the LBM itself may be estimated, the resulting BMR
+        should also be treated as an estimate. You can compare it with our
+        <a href="/tools/nutrition/bmr-calculator">
+          BMR Calculator
+        </a>.
+      </p>
+    </div>
+
+    <div class="faq-item">
+      <h3>Is lean body mass the same as muscle mass?</h3>
+
+      <p>
+        No. Muscle is only one component of lean body mass. Lean mass also
+        includes body water, organs, bones, skin, connective tissue, and
+        other non-fat tissues.
+      </p>
+    </div>
+
+    <div class="faq-item">
+      <h3>Is lean body mass the same as fat-free mass?</h3>
+
+      <p>
+        The terms are often used interchangeably in fitness contexts, but
+        technical definitions can vary between body-composition models and
+        measurement methods. For precise interpretation, use the definition
+        provided by the particular method or study.
       </p>
     </div>
   </article>
@@ -664,6 +757,7 @@ import RelatedTools from '../../../components/RelatedTools.astro';
     .input-with-suffix input {
       flex: 1;
       min-width: 0;
+      border-radius: 8px 0 0 8px;
     }
 
     .input-with-suffix span {
@@ -675,10 +769,6 @@ import RelatedTools from '../../../components/RelatedTools.astro';
       border-radius: 0 8px 8px 0;
       background: var(--surface-2);
       font-weight: 700;
-    }
-
-    .input-with-suffix input {
-      border-radius: 8px 0 0 8px;
     }
 
     .lbm-details {
@@ -724,6 +814,65 @@ import RelatedTools from '../../../components/RelatedTools.astro';
       line-height: 1.55;
     }
 
+    .composition-visual {
+      margin-top: 20px;
+    }
+
+    .composition-bar {
+      display: flex;
+      width: 100%;
+      height: 22px;
+      overflow: hidden;
+      border-radius: 999px;
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+    }
+
+    .composition-lean {
+      width: 0%;
+      background: #2563eb;
+      transition: width 0.3s ease;
+    }
+
+    .composition-fat {
+      width: 0%;
+      background: #dc2626;
+      transition: width 0.3s ease;
+    }
+
+    .composition-legend {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      margin-top: 9px;
+      font-size: 0.85rem;
+    }
+
+    .composition-legend span {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .legend-dot {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      display: inline-block;
+    }
+
+    .lean-dot {
+      background: #2563eb;
+    }
+
+    .fat-dot {
+      background: #dc2626;
+    }
+
+    .composition-legend strong {
+      margin-left: 2px;
+    }
+
     .article-section code {
       display: inline-block;
       margin: 4px 0;
@@ -741,6 +890,11 @@ import RelatedTools from '../../../components/RelatedTools.astro';
       .method-toggle button {
         flex: 1 1 calc(50% - 8px);
       }
+
+      .composition-legend {
+        flex-direction: column;
+        gap: 6px;
+      }
     }
   </style>
 
@@ -756,13 +910,23 @@ import RelatedTools from '../../../components/RelatedTools.astro';
     const methodJames = document.getElementById("method-james");
     const methodHume = document.getElementById("method-hume");
 
-    const sexInput = document.getElementById("sex") as HTMLSelectElement | null;
-    const weightInput = document.getElementById("weight") as HTMLInputElement | null;
-    const bodyFatInput = document.getElementById("bodyfat") as HTMLInputElement | null;
+    const sexInput =
+      document.getElementById("sex") as HTMLSelectElement | null;
 
-    const heightFtInput = document.getElementById("height-ft") as HTMLInputElement | null;
-    const heightInInput = document.getElementById("height-in") as HTMLInputElement | null;
-    const heightCmInput = document.getElementById("height-cm") as HTMLInputElement | null;
+    const weightInput =
+      document.getElementById("weight") as HTMLInputElement | null;
+
+    const bodyFatInput =
+      document.getElementById("bodyfat") as HTMLInputElement | null;
+
+    const heightFtInput =
+      document.getElementById("height-ft") as HTMLInputElement | null;
+
+    const heightInInput =
+      document.getElementById("height-in") as HTMLInputElement | null;
+
+    const heightCmInput =
+      document.getElementById("height-cm") as HTMLInputElement | null;
 
     const sexField = document.getElementById("sex-field");
     const bodyFatField = document.getElementById("bodyfat-field");
@@ -771,41 +935,141 @@ import RelatedTools from '../../../components/RelatedTools.astro';
     const heightMetric = document.getElementById("height-metric");
 
     const calcBtn = document.getElementById("calc-btn");
-    const resultBox = document.getElementById("result-box");
-    const resultLbm = document.getElementById("result-lbm");
-    const resultWeight = document.getElementById("result-weight");
-    const resultFat = document.getElementById("result-fat");
-    const resultPercent = document.getElementById("result-percent");
-    const resultMethod = document.getElementById("result-method");
+
+    const inputError =
+      document.getElementById("input-error");
+
+    const resultBox =
+      document.getElementById("result-box");
+
+    const resultLbm =
+      document.getElementById("result-lbm");
+
+    const resultWeight =
+      document.getElementById("result-weight");
+
+    const resultFat =
+      document.getElementById("result-fat");
+
+    const resultPercent =
+      document.getElementById("result-percent");
+
+    const resultMethod =
+      document.getElementById("result-method");
+
+    const compositionLean =
+      document.getElementById("composition-lean");
+
+    const compositionFat =
+      document.getElementById("composition-fat");
+
+    const visualLeanPercent =
+      document.getElementById("visual-lean-percent");
+
+    const visualFatPercent =
+      document.getElementById("visual-fat-percent");
+
 
     function setUnit(newUnit: string) {
       if (newUnit === unit) return;
 
       if (weightInput) {
-        const weight = parseFloat(weightInput.value);
+        const currentWeight =
+          parseFloat(weightInput.value);
 
-        if (Number.isFinite(weight) && weight > 0) {
+        if (
+          Number.isFinite(currentWeight) &&
+          currentWeight > 0
+        ) {
           weightInput.value =
             newUnit === "kg"
-              ? (weight / 2.20462).toFixed(1)
-              : (weight * 2.20462).toFixed(1);
+              ? (currentWeight / 2.20462).toFixed(1)
+              : (currentWeight * 2.20462).toFixed(1);
+        }
+      }
+
+      if (newUnit === "kg") {
+        const feet =
+          parseFloat(heightFtInput?.value || "");
+
+        const inches =
+          parseFloat(heightInInput?.value || "");
+
+        if (
+          Number.isFinite(feet) &&
+          Number.isFinite(inches) &&
+          heightCmInput
+        ) {
+          const totalInches =
+            (feet * 12) + inches;
+
+          heightCmInput.value =
+            (totalInches * 2.54).toFixed(1);
+        }
+      } else {
+        const cm =
+          parseFloat(heightCmInput?.value || "");
+
+        if (
+          Number.isFinite(cm) &&
+          cm > 0
+        ) {
+          const totalInches =
+            cm / 2.54;
+
+          const feet =
+            Math.floor(totalInches / 12);
+
+          const inches =
+            totalInches - (feet * 12);
+
+          if (heightFtInput) {
+            heightFtInput.value =
+              String(feet);
+          }
+
+          if (heightInInput) {
+            heightInInput.value =
+              inches.toFixed(1);
+          }
         }
       }
 
       unit = newUnit;
 
+      updateUnitUI();
+      clearError();
+    }
+
+
+    function updateUnitUI() {
       if (unitLb) {
-        unitLb.classList.toggle("active", unit === "lb");
-        unitLb.setAttribute("aria-pressed", String(unit === "lb"));
+        unitLb.classList.toggle(
+          "active",
+          unit === "lb"
+        );
+
+        unitLb.setAttribute(
+          "aria-pressed",
+          String(unit === "lb")
+        );
       }
 
       if (unitKg) {
-        unitKg.classList.toggle("active", unit === "kg");
-        unitKg.setAttribute("aria-pressed", String(unit === "kg"));
+        unitKg.classList.toggle(
+          "active",
+          unit === "kg"
+        );
+
+        unitKg.setAttribute(
+          "aria-pressed",
+          String(unit === "kg")
+        );
       }
 
       updateHeightFields();
     }
+
 
     function setMethod(newMethod: string) {
       method = newMethod;
@@ -819,61 +1083,109 @@ import RelatedTools from '../../../components/RelatedTools.astro';
 
       for (const [button, value] of buttons) {
         if (button) {
-          button.classList.toggle("active", method === value);
-          button.setAttribute("aria-pressed", String(method === value));
+          button.classList.toggle(
+            "active",
+            method === value
+          );
+
+          button.setAttribute(
+            "aria-pressed",
+            String(method === value)
+          );
         }
       }
 
-      const needsHeight = method !== "bodyfat";
+      const needsHeight =
+        method !== "bodyfat";
 
       if (bodyFatField) {
-        bodyFatField.hidden = !(
-          method === "bodyfat"
-        );
+        bodyFatField.hidden =
+          method !== "bodyfat";
       }
 
       if (heightFields) {
-        heightFields.hidden = !needsHeight;
+        heightFields.hidden =
+          !needsHeight;
       }
 
       if (sexField) {
-        sexField.hidden = !needsHeight;
+        sexField.hidden =
+          !needsHeight;
       }
 
       updateHeightFields();
+      clearError();
     }
 
-    function updateHeightFields() {
-      const needsHeight = method !== "bodyfat";
 
-      if (!needsHeight) {
-        if (heightFields) heightFields.hidden = true;
+    function updateHeightFields() {
+      if (method === "bodyfat") {
+        if (heightFields) {
+          heightFields.hidden = true;
+        }
+
         return;
       }
 
-      if (heightFields) heightFields.hidden = false;
+      if (heightFields) {
+        heightFields.hidden = false;
+      }
 
       if (unit === "lb") {
-        if (heightImperial) heightImperial.hidden = false;
-        if (heightMetric) heightMetric.hidden = true;
+        if (heightImperial) {
+          heightImperial.hidden = false;
+        }
+
+        if (heightMetric) {
+          heightMetric.hidden = true;
+        }
       } else {
-        if (heightImperial) heightImperial.hidden = true;
-        if (heightMetric) heightMetric.hidden = false;
+        if (heightImperial) {
+          heightImperial.hidden = true;
+        }
+
+        if (heightMetric) {
+          heightMetric.hidden = false;
+        }
       }
     }
 
+
     function showError(message: string) {
-      alert(message);
+      if (!inputError) return;
+
+      inputError.textContent =
+        message;
+
+      inputError.hidden = false;
+
+      if (resultBox) {
+        resultBox.hidden = true;
+      }
     }
+
+
+    function clearError() {
+      if (!inputError) return;
+
+      inputError.textContent = "";
+      inputError.hidden = true;
+    }
+
 
     function round(value: number): number {
       return Math.round(value * 10) / 10;
     }
 
-    function getWeightKg(): number {
-      const rawWeight = parseFloat(weightInput?.value || "");
 
-      if (!Number.isFinite(rawWeight) || rawWeight <= 0) {
+    function getWeightKg(): number {
+      const rawWeight =
+        parseFloat(weightInput?.value || "");
+
+      if (
+        !Number.isFinite(rawWeight) ||
+        rawWeight <= 0
+      ) {
         return NaN;
       }
 
@@ -882,27 +1194,43 @@ import RelatedTools from '../../../components/RelatedTools.astro';
         : rawWeight / 2.20462;
     }
 
+
     function getHeightCm(): number {
       if (unit === "kg") {
-        return parseFloat(heightCmInput?.value || "");
+        return parseFloat(
+          heightCmInput?.value || ""
+        );
       }
 
-      const feet = parseFloat(heightFtInput?.value || "");
-      const inches = parseFloat(heightInInput?.value || "");
+      const feet =
+        parseFloat(heightFtInput?.value || "");
 
-      if (!Number.isFinite(feet) || !Number.isFinite(inches)) {
+      const inches =
+        parseFloat(heightInInput?.value || "");
+
+      if (
+        !Number.isFinite(feet) ||
+        !Number.isFinite(inches)
+      ) {
         return NaN;
       }
 
-      return (feet * 12 + inches) * 2.54;
+      return (
+        (feet * 12) + inches
+      ) * 2.54;
     }
+
 
     function getLbmFromBodyFat(
       weightKg: number,
       bodyFatPercent: number
     ): number {
-      return weightKg * (1 - bodyFatPercent / 100);
+      return (
+        weightKg *
+        (1 - bodyFatPercent / 100)
+      );
     }
+
 
     function getBoerLbm(
       weightKg: number,
@@ -924,20 +1252,47 @@ import RelatedTools from '../../../components/RelatedTools.astro';
       );
     }
 
+
     function getJamesLbm(
       weightKg: number,
       heightCm: number,
       sex: string
     ): number {
-      const ratioSquared =
-        Math.pow(weightKg / heightCm, 2);
+      /*
+       * James formula uses height in meters.
+       * The previous implementation incorrectly used
+       * centimeters directly, which materially distorted results.
+       */
 
-      if (sex === "female") {
-        return 1.07 * weightKg - 148 * ratioSquared;
+      const heightM =
+        heightCm / 100;
+
+      if (
+        !Number.isFinite(heightM) ||
+        heightM <= 0
+      ) {
+        return NaN;
       }
 
-      return 1.10 * weightKg - 128 * ratioSquared;
+      const ratioSquared =
+        Math.pow(
+          weightKg / heightM,
+          2
+        );
+
+      if (sex === "female") {
+        return (
+          1.07 * weightKg -
+          148 * ratioSquared
+        );
+      }
+
+      return (
+        1.10 * weightKg -
+        128 * ratioSquared
+      );
     }
+
 
     function getHumeLbm(
       weightKg: number,
@@ -959,179 +1314,299 @@ import RelatedTools from '../../../components/RelatedTools.astro';
       );
     }
 
+
+    function updateCompositionVisual(
+      leanPercent: number,
+      fatPercent: number
+    ) {
+      const safeLean =
+        Math.max(
+          0,
+          Math.min(100, leanPercent)
+        );
+
+      const safeFat =
+        Math.max(
+          0,
+          Math.min(100, fatPercent)
+        );
+
+      if (compositionLean) {
+        compositionLean.style.width =
+          `${safeLean}%`;
+      }
+
+      if (compositionFat) {
+        compositionFat.style.width =
+          `${safeFat}%`;
+      }
+
+      if (visualLeanPercent) {
+        visualLeanPercent.textContent =
+          `${round(safeLean)}%`;
+      }
+
+      if (visualFatPercent) {
+        visualFatPercent.textContent =
+          `${round(safeFat)}%`;
+      }
+    }
+
+
     if (unitLb) {
-      unitLb.addEventListener("click", () => setUnit("lb"));
+      unitLb.addEventListener(
+        "click",
+        () => setUnit("lb")
+      );
     }
 
     if (unitKg) {
-      unitKg.addEventListener("click", () => setUnit("kg"));
+      unitKg.addEventListener(
+        "click",
+        () => setUnit("kg")
+      );
     }
 
     if (methodBodyFat) {
-      methodBodyFat.addEventListener("click", () =>
-        setMethod("bodyfat")
+      methodBodyFat.addEventListener(
+        "click",
+        () => setMethod("bodyfat")
       );
     }
 
     if (methodBoer) {
-      methodBoer.addEventListener("click", () =>
-        setMethod("boer")
+      methodBoer.addEventListener(
+        "click",
+        () => setMethod("boer")
       );
     }
 
     if (methodJames) {
-      methodJames.addEventListener("click", () =>
-        setMethod("james")
+      methodJames.addEventListener(
+        "click",
+        () => setMethod("james")
       );
     }
 
     if (methodHume) {
-      methodHume.addEventListener("click", () =>
-        setMethod("hume")
+      methodHume.addEventListener(
+        "click",
+        () => setMethod("hume")
       );
     }
 
+
     if (calcBtn) {
-      calcBtn.addEventListener("click", () => {
-        const weightKg = getWeightKg();
+      calcBtn.addEventListener(
+        "click",
+        () => {
+          clearError();
 
-        if (
-          !Number.isFinite(weightKg) ||
-          weightKg < 25 ||
-          weightKg > 300
-        ) {
-          showError(
-            "Please enter a body weight between 25 and 300 kg."
-          );
-          return;
-        }
-
-        let lbmKg = NaN;
-        let estimatedBodyFat = NaN;
-        let methodName = "";
-
-        if (method === "bodyfat") {
-          const bodyFat = parseFloat(
-            bodyFatInput?.value || ""
-          );
+          const weightKg =
+            getWeightKg();
 
           if (
-            !Number.isFinite(bodyFat) ||
-            bodyFat <= 0 ||
-            bodyFat >= 70
+            !Number.isFinite(weightKg) ||
+            weightKg < 25 ||
+            weightKg > 300
           ) {
             showError(
-              "Please enter a body-fat percentage between 1% and 69.9%."
+              "Please enter a body weight between 25 and 300 kg."
             );
+
             return;
           }
 
-          lbmKg = getLbmFromBodyFat(weightKg, bodyFat);
-          estimatedBodyFat = bodyFat;
-          methodName = "Body fat percentage";
-        } else {
-          const heightCm = getHeightCm();
-          const sex = sexInput?.value || "male";
+          let lbmKg = NaN;
+          let methodName = "";
+
+          if (method === "bodyfat") {
+            const bodyFat =
+              parseFloat(
+                bodyFatInput?.value || ""
+              );
+
+            if (
+              !Number.isFinite(bodyFat) ||
+              bodyFat <= 0 ||
+              bodyFat >= 70
+            ) {
+              showError(
+                "Please enter a body-fat percentage between 1% and 69.9%."
+              );
+
+              return;
+            }
+
+            lbmKg =
+              getLbmFromBodyFat(
+                weightKg,
+                bodyFat
+              );
+
+            methodName =
+              "Body fat percentage";
+          } else {
+            const heightCm =
+              getHeightCm();
+
+            const sex =
+              sexInput?.value || "male";
+
+            if (
+              !Number.isFinite(heightCm) ||
+              heightCm < 120 ||
+              heightCm > 250
+            ) {
+              showError(
+                "Please enter a height between 120 and 250 cm."
+              );
+
+              return;
+            }
+
+            if (
+              unit === "lb"
+            ) {
+              const feet =
+                parseFloat(
+                  heightFtInput?.value || ""
+                );
+
+              const inches =
+                parseFloat(
+                  heightInInput?.value || ""
+                );
+
+              if (
+                !Number.isFinite(feet) ||
+                !Number.isFinite(inches) ||
+                feet < 3 ||
+                feet > 8 ||
+                inches < 0 ||
+                inches >= 12
+              ) {
+                showError(
+                  "Please enter a valid height using feet and inches."
+                );
+
+                return;
+              }
+            }
+
+            if (method === "boer") {
+              lbmKg =
+                getBoerLbm(
+                  weightKg,
+                  heightCm,
+                  sex
+                );
+
+              methodName =
+                "Boer formula";
+            }
+
+            if (method === "james") {
+              lbmKg =
+                getJamesLbm(
+                  weightKg,
+                  heightCm,
+                  sex
+                );
+
+              methodName =
+                "James formula";
+            }
+
+            if (method === "hume") {
+              lbmKg =
+                getHumeLbm(
+                  weightKg,
+                  heightCm,
+                  sex
+                );
+
+              methodName =
+                "Hume formula";
+            }
+          }
 
           if (
-            !Number.isFinite(heightCm) ||
-            heightCm < 120 ||
-            heightCm > 250
+            !Number.isFinite(lbmKg) ||
+            lbmKg <= 0 ||
+            lbmKg >= weightKg
           ) {
             showError(
-              "Please enter a height between 120 and 250 cm."
+              "This combination of inputs produced an invalid LBM estimate. Please check your values or try another method."
             );
+
             return;
           }
 
-          if (method === "boer") {
-            lbmKg = getBoerLbm(
-              weightKg,
-              heightCm,
-              sex
-            );
-            methodName = "Boer formula";
+          const fatMassKg =
+            weightKg - lbmKg;
+
+          const leanPercent =
+            (lbmKg / weightKg) * 100;
+
+          const fatPercent =
+            (fatMassKg / weightKg) * 100;
+
+          const displayLbm =
+            unit === "lb"
+              ? lbmKg * 2.20462
+              : lbmKg;
+
+          const displayWeight =
+            unit === "lb"
+              ? weightKg * 2.20462
+              : weightKg;
+
+          const displayFat =
+            unit === "lb"
+              ? fatMassKg * 2.20462
+              : fatMassKg;
+
+          if (resultLbm) {
+            resultLbm.textContent =
+              `${round(displayLbm)} ${unit}`;
           }
 
-          if (method === "james") {
-            lbmKg = getJamesLbm(
-              weightKg,
-              heightCm,
-              sex
-            );
-            methodName = "James formula";
+          if (resultWeight) {
+            resultWeight.textContent =
+              `${round(displayWeight)} ${unit}`;
           }
 
-          if (method === "hume") {
-            lbmKg = getHumeLbm(
-              weightKg,
-              heightCm,
-              sex
-            );
-            methodName = "Hume formula";
+          if (resultFat) {
+            resultFat.textContent =
+              `${round(displayFat)} ${unit}`;
           }
-        }
 
-        if (
-          !Number.isFinite(lbmKg) ||
-          lbmKg <= 0 ||
-          lbmKg >= weightKg
-        ) {
-          showError(
-            "This combination of inputs produced an invalid LBM estimate. Please check your values or try another method."
+          if (resultPercent) {
+            resultPercent.textContent =
+              `${round(leanPercent)}%`;
+          }
+
+          if (resultMethod) {
+            resultMethod.textContent =
+              methodName;
+          }
+
+          updateCompositionVisual(
+            leanPercent,
+            fatPercent
           );
-          return;
+
+          if (resultBox) {
+            resultBox.hidden = false;
+            resultBox.classList.add("show");
+          }
         }
-
-        const fatMassKg = weightKg - lbmKg;
-        const leanPercent = (lbmKg / weightKg) * 100;
-
-        const displayLbm =
-          unit === "lb"
-            ? lbmKg * 2.20462
-            : lbmKg;
-
-        const displayWeight =
-          unit === "lb"
-            ? weightKg * 2.20462
-            : weightKg;
-
-        const displayFat =
-          unit === "lb"
-            ? fatMassKg * 2.20462
-            : fatMassKg;
-
-        if (resultLbm) {
-          resultLbm.textContent =
-            `${round(displayLbm)} ${unit}`;
-        }
-
-        if (resultWeight) {
-          resultWeight.textContent =
-            `${round(displayWeight)} ${unit}`;
-        }
-
-        if (resultFat) {
-          resultFat.textContent =
-            `${round(displayFat)} ${unit}`;
-        }
-
-        if (resultPercent) {
-          resultPercent.textContent =
-            `${round(leanPercent)}%`;
-        }
-
-        if (resultMethod) {
-          resultMethod.textContent = methodName;
-        }
-
-        if (resultBox) {
-          resultBox.classList.add("show");
-        }
-      });
+      );
     }
 
+
     setMethod("bodyfat");
-    updateHeightFields();
+    updateUnitUI();
   </script>
 </Base>
