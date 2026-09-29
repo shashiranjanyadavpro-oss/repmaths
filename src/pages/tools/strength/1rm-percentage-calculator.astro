@@ -2,9 +2,10 @@
 import Base from '../../../layouts/Base.astro';
 import RelatedTools from '../../../components/RelatedTools.astro';
 ---
+
 <Base
-  title="1RM Percentage Calculator — Lifting Percentage Chart"
-  description="Free 1RM percentage calculator. Find the exact weight for any percentage of your one-rep max, or calculate your 1RM from a known working weight."
+  title="1RM Percentage Calculator — Calculate Any % of Your 1RM"
+  description="Free 1RM percentage calculator. Calculate 50%, 60%, 70%, 80%, 90%, 95% and any other percentage of your one-rep max in lb or kg, or reverse-calculate your 1RM from a known training weight."
 >
   <script type="application/ld+json" set:html={JSON.stringify({
     "@context": "https://schema.org",
@@ -12,144 +13,693 @@ import RelatedTools from '../../../components/RelatedTools.astro';
     "name": "1RM Percentage Calculator",
     "applicationCategory": "HealthApplication",
     "operatingSystem": "Any",
-    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
-    "description": "Free online calculator that converts between one-rep max, training percentage, and working weight for percentage-based strength programs."
-  })} />
-
-  <script type="application/ld+json" set:html={JSON.stringify({
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    "mainEntity": [
-      {
-        "@type": "Question",
-        "name": "What percentage of my 1RM should I use for muscle growth?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "Many hypertrophy-focused programs use moderate loads, often around 65% to 75% of 1RM for sets in the 8 to 12 rep range. The appropriate load can vary with the exercise, training experience, proximity to failure, and individual response."
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "What percentage of my 1RM is best for building strength?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "Strength-focused training often uses heavier loads, commonly around 85% to 95% of 1RM for lower-rep work. The appropriate percentage depends on the exercise, program, experience, and desired training volume."
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "Should I use my true 1RM or a training max for percentage-based programs?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "Some percentage-based programs use a training max below the true 1RM. A common example is 90% of the actual 1RM, although the exact approach depends on the program and athlete."
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "How often should I recalculate my 1RM percentages?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "You can update your 1RM estimate after a meaningful change in performance or at the end of a training cycle. The appropriate timing depends on the program and how frequently your strength changes."
-        }
-      }
-    ]
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    },
+    "description": "Free online calculator that converts a one-rep max into percentage-based training weights and can reverse-calculate an estimated 1RM from a known weight and its percentage of 1RM."
   })} />
 
   <section class="hero">
     <h1>1RM Percentage Calculator</h1>
-    <p>Find the exact weight for any percentage of your max, or work out your 1RM from a lift you already made.</p>
+
+    <p>
+      Calculate any percentage of your one-rep max and turn your 1RM into
+      practical training weights in pounds (lb) or kilograms (kg).
+    </p>
   </section>
 
   <section class="calc-card">
     <div class="field">
       <label>Unit</label>
+
       <div class="unit-toggle">
-        <button type="button" id="unit-lb" class="active" aria-pressed="true">lb</button>
-        <button type="button" id="unit-kg" aria-pressed="false">kg</button>
+        <button
+          type="button"
+          id="unit-lb"
+          class="active"
+          aria-pressed="true"
+        >
+          lb
+        </button>
+
+        <button
+          type="button"
+          id="unit-kg"
+          aria-pressed="false"
+        >
+          kg
+        </button>
       </div>
     </div>
 
     <div class="field">
       <label>Mode</label>
+
       <div class="unit-toggle">
-        <button type="button" id="mode-forward" class="active" aria-pressed="true">1RM → Weight</button>
-        <button type="button" id="mode-reverse" aria-pressed="false">Weight → 1RM</button>
+        <button
+          type="button"
+          id="mode-forward"
+          class="active"
+          aria-pressed="true"
+        >
+          1RM → Weight
+        </button>
+
+        <button
+          type="button"
+          id="mode-reverse"
+          aria-pressed="false"
+        >
+          Weight → 1RM
+        </button>
       </div>
     </div>
 
     <div id="forward-fields">
       <div class="field">
         <label for="onerm">Your 1RM</label>
-        <input type="number" id="onerm" placeholder="e.g. 225" inputmode="decimal" min="0" />
+
+        <input
+          type="number"
+          id="onerm"
+          placeholder="e.g. 225"
+          inputmode="decimal"
+          min="0"
+          step="any"
+          autocomplete="off"
+        />
+      </div>
+
+      <div class="field">
+        <label for="target-percent">
+          Percentage of 1RM
+        </label>
+
+        <input
+          type="number"
+          id="target-percent"
+          placeholder="e.g. 80"
+          inputmode="decimal"
+          min="1"
+          max="100"
+          step="1"
+          value="80"
+          autocomplete="off"
+        />
       </div>
     </div>
 
-    <div id="reverse-fields" style="display:none;">
+    <div
+      id="reverse-fields"
+      style="display:none;"
+    >
       <div class="field">
-        <label for="known-weight">Weight You Lifted</label>
-        <input type="number" id="known-weight" placeholder="e.g. 180" inputmode="decimal" min="0" />
+        <label for="known-weight">
+          Weight You Lifted
+        </label>
+
+        <input
+          type="number"
+          id="known-weight"
+          placeholder="e.g. 180"
+          inputmode="decimal"
+          min="0"
+          step="any"
+          autocomplete="off"
+        />
       </div>
 
       <div class="field">
-        <label for="known-percent">That Weight Was What % of Your Max?</label>
-        <input type="number" id="known-percent" placeholder="e.g. 80" inputmode="numeric" min="1" max="100" step="1" />
+        <label for="known-percent">
+          That Weight Was What % of Your Max?
+        </label>
+
+        <input
+          type="number"
+          id="known-percent"
+          placeholder="e.g. 80"
+          inputmode="decimal"
+          min="1"
+          max="100"
+          step="1"
+          autocomplete="off"
+        />
       </div>
     </div>
 
-    <button class="btn-primary" id="calc-btn">Calculate</button>
+    <div
+      id="input-error"
+      role="alert"
+      aria-live="assertive"
+      style="display:none; margin:12px 0 0; color:#ff9b82; font-size:0.9rem;"
+    ></div>
 
-    <div class="result-box" id="result-box">
-      <div class="big-number" id="result-main">–</div>
-      <div class="label" id="result-label">Result</div>
-      <table class="result-table" id="result-table">
+    <button
+      class="btn-primary"
+      id="calc-btn"
+    >
+      Calculate
+    </button>
+
+    <div
+      class="result-box"
+      id="result-box"
+      role="status"
+      aria-live="polite"
+    >
+      <div
+        class="big-number"
+        id="result-main"
+      >
+        –
+      </div>
+
+      <div
+        class="label"
+        id="result-label"
+      >
+        Result
+      </div>
+
+      <p
+        id="result-summary"
+        style="margin:10px 0 0; color:var(--text-muted); font-size:0.9rem;"
+      ></p>
+
+      <table
+        class="result-table"
+        id="result-table"
+      >
+        <caption
+          style="text-align:left; padding:0 0 8px; font-weight:700;"
+        >
+          1RM percentage chart
+        </caption>
+
         <thead>
-          <tr><th>% of 1RM</th><th>Weight</th></tr>
+          <tr>
+            <th scope="col">% of 1RM</th>
+            <th scope="col">Training Weight</th>
+          </tr>
         </thead>
+
         <tbody id="result-table-body"></tbody>
       </table>
+
+      <div style="height:18px;"></div>
+
+      <table class="result-table">
+        <caption
+          style="text-align:left; padding:0 0 8px; font-weight:700;"
+        >
+          Common 1RM training percentages
+        </caption>
+
+        <thead>
+          <tr>
+            <th scope="col">% of 1RM</th>
+            <th scope="col">Weight</th>
+          </tr>
+        </thead>
+
+        <tbody id="common-table-body"></tbody>
+      </table>
+
+      <div class="result-actions">
+        <a
+          class="btn-primary"
+          href="/tools/strength/1rm-calculator"
+        >
+          Calculate Your 1RM
+        </a>
+
+        <a
+          class="btn-primary"
+          href="/tools/training/training-max-calculator"
+        >
+          Calculate Training Max
+        </a>
+      </div>
+
+      <p
+        style="margin:12px 0 0; font-size:0.85rem; color:var(--text-muted);"
+      >
+        Need actual plates for your calculated training weight?
+        <a href="/tools/equipment/plate-calculator">
+          Use the Barbell Plate Calculator
+        </a>.
+      </p>
     </div>
   </section>
 
   <article class="article-section">
     <h2>What Is a 1RM Percentage Calculator?</h2>
-    <p>
-      Percentage-based training programs — from basic strength blocks to
-      structured systems like Wendler 5/3/1 — prescribe your working weight
-      as a percentage of your one-rep max rather than a fixed number. This
-      calculator works both ways: enter your 1RM to get a full lifting
-      percentage chart, or enter a weight you already lifted along with the
-      percentage it represented to back-calculate your 1RM.
-    </p>
-    <p>
-      If you need to estimate your one-rep max from a completed set instead,
-      use the <a href="/tools/strength/1rm-calculator">1RM Calculator</a>.
-      You can also use the <a href="/tools/strength/rep-max-calculator">Rep Max Calculator</a>
-      to convert a known weight and rep count into a different target rep range.
-    </p>
-  </article>
 
-  <article class="article-section">
-    <h2>How to Use This Calculator</h2>
     <p>
-      If you already know your 1RM, switch to "1RM → Weight" mode and enter
-      it — the table below will show your working weight at every common
-      training percentage. If you only know a weight you lifted and roughly
-      what percentage it was (from a program), switch to "Weight → 1RM" mode
-      to calculate your max instead.
+      A <strong>1RM percentage calculator</strong> converts your one-rep
+      max into training weights based on a selected percentage. If your
+      1RM is 200 lb, for example, 80% of your 1RM is 160 lb.
     </p>
-  </article>
 
-  <article class="article-section">
-    <h2>1RM Percentages by Training Goal</h2>
+    <p>
+      Percentage-based training is commonly used in strength programs
+      because it gives you a repeatable way to describe training load.
+      Instead of guessing how much weight to use, a program can prescribe
+      something such as 80% of 1RM and you can calculate the corresponding
+      load.
+    </p>
+
+    <p>
+      This calculator works in both directions:
+    </p>
+
     <ul>
-      <li><strong>85%–95%:</strong> <em>Strength &amp; power.</em> Heavy, low-rep work commonly used for strength-focused training. Higher percentages generally allow fewer repetitions and require appropriate fatigue and technique management.</li>
-      <li><strong>65%–75%:</strong> <em>Hypertrophy.</em> A commonly used range for moderate-rep sets. It can provide substantial mechanical tension, although muscle growth can occur across a broader range of loads when sets are sufficiently challenging.</li>
-      <li><strong>50%–65%:</strong> <em>Endurance &amp; technique work.</em> Lighter loads that can be useful for higher-rep work, warm-ups, technique practice, or deload periods depending on the program.</li>
+      <li>
+        <strong>1RM → Weight:</strong> calculate the weight at any percentage
+        of your max.
+      </li>
+      <li>
+        <strong>Weight → 1RM:</strong> estimate your 1RM when you know that
+        a weight represented a particular percentage of your max.
+      </li>
     </ul>
+
     <p>
-      If your program uses a percentage below your true 1RM as its working
-      reference, the <a href="/tools/training/training-max-calculator">Training Max Calculator</a>
-      can help convert your 1RM into a training max.
+      If you do not know your 1RM, first use our
+      <a href="/tools/strength/1rm-calculator">
+        1RM Calculator
+      </a>
+      to estimate it from a completed set.
+    </p>
+  </article>
+
+  <article class="article-section">
+    <h2>How to Calculate a Percentage of Your 1RM</h2>
+
+    <p>
+      The basic calculation is:
+    </p>
+
+    <p>
+      <code>Training Weight = 1RM × Percentage ÷ 100</code>
+    </p>
+
+    <p>
+      For example, if your 1RM is 300 lb:
+    </p>
+
+    <ul>
+      <li>50% = 150 lb</li>
+      <li>60% = 180 lb</li>
+      <li>70% = 210 lb</li>
+      <li>80% = 240 lb</li>
+      <li>90% = 270 lb</li>
+      <li>95% = 285 lb</li>
+    </ul>
+
+    <p>
+      The same calculation works in kilograms because percentages do not
+      depend on the unit of measurement.
+    </p>
+  </article>
+
+  <article class="article-section">
+    <h2>1RM Percentage Chart</h2>
+
+    <p>
+      The following chart gives common percentage points from 50% through
+      100% of your one-rep max. Enter your own 1RM above to calculate the
+      exact weight for your lift.
+    </p>
+
+    <table class="result-table">
+      <caption
+        style="text-align:left; padding:0 0 8px; font-weight:700;"
+      >
+        Common lifting percentages
+      </caption>
+
+      <thead>
+        <tr>
+          <th scope="col">1RM %</th>
+          <th scope="col">Example from 200 lb 1RM</th>
+          <th scope="col">General use</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr>
+          <td>100%</td>
+          <td>200 lb</td>
+          <td>Maximal single</td>
+        </tr>
+        <tr>
+          <td>95%</td>
+          <td>190 lb</td>
+          <td>Very heavy strength work</td>
+        </tr>
+        <tr>
+          <td>90%</td>
+          <td>180 lb</td>
+          <td>Heavy strength work</td>
+        </tr>
+        <tr>
+          <td>85%</td>
+          <td>170 lb</td>
+          <td>Heavy strength work</td>
+        </tr>
+        <tr>
+          <td>80%</td>
+          <td>160 lb</td>
+          <td>Moderate-heavy training</td>
+        </tr>
+        <tr>
+          <td>75%</td>
+          <td>150 lb</td>
+          <td>Moderate-load training</td>
+        </tr>
+        <tr>
+          <td>70%</td>
+          <td>140 lb</td>
+          <td>Moderate-load training</td>
+        </tr>
+        <tr>
+          <td>65%</td>
+          <td>130 lb</td>
+          <td>Lighter-load training</td>
+        </tr>
+        <tr>
+          <td>60%</td>
+          <td>120 lb</td>
+          <td>Lighter-load work</td>
+        </tr>
+        <tr>
+          <td>50%</td>
+          <td>100 lb</td>
+          <td>Very light training</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p>
+      These percentages describe loading intensity, not guaranteed
+      repetition capacity. The number of reps a lifter can perform at a
+      particular percentage varies between people, exercises and training
+      conditions. Published percentage-to-rep charts should therefore be
+      treated as practical reference ranges rather than exact predictions.
+      1
+    </p>
+  </article>
+
+  <article class="article-section">
+    <h2>What Percentage of 1RM Should You Use for Strength?</h2>
+
+    <p>
+      Strength-focused training commonly uses heavier relative loads.
+      Loads around 80% or more of 1RM are frequently used for strength
+      development, with the exact percentage depending on the program,
+      exercise, volume, experience and proximity to failure.
+    </p>
+
+    <p>
+      The latest ACSM resistance-training position stand supports heavier
+      loading for maximizing strength adaptations, while emphasizing that
+      resistance-training outcomes depend on the overall program rather
+      than a single percentage number.
+      <a
+        href="https://pubmed.ncbi.nlm.nih.gov/41843416/"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        Review the 2026 ACSM position stand.
+      </a>
+      2
+    </p>
+
+    <p>
+      As a practical reference, many strength programs use roughly
+      <strong>80–95% of 1RM</strong> for heavier strength work. This is a
+      programming range, not a universal requirement.
+    </p>
+  </article>
+
+  <article class="article-section">
+    <h2>What Percentage of 1RM Should You Use for Muscle Growth?</h2>
+
+    <p>
+      There is no single percentage of 1RM that is required for muscle
+      growth. Hypertrophy can occur across a relatively broad range of
+      resistance-training loads when the overall training stimulus,
+      effort and volume are appropriate.
+    </p>
+
+    <p>
+      Moderate loads such as approximately
+      <strong>65–80% of 1RM</strong> are commonly used for hypertrophy
+      training because they allow practical moderate-repetition sets.
+      However, this should be viewed as a useful programming range rather
+      than a strict hypertrophy zone.
+    </p>
+
+    <p>
+      Current evidence does not support treating one narrow percentage
+      range as the only effective way to build muscle. The 2026 ACSM
+      position stand places greater emphasis on the overall resistance
+      training prescription for hypertrophy rather than a single fixed
+      percentage.
+      <a
+        href="https://pubmed.ncbi.nlm.nih.gov/41843416/"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        See the current evidence.
+      </a>
+      3
+    </p>
+  </article>
+
+  <article class="article-section">
+    <h2>What Percentage of 1RM Is Best for 5 Reps, 8 Reps, or 10 Reps?</h2>
+
+    <p>
+      Rep-to-percentage charts often provide approximate relationships such
+      as:
+    </p>
+
+    <ul>
+      <li>
+        <strong>5 reps:</strong> often around 85–90% of 1RM
+      </li>
+      <li>
+        <strong>8 reps:</strong> often around 75–82% of 1RM
+      </li>
+      <li>
+        <strong>10 reps:</strong> often around 70–77% of 1RM
+      </li>
+      <li>
+        <strong>12 reps:</strong> often around 65–72% of 1RM
+      </li>
+    </ul>
+
+    <p>
+      These are approximate reference ranges, not mathematical guarantees.
+      Different lifters can perform different numbers of repetitions at the
+      same percentage, and the relationship can change between exercises.
+      Current percentage charts from strength-training resources likewise
+      describe these relationships as approximate rather than exact.
+      4
+    </p>
+
+    <p>
+      If you know the weight and repetitions you actually performed and
+      want to estimate your 1RM from that set, use the
+      <a href="/tools/strength/1rm-calculator">
+        1RM Calculator
+      </a>
+      instead of assuming a generic percentage-to-rep relationship.
+    </p>
+  </article>
+
+  <article class="article-section">
+    <h2>What Is 80% of My 1RM?</h2>
+
+    <p>
+      To calculate 80% of your 1RM, multiply your max by 0.80.
+    </p>
+
+    <p>
+      For example:
+    </p>
+
+    <p>
+      <strong>300 lb × 0.80 = 240 lb</strong>
+    </p>
+
+    <p>
+      So 80% of a 300 lb 1RM is <strong>240 lb</strong>.
+    </p>
+
+    <p>
+      For any other percentage, replace 0.80 with the percentage expressed
+      as a decimal. For example, 90% is 0.90 and 75% is 0.75.
+    </p>
+  </article>
+
+  <article class="article-section">
+    <h2>What Is 90% of My 1RM?</h2>
+
+    <p>
+      Multiply your 1RM by 0.90.
+    </p>
+
+    <p>
+      For a 300 lb 1RM:
+    </p>
+
+    <p>
+      <strong>300 lb × 0.90 = 270 lb</strong>
+    </p>
+
+    <p>
+      Therefore, 90% of a 300 lb one-rep max is
+      <strong>270 lb</strong>.
+    </p>
+
+    <p>
+      If your program uses a percentage below your true 1RM as its main
+      reference, you may be working from a
+      <a href="/tools/training/training-max-calculator">
+        Training Max
+      </a>
+      rather than your actual tested max.
+    </p>
+  </article>
+
+  <article class="article-section">
+    <h2>1RM Percentage Calculator for Bench Press, Squat and Deadlift</h2>
+
+    <p>
+      The same percentage calculation works for bench press, squat,
+      deadlift, overhead press and other resistance-training exercises.
+      The important part is that the 1RM and training weight refer to the
+      same exercise and the same movement standard.
+    </p>
+
+    <p>
+      For example, if your bench press 1RM is 225 lb:
+    </p>
+
+    <ul>
+      <li>90% = 202.5 lb</li>
+      <li>85% = 191.3 lb</li>
+      <li>80% = 180 lb</li>
+      <li>75% = 168.8 lb</li>
+      <li>70% = 157.5 lb</li>
+    </ul>
+
+    <p>
+      If you need to estimate your bench press max first, use the
+      <a href="/tools/strength/bench-press-1rm-calculator">
+        Bench Press Max Calculator
+      </a>.
+    </p>
+
+    <p>
+      You can also calculate exercise-specific maxes with our
+      <a href="/tools/strength/squat-1rm-calculator">
+        Squat Max Calculator
+      </a>,
+      <a href="/tools/strength/deadlift-1rm-calculator">
+        Deadlift Max Calculator
+      </a>
+      and
+      <a href="/tools/strength/overhead-press-1rm-calculator">
+        Overhead Press Max Calculator
+      </a>.
+    </p>
+  </article>
+
+  <article class="article-section">
+    <h2>True 1RM vs Training Max</h2>
+
+    <p>
+      A true 1RM represents your tested maximum under specific conditions.
+      A training max is a deliberately more conservative number used to
+      calculate repeatable working weights.
+    </p>
+
+    <p>
+      Percentage-based programs may therefore calculate working sets from
+      a training max rather than directly from a true 1RM. There is no
+      universal training-max percentage that applies to every program.
+    </p>
+
+    <p>
+      Wendler-style 5/3/1 programming, for example, uses a training max
+      rather than simply treating every workout percentage as a percentage
+      of an all-out true 1RM.
+    </p>
+
+    <p>
+      If you want to convert a known 1RM into a conservative training
+      reference, use the
+      <a href="/tools/training/training-max-calculator">
+        Training Max Calculator
+      </a>.
+    </p>
+  </article>
+
+  <article class="article-section">
+    <h2>How Often Should You Recalculate Your 1RM Percentages?</h2>
+
+    <p>
+      Recalculate your percentage-based training weights when your
+      estimated or tested 1RM has meaningfully changed, when a training
+      block ends, or when your program calls for a new training max.
+    </p>
+
+    <p>
+      You do not need to recalculate after every workout. A percentage
+      chart is only as useful as the 1RM value it is based on.
+    </p>
+
+    <p>
+      If your current 1RM estimate came from an older training block,
+      update the max before starting a new percentage-based cycle when
+      appropriate.
+    </p>
+  </article>
+
+  <article class="article-section">
+    <h2>Rounding Your 1RM Training Weight</h2>
+
+    <p>
+      The mathematical result of a percentage calculation may not match
+      the smallest weight you can actually load onto a barbell.
+    </p>
+
+    <p>
+      For example, 85% of a 225 lb 1RM is:
+    </p>
+
+    <p>
+      <strong>225 × 0.85 = 191.25 lb</strong>
+    </p>
+
+    <p>
+      A gym may not have plates that allow exactly 191.25 lb. In that case,
+      round the training weight to a practical load your equipment can
+      produce, following the rounding convention of your program.
+    </p>
+
+    <p>
+      Once you have the final working weight, the
+      <a href="/tools/equipment/plate-calculator">
+        Barbell Plate Calculator
+      </a>
+      can show the required plates per side.
     </p>
   </article>
 
@@ -157,24 +707,162 @@ import RelatedTools from '../../../components/RelatedTools.astro';
     <h2>Frequently Asked Questions</h2>
 
     <div class="faq-item">
-      <h3>What percentage of my 1RM should I use for muscle growth?</h3>
-      <p>Many hypertrophy-focused programs use around 65-75% of 1RM for moderate-rep sets such as 8-12 reps. The appropriate load can vary by exercise, training experience, proximity to failure, and individual response.</p>
+      <h3>How do I calculate 80% of my 1RM?</h3>
+      <p>
+        Multiply your 1RM by 0.80. For example, if your 1RM is 300 lb,
+        80% is 240 lb.
+      </p>
     </div>
 
     <div class="faq-item">
-      <h3>What percentage of my 1RM is best for building strength?</h3>
-      <p>Strength-focused training often uses heavier loads, commonly around 85-95% of 1RM for lower-rep work. The appropriate percentage depends on the exercise, program, experience, and training volume.</p>
+      <h3>How do I calculate 90% of my 1RM?</h3>
+      <p>
+        Multiply your 1RM by 0.90. A 300 lb 1RM at 90% equals 270 lb.
+      </p>
+    </div>
+
+    <div class="faq-item">
+      <h3>What percentage of 1RM should I use for strength?</h3>
+      <p>
+        Strength-focused training commonly uses heavier loads, often
+        around 80–95% of 1RM for lower-repetition work. The appropriate
+        percentage depends on the exercise, program, volume, experience
+        and training conditions.
+      </p>
+    </div>
+
+    <div class="faq-item">
+      <h3>What percentage of 1RM should I use for muscle growth?</h3>
+      <p>
+        Muscle growth can occur across a broad range of resistance-training
+        loads. Moderate loads around 65–80% of 1RM are commonly used, but
+        there is no single percentage that is required for hypertrophy.
+      </p>
+    </div>
+
+    <div class="faq-item">
+      <h3>What percentage of 1RM is 5 reps?</h3>
+      <p>
+        Five reps are often associated with roughly 85–90% of 1RM, but
+        individual repetition capacity varies. Treat rep-to-percentage
+        charts as estimates rather than exact rules.
+      </p>
+    </div>
+
+    <div class="faq-item">
+      <h3>What percentage of 1RM is 8 reps?</h3>
+      <p>
+        Eight reps are often associated with roughly 75–82% of 1RM.
+        The actual percentage you can perform for eight reps varies by
+        exercise, lifter and training conditions.
+      </p>
+    </div>
+
+    <div class="faq-item">
+      <h3>What percentage of 1RM is 10 reps?</h3>
+      <p>
+        Ten reps are often associated with roughly 70–77% of 1RM.
+        This is a practical reference range, not a guaranteed percentage
+        for every lifter.
+      </p>
     </div>
 
     <div class="faq-item">
       <h3>Should I use my true 1RM or a training max?</h3>
-      <p>Some percentage-based programs use a training max below your true 1RM. Around 90% of true 1RM is a common example, but the appropriate training max depends on the program and athlete.</p>
+      <p>
+        Some percentage-based programs use a training max below your true
+        1RM to make working weights more repeatable. The correct training
+        max depends on the specific program and athlete.
+      </p>
     </div>
 
     <div class="faq-item">
-      <h3>How often should I recalculate my percentages?</h3>
-      <p>You can update your 1RM estimate after a meaningful change in performance or at the end of a training cycle. The appropriate timing depends on your program and how frequently your strength changes.</p>
+      <h3>Can I use this calculator for bench press, squat and deadlift?</h3>
+      <p>
+        Yes. Percentage calculations work for bench press, squat, deadlift,
+        overhead press and other lifts as long as the 1RM and working weight
+        refer to the same exercise.
+      </p>
     </div>
+
+    <div class="faq-item">
+      <h3>Can I calculate 1RM percentages in pounds and kilograms?</h3>
+      <p>
+        Yes. The calculator supports both pounds (lb) and kilograms (kg).
+        The mathematical percentage calculation is the same in either unit.
+      </p>
+    </div>
+
+    <div class="faq-item">
+      <h3>How often should I update my 1RM?</h3>
+      <p>
+        Update your percentage weights when your estimated or tested 1RM
+        meaningfully changes, when a training cycle ends, or when your
+        program calls for a new training max.
+      </p>
+    </div>
+  </article>
+
+  <article class="article-section">
+    <h2>Sources &amp; Methodology</h2>
+
+    <p>
+      RepMaths calculates percentage-based training weights using direct
+      percentage arithmetic. It does not claim that a specific percentage
+      guarantees a specific number of repetitions.
+    </p>
+
+    <p>
+      Rep-to-percentage relationships vary between lifters and exercises.
+      The percentage ranges presented on this page are therefore practical
+      programming references rather than fixed physiological laws.
+    </p>
+
+    <ul>
+      <li>
+        Currier BS, D'Souza AC, Fiatarone Singh MA, et al.
+        <a
+          href="https://pubmed.ncbi.nlm.nih.gov/41843416/"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          American College of Sports Medicine Position Stand:
+          Resistance Training Prescription for Muscle Function,
+          Hypertrophy, and Physical Performance in Healthy Adults
+        </a>.
+        <em>Medicine &amp; Science in Sports &amp; Exercise</em>. 2026.
+      </li>
+
+      <li>
+        National Strength and Conditioning Association.
+        <a
+          href="https://www.nsca.com/education/articles/nsca-coach/using-intensity-based-on-sets-and-repetitions-over-50-years-of-experience-a-brief-overview-of-load-setting-and-programming-strategy/"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Using Intensity Based on Sets and Repetitions
+        </a>.
+      </li>
+
+      <li>
+        Mayhew JL, Prinster JL, Ware JS, Zimmer DL, Arabas JR, Bemben MG.
+        <a
+          href="https://pubmed.ncbi.nlm.nih.gov/7500624/"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Muscular endurance repetitions to predict bench press strength
+          in men of different training levels
+        </a>.
+        <em>Journal of Sports Medicine and Physical Fitness</em>. 1995.
+      </li>
+    </ul>
+
+    <p>
+      The calculator is intended as a training-planning utility for healthy
+      adults. It is not medical advice and does not replace individualized
+      coaching or professional assessment.
+    </p>
   </article>
 
   <RelatedTools currentToolId="1rm-percentage-calculator" />
@@ -185,39 +873,116 @@ import RelatedTools from '../../../components/RelatedTools.astro';
 
     const unitLb = document.getElementById("unit-lb");
     const unitKg = document.getElementById("unit-kg");
+
     const modeForward = document.getElementById("mode-forward");
     const modeReverse = document.getElementById("mode-reverse");
-    const forwardFields = document.getElementById("forward-fields");
-    const reverseFields = document.getElementById("reverse-fields");
-    const oneRMInput = document.getElementById("onerm") as HTMLInputElement | null;
-    const knownWeightInput = document.getElementById("known-weight") as HTMLInputElement | null;
-    const knownPercentInput = document.getElementById("known-percent") as HTMLInputElement | null;
-    const calcBtn = document.getElementById("calc-btn");
-    const resultMain = document.getElementById("result-main");
-    const resultLabel = document.getElementById("result-label");
-    const resultTableBody = document.getElementById("result-table-body");
-    const resultBox = document.getElementById("result-box");
 
-    if (unitLb) unitLb.addEventListener("click", () => setUnit("lb"));
-    if (unitKg) unitKg.addEventListener("click", () => setUnit("kg"));
-    if (modeForward) modeForward.addEventListener("click", () => setMode("forward"));
-    if (modeReverse) modeReverse.addEventListener("click", () => setMode("reverse"));
+    const forwardFields =
+      document.getElementById("forward-fields");
+
+    const reverseFields =
+      document.getElementById("reverse-fields");
+
+    const oneRMInput =
+      document.getElementById("onerm") as HTMLInputElement | null;
+
+    const targetPercentInput =
+      document.getElementById("target-percent") as HTMLInputElement | null;
+
+    const knownWeightInput =
+      document.getElementById("known-weight") as HTMLInputElement | null;
+
+    const knownPercentInput =
+      document.getElementById("known-percent") as HTMLInputElement | null;
+
+    const calcBtn =
+      document.getElementById("calc-btn");
+
+    const resultMain =
+      document.getElementById("result-main");
+
+    const resultLabel =
+      document.getElementById("result-label");
+
+    const resultSummary =
+      document.getElementById("result-summary");
+
+    const resultTableBody =
+      document.getElementById("result-table-body");
+
+    const commonTableBody =
+      document.getElementById("common-table-body");
+
+    const resultBox =
+      document.getElementById("result-box");
+
+    const inputError =
+      document.getElementById("input-error");
+
+    const commonPercentages = [
+      100,
+      95,
+      90,
+      85,
+      80,
+      75,
+      70,
+      65,
+      60,
+      55,
+      50
+    ];
+
+    if (unitLb) {
+      unitLb.addEventListener("click", () => setUnit("lb"));
+    }
+
+    if (unitKg) {
+      unitKg.addEventListener("click", () => setUnit("kg"));
+    }
+
+    if (modeForward) {
+      modeForward.addEventListener(
+        "click",
+        () => setMode("forward")
+      );
+    }
+
+    if (modeReverse) {
+      modeReverse.addEventListener(
+        "click",
+        () => setMode("reverse")
+      );
+    }
 
     function setUnit(newUnit: string) {
+      if (newUnit !== "lb" && newUnit !== "kg") return;
       if (newUnit === unit) return;
 
       const conversionFactor = 2.20462;
 
-      const convertInput = (input: HTMLInputElement | null) => {
+      const convertInput = (
+        input: HTMLInputElement | null
+      ) => {
         if (!input) return;
 
         const currentValue = Number(input.value);
 
-        if (!Number.isFinite(currentValue) || currentValue <= 0) return;
+        if (
+          !Number.isFinite(currentValue) ||
+          currentValue <= 0
+        ) {
+          return;
+        }
 
-        input.value = newUnit === "kg"
-          ? (currentValue / conversionFactor).toFixed(1)
-          : (currentValue * conversionFactor).toFixed(1);
+        input.value =
+          newUnit === "kg"
+            ? (
+                currentValue / conversionFactor
+              ).toFixed(1)
+            : (
+                currentValue * conversionFactor
+              ).toFixed(1);
       };
 
       convertInput(oneRMInput);
@@ -226,14 +991,30 @@ import RelatedTools from '../../../components/RelatedTools.astro';
       unit = newUnit;
 
       if (unitLb) {
-        unitLb.classList.toggle("active", unit === "lb");
-        unitLb.setAttribute("aria-pressed", String(unit === "lb"));
+        unitLb.classList.toggle(
+          "active",
+          unit === "lb"
+        );
+
+        unitLb.setAttribute(
+          "aria-pressed",
+          String(unit === "lb")
+        );
       }
 
       if (unitKg) {
-        unitKg.classList.toggle("active", unit === "kg");
-        unitKg.setAttribute("aria-pressed", String(unit === "kg"));
+        unitKg.classList.toggle(
+          "active",
+          unit === "kg"
+        );
+
+        unitKg.setAttribute(
+          "aria-pressed",
+          String(unit === "kg")
+        );
       }
+
+      clearError();
 
       if (resultBox) {
         resultBox.classList.remove("show");
@@ -241,102 +1022,292 @@ import RelatedTools from '../../../components/RelatedTools.astro';
     }
 
     function setMode(newMode: string) {
+      if (
+        newMode !== "forward" &&
+        newMode !== "reverse"
+      ) {
+        return;
+      }
+
       mode = newMode;
 
       if (modeForward) {
-        modeForward.classList.toggle("active", mode === "forward");
-        modeForward.setAttribute("aria-pressed", String(mode === "forward"));
+        modeForward.classList.toggle(
+          "active",
+          mode === "forward"
+        );
+
+        modeForward.setAttribute(
+          "aria-pressed",
+          String(mode === "forward")
+        );
       }
 
       if (modeReverse) {
-        modeReverse.classList.toggle("active", mode === "reverse");
-        modeReverse.setAttribute("aria-pressed", String(mode === "reverse"));
+        modeReverse.classList.toggle(
+          "active",
+          mode === "reverse"
+        );
+
+        modeReverse.setAttribute(
+          "aria-pressed",
+          String(mode === "reverse")
+        );
       }
 
       if (forwardFields) {
-        forwardFields.style.display = mode === "forward" ? "block" : "none";
+        forwardFields.style.display =
+          mode === "forward"
+            ? "block"
+            : "none";
       }
 
       if (reverseFields) {
-        reverseFields.style.display = mode === "reverse" ? "block" : "none";
+        reverseFields.style.display =
+          mode === "reverse"
+            ? "block"
+            : "none";
       }
+
+      clearError();
 
       if (resultBox) {
         resultBox.classList.remove("show");
       }
     }
 
+    function clearError() {
+      if (inputError) {
+        inputError.textContent = "";
+        inputError.style.display = "none";
+      }
+    }
+
+    function showError(message: string) {
+      if (inputError) {
+        inputError.textContent = message;
+        inputError.style.display = "block";
+      }
+
+      if (resultBox) {
+        resultBox.classList.remove("show");
+      }
+
+      if (resultMain) {
+        resultMain.textContent = "–";
+      }
+
+      if (resultLabel) {
+        resultLabel.textContent = "Result";
+      }
+
+      if (resultSummary) {
+        resultSummary.textContent = "";
+      }
+
+      if (resultTableBody) {
+        resultTableBody.innerHTML = "";
+      }
+
+      if (commonTableBody) {
+        commonTableBody.innerHTML = "";
+      }
+    }
+
+    function roundWeight(value: number) {
+      return Math.round(value * 10) / 10;
+    }
+
+    function percentageWeight(
+      oneRM: number,
+      percentage: number
+    ) {
+      return roundWeight(
+        oneRM * (percentage / 100)
+      );
+    }
+
+    function renderPercentageRows(
+      oneRM: number,
+      percentages: number[]
+    ) {
+      return percentages.map((percentage) => {
+        const weight = percentageWeight(
+          oneRM,
+          percentage
+        );
+
+        return `
+          <tr>
+            <td>${percentage}%</td>
+            <td>${weight} ${unit}</td>
+          </tr>
+        `;
+      }).join("");
+    }
+
     if (calcBtn) {
       calcBtn.addEventListener("click", () => {
-        const percentages = [95, 90, 85, 80, 75, 70, 65, 60, 55, 50];
+        clearError();
 
         if (mode === "forward") {
-          if (!oneRMInput) return;
+          if (!oneRMInput || !targetPercentInput) {
+            return;
+          }
 
-          const oneRM = Number(oneRMInput.value);
+          const oneRM =
+            Number(oneRMInput.value);
 
-          if (!Number.isFinite(oneRM) || oneRM <= 0) {
-            alert("Please enter a valid 1RM greater than 0.");
+          const targetPercent =
+            Number(targetPercentInput.value);
+
+          if (
+            !Number.isFinite(oneRM) ||
+            oneRM <= 0
+          ) {
+            showError(
+              "Please enter a valid 1RM greater than zero."
+            );
+            return;
+          }
+
+          if (
+            !Number.isFinite(targetPercent) ||
+            targetPercent < 1 ||
+            targetPercent > 100
+          ) {
+            showError(
+              "Please enter a percentage between 1 and 100."
+            );
+            return;
+          }
+
+          const targetWeight =
+            percentageWeight(
+              oneRM,
+              targetPercent
+            );
+
+          if (
+            !Number.isFinite(targetWeight) ||
+            targetWeight <= 0
+          ) {
+            showError(
+              "The entered values could not produce a valid training weight."
+            );
             return;
           }
 
           if (resultMain) {
-            resultMain.textContent = `${oneRM} ${unit}`;
+            resultMain.textContent =
+              `${targetWeight} ${unit}`;
           }
 
           if (resultLabel) {
-            resultLabel.textContent = "Your 1RM";
+            resultLabel.textContent =
+              `${targetPercent}% of Your 1RM`;
           }
 
-          const rows = percentages.map(p => {
-            const w = Math.round(oneRM * (p / 100) * 10) / 10;
-            return `<tr><td>${p}%</td><td>${w} ${unit}</td></tr>`;
-          }).join("");
+          if (resultSummary) {
+            resultSummary.textContent =
+              `${targetPercent}% of ${oneRM} ${unit} is ${targetWeight} ${unit}.`;
+          }
 
           if (resultTableBody) {
-            resultTableBody.innerHTML = rows;
+            resultTableBody.innerHTML =
+              renderPercentageRows(
+                oneRM,
+                commonPercentages
+              );
+          }
+
+          if (commonTableBody) {
+            commonTableBody.innerHTML =
+              renderPercentageRows(
+                oneRM,
+                commonPercentages
+              );
           }
         } else {
-          if (!knownWeightInput || !knownPercentInput) return;
+          if (
+            !knownWeightInput ||
+            !knownPercentInput
+          ) {
+            return;
+          }
 
-          const weight = Number(knownWeightInput.value);
-          const percent = Number(knownPercentInput.value);
+          const weight =
+            Number(knownWeightInput.value);
+
+          const percent =
+            Number(knownPercentInput.value);
 
           if (
             !Number.isFinite(weight) ||
+            weight <= 0
+          ) {
+            showError(
+              "Please enter a valid weight greater than zero."
+            );
+            return;
+          }
+
+          if (
             !Number.isFinite(percent) ||
-            weight <= 0 ||
             percent < 1 ||
             percent > 100
           ) {
-            alert("Please enter a valid weight and a percentage between 1 and 100.");
+            showError(
+              "Please enter a percentage between 1 and 100."
+            );
             return;
           }
 
-          const oneRM = weight / (percent / 100);
+          const oneRM =
+            weight / (percent / 100);
 
-          if (!Number.isFinite(oneRM) || oneRM <= 0) {
-            alert("The entered values could not produce a valid 1RM estimate.");
+          if (
+            !Number.isFinite(oneRM) ||
+            oneRM <= 0
+          ) {
+            showError(
+              "The entered values could not produce a valid 1RM."
+            );
             return;
           }
 
-          const rounded = Math.round(oneRM * 10) / 10;
+          const roundedOneRM =
+            roundWeight(oneRM);
 
           if (resultMain) {
-            resultMain.textContent = `${rounded} ${unit}`;
+            resultMain.textContent =
+              `${roundedOneRM} ${unit}`;
           }
 
           if (resultLabel) {
-            resultLabel.textContent = "Estimated 1RM";
+            resultLabel.textContent =
+              "Estimated 1RM";
           }
 
-          const rows = percentages.map(p => {
-            const w = Math.round(rounded * (p / 100) * 10) / 10;
-            return `<tr><td>${p}%</td><td>${w} ${unit}</td></tr>`;
-          }).join("");
+          if (resultSummary) {
+            resultSummary.textContent =
+              `${weight} ${unit} at ${percent}% corresponds to an estimated ${roundedOneRM} ${unit} 1RM.`;
+          }
 
           if (resultTableBody) {
-            resultTableBody.innerHTML = rows;
+            resultTableBody.innerHTML =
+              renderPercentageRows(
+                roundedOneRM,
+                commonPercentages
+              );
+          }
+
+          if (commonTableBody) {
+            commonTableBody.innerHTML =
+              renderPercentageRows(
+                roundedOneRM,
+                commonPercentages
+              );
           }
         }
 
