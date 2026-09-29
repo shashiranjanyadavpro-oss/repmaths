@@ -70,7 +70,13 @@
     "shortDesc": "Find your weight at any training percentage, or reverse-calculate your 1RM.",
     "icon": "%",
     "cluster": "strength",
-    "related": ["1rm-calculator", "rep-max-calculator", "training-max-calculator"]
+    "related": [
+  "1rm-calculator",
+  "rep-max-calculator",
+  "training-max-calculator",
+  "bench-press-1rm-calculator",
+  "squat-1rm-calculator",
+  "deadlift-1rm-calculator"]
   },
   {
     "id": "training-max-calculator",
