@@ -6,7 +6,7 @@ const clusterLabels: Record<string, string> = {
   strength: "1RM & Strength Calculators",
   training: "Training & Programming",
   equipment: "Plate & Equipment",
-nutrition: "Nutrition & Body Composition",
+  nutrition: "Nutrition & Body Composition",
 };
 
 const clusterOrder = ["strength", "training", "equipment", "nutrition"];
@@ -19,29 +19,27 @@ const groupedTools = clusterOrder
   }))
   .filter((group) => group.tools.length > 0);
 ---
+
 <Base
   title="Free Strength & Nutrition Calculators | RepMaths"
-  description="Free, fast fitness calculators built on established formulas — 1RM, training percentages, plate loading, and TDEE. No sign-up required.">
-  <script type="application/ld+json" set:html={JSON.stringify({
-    "@context": "https://schema.org",
-    "@type": "WebSite",
-    "name": "RepMaths",
-    "url": "https://repmaths.com",
-    "description": "Free strength-training calculators built on established, published formulas."
-  })} />
-
+  description="Free, fast fitness calculators built on established formulas — 1RM, training percentages, plate loading, and TDEE. No sign-up required."
+>
   <section class="hero">
     <h1>Free Fitness &amp; Strength Calculators</h1>
-    <p>Instant, reliable tools for lifters — built on established formulas, no sign-up required.</p>
+    <p>
+      Instant, reliable tools for lifters — built on established formulas,
+      no sign-up required.
+    </p>
   </section>
 
   {groupedTools.map((group) => (
     <section class="cluster-section">
       <h2>{group.label}</h2>
+
       <div class="tool-grid">
         {group.tools.map((tool) => (
           <a class="tool-card" href={tool.url}>
-            <span class="icon">{tool.icon}</span>
+            <span class="icon" aria-hidden="true">{tool.icon}</span>
             <span class="name">{tool.name}</span>
             <span class="desc">{tool.shortDesc}</span>
           </a>
@@ -51,26 +49,50 @@ const groupedTools = clusterOrder
   ))}
 
   <style>
-    .cluster-section { margin: 32px 0 40px; }
-    .cluster-section h2 {
-      font-size: 1.3rem; margin-bottom: 16px;
-      padding-bottom: 8px; border-bottom: 1px solid var(--border);
+    .cluster-section {
+      margin: 32px 0 40px;
     }
+
+    .cluster-section h2 {
+      font-size: 1.3rem;
+      margin-bottom: 16px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid var(--border);
+    }
+
     .tool-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
       gap: 12px;
     }
+
     .tool-card {
       background: var(--surface);
       border: 1px solid var(--border);
       border-radius: var(--radius);
       padding: 18px 14px;
       text-align: center;
-      transition: border-color 0.15s ease, transform 0.15s ease;
+      transition:
+        border-color 0.15s ease,
+        transform 0.15s ease;
     }
-    .tool-card:hover { border-color: var(--accent); transform: translateY(-2px); }
-    .tool-card .name { color: var(--text); font-weight: 600; font-size: 0.92rem; display: block; margin-bottom: 4px; }
-    .tool-card .desc { color: var(--text-muted); font-size: 0.78rem; }
+
+    .tool-card:hover {
+      border-color: var(--accent);
+      transform: translateY(-2px);
+    }
+
+    .tool-card .name {
+      color: var(--text);
+      font-weight: 600;
+      font-size: 0.92rem;
+      display: block;
+      margin-bottom: 4px;
+    }
+
+    .tool-card .desc {
+      color: var(--text-muted);
+      font-size: 0.78rem;
+    }
   </style>
 </Base>
