@@ -1,39 +1,130 @@
 ---
+export interface BreadcrumbItem {
+  name: string;
+  href?: string;
+}
+
 export interface Props {
   title: string;
   description: string;
+  breadcrumbs?: BreadcrumbItem[];
+  noindex?: boolean;
+  ogType?: "website" | "article";
 }
-const { title, description } = Astro.props;
+
+const {
+  title,
+  description,
+  breadcrumbs = [],
+  noindex = false,
+  ogType = "website",
+} = Astro.props;
+
+// Keep canonical URLs clean by removing query strings and hashes.
+const canonicalUrl = new URL(Astro.url);
+canonicalUrl.search = "";
+canonicalUrl.hash = "";
+
+const siteUrl = canonicalUrl.origin;
+
+// Only output breadcrumb data when there is a real hierarchy.
+const hasBreadcrumbs = breadcrumbs.length >= 2;
+
+const breadcrumbSchema = hasBreadcrumbs
+  ? {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      itemListElement: breadcrumbs.map((item, index) => {
+        const listItem: Record<string, unknown> = {
+          "@type": "ListItem",
+          position: index + 1,
+          name: item.name,
+        };
+
+        // Google allows the final breadcrumb item to omit "item".
+        if (item.href) {
+          listItem.item = new URL(item.href, siteUrl).href;
+        }
+
+        return listItem;
+      }),
+    }
+  : null;
+
+const websiteSchema = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "@id": `${siteUrl}/#website`,
+  name: "RepMaths",
+  url: siteUrl,
+  description:
+    "Free strength, fitness and training calculators with clear formulas and practical results.",
+};
+
+const organizationSchema = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "@id": `${siteUrl}/#organization`,
+  name: "RepMaths",
+  url: siteUrl,
+};
 ---
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
   <meta name="theme-color" content="#0f1115" />
+
   <title>{title}</title>
   <meta name="description" content={description} />
-  <link rel="canonical" href={Astro.url} />
-<link
-  rel="ard"
-  href="/.well-known/ard.json"
-  type="application/json"
-/>
 
-<link
-  rel="ai-catalog"
-  href="/.well-known/ai-catalog.json"
-  type="application/json"
-/>
+  <link rel="canonical" href={canonicalUrl.href} />
+
+  {noindex && <meta name="robots" content="noindex, nofollow" />}
+
+  <!-- RepMaths machine-readable resources -->
+  <link
+    rel="ard"
+    href="/.well-known/ard.json"
+    type="application/json"
+  />
+
+  <link
+    rel="ai-catalog"
+    href="/.well-known/ai-catalog.json"
+    type="application/json"
+  />
+
+  <!-- Open Graph -->
   <meta property="og:title" content={title} />
   <meta property="og:description" content={description} />
-  <meta property="og:type" content="website" />
+  <meta property="og:type" content={ogType} />
   <meta property="og:locale" content="en_US" />
-<meta property="og:url" content={Astro.url} />
-<meta property="og:site_name" content="RepMaths" />
-<meta name="twitter:card" content="summary" />
-<meta name="twitter:title" content={title} />
-<meta name="twitter:description" content={description} />
+  <meta property="og:url" content={canonicalUrl.href} />
+  <meta property="og:site_name" content="RepMaths" />
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content={title} />
+  <meta name="twitter:description" content={description} />
+
+  <!-- Global structured data -->
+  <script type="application/ld+json" set:html={JSON.stringify(websiteSchema)} />
+  <script
+    type="application/ld+json"
+    set:html={JSON.stringify(organizationSchema)}
+  />
+
+  {breadcrumbSchema && (
+    <script
+      type="application/ld+json"
+      set:html={JSON.stringify(breadcrumbSchema)}
+    />
+  )}
+
   <style is:global>
     :root {
       --bg: #0f1115;
@@ -48,128 +139,378 @@ const { title, description } = Astro.props;
       --radius: 14px;
       --max-width: 780px;
     }
-    * { box-sizing: border-box; }
-    html, body {
-      margin: 0; padding: 0;
-      background: var(--bg); color: var(--text);
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      margin: 0;
+      padding: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family:
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        Roboto,
+        sans-serif;
       line-height: 1.55;
     }
-    a { color: var(--accent); text-decoration: none; }
-    a:hover { color: var(--accent-hover); }
-    .container { max-width: var(--max-width); margin: 0 auto; padding: 0 20px; }
 
-    /* Header / Footer */
+    a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+
+    a:hover {
+      color: var(--accent-hover);
+    }
+
+    .container {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    /* ===== HEADER / FOOTER ===== */
+
     .site-header {
       border-bottom: 1px solid var(--border);
       padding: 16px 0;
-      position: sticky; top: 0;
-      background: rgba(15,17,21,0.92);
+      position: sticky;
+      top: 0;
+      background: rgba(15, 17, 21, 0.92);
       backdrop-filter: blur(8px);
       z-index: 50;
     }
-    .site-header .container { display: flex; align-items: center; justify-content: space-between; }
-    .logo { font-weight: 700; font-size: 1.15rem; color: var(--text); }
-    .logo span { color: var(--accent); }
+
+    .site-header .container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .logo {
+      font-weight: 700;
+      font-size: 1.15rem;
+      color: var(--text);
+    }
+
+    .logo span {
+      color: var(--accent);
+    }
+
     .site-footer {
       border-top: 1px solid var(--border);
-      padding: 24px 0; text-align: center;
-      color: var(--text-muted); font-size: 0.82rem;
+      padding: 24px 0;
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.82rem;
       margin-top: 48px;
     }
-    .site-footer a { color: var(--text-muted); margin: 0 8px; }
+
+    .site-footer a {
+      color: var(--text-muted);
+      margin: 0 8px;
+    }
+
     .ad-slot {
-      margin: 24px 0; min-height: 90px;
-      display: flex; align-items: center; justify-content: center;
-      color: var(--text-muted); font-size: 0.75rem;
-      border: 1px dashed var(--border); border-radius: 10px;
+      margin: 24px 0;
+      min-height: 90px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-muted);
+      font-size: 0.75rem;
+      border: 1px dashed var(--border);
+      border-radius: 10px;
+    }
+
+    /* ===== BREADCRUMBS ===== */
+
+    .breadcrumbs {
+      padding: 16px 0 0;
+      font-size: 0.78rem;
+      color: var(--text-muted);
+    }
+
+    .breadcrumbs ol {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 6px;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    .breadcrumbs li {
+      display: inline-flex;
+      align-items: center;
+      min-width: 0;
+    }
+
+    .breadcrumbs li:not(:last-child)::after {
+      content: "›";
+      margin-left: 6px;
+      color: var(--text-muted);
+    }
+
+    .breadcrumbs a {
+      color: var(--text-muted);
+    }
+
+    .breadcrumbs a:hover {
+      color: var(--accent);
+    }
+
+    .breadcrumbs [aria-current="page"] {
+      color: var(--text);
+      overflow-wrap: anywhere;
     }
 
     /* ===== SHARED CALCULATOR COMPONENTS ===== */
-    .hero { padding: 28px 0 24px; text-align: center; }
-    .hero h1 { font-size: 1.8rem; margin: 0 0 8px; }
-    .hero p { color: var(--text-muted); margin: 0; }
+
+    .hero {
+      padding: 28px 0 24px;
+      text-align: center;
+    }
+
+    .hero h1 {
+      font-size: 1.8rem;
+      margin: 0 0 8px;
+    }
+
+    .hero p {
+      color: var(--text-muted);
+      margin: 0;
+    }
 
     .calc-card {
-      background: var(--surface); border: 1px solid var(--border);
-      border-radius: var(--radius); padding: 24px; margin: 24px 0;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 24px;
+      margin: 24px 0;
     }
-    .field { margin-bottom: 16px; }
-    .field label { display: block; font-size: 0.85rem; color: var(--text-muted); margin-bottom: 6px; }
-    .field input, .field select {
-      width: 100%; padding: 12px 14px; background: var(--surface-2);
-      border: 1px solid var(--border); border-radius: 10px; color: var(--text); font-size: 1rem;
-    }
-    .field input:focus, .field select:focus { outline: none; border-color: var(--accent); }
 
-    .unit-toggle { display: flex; gap: 8px; flex-wrap: wrap; }
-    .unit-toggle button {
-      flex: 1; min-width: 70px; padding: 10px; background: var(--surface-2);
-      border: 1px solid var(--border); border-radius: 10px; color: var(--text-muted); cursor: pointer;
+    .field {
+      margin-bottom: 16px;
     }
+
+    .field label {
+      display: block;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-bottom: 6px;
+    }
+
+    .field input,
+    .field select {
+      width: 100%;
+      padding: 12px 14px;
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      color: var(--text);
+      font-size: 1rem;
+    }
+
+    .field input:focus,
+    .field select:focus {
+      outline: none;
+      border-color: var(--accent);
+    }
+
+    .unit-toggle {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .unit-toggle button {
+      flex: 1;
+      min-width: 70px;
+      padding: 10px;
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      color: var(--text-muted);
+      cursor: pointer;
+    }
+
     .unit-toggle button.active {
-      border-color: var(--accent); color: var(--text); background: rgba(255,91,46,0.12);
+      border-color: var(--accent);
+      color: var(--text);
+      background: rgba(255, 91, 46, 0.12);
     }
 
     .btn-primary {
-      width: 100%; padding: 14px; background: var(--accent); color: #fff;
-      border: none; border-radius: 10px; font-size: 1rem; font-weight: 600;
-      cursor: pointer; margin-top: 8px;
+      width: 100%;
+      padding: 14px;
+      background: var(--accent);
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      margin-top: 8px;
     }
-    .btn-primary:hover { background: var(--accent-hover); }
+
+    .btn-primary:hover {
+      background: var(--accent-hover);
+    }
 
     .result-box {
-      margin-top: 20px; padding: 20px; background: var(--surface-2);
-      border-radius: 12px; text-align: center; display: none;
+      margin-top: 20px;
+      padding: 20px;
+      background: var(--surface-2);
+      border-radius: 12px;
+      text-align: center;
+      display: none;
     }
-    .result-box.show { display: block; }
-    .result-box .big-number { font-size: 2.4rem; font-weight: 700; color: var(--success); }
-    .result-box .label { color: var(--text-muted); font-size: 0.85rem; margin-top: 4px; }
 
-    .result-table { width: 100%; margin-top: 16px; border-collapse: collapse; font-size: 0.88rem; }
-    .result-table td { padding: 8px 6px; border-bottom: 1px solid var(--border); }
-    .result-table td:last-child { text-align: right; font-weight: 600; }
+    .result-box.show {
+      display: block;
+    }
 
-    .article-section { margin: 32px 0; }
-    .article-section h2 { font-size: 1.2rem; margin-bottom: 10px; }
-    .article-section p { color: #c7cbd2; font-size: 0.95rem; }
+    .result-box .big-number {
+      font-size: 2.4rem;
+      font-weight: 700;
+      color: var(--success);
+    }
 
-    .faq-item { border-bottom: 1px solid var(--border); padding: 14px 0; }
-    .faq-item h3 { font-size: 0.98rem; margin: 0 0 6px; }
-    .faq-item p { color: var(--text-muted); font-size: 0.9rem; margin: 0; }
-    .article-section ul { color: #c7cbd2; font-size: 0.95rem; padding-left: 20px; margin: 12px 0; }
-    .article-section li { margin-bottom: 8px; }
-    .article-section h3 { font-size: 1.05rem; margin: 20px 0 8px; color: var(--text); }
+    .result-box .label {
+      color: var(--text-muted);
+      font-size: 0.85rem;
+      margin-top: 4px;
+    }
+
+    .result-table {
+      width: 100%;
+      margin-top: 16px;
+      border-collapse: collapse;
+      font-size: 0.88rem;
+    }
+
+    .result-table td {
+      padding: 8px 6px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .result-table td:last-child {
+      text-align: right;
+      font-weight: 600;
+    }
+
+    .article-section {
+      margin: 32px 0;
+    }
+
+    .article-section h2 {
+      font-size: 1.2rem;
+      margin-bottom: 10px;
+    }
+
+    .article-section p {
+      color: #c7cbd2;
+      font-size: 0.95rem;
+    }
+
+    .faq-item {
+      border-bottom: 1px solid var(--border);
+      padding: 14px 0;
+    }
+
+    .faq-item h3 {
+      font-size: 0.98rem;
+      margin: 0 0 6px;
+    }
+
+    .faq-item p {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      margin: 0;
+    }
+
+    .article-section ul {
+      color: #c7cbd2;
+      font-size: 0.95rem;
+      padding-left: 20px;
+      margin: 12px 0;
+    }
+
+    .article-section li {
+      margin-bottom: 8px;
+    }
+
+    .article-section h3 {
+      font-size: 1.05rem;
+      margin: 20px 0 8px;
+      color: var(--text);
+    }
+
     .article-section code {
-      background: var(--surface-2); padding: 2px 6px; border-radius: 4px;
-      font-size: 0.88rem; color: var(--accent);
+      background: var(--surface-2);
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 0.88rem;
+      color: var(--accent);
     }
-.result-table thead th {
-  text-align: left; font-size: 0.8rem; color: var(--text-muted);
-  padding: 6px; border-bottom: 1px solid var(--border);
-}
-.result-table thead th:last-child { text-align: right; }
- .tool-card .icon {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 40px;
-  height: 40px;
-  margin: 0 auto 10px;
-  background: var(--surface-2);
-  border: 1px solid var(--accent);
-  border-radius: 12px;
-  font-size: 0.95rem !important;
-  font-weight: 800;
-  letter-spacing: 0;
-  color: var(--accent);
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
-}
-.result-actions { display: flex; gap: 8px; margin-top: 14px; }
-.result-actions .btn-primary { flex: 1; text-decoration: none; text-align: center; font-size: 0.85rem; }
-.result-range { font-size: 0.85rem; color: var(--text-muted); margin-top: 4px; }
-</style>
+
+    .result-table thead th {
+      text-align: left;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      padding: 6px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .result-table thead th:last-child {
+      text-align: right;
+    }
+
+    .tool-card .icon {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      margin: 0 auto 10px;
+      background: var(--surface-2);
+      border: 1px solid var(--accent);
+      border-radius: 12px;
+      font-size: 0.95rem !important;
+      font-weight: 800;
+      letter-spacing: 0;
+      color: var(--accent);
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
+    }
+
+    .result-actions {
+      display: flex;
+      gap: 8px;
+      margin-top: 14px;
+    }
+
+    .result-actions .btn-primary {
+      flex: 1;
+      text-decoration: none;
+      text-align: center;
+      font-size: 0.85rem;
+    }
+
+    .result-range {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-top: 4px;
+    }
+  </style>
 </head>
+
 <body>
   <header class="site-header">
     <div class="container">
@@ -178,6 +519,22 @@ const { title, description } = Astro.props;
   </header>
 
   <main class="container">
+    {hasBreadcrumbs && (
+      <nav class="breadcrumbs" aria-label="Breadcrumb">
+        <ol>
+          {breadcrumbs.map((item, index) => (
+            <li>
+              {item.href && index !== breadcrumbs.length - 1 ? (
+                <a href={item.href}>{item.name}</a>
+              ) : (
+                <span aria-current="page">{item.name}</span>
+              )}
+            </li>
+          ))}
+        </ol>
+      </nav>
+    )}
+
     <slot />
   </main>
 
@@ -188,7 +545,12 @@ const { title, description } = Astro.props;
       <a href="/contact">Contact</a>
       <a href="/disclaimer">Disclaimer</a>
       <a href="/terms">Terms</a>
-      <p>&copy; 2026 RepMaths. Calculators use established, peer-referenced formulas for educational purposes only. <a href="/about">See our methods</a>.</p>
+
+      <p>
+        &copy; 2026 RepMaths. Calculators use established, peer-referenced
+        formulas for educational purposes only.
+        <a href="/about">See our methods</a>.
+      </p>
     </div>
   </footer>
 </body>
