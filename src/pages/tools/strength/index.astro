@@ -1,0 +1,100 @@
+---
+import Base from '../../layouts/Base.astro';
+import toolsData from '../../data/tools.json';
+const tools = toolsData.filter((t) => t.cluster === "strength");
+---
+
+<Base
+  title="Strength & 1RM Calculators | RepMaths"
+  description="Free strength calculators: 1RM estimators for bench, squat, deadlift, overhead press, rep max, 1RM percentages, and strength standards."
+  breadcrumbs={[{ "name": "Home", "href": "/" }, { "name": "Tools", "href": "/tools/" }, { "name": "Strength Calculators" }]}
+>
+  <section class="hero">
+    <h1>Strength & 1RM Calculators</h1>
+    <p>Estimate your one-rep max, plan percentage-based training blocks, and track your true lifting potential safely.</p>
+  </section>
+
+  <div class="tool-grid">
+    {tools.map((tool) => (
+      <a class="tool-card" href={tool.url}>
+        <span class="icon" aria-hidden="true">{tool.icon}</span>
+        <span class="name">{tool.name}</span>
+        <span class="desc">{tool.shortDesc}</span>
+      </a>
+    ))}
+  </div>
+
+  <section class="seo-content">
+    <h2>Why Track Your Strength Metrics?</h2>
+    <p>
+      Whether you are a powerlifter or training for general fitness, knowing your exact numbers is crucial for progressive overload. Our free strength calculators use highly accurate, established formulas (like Epley and Brzycki) to help you estimate your <strong>1 Rep Max (1RM)</strong>, find optimal training loads, and compare your lifts against global standards—all without the injury risk of lifting your absolute max every session.
+    </p>
+  </section>
+
+  <style>
+    .hero {
+      margin-bottom: 24px;
+    }
+    
+    .hero p {
+      color: var(--text-muted);
+      font-size: 1.05rem;
+      max-width: 600px;
+    }
+
+    .tool-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+      gap: 12px;
+      margin: 24px 0 48px;
+    }
+
+    .tool-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 18px 14px;
+      text-align: center;
+      transition:
+        border-color 0.15s ease,
+        transform 0.15s ease;
+    }
+
+    .tool-card:hover {
+      border-color: var(--accent);
+      transform: translateY(-2px);
+    }
+
+    .tool-card .name {
+      color: var(--text);
+      font-weight: 600;
+      font-size: 0.92rem;
+      display: block;
+      margin-bottom: 4px;
+    }
+
+    .tool-card .desc {
+      color: var(--text-muted);
+      font-size: 0.78rem;
+    }
+
+    /* SEO Content Styling */
+    .seo-content {
+      border-top: 1px solid var(--border);
+      padding-top: 32px;
+      margin-top: 32px;
+    }
+
+    .seo-content h2 {
+      font-size: 1.25rem;
+      color: var(--text);
+      margin-bottom: 12px;
+    }
+
+    .seo-content p {
+      color: var(--text-muted);
+      line-height: 1.6;
+      font-size: 0.95rem;
+    }
+  </style>
+</Base>
