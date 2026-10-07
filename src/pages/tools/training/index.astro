@@ -1,0 +1,100 @@
+---
+import Base from '../../layouts/Base.astro';
+import toolsData from '../../data/tools.json';
+const tools = toolsData.filter((t) => t.cluster === "training");
+---
+
+<Base
+  title="Training & Programming Calculators | RepMaths"
+  description="Free training and programming calculators: Wendler 5/3/1, training max, RPE to RIR conversions, and warm-up set generators."
+  breadcrumbs={[{ "name": "Home", "href": "/" }, { "name": "Tools", "href": "/tools/" }, { "name": "Training & Programming" }]}
+>
+  <section class="hero">
+    <h1>Training & Programming</h1>
+    <p>Plan your workouts, auto-regulate with RPE/RIR, and structure your training blocks effectively.</p>
+  </section>
+
+  <div class="tool-grid">
+    {tools.map((tool) => (
+      <a class="tool-card" href={tool.url}>
+        <span class="icon" aria-hidden="true">{tool.icon}</span>
+        <span class="name">{tool.name}</span>
+        <span class="desc">{tool.shortDesc}</span>
+      </a>
+    ))}
+  </div>
+
+  <section class="seo-content">
+    <h2>Optimize Your Training Blocks</h2>
+    <p>
+      Structured programming is the key to long-term strength and muscle gains. Our training calculators take the guesswork out of your routine. Whether you are calculating your <strong>Training Max</strong> for a Wendler 5/3/1 cycle, converting RPE (Rate of Perceived Exertion) to RIR (Reps in Reserve) for auto-regulation, or generating optimal warm-up sets, these tools help you train smarter, manage fatigue, and avoid overtraining.
+    </p>
+  </section>
+
+  <style>
+    .hero {
+      margin-bottom: 24px;
+    }
+    
+    .hero p {
+      color: var(--text-muted);
+      font-size: 1.05rem;
+      max-width: 600px;
+    }
+
+    .tool-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+      gap: 12px;
+      margin: 24px 0 48px;
+    }
+
+    .tool-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 18px 14px;
+      text-align: center;
+      transition:
+        border-color 0.15s ease,
+        transform 0.15s ease;
+    }
+
+    .tool-card:hover {
+      border-color: var(--accent);
+      transform: translateY(-2px);
+    }
+
+    .tool-card .name {
+      color: var(--text);
+      font-weight: 600;
+      font-size: 0.92rem;
+      display: block;
+      margin-bottom: 4px;
+    }
+
+    .tool-card .desc {
+      color: var(--text-muted);
+      font-size: 0.78rem;
+    }
+
+    /* SEO Content Styling */
+    .seo-content {
+      border-top: 1px solid var(--border);
+      padding-top: 32px;
+      margin-top: 32px;
+    }
+
+    .seo-content h2 {
+      font-size: 1.25rem;
+      color: var(--text);
+      margin-bottom: 12px;
+    }
+
+    .seo-content p {
+      color: var(--text-muted);
+      line-height: 1.6;
+      font-size: 0.95rem;
+    }
+  </style>
+</Base>
