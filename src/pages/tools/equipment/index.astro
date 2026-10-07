@@ -1,0 +1,100 @@
+---
+import Base from '../../../layouts/Base.astro';
+import toolsData from '../../../data/tools.json';
+const tools = toolsData.filter((t) => t.cluster === "equipment");
+---
+
+<Base
+  title="Plate & Equipment Calculators | RepMaths"
+  description="Free gym equipment calculators: Barbell plate loading calculator to quickly determine the correct plates for any target weight."
+  breadcrumbs={[{ "name": "Home", "href": "/" }, { "name": "Tools", "href": "/tools/" }, { "name": "Plate & Equipment" }]}
+>
+  <section class="hero">
+    <h1>Plate & Equipment</h1>
+    <p>Load the bar correctly, every time without the math headache.</p>
+  </section>
+
+  <div class="tool-grid">
+    {tools.map((tool) => (
+      <a class="tool-card" href={tool.url}>
+        <span class="icon" aria-hidden="true">{tool.icon}</span>
+        <span class="name">{tool.name}</span>
+        <span class="desc">{tool.shortDesc}</span>
+      </a>
+    ))}
+  </div>
+
+  <section class="seo-content">
+    <h2>Why Use a Plate Loading Calculator?</h2>
+    <p>
+      Figuring out exactly which plates to load on the barbell can be confusing and time-consuming, especially when fatigue sets in or when dealing with different bar weights. Our <strong>Plate Loading Calculator</strong> eliminates the mental math, ensuring you load the bar accurately every single time. Spend less time calculating and more time lifting safely.
+    </p>
+  </section>
+
+  <style>
+    .hero {
+      margin-bottom: 24px;
+    }
+    
+    .hero p {
+      color: var(--text-muted);
+      font-size: 1.05rem;
+      max-width: 600px;
+    }
+
+    .tool-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+      gap: 12px;
+      margin: 24px 0 48px;
+    }
+
+    .tool-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 18px 14px;
+      text-align: center;
+      transition:
+        border-color 0.15s ease,
+        transform 0.15s ease;
+    }
+
+    .tool-card:hover {
+      border-color: var(--accent);
+      transform: translateY(-2px);
+    }
+
+    .tool-card .name {
+      color: var(--text);
+      font-weight: 600;
+      font-size: 0.92rem;
+      display: block;
+      margin-bottom: 4px;
+    }
+
+    .tool-card .desc {
+      color: var(--text-muted);
+      font-size: 0.78rem;
+    }
+
+    /* SEO Content Styling */
+    .seo-content {
+      border-top: 1px solid var(--border);
+      padding-top: 32px;
+      margin-top: 32px;
+    }
+
+    .seo-content h2 {
+      font-size: 1.25rem;
+      color: var(--text);
+      margin-bottom: 12px;
+    }
+
+    .seo-content p {
+      color: var(--text-muted);
+      line-height: 1.6;
+      font-size: 0.95rem;
+    }
+  </style>
+</Base>
