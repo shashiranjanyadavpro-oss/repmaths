@@ -1,16 +1,16 @@
 ---
-import Base from '../../layouts/Base.astro';
-import toolsData from '../../data/tools.json';
+import Base from '../../../layouts/Base.astro';
+import toolsData from '../../../data/tools.json';
 const tools = toolsData.filter((t) => t.cluster === "strength");
 ---
 
 <Base
   title="Strength & 1RM Calculators | RepMaths"
   description="Free strength calculators: 1RM estimators for bench, squat, deadlift, overhead press, rep max, 1RM percentages, and strength standards."
-  breadcrumbs={[{ "name": "Home", "href": "/" }, { "name": "Tools", "href": "/tools/" }, { "name": "Strength Calculators" }]}
+  breadcrumbs={[{ "name": "Home", "href": "/" }, { "name": "Tools", "href": "/tools/" }, { "name": "1RM & Strength Calculators" }]}
 >
   <section class="hero">
-    <h1>Strength & 1RM Calculators</h1>
+    <h1>1RM & Strength Calculators</h1>
     <p>Estimate your one-rep max, plan percentage-based training blocks, and track your true lifting potential safely.</p>
   </section>
 
