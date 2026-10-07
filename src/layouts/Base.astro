@@ -4,12 +4,18 @@ export interface BreadcrumbItem {
   href?: string;
 }
 
+export interface FaqItem {
+  question: string;
+  answer: string;
+}
+
 export interface Props {
   title: string;
   description: string;
   breadcrumbs?: BreadcrumbItem[];
   noindex?: boolean;
   ogType?: "website" | "article";
+  faqs?: FaqItem[];
 }
 
 const {
@@ -18,6 +24,7 @@ const {
   breadcrumbs = [],
   noindex = false,
   ogType = "website",
+  faqs = [],
 } = Astro.props;
 
 // Keep canonical URLs clean by removing query strings and hashes.
@@ -25,10 +32,19 @@ const canonicalUrl = new URL(Astro.url);
 canonicalUrl.search = "";
 canonicalUrl.hash = "";
 
+// Normalize trailing slash — matches how Google has indexed the site.
+if (!canonicalUrl.pathname.endsWith("/")) {
+  canonicalUrl.pathname += "/";
+}
+
 const siteUrl = canonicalUrl.origin;
 
 // Only output breadcrumb data when there is a real hierarchy.
 const hasBreadcrumbs = breadcrumbs.length >= 2;
+
+// Normalize breadcrumb hrefs to trailing slash as well.
+const normalizeHref = (href: string) =>
+  href.endsWith("/") ? href : href + "/";
 
 const breadcrumbSchema = hasBreadcrumbs
   ? {
@@ -43,7 +59,7 @@ const breadcrumbSchema = hasBreadcrumbs
 
         // Google allows the final breadcrumb item to omit "item".
         if (item.href) {
-          listItem.item = new URL(item.href, siteUrl).href;
+          listItem.item = new URL(normalizeHref(item.href), siteUrl).href;
         }
 
         return listItem;
@@ -57,6 +73,7 @@ const websiteSchema = {
   "@id": `${siteUrl}/#website`,
   name: "RepMaths",
   url: siteUrl,
+  inLanguage: "en",
   description:
     "Free strength, fitness and training calculators with clear formulas and practical results.",
 };
@@ -67,7 +84,25 @@ const organizationSchema = {
   "@id": `${siteUrl}/#organization`,
   name: "RepMaths",
   url: siteUrl,
+  logo: `${siteUrl}/icon-512.png`,
 };
+
+// FAQ structured data (AEO/GEO) — pages can pass their FAQ items.
+const faqSchema =
+  faqs.length > 0
+    ? {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        mainEntity: faqs.map((faq) => ({
+          "@type": "Question",
+          name: faq.question,
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: faq.answer,
+          },
+        })),
+      }
+    : null;
 ---
 
 <!DOCTYPE html>
@@ -78,6 +113,11 @@ const organizationSchema = {
 
   <meta name="theme-color" content="#0f1115" />
 
+  <!-- Favicon & PWA -->
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+  <link rel="manifest" href="/site.webmanifest" />
+
   <title>{title}</title>
   <meta name="description" content={description} />
 
@@ -85,7 +125,7 @@ const organizationSchema = {
 
   {noindex && <meta name="robots" content="noindex, nofollow" />}
 
-  <!-- RepMaths machine-readable resources -->
+  <!-- RepMaths machine-readable resources (GEO) -->
   <link
     rel="ard"
     href="/.well-known/ard.json"
@@ -105,11 +145,17 @@ const organizationSchema = {
   <meta property="og:locale" content="en_US" />
   <meta property="og:url" content={canonicalUrl.href} />
   <meta property="og:site_name" content="RepMaths" />
+  <meta property="og:image" content={`${siteUrl}/og-image.png`} />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="RepMaths — Free strength and nutrition calculators" />
+  <meta property="og:image:type" content="image/png" />
 
   <!-- Twitter -->
-  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content={title} />
   <meta name="twitter:description" content={description} />
+  <meta name="twitter:image" content={`${siteUrl}/og-image.png`} />
 
   <!-- Global structured data -->
   <script type="application/ld+json" set:html={JSON.stringify(websiteSchema)} />
@@ -122,6 +168,13 @@ const organizationSchema = {
     <script
       type="application/ld+json"
       set:html={JSON.stringify(breadcrumbSchema)}
+    />
+  )}
+
+  {faqSchema && (
+    <script
+      type="application/ld+json"
+      set:html={JSON.stringify(faqSchema)}
     />
   )}
 
@@ -509,14 +562,15 @@ const organizationSchema = {
       margin-top: 4px;
     }
   </style>
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-DC5Y64ZHYT"></script>
-<script is:inline>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'G-DC5Y64ZHYT');
-</script>
+
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-DC5Y64ZHYT"></script>
+  <script is:inline>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-DC5Y64ZHYT');
+  </script>
 </head>
 
 <body>
@@ -533,7 +587,7 @@ const organizationSchema = {
           {breadcrumbs.map((item, index) => (
             <li>
               {item.href && index !== breadcrumbs.length - 1 ? (
-                <a href={item.href}>{item.name}</a>
+                <a href={normalizeHref(item.href)}>{item.name}</a>
               ) : (
                 <span aria-current="page">{item.name}</span>
               )}
