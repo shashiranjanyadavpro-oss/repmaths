@@ -2,11 +2,12 @@
 import Base from "../../../layouts/Base.astro";
 import RelatedTools from "../../../components/RelatedTools.astro";
 
-const pageUrl = "https://repmaths.com/tools/strength/strength-standards-calculator";
+const pageUrl = "https://repmaths.com/tools/strength/strength-standards-calculator/";
 
 const breadcrumbItems = [
   { name: "Home", href: "/" },
-  { name: "Strength Calculators", href: "/tools/strength" },
+  { name: "Tools", href: "/tools/" },
+  { name: "1RM & Strength", href: "/tools/strength/" },
   { name: "Strength Standards Calculator" },
 ];
 
@@ -73,6 +74,33 @@ const referenceStandards = {
   },
 };
 
+const faqItems = [
+  {
+    question: "What is considered a 'good' strength standard for natural lifters?",
+    answer: "An 'Intermediate' level—typically a 1.25x bodyweight bench, 1.5x squat, and 2.0x deadlift for men—represents a dedicated natural trainee with 1 to 2 years of consistent progressive overload. Hitting these marks indicates a solid foundation of general strength."
+  },
+  {
+    question: "Does body weight affect relative strength standards?",
+    answer: "Yes. Due to allometric scaling (the square-cube law), lighter lifters naturally tend to have higher strength-to-bodyweight ratios than heavier lifters. This is why a 150 lb lifter might achieve a 1.5x bodyweight bench press more easily than a 250 lb lifter."
+  },
+  {
+    question: "What are the five main strength standard classifications?",
+    answer: "The five common categories are Beginner (just starting to learn the movement), Novice (under 1 year of consistent training), Intermediate (1-2 years of structured lifting), Advanced (multiple years of dedicated programming), and Elite (competitive level strength)."
+  },
+  {
+    question: "Should strength standards be based on bodyweight?",
+    answer: "Bodyweight is highly useful for contextualizing strength because the same absolute weight on the bar represents a vastly different relative load for people of different sizes. However, bodyweight ratios do not capture every mechanical factor like height or limb length."
+  },
+  {
+    question: "Can I use an estimated 1RM instead of a tested 1RM?",
+    answer: "Yes. An estimated 1RM calculated from a recent submaximal set (e.g., a heavy set of 3 or 5 reps) is perfectly fine to use. While it introduces slight mathematical uncertainty, it is often safer and more practical than testing a true 1-rep max."
+  },
+  {
+    question: "Are strength standards the same as powerlifting standards?",
+    answer: "Not necessarily. Competition standards include specific rules for technique, commands, depth, pauses, and equipment (like suits or wraps). A general bodyweight-ratio calculator serves as a personal training benchmark, not a replacement for federation-specific rules."
+  }
+];
+
 const applicationSchema = {
   "@context": "https://schema.org",
   "@type": "SoftwareApplication",
@@ -80,7 +108,9 @@ const applicationSchema = {
   name: "Strength Standards Calculator",
   url: pageUrl,
   applicationCategory: "HealthApplication",
+  applicationSubCategory: "Fitness Calculator",
   operatingSystem: "Any",
+  browserRequirements: "Requires JavaScript",
   isAccessibleForFree: true,
   offers: {
     "@type": "Offer",
@@ -88,7 +118,7 @@ const applicationSchema = {
     priceCurrency: "USD",
   },
   description:
-    "Free strength standards calculator for comparing bench press, squat, deadlift, and overhead press performance with bodyweight-based reference benchmarks.",
+    "Free strength standards calculator for comparing bench press, squat, deadlift, and overhead press 1RM with bodyweight-based reference benchmarks for male and female lifters.",
 };
 
 const webpageSchema = {
@@ -99,6 +129,7 @@ const webpageSchema = {
   name: "Strength Standards Calculator — Bench, Squat, Deadlift & OHP",
   description:
     "Free strength standards calculator for bench press, squat, deadlift, and overhead press. Compare your 1RM with bodyweight-based reference standards in lb or kg.",
+  inLanguage: "en",
   isPartOf: {
     "@id": "https://repmaths.com/#website",
   },
@@ -108,834 +139,589 @@ const webpageSchema = {
   },
   mainEntity: {
     "@id": `${pageUrl}#app`,
-  },
+  }
+};
+
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": faqItems.map(faq => ({
+    "@type": "Question",
+    "name": faq.question,
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": faq.answer
+    }
+  }))
 };
 ---
 
 <Base
   title="Strength Standards Calculator — Bench, Squat, Deadlift & OHP"
-  description="Free strength standards calculator for bench press, squat, deadlift, and overhead press. Compare your 1RM with bodyweight-based reference standards in lb or kg."
-  canonical={pageUrl}
+  description="Free strength standards calculator for bench press, squat, deadlift, and overhead press. Compare your 1RM with bodyweight-based reference standards for male and female lifters in lb or kg."
   breadcrumbs={breadcrumbItems}
-  schema={[applicationSchema, webpageSchema]}
 >
-  <section class="article-section">
-    <h1>Strength Standards Calculator</h1>
+  <script type="application/ld+json" set:html={JSON.stringify(applicationSchema)} />
+  <script type="application/ld+json" set:html={JSON.stringify(webpageSchema)} />
+  <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
 
+  <section class="hero">
+    <h1>Strength Standards Calculator</h1>
     <p>
       Compare your <strong>bench press, squat, deadlift, or overhead press 1RM</strong>
       with bodyweight-based strength standards. Enter your bodyweight and lift,
-      choose your sex and unit, and see your current reference level.
+      choose your sex and unit, and discover your current reference level in pounds (lb) or kilograms (kg).
     </p>
+  </section>
 
-    <div class="calc-card">
-      <div
-        class="field"
-        role="group"
-        aria-labelledby="sex-label"
-      >
-        <span id="sex-label" class="field-label">Sex</span>
+  <section class="calc-card" aria-labelledby="calculator-heading">
+    <h2 id="calculator-heading" class="sr-only">Calculate Your Strength Level</h2>
 
-        <div class="unit-toggle" role="group" aria-label="Sex">
-          <button
-            type="button"
-            class="unit-btn active"
-            data-sex="male"
-            aria-pressed="true"
-          >
-            Male
-          </button>
-
-          <button
-            type="button"
-            class="unit-btn"
-            data-sex="female"
-            aria-pressed="false"
-          >
-            Female
-          </button>
-        </div>
+    <div class="field" role="group" aria-labelledby="sex-label">
+      <label id="sex-label">Sex</label>
+      <div class="unit-toggle" role="group" aria-label="Sex">
+        <button type="button" class="unit-btn active" data-sex="male" aria-pressed="true">
+          Male
+        </button>
+        <button type="button" class="unit-btn" data-sex="female" aria-pressed="false">
+          Female
+        </button>
       </div>
+    </div>
 
-      <div
-        class="field"
-        role="group"
-        aria-labelledby="unit-label"
-      >
-        <span id="unit-label" class="field-label">Weight Unit</span>
-
-        <div class="unit-toggle" role="group" aria-label="Weight unit">
-          <button
-            type="button"
-            class="unit-btn active"
-            data-unit="lb"
-            aria-pressed="true"
-          >
-            lb
-          </button>
-
-          <button
-            type="button"
-            class="unit-btn"
-            data-unit="kg"
-            aria-pressed="false"
-          >
-            kg
-          </button>
-        </div>
+    <div class="field" role="group" aria-labelledby="unit-label">
+      <label id="unit-label">Weight Unit</label>
+      <div class="unit-toggle" role="group" aria-label="Weight unit">
+        <button type="button" class="unit-btn active" data-unit="lb" aria-pressed="true">
+          lb
+        </button>
+        <button type="button" class="unit-btn" data-unit="kg" aria-pressed="false">
+          kg
+        </button>
       </div>
+    </div>
 
-      <div class="field">
-        <label for="bodyweight">Body Weight</label>
+    <div class="field">
+      <label for="bodyweight">Body Weight</label>
+      <input
+        id="bodyweight"
+        name="bodyweight"
+        type="number"
+        inputmode="decimal"
+        min="66"
+        max="660"
+        step="0.1"
+        placeholder="e.g. 180"
+        autocomplete="off"
+      />
+    </div>
 
-        <input
-          id="bodyweight"
-          name="bodyweight"
-          type="number"
-          inputmode="decimal"
-          min="66"
-          max="660"
-          step="0.1"
-          placeholder="e.g. 180"
-          aria-describedby="bodyweight-help"
-        />
+    <div class="field">
+      <label for="exercise">Exercise</label>
+      <select id="exercise" name="exercise">
+        <option value="bench">Bench Press</option>
+        <option value="squat">Back Squat</option>
+        <option value="deadlift">Deadlift</option>
+        <option value="ohp">Overhead Press</option>
+      </select>
+    </div>
 
-        <small id="bodyweight-help">
-          Enter your current bodyweight.
-        </small>
-      </div>
+    <div class="field">
+      <label for="one-rm">1RM (One Rep Max)</label>
+      <input
+        id="one-rm"
+        name="one-rm"
+        type="number"
+        inputmode="decimal"
+        min="1"
+        step="0.1"
+        placeholder="e.g. 225"
+        autocomplete="off"
+      />
+    </div>
 
-      <div class="field">
-        <label for="exercise">Exercise</label>
+    <div id="calc-error" class="calc-error" role="alert" aria-live="assertive" aria-atomic="true" hidden></div>
 
-        <select id="exercise" name="exercise">
-          <option value="bench">Bench Press</option>
-          <option value="squat">Back Squat</option>
-          <option value="deadlift">Deadlift</option>
-          <option value="ohp">Overhead Press</option>
-        </select>
-      </div>
+    <button type="button" id="calculate" class="btn-primary">
+      Calculate Strength Standard
+    </button>
 
-      <div class="field">
-        <label for="one-rm">1RM</label>
+    <div id="result" class="result-box" hidden aria-live="polite" aria-atomic="true">
+      <div class="big-number" id="result-level">–</div>
+      <div class="label">Reference Strength Level</div>
 
-        <input
-          id="one-rm"
-          name="one-rm"
-          type="number"
-          inputmode="decimal"
-          min="1"
-          step="0.1"
-          placeholder="e.g. 225"
-          aria-describedby="one-rm-help"
-        />
+      <p id="result-summary" style="margin-top: 14px; font-size: 1.05rem; font-weight: 600;"></p>
+      
+      <div id="result-table-wrap" style="margin-top: 18px;"></div>
+      
+      <div id="next-level" class="lifter-note" style="margin-top: 20px;"></div>
 
-        <small id="one-rm-help">
-          Enter your actual or estimated one-rep max in the selected unit.
-        </small>
-      </div>
-
-      <div
-        id="calc-error"
-        class="calc-error"
-        role="alert"
-        aria-live="assertive"
-        aria-atomic="true"
-        hidden
-      ></div>
-
-      <button
-        type="button"
-        id="calculate"
-        class="btn-primary"
-      >
-        Calculate Strength Standard
-      </button>
-
-      <div
-        id="result"
-        class="result-box"
-        hidden
-        aria-live="polite"
-        aria-atomic="true"
-      >
-        <h2>Your Strength Standard</h2>
-
-        <p id="result-summary"></p>
-
-        <div id="result-table-wrap"></div>
-
-        <p id="next-level"></p>
+      <div class="result-actions" style="margin-top: 24px;">
+        <a href="/tools/strength/1rm-percentage-calculator" class="btn-primary">
+          Calculate 1RM Percentages
+        </a>
+        <a href="/tools/equipment/plate-calculator" class="btn-primary">
+          Load the Bar
+        </a>
       </div>
     </div>
   </section>
 
-  <section class="article-section">
-    <h2>What Are Strength Standards?</h2>
-
+  <article class="article-section">
+    <h2>Understanding Bodyweight Reference Benchmarks</h2>
     <p>
-      Strength standards are reference points used to compare a person's
-      lifting performance with bodyweight-based benchmarks. They are commonly
-      expressed as a ratio between a lift's 1RM and bodyweight.
+      Strength standards are reference points used to compare a lifter's performance with bodyweight-adjusted benchmarks. Instead of looking purely at the absolute weight on the barbell, these standards evaluate performance based on your biological sex, specific exercise, and mass.
+    </p>
+    <p>
+      RepMaths uses separate reference models for male and female lifters across five descriptive levels: <strong>Beginner, Novice, Intermediate, Advanced, and Elite</strong>. These levels serve as highly practical training targets and reality checks, rather than universal population percentiles or strict medical assessments.
+    </p>
+  </article>
+
+  <article class="article-section">
+    <h2>The Science of Relative Strength</h2>
+    <p>
+      Bodyweight matters immensely in strength sports because the same absolute lift represents a vastly different relative effort for people of varying sizes. For example, a 100 kg (225 lb) bench press represents a significantly higher relative strength ratio for someone weighing 65 kg than for someone weighing 110 kg.
+    </p>
+    <p>The calculator evaluates your capability using this foundational formula:</p>
+    <p>
+      <code>Relative Strength = 1RM ÷ Bodyweight</code>
+    </p>
+    <p>
+      Your calculated ratio is then mapped against our exercise-specific reference thresholds to determine your current training bracket.
+    </p>
+  </article>
+
+  <article class="article-section">
+    <h2>Using the Reference Ratios (By Lift)</h2>
+    
+    <h3>Bench Press & Overhead Press</h3>
+    <p>
+      Upper body pressing standards are highly sensitive to bodyweight and sex. Because upper body musculature differs significantly between males and females, the reference thresholds for the bench press and strict overhead press scale differently than lower body movements. Treat these as baseline performance metrics for upper-body pushing power.
     </p>
 
+    <h3>Back Squat & Deadlift</h3>
     <p>
-      RepMaths uses separate reference models for male and female lifters and
-      five descriptive levels: Beginner, Novice, Intermediate, Advanced, and
-      Elite. These levels are intended as practical reference points, not
-      universal rankings or population percentiles.
+      Squat and deadlift standards evaluate lower body and posterior chain strength. Differences in squat depth (parallel vs. full depth), bar position (high-bar vs. low-bar), and deadlift stance (conventional vs. sumo) can heavily influence how your lift compares with a standardized reference value. For the most accurate long-term tracking, ensure your technique remains consistent.
     </p>
-  </section>
+  </article>
 
-  <section class="article-section">
-    <h2>Strength Standards by Bodyweight</h2>
-
+  <article class="article-section">
+    <h2>Strength Standards Chart (1RM ÷ Bodyweight)</h2>
     <p>
-      Bodyweight matters because the same absolute lift represents a different
-      relative strength level for people of different sizes. For example, a
-      100 kg bench press represents a different bodyweight ratio for someone
-      weighing 60 kg than for someone weighing 100 kg.
+      Below are the exact bodyweight-ratio thresholds used by the RepMaths engine. Multiply your bodyweight by the ratio shown to find the required 1RM for each level.
     </p>
 
-    <p>
-      The calculator therefore uses the formula:
-    </p>
-
-    <p>
-      <strong>Relative Strength = 1RM ÷ Bodyweight</strong>
-    </p>
-
-    <p>
-      Your calculated ratio is then compared with the selected exercise and
-      sex-specific reference thresholds.
-    </p>
-  </section>
-
-  <section class="article-section">
-    <h2>Bench Press Strength Standards</h2>
-
-    <p>
-      Bench press standards describe relative pressing strength based on your
-      bench press 1RM compared with bodyweight. The reference thresholds used
-      by this calculator increase progressively from Beginner through Elite.
-    </p>
-
-    <p>
-      Because bench press technique, equipment, range of motion, training age,
-      and individual body proportions vary, the result should be treated as a
-      reference point rather than a definitive assessment of strength.
-    </p>
-  </section>
-
-  <section class="article-section">
-    <h2>Squat Strength Standards</h2>
-
-    <p>
-      Squat standards use your back squat 1RM relative to bodyweight.
-      Differences in squat depth, bar position, technique, equipment, and
-      training history can affect how a lift compares with a reference value.
-    </p>
-
-    <p>
-      For consistent tracking, use the same exercise variation and comparable
-      technique when checking your strength over time.
-    </p>
-  </section>
-
-  <section class="article-section">
-    <h2>Deadlift Strength Standards</h2>
-
-    <p>
-      Deadlift standards compare your deadlift 1RM with bodyweight. Deadlift
-      performance can vary considerably depending on conventional or sumo
-      technique, range of motion, equipment, and individual proportions.
-    </p>
-
-    <p>
-      Use the calculator primarily as a consistent reference for your own
-      training rather than as a universal measurement of athletic ability.
-    </p>
-  </section>
-
-  <section class="article-section">
-    <h2>Overhead Press Strength Standards</h2>
-
-    <p>
-      Overhead press standards compare your strict overhead press 1RM with
-      bodyweight. The lift is generally much lighter than the squat or
-      deadlift, so the bodyweight ratios used for this exercise are different.
-    </p>
-
-    <p>
-      Keep your exercise technique consistent when using the calculator to
-      monitor progress.
-    </p>
-  </section>
-
-  <section class="article-section">
-    <h2>How This Strength Standards Calculator Works</h2>
-
-    <ol>
-      <li>Choose your sex.</li>
-      <li>Choose pounds or kilograms.</li>
-      <li>Enter your bodyweight.</li>
-      <li>Select the exercise.</li>
-      <li>Enter your 1RM or estimated 1RM.</li>
-      <li>Calculate your bodyweight-relative strength ratio.</li>
-      <li>Compare that ratio with the selected reference thresholds.</li>
-    </ol>
-
-    <p>
-      The calculation itself is simple, but the reference values are
-      exercise-specific. A ratio that corresponds to one level for the bench
-      press does not automatically correspond to the same level for the squat,
-      deadlift, or overhead press.
-    </p>
-  </section>
-
-  <section class="article-section">
-    <h2>Why Strength Standards Vary</h2>
-
-    <p>
-      Strength standards can differ between sources because different datasets,
-      populations, definitions, exercise standards, and classification methods
-      may be used.
-    </p>
-
-    <p>
-      Your individual performance can also be affected by body size, limb
-      proportions, technique, training experience, exercise selection,
-      equipment, and how the 1RM was measured.
-    </p>
-
-    <p>
-      RepMaths presents its own bodyweight-ratio reference thresholds so that
-      users can make consistent comparisons within this calculator.
-    </p>
-  </section>
-
-  <section class="article-section">
-    <h2>1RM vs Estimated 1RM</h2>
-
-    <p>
-      A 1RM is the maximum load you can successfully lift for one repetition
-      with the intended technique. An estimated 1RM can be calculated from a
-      submaximal set using a rep-max formula.
-    </p>
-
-    <p>
-      If your 1RM is estimated rather than directly tested, the resulting
-      strength-standard level is also an estimate. Different 1RM formulas can
-      produce slightly different results.
-    </p>
-
-    <p>
-      For training purposes, estimated 1RM can be useful because repeatedly
-      testing a true maximum is not necessary for tracking progress.
-    </p>
-  </section>
-
-  <section class="article-section">
-    <h2>How to Use Your Strength Standard</h2>
-
-    <p>
-      Your result is most useful when viewed alongside your training history.
-      Rather than focusing only on a single classification, track your
-      bodyweight, 1RM, technique, and progress over time.
-    </p>
-
-    <p>
-      You can also use your result with other RepMaths tools to plan training
-      loads and understand your estimated percentages.
-    </p>
-  </section>
-
-  <section class="article-section">
-    <h2>Frequently Asked Questions</h2>
-
-    <div class="faq-item">
-      <h3>What is a good strength standard?</h3>
-      <p>
-        There is no single universal definition of a good strength standard.
-        Standards depend on the exercise, bodyweight, sex, training history,
-        technique, and the reference system being used.
-      </p>
-    </div>
-
-    <div class="faq-item">
-      <h3>How is relative strength calculated?</h3>
-      <p>
-        Relative strength is calculated by dividing your 1RM by your
-        bodyweight. For example, a 100 kg 1RM at a 75 kg bodyweight produces a
-        ratio of 1.33.
-      </p>
-    </div>
-
-    <div class="faq-item">
-      <h3>Are these strength standards universal?</h3>
-      <p>
-        No. The RepMaths thresholds are reference values used by this
-        calculator. Different strength-standard systems may use different
-        thresholds or populations.
-      </p>
-    </div>
-
-    <div class="faq-item">
-      <h3>Does age affect the calculation?</h3>
-      <p>
-        This calculator does not apply an age adjustment. It compares your
-        selected 1RM and bodyweight against the exercise-specific reference
-        thresholds.
-      </p>
-    </div>
-
-    <div class="faq-item">
-      <h3>Can I use an estimated 1RM?</h3>
-      <p>
-        Yes. You can enter an estimated 1RM. Keep in mind that the accuracy of
-        your strength-standard result depends on the accuracy of that estimate.
-      </p>
-    </div>
-
-    <div class="faq-item">
-      <h3>What exercises does the calculator support?</h3>
-      <p>
-        It currently supports bench press, back squat, deadlift, and overhead
-        press.
-      </p>
-    </div>
-
-    <div class="faq-item">
-      <h3>Should I compare myself with other lifters?</h3>
-      <p>
-        Standards are best used as reference points. Differences in technique,
-        body proportions, equipment, training history, and measurement methods
-        can make direct comparisons less meaningful.
-      </p>
-    </div>
-
-    <div class="faq-item">
-      <h3>Are strength standards the same as powerlifting standards?</h3>
-      <p>
-        Not necessarily. Competition standards can include specific rules for
-        technique, commands, depth, pauses, and equipment. A general
-        bodyweight-ratio calculator does not replace competition rules or
-        federation-specific standards.
-      </p>
-    </div>
-  </section>
-
-  <section class="article-section">
-    <h2>Sources and Further Reading</h2>
-
-    <p>
-      Strength standards can vary between reference systems. For additional
-      context, users may compare published strength-standard methodologies from
-      established lifting databases such as Strength Level.
-    </p>
-
-    <p>
-      RepMaths uses its own bodyweight-ratio thresholds in this calculator and
-      does not claim that these thresholds represent universal population
-      percentiles.
-    </p>
-  </section>
-
-  <section class="article-section">
-    <p>
-      <strong>Disclaimer:</strong> This calculator provides general fitness
-      information and reference estimates. It is not medical advice and does
-      not diagnose, treat, or prevent any health condition.
-    </p>
-  </section>
-
-  <RelatedTools
-    currentToolId="strength-standards-calculator"
-    maxItems={6}
-  />
-</Base>
-
-<style>
-  .sr-only {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    padding: 0;
-    margin: -1px;
-    overflow: hidden;
-    clip: rect(0, 0, 0, 0);
-    white-space: nowrap;
-    border: 0;
-  }
-
-  .calc-error {
-    margin: 1rem 0;
-    padding: 0.85rem 1rem;
-    border: 1px solid #d33;
-    border-radius: 8px;
-    background: #fff4f4;
-    color: #8a1f1f;
-  }
-
-  .reference-table-wrap {
-    width: 100%;
-    overflow-x: auto;
-    margin-top: 1rem;
-  }
-
-  .reference-table {
-    width: 100%;
-    border-collapse: collapse;
-    min-width: 420px;
-  }
-
-  .reference-table th,
-  .reference-table td {
-    padding: 0.65rem 0.75rem;
-    border-bottom: 1px solid #ddd;
-    text-align: left;
-  }
-
-  .reference-table th {
-    font-weight: 700;
-  }
-
-  .reference-table .current-level {
-    font-weight: 700;
-  }
-</style>
-
-<script define:vars={{ referenceStandards }}>
-  const standards = referenceStandards;
-
-  const exerciseNames = {
-    bench: "Bench Press",
-    squat: "Back Squat",
-    deadlift: "Deadlift",
-    ohp: "Overhead Press",
-  };
-
-  let sex = "male";
-  let unit = "lb";
-
-  const LB_PER_KG = 2.20462;
-
-  const sexButtons = document.querySelectorAll("[data-sex]");
-  const unitButtons = document.querySelectorAll("[data-unit]");
-
-  const bodyweightInput = document.querySelector("#bodyweight");
-  const oneRmInput = document.querySelector("#one-rm");
-  const exerciseInput = document.querySelector("#exercise");
-  const calculateButton = document.querySelector("#calculate");
-
-  const resultBox = document.querySelector("#result");
-  const resultSummary = document.querySelector("#result-summary");
-  const resultTableWrap = document.querySelector("#result-table-wrap");
-  const nextLevel = document.querySelector("#next-level");
-  const errorBox = document.querySelector("#calc-error");
-
-  function showError(message) {
-    if (!errorBox) return;
-
-    errorBox.textContent = message;
-    errorBox.hidden = false;
-  }
-
-  function clearError() {
-    if (!errorBox) return;
-
-    errorBox.textContent = "";
-    errorBox.hidden = true;
-  }
-
-  function invalidateResult() {
-    if (!resultBox) return;
-
-    resultBox.hidden = true;
-
-    if (resultSummary) {
-      resultSummary.textContent = "";
-    }
-
-    if (resultTableWrap) {
-      resultTableWrap.innerHTML = "";
-    }
-
-    if (nextLevel) {
-      nextLevel.textContent = "";
-    }
-  }
-
-  function updateToggleButtons(buttons, activeValue, attribute) {
-    buttons.forEach((button) => {
-      const isActive = button.getAttribute(attribute) === activeValue;
-
-      button.classList.toggle("active", isActive);
-      button.setAttribute("aria-pressed", String(isActive));
-    });
-  }
-
-  function updateWeightLimits() {
-    if (!bodyweightInput) return;
-
-    if (unit === "kg") {
-      bodyweightInput.min = "30";
-      bodyweightInput.max = "300";
-      bodyweightInput.step = "0.1";
-      bodyweightInput.placeholder = "e.g. 82.5";
-    } else {
-      bodyweightInput.min = "66";
-      bodyweightInput.max = "660";
-      bodyweightInput.step = "0.1";
-      bodyweightInput.placeholder = "e.g. 180";
-    }
-  }
-
-  function toKg(weight) {
-    return unit === "kg" ? weight : weight / LB_PER_KG;
-  }
-
-  function formatNumber(value) {
-    return Number(value).toFixed(2).replace(/\.00$/, "");
-  }
-
-  function formatWeight(value) {
-    if (unit === "kg") {
-      return `${formatNumber(value)} kg`;
-    }
-
-    return `${formatNumber(value)} lb`;
-  }
-
-  function getStrengthLevel(ratio, exerciseStandards) {
-    let current = exerciseStandards[0];
-
-    for (let i = 0; i < exerciseStandards.length; i += 1) {
-      if (ratio >= exerciseStandards[i].ratio) {
-        current = exerciseStandards[i];
-      } else {
-        break;
-      }
-    }
-
-    return current;
-  }
-
-  function getNextLevel(currentLevel, exerciseStandards) {
-    const currentIndex = exerciseStandards.findIndex(
-      (item) => item.label === currentLevel.label
-    );
-
-    if (currentIndex === -1 || currentIndex >= exerciseStandards.length - 1) {
-      return null;
-    }
-
-    return exerciseStandards[currentIndex + 1];
-  }
-
-  function calculateStrength() {
-    clearError();
-
-    const bodyweight = Number(bodyweightInput?.value);
-    const oneRm = Number(oneRmInput?.value);
-    const exercise = exerciseInput?.value;
-
-    if (!Number.isFinite(bodyweight) || bodyweight <= 0) {
-      invalidateResult();
-      showError("Please enter a valid bodyweight.");
-      bodyweightInput?.focus();
-      return;
-    }
-
-    const bodyweightKg = toKg(bodyweight);
-
-    if (bodyweightKg < 30 || bodyweightKg > 300) {
-      invalidateResult();
-      showError("Please enter a bodyweight between 30 and 300 kg.");
-      bodyweightInput?.focus();
-      return;
-    }
-
-    if (!Number.isFinite(oneRm) || oneRm <= 0) {
-      invalidateResult();
-      showError("Please enter a valid 1RM.");
-      oneRmInput?.focus();
-      return;
-    }
-
-    if (!exercise || !standards[sex] || !standards[sex][exercise]) {
-      invalidateResult();
-      showError("Please select a valid exercise.");
-      exerciseInput?.focus();
-      return;
-    }
-
-    const ratio = oneRm / bodyweight;
-    const exerciseStandards = standards[sex][exercise];
-
-    const currentLevel = getStrengthLevel(
-      ratio,
-      exerciseStandards
-    );
-
-    const next = getNextLevel(
-      currentLevel,
-      exerciseStandards
-    );
-
-    const exerciseName = exerciseNames[exercise];
-
-    resultSummary.textContent =
-      `Your ${exerciseName} 1RM is ${formatWeight(oneRm)}, ` +
-      `which is ${formatNumber(ratio)}× your bodyweight. ` +
-      `Your current RepMaths reference level is ${currentLevel.label}.`;
-
-    let tableHtml = `
-      <div class="reference-table-wrap">
-        <table class="reference-table">
-          <caption class="sr-only">
-            ${exerciseName} strength standards
-          </caption>
-          <thead>
+    <h3>Male Strength Standards</h3>
+    <div class="reference-table-wrap">
+      <table class="result-table standards-chart">
+        <caption class="sr-only">Male strength standards by exercise and level</caption>
+        <thead>
+          <tr>
+            <th scope="col">Level</th>
+            <th scope="col">Bench Press</th>
+            <th scope="col">Squat</th>
+            <th scope="col">Deadlift</th>
+            <th scope="col">OHP</th>
+          </tr>
+        </thead>
+        <tbody>
+          {referenceStandards.male.bench.map((row, i) => (
             <tr>
-              <th scope="col">Level</th>
-              <th scope="col">Bodyweight Ratio</th>
-              <th scope="col">Target ${unit.toUpperCase()}</th>
+              <td>{row.label}</td>
+              <td>{row.ratio.toFixed(2)}×</td>
+              <td>{referenceStandards.male.squat[i].ratio.toFixed(2)}×</td>
+              <td>{referenceStandards.male.deadlift[i].ratio.toFixed(2)}×</td>
+              <td>{referenceStandards.male.ohp[i].ratio.toFixed(2)}×</td>
             </tr>
-          </thead>
-          <tbody>
-    `;
+          ))}
+        </tbody>
+      </table>
+    </div>
 
-    exerciseStandards.forEach((standard) => {
-      const targetWeight = bodyweight * standard.ratio;
-      const isCurrent = standard.label === currentLevel.label;
+    <h3>Female Strength Standards</h3>
+    <div class="reference-table-wrap">
+      <table class="result-table standards-chart">
+        <caption class="sr-only">Female strength standards by exercise and level</caption>
+        <thead>
+          <tr>
+            <th scope="col">Level</th>
+            <th scope="col">Bench Press</th>
+            <th scope="col">Squat</th>
+            <th scope="col">Deadlift</th>
+            <th scope="col">OHP</th>
+          </tr>
+        </thead>
+        <tbody>
+          {referenceStandards.female.bench.map((row, i) => (
+            <tr>
+              <td>{row.label}</td>
+              <td>{row.ratio.toFixed(2)}×</td>
+              <td>{referenceStandards.female.squat[i].ratio.toFixed(2)}×</td>
+              <td>{referenceStandards.female.deadlift[i].ratio.toFixed(2)}×</td>
+              <td>{referenceStandards.female.ohp[i].ratio.toFixed(2)}×</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  </article>
 
-      tableHtml += `
-        <tr class="${isCurrent ? "current-level" : ""}">
-          <td>${standard.label}${isCurrent ? " — Current" : ""}</td>
-          <td>${standard.ratio.toFixed(2)}×</td>
-          <td>${formatWeight(targetWeight)}</td>
-        </tr>
-      `;
-    });
+  <article class="article-section">
+    <h2>Datasets and Coaching Observations</h2>
+    <p>
+      It is normal for strength standards to differ slightly depending on where you look. This variation exists because different systems utilize different foundational datasets. Some frameworks are built entirely on crowdsourced community logs (which can sometimes be inflated), while others are built on decades of strict clinical coaching observations and athletic testing.
+    </p>
+    <p>
+      Your individual placement on these charts can also be affected by genetic limb proportions, training experience, equipment (like belts and knee sleeves), and whether the 1RM was measured in a commercial gym or under strict competition judging criteria.
+    </p>
+  </article>
 
-    tableHtml += `
-          </tbody>
-        </table>
+  <article class="article-section">
+    <h2>Applying Your Results to Your Training</h2>
+    <p>
+      Use your resulting level as a baseline metric to inform your programming, rather than a final rigid destination. Tracking your own progressive overload over time is universally more beneficial than comparing yourself exclusively to others.
+    </p>
+    <p>
+      Once you know your current level, you can utilize the 
+      <a href="/tools/strength/1rm-percentage-calculator/">1RM Percentage Calculator</a> 
+      to structure your next training block, or use the 
+      <a href="/tools/training/training-max-calculator/">Training Max Calculator</a> 
+      to establish a safe, submaximal starting point for programs like 5/3/1.
+    </p>
+  </article>
+
+  <article class="article-section">
+    <h2>Sources &amp; Academic Reference</h2>
+    <ul>
+      <li>
+        Rippetoe, M., & Kilgore, L. (2006). <em>Practical Programming for Strength Training</em>. (Foundational definitions of Novice to Elite lifter classifications).
+      </li>
+      <li>
+        <a href="https://strengthlevel.com/strength-standards" target="_blank" rel="noopener noreferrer">
+          Strength Level — Crowdsourced Community Strength Standards
+        </a>
+      </li>
+      <li>
+        <a href="https://www.powerlifting.sport/rules/codes/info" target="_blank" rel="noopener noreferrer">
+          International Powerlifting Federation (IPF) Technical Rules
+        </a>
+      </li>
+    </ul>
+    <p style="color:var(--text-muted); font-size:0.85rem; margin-top:12px;">
+      External systems are provided for comparison of methodology. RepMaths utilizes its own streamlined relative ratio reference model to ensure highly consistent, bodyweight-scaled goal setting.
+    </p>
+  </article>
+
+  <article class="article-section">
+    <h2>Frequently Asked Questions</h2>
+    {faqItems.map((faq) => (
+      <div class="faq-item">
+        <h3>{faq.question}</h3>
+        <p>{faq.answer}</p>
       </div>
-    `;
+    ))}
+  </article>
 
-    resultTableWrap.innerHTML = tableHtml;
+  <RelatedTools currentToolId="strength-standards-calculator" />
 
-    if (next) {
-      const targetWeight = bodyweight * next.ratio;
-      const additionalWeight = targetWeight - oneRm;
-
-      if (additionalWeight > 0) {
-        nextLevel.textContent =
-          `The next reference level is ${next.label} at ` +
-          `${next.ratio.toFixed(2)}× bodyweight, or approximately ` +
-          `${formatWeight(targetWeight)}. ` +
-          `That is about ${formatWeight(additionalWeight)} above your current 1RM.`;
-      } else {
-        nextLevel.textContent =
-          `The next reference level is ${next.label} at ` +
-          `${next.ratio.toFixed(2)}× bodyweight.`;
-      }
-    } else {
-      nextLevel.textContent =
-        "Your result reaches the highest reference level used by this calculator.";
+  <style>
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
     }
 
-    resultBox.hidden = false;
-    resultBox.classList.add("show");
-  }
+    .calc-error {
+      margin: 1rem 0;
+      padding: 0.85rem 1rem;
+      border: 1px solid #d33;
+      border-radius: 8px;
+      background: rgba(255, 91, 46, 0.08);
+      color: #ff9b82;
+    }
 
-  sexButtons.forEach((button) => {
-    button.addEventListener("click", () => {
-      sex = button.getAttribute("data-sex") || "male";
+    .reference-table-wrap {
+      width: 100%;
+      overflow-x: auto;
+      margin-top: 1rem;
+    }
 
-      updateToggleButtons(
-        sexButtons,
-        sex,
-        "data-sex"
+    .standards-chart {
+      margin-bottom: 1.5rem;
+    }
+    
+    .current-level {
+      font-weight: 700;
+      background-color: rgba(255, 91, 46, 0.08);
+      color: var(--accent);
+    }
+    
+    .lifter-note {
+      padding: 14px;
+      border-left: 3px solid var(--accent);
+      background: var(--surface-2);
+      border-radius: 8px;
+      line-height: 1.55;
+      font-size: 0.95rem;
+    }
+  </style>
+
+  <script define:vars={{ referenceStandards }}>
+    const standards = referenceStandards;
+
+    const exerciseNames = {
+      bench: "Bench Press",
+      squat: "Back Squat",
+      deadlift: "Deadlift",
+      ohp: "Overhead Press",
+    };
+
+    let sex = "male";
+    let unit = "lb";
+    const LB_PER_KG = 2.2046226218;
+
+    const sexButtons = document.querySelectorAll("[data-sex]");
+    const unitButtons = document.querySelectorAll("[data-unit]");
+
+    const bodyweightInput = document.querySelector("#bodyweight");
+    const oneRmInput = document.querySelector("#one-rm");
+    const exerciseInput = document.querySelector("#exercise");
+    const calculateButton = document.querySelector("#calculate");
+
+    const resultBox = document.querySelector("#result");
+    const resultLevel = document.querySelector("#result-level");
+    const resultSummary = document.querySelector("#result-summary");
+    const resultTableWrap = document.querySelector("#result-table-wrap");
+    const nextLevel = document.querySelector("#next-level");
+    const errorBox = document.querySelector("#calc-error");
+
+    function showError(message) {
+      if (!errorBox) return;
+      errorBox.textContent = message;
+      errorBox.hidden = false;
+    }
+
+    function clearError() {
+      if (!errorBox) return;
+      errorBox.textContent = "";
+      errorBox.hidden = true;
+    }
+
+    function invalidateResult() {
+      if (!resultBox) return;
+      resultBox.classList.remove("show");
+      setTimeout(() => { resultBox.hidden = true; }, 300);
+    }
+
+    function updateToggleButtons(buttons, activeValue, attribute) {
+      buttons.forEach((button) => {
+        const isActive = button.getAttribute(attribute) === activeValue;
+        button.classList.toggle("active", isActive);
+        button.setAttribute("aria-pressed", String(isActive));
+      });
+    }
+
+    function updateWeightPlaceholder() {
+      if (!bodyweightInput || !oneRmInput) return;
+      if (unit === "kg") {
+        bodyweightInput.placeholder = "e.g. 82.5";
+        oneRmInput.placeholder = "e.g. 100";
+      } else {
+        bodyweightInput.placeholder = "e.g. 180";
+        oneRmInput.placeholder = "e.g. 225";
+      }
+    }
+
+    function toKg(weight) {
+      return unit === "kg" ? weight : weight / LB_PER_KG;
+    }
+
+    function formatNumber(value) {
+      return Number(value).toFixed(2).replace(/\.00$/, "");
+    }
+
+    function formatWeight(value) {
+      let rounded;
+      if (unit === "lb") {
+        rounded = Math.round(value / 2.5) * 2.5;
+      } else {
+        rounded = Math.round(value * 2) / 2;
+      }
+      return `${Number.isInteger(rounded) ? String(rounded) : rounded.toFixed(1)} ${unit}`;
+    }
+
+    function getStrengthLevel(ratio, exerciseStandards) {
+      let current = exerciseStandards[0];
+      for (let i = 0; i < exerciseStandards.length; i += 1) {
+        if (ratio >= exerciseStandards[i].ratio) {
+          current = exerciseStandards[i];
+        } else {
+          break;
+        }
+      }
+      return current;
+    }
+
+    function getNextLevel(currentLevel, exerciseStandards) {
+      const currentIndex = exerciseStandards.findIndex(
+        (item) => item.label === currentLevel.label
       );
+      if (currentIndex === -1 || currentIndex >= exerciseStandards.length - 1) {
+        return null;
+      }
+      return exerciseStandards[currentIndex + 1];
+    }
 
-      invalidateResult();
+    function calculateStrength() {
       clearError();
-    });
-  });
 
-  unitButtons.forEach((button) => {
-    button.addEventListener("click", () => {
-      const nextUnit = button.getAttribute("data-unit");
+      const bodyweight = Number(bodyweightInput?.value);
+      const oneRm = Number(oneRmInput?.value);
+      const exercise = exerciseInput?.value;
 
-      if (nextUnit !== "lb" && nextUnit !== "kg") {
+      if (!Number.isFinite(bodyweight) || bodyweight <= 0) {
+        invalidateResult();
+        showError("Please enter a valid body weight.");
         return;
       }
 
-      if (bodyweightInput?.value) {
-        const currentValue = Number(bodyweightInput.value);
-
-        if (Number.isFinite(currentValue) && currentValue > 0) {
-          if (unit === "lb" && nextUnit === "kg") {
-            bodyweightInput.value = (
-              currentValue / LB_PER_KG
-            ).toFixed(1);
-          } else if (unit === "kg" && nextUnit === "lb") {
-            bodyweightInput.value = (
-              currentValue * LB_PER_KG
-            ).toFixed(1);
-          }
-        }
+      const bodyweightKg = toKg(bodyweight);
+      if (bodyweightKg < 30 || bodyweightKg > 350) {
+        invalidateResult();
+        showError("Please enter a body weight between 30 and 350 kg (66-770 lbs).");
+        return;
       }
 
-      if (oneRmInput?.value) {
-        const currentOneRm = Number(oneRmInput.value);
-
-        if (Number.isFinite(currentOneRm) && currentOneRm > 0) {
-          if (unit === "lb" && nextUnit === "kg") {
-            oneRmInput.value = (
-              currentOneRm / LB_PER_KG
-            ).toFixed(1);
-          } else if (unit === "kg" && nextUnit === "lb") {
-            oneRmInput.value = (
-              currentOneRm * LB_PER_KG
-            ).toFixed(1);
-          }
-        }
+      if (!Number.isFinite(oneRm) || oneRm <= 0) {
+        invalidateResult();
+        showError("Please enter a valid 1RM.");
+        return;
       }
 
-      unit = nextUnit;
+      if (!exercise || !standards[sex] || !standards[sex][exercise]) {
+        invalidateResult();
+        showError("Please select a valid exercise.");
+        return;
+      }
 
-      updateToggleButtons(
-        unitButtons,
-        unit,
-        "data-unit"
-      );
+      const ratio = oneRm / bodyweight;
+      const exerciseStandards = standards[sex][exercise];
+      const currentLevel = getStrengthLevel(ratio, exerciseStandards);
+      const next = getNextLevel(currentLevel, exerciseStandards);
+      const exerciseName = exerciseNames[exercise];
 
-      updateWeightLimits();
-      invalidateResult();
-      clearError();
+      const isBelowBeginner = ratio < exerciseStandards[0].ratio;
+      const levelDisplay = isBelowBeginner ? "Below Beginner" : currentLevel.label;
+
+      if (resultLevel) {
+        resultLevel.textContent = levelDisplay;
+      }
+
+      resultSummary.textContent =
+        `Your relative strength is ${formatNumber(ratio)}× bodyweight. ` +
+        `Your ${exerciseName} 1RM of ${formatWeight(oneRm)} falls within the ${levelDisplay} reference band.`;
+
+      let tableHtml = `
+        <table class="result-table">
+          <thead>
+            <tr>
+              <th>Level</th>
+              <th>Ratio</th>
+              <th>Target ${unit.toUpperCase()}</th>
+            </tr>
+          </thead>
+          <tbody>
+      `;
+
+      exerciseStandards.forEach((standard) => {
+        const targetWeight = bodyweight * standard.ratio;
+        const isCurrent = !isBelowBeginner && standard.label === currentLevel.label;
+        
+        tableHtml += `
+          <tr class="${isCurrent ? "current-level" : ""}">
+            <td>${standard.label}${isCurrent ? " (Current)" : ""}</td>
+            <td>${standard.ratio.toFixed(2)}×</td>
+            <td>${formatWeight(targetWeight)}</td>
+          </tr>
+        `;
+      });
+      tableHtml += `</tbody></table>`;
+      resultTableWrap.innerHTML = tableHtml;
+
+      if (isBelowBeginner) {
+        const beginnerTarget = bodyweight * exerciseStandards[0].ratio;
+        const diff = beginnerTarget - oneRm;
+        nextLevel.innerHTML = `<strong>Next Target (Beginner):</strong> ${formatWeight(beginnerTarget)} <br/><span style="color:var(--text-muted); font-size:0.9rem;">You need approximately ${formatWeight(diff)} more to reach the Beginner benchmark.</span>`;
+      } else if (next) {
+        const targetWeight = bodyweight * next.ratio;
+        const additionalWeight = targetWeight - oneRm;
+        nextLevel.innerHTML = `<strong>Next Target (${next.label}):</strong> ${formatWeight(targetWeight)} <br/><span style="color:var(--text-muted); font-size:0.9rem;">You need approximately ${formatWeight(additionalWeight)} more to reach the next benchmark.</span>`;
+      } else {
+        nextLevel.innerHTML = `<strong>Elite Status Achieved.</strong><br/><span style="color:var(--text-muted); font-size:0.9rem;">You are at or above the highest reference band in this model. Outstanding work.</span>`;
+      }
+
+      resultBox.hidden = false;
+      setTimeout(() => { resultBox.classList.add("show"); }, 10);
+    }
+
+    sexButtons.forEach((button) => {
+      button.addEventListener("click", () => {
+        sex = button.getAttribute("data-sex") || "male";
+        updateToggleButtons(sexButtons, sex, "data-sex");
+        invalidateResult();
+        clearError();
+      });
     });
-  });
 
-  bodyweightInput?.addEventListener("input", () => {
-    invalidateResult();
-    clearError();
-  });
+    unitButtons.forEach((button) => {
+      button.addEventListener("click", () => {
+        const nextUnit = button.getAttribute("data-unit");
+        if (nextUnit !== "lb" && nextUnit !== "kg") return;
 
-  oneRmInput?.addEventListener("input", () => {
-    invalidateResult();
-    clearError();
-  });
+        if (bodyweightInput?.value) {
+          const currentValue = Number(bodyweightInput.value);
+          if (Number.isFinite(currentValue) && currentValue > 0) {
+            if (unit === "lb" && nextUnit === "kg") {
+              bodyweightInput.value = (currentValue / LB_PER_KG).toFixed(1);
+            } else if (unit === "kg" && nextUnit === "lb") {
+              bodyweightInput.value = (currentValue * LB_PER_KG).toFixed(1);
+            }
+          }
+        }
 
-  exerciseInput?.addEventListener("change", () => {
-    invalidateResult();
-    clearError();
-  });
+        if (oneRmInput?.value) {
+          const currentOneRm = Number(oneRmInput.value);
+          if (Number.isFinite(currentOneRm) && currentOneRm > 0) {
+            if (unit === "lb" && nextUnit === "kg") {
+              oneRmInput.value = (currentOneRm / LB_PER_KG).toFixed(1);
+            } else if (unit === "kg" && nextUnit === "lb") {
+              oneRmInput.value = (currentOneRm * LB_PER_KG).toFixed(1);
+            }
+          }
+        }
 
-  calculateButton?.addEventListener("click", calculateStrength);
+        unit = nextUnit;
+        updateToggleButtons(unitButtons, unit, "data-unit");
+        updateWeightPlaceholder();
+        invalidateResult();
+        clearError();
+      });
+    });
 
-  updateWeightLimits();
-</script>
+    [bodyweightInput, oneRmInput, exerciseInput].forEach(el => {
+      el?.addEventListener("input", () => {
+        invalidateResult();
+        clearError();
+      });
+    });
+
+    calculateButton?.addEventListener("click", calculateStrength);
+    updateWeightPlaceholder();
+  </script>
+</Base>
