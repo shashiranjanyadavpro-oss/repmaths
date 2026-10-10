@@ -21,21 +21,38 @@ const groupedTools = clusterOrder
 ---
 
 <Base
-  title="Free Strength & Nutrition Calculators | RepMaths"
-  description="Free, fast fitness calculators built on established formulas — 1RM, training percentages, plate loading, and TDEE. No sign-up required."
+  title="Free Fitness Calculators — 1RM, TDEE, BMI & More | RepMaths"
+  description="25+ free fitness calculators for strength, training, and nutrition — 1RM, TDEE, BMI, macros, body fat, and more. Built on established formulas. No sign-up."
 >
   <section class="hero">
-    <h1>Free Fitness &amp; Strength Calculators</h1>
+    <h1>Free Fitness Calculators for Strength, Nutrition &amp; Body Composition</h1>
     <p>
-      Instant, reliable tools for lifters — built on established formulas,
-      no sign-up required.
+      {toolsData.length}+ instant, reliable tools for lifters, athletes, and
+      anyone tracking fitness — built on established formulas, no sign-up
+      required.
     </p>
+
+    <p class="hero-answer">
+      RepMaths is a free collection of fitness calculators covering
+      strength, training, nutrition, and body composition — each built on
+      established, cited formulas such as Mifflin-St Jeor, the US Navy
+      body-fat method, and ISSN protein guidelines.
+    </p>
+
+    <ul class="trust-list">
+      <li>✓ No sign-up required</li>
+      <li>✓ Formulas and sources cited on every page</li>
+      <li>✓ Works in lb and kg</li>
+    </ul>
   </section>
 
   {groupedTools.map((group) => (
     <section class="cluster-section">
-      <h2>{group.label}</h2>
-
+      <h2>
+        <a class="cluster-link" href={`/tools/${group.id}/`}>
+          {group.label}
+        </a>
+      </h2>
       <div class="tool-grid">
         {group.tools.map((tool) => (
           <a class="tool-card" href={tool.url}>
@@ -49,6 +66,26 @@ const groupedTools = clusterOrder
   ))}
 
   <style>
+    .hero-answer {
+      max-width: 34rem;
+      margin: 8px auto 18px;
+      font-size: 0.92rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    .trust-list {
+      list-style: none;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 6px 18px;
+      margin: 0 0 8px;
+      padding: 0;
+      font-size: 0.82rem;
+      color: var(--text-muted);
+    }
+
     .cluster-section {
       margin: 32px 0 40px;
     }
@@ -58,6 +95,16 @@ const groupedTools = clusterOrder
       margin-bottom: 16px;
       padding-bottom: 8px;
       border-bottom: 1px solid var(--border);
+    }
+
+    .cluster-link {
+      color: var(--text);
+      text-decoration: none;
+      display: inline-block;
+    }
+
+    .cluster-link:hover {
+      color: var(--accent);
     }
 
     .tool-grid {
