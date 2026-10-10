@@ -1,127 +1,126 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
+  <!-- ===== Core Pages ===== -->
   <url>
     <loc>https://repmaths.com/</loc>
   </url>
-
   <url>
     <loc>https://repmaths.com/about/</loc>
   </url>
-
   <url>
     <loc>https://repmaths.com/contact/</loc>
   </url>
-
   <url>
     <loc>https://repmaths.com/disclaimer/</loc>
   </url>
-
   <url>
     <loc>https://repmaths.com/privacy-policy/</loc>
   </url>
-
   <url>
     <loc>https://repmaths.com/terms/</loc>
   </url>
 
+  <!-- ===== Tools Directory ===== -->
   <url>
-    <loc>https://repmaths.com/tools/equipment/plate-calculator/</loc>
+    <loc>https://repmaths.com/tools/</loc>
   </url>
 
+  <!-- ===== Category Hubs ===== -->
   <url>
-    <loc>https://repmaths.com/tools/nutrition/bmr-calculator/</loc>
+    <loc>https://repmaths.com/tools/strength/</loc>
+  </url>
+  <url>
+    <loc>https://repmaths.com/tools/training/</loc>
+  </url>
+  <url>
+    <loc>https://repmaths.com/tools/equipment/</loc>
+  </url>
+  <url>
+    <loc>https://repmaths.com/tools/nutrition/</loc>
   </url>
 
-  <url>
-  <loc>https://repmaths.com/tools/nutrition/calorie-deficit-calculator/</loc>
-  </url>
-  
-  <url>
-    <loc>https://repmaths.com/tools/nutrition/body-fat-calculator/</loc>
-  </url>
-
-  <url>
-    <loc>https://repmaths.com/tools/nutrition/macro-calculator/</loc>
-  </url>
-
-  <url>
-    <loc>https://repmaths.com/tools/nutrition/protein-calculator/</loc>
-  </url>
-
-  <url>
-    <loc>https://repmaths.com/tools/nutrition/tdee-calculator/</loc>
-  </url>
-
-  <url>
-    <loc>https://repmaths.com/tools/nutrition/water-intake-calculator/</loc>
-  </url>
-
+  <!-- ===== Strength Calculators ===== -->
   <url>
     <loc>https://repmaths.com/tools/strength/1rm-calculator/</loc>
   </url>
-
   <url>
     <loc>https://repmaths.com/tools/strength/1rm-percentage-calculator/</loc>
   </url>
-
   <url>
     <loc>https://repmaths.com/tools/strength/bench-press-1rm-calculator/</loc>
   </url>
-
   <url>
     <loc>https://repmaths.com/tools/strength/deadlift-1rm-calculator/</loc>
   </url>
-
   <url>
     <loc>https://repmaths.com/tools/strength/overhead-press-1rm-calculator/</loc>
   </url>
-
   <url>
     <loc>https://repmaths.com/tools/strength/rep-max-calculator/</loc>
   </url>
-
   <url>
     <loc>https://repmaths.com/tools/strength/squat-1rm-calculator/</loc>
   </url>
-
   <url>
-  <loc>https://repmaths.com/tools/strength/strength-standards-calculator/</loc>
+    <loc>https://repmaths.com/tools/strength/strength-standards-calculator/</loc>
   </url>
-  
+
+  <!-- ===== Training Calculators ===== -->
   <url>
     <loc>https://repmaths.com/tools/training/531-calculator/</loc>
   </url>
-
   <url>
     <loc>https://repmaths.com/tools/training/rpe-rir-calculator/</loc>
   </url>
-
   <url>
     <loc>https://repmaths.com/tools/training/training-max-calculator/</loc>
   </url>
-
   <url>
     <loc>https://repmaths.com/tools/training/warmup-set-calculator/</loc>
   </url>
 
+  <!-- ===== Equipment Calculators ===== -->
   <url>
-  <loc>https://repmaths.com/tools/nutrition/bmi-calculator/</loc>
+    <loc>https://repmaths.com/tools/equipment/plate-calculator/</loc>
   </url>
 
+  <!-- ===== Nutrition Calculators ===== -->
   <url>
-  <loc>https://repmaths.com/tools/nutrition/lean-body-mass-calculator/</loc>
+    <loc>https://repmaths.com/tools/nutrition/bmi-calculator/</loc>
   </url>
-  
   <url>
-  <loc>https://repmaths.com/tools/nutrition/ffmi-calculator/</loc>
+    <loc>https://repmaths.com/tools/nutrition/bmr-calculator/</loc>
+  </url>
+  <url>
+    <loc>https://repmaths.com/tools/nutrition/body-fat-calculator/</loc>
+  </url>
+  <url>
+    <loc>https://repmaths.com/tools/nutrition/calorie-deficit-calculator/</loc>
+  </url>
+  <url>
+    <loc>https://repmaths.com/tools/nutrition/calories-burned-calculator/</loc>
+  </url>
+  <url>
+    <loc>https://repmaths.com/tools/nutrition/ffmi-calculator/</loc>
+  </url>
+  <url>
+    <loc>https://repmaths.com/tools/nutrition/ideal-weight-calculator/</loc>
+  </url>
+  <url>
+    <loc>https://repmaths.com/tools/nutrition/lean-body-mass-calculator/</loc>
+  </url>
+  <url>
+    <loc>https://repmaths.com/tools/nutrition/macro-calculator/</loc>
+  </url>
+  <url>
+    <loc>https://repmaths.com/tools/nutrition/protein-calculator/</loc>
+  </url>
+  <url>
+    <loc>https://repmaths.com/tools/nutrition/tdee-calculator/</loc>
+  </url>
+  <url>
+    <loc>https://repmaths.com/tools/nutrition/water-intake-calculator/</loc>
   </url>
 
-  <url>
-  <loc>https://repmaths.com/tools/nutrition/ideal-weight-calculator/</loc>
-  </url>
-  <url>
-  <loc>https://repmaths.com/tools/nutrition/calories-burned-calculator/</loc>
-</url>
-  
 </urlset>
