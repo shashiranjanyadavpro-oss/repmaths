@@ -1,10 +1,16 @@
 ---
 import Base from '../layouts/Base.astro';
+
+const breadcrumbs = [
+  { name: "Home", href: "/" },
+  { name: "About" },
+];
 ---
 
 <Base
   title="About — RepMaths"
   description="Learn about RepMaths, our fitness calculators, and the established formulas and methods behind them."
+  breadcrumbs={breadcrumbs}
 >
   <article class="about-page">
     <h1>About RepMaths</h1>
@@ -109,7 +115,7 @@ import Base from '../layouts/Base.astro';
     <p>
       For important health, nutrition, or training decisions, consider
       consulting an appropriately qualified professional. See our
-      <a href="/disclaimer">Disclaimer</a> for more information.
+      <a href="/disclaimer/">Disclaimer</a> for more information.
     </p>
   </article>
 
