@@ -148,7 +148,10 @@ const faqSchema =
   <meta property="og:image" content={`${siteUrl}/og-image.png`} />
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="630" />
-  <meta property="og:image:alt" content="RepMaths — Free strength and nutrition calculators" />
+  <meta
+    property="og:image:alt"
+    content="RepMaths — Free strength, fitness and nutrition calculators"
+  />
   <meta property="og:image:type" content="image/png" />
 
   <!-- Twitter -->
@@ -156,6 +159,10 @@ const faqSchema =
   <meta name="twitter:title" content={title} />
   <meta name="twitter:description" content={description} />
   <meta name="twitter:image" content={`${siteUrl}/og-image.png`} />
+  <meta
+    name="twitter:image:alt"
+    content="RepMaths — Free strength, fitness and nutrition calculators"
+  />
 
   <!-- Global structured data -->
   <script type="application/ld+json" set:html={JSON.stringify(websiteSchema)} />
@@ -267,18 +274,6 @@ const faqSchema =
     .site-footer a {
       color: var(--text-muted);
       margin: 0 8px;
-    }
-
-    .ad-slot {
-      margin: 24px 0;
-      min-height: 90px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: var(--text-muted);
-      font-size: 0.75rem;
-      border: 1px dashed var(--border);
-      border-radius: 10px;
     }
 
     /* ===== BREADCRUMBS ===== */
@@ -563,6 +558,10 @@ const faqSchema =
     }
   </style>
 
+  <!-- Preconnect for GA4 -->
+  <link rel="preconnect" href="https://www.googletagmanager.com" />
+  <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
+
   <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-DC5Y64ZHYT"></script>
   <script is:inline>
@@ -611,7 +610,7 @@ const faqSchema =
       <p>
         &copy; 2026 RepMaths. Calculators use established, peer-referenced
         formulas for educational purposes only.
-        <a href="/about">See our methods</a>.
+        <a href="/about/">See our methods</a>.
       </p>
     </div>
   </footer>
