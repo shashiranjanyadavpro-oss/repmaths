@@ -6,7 +6,7 @@
       "displayName": "RepMaths Fitness Calculator Suite",
       "type": "application/ai-skill+md",
       "url": "https://repmaths.com/.well-known/repmaths-calculators.md",
-      "description": "Machine-readable guide to RepMaths fitness calculators for strength, training, nutrition, plate loading, and body composition.",
+      "description": "Machine-readable guide to RepMaths fitness calculators covering 1RM estimation, training programming, nutrition, body composition, and gym equipment math.",
       "tags": [
         "fitness",
         "calculators",
@@ -24,7 +24,7 @@
         "find a calculator for gym training and body composition"
       ],
       "version": "1.0",
-      "updatedAt": "2026-09-28T00:00:00Z"
+      "updatedAt": "2026-10-11T00:00:00Z"
     }
   ]
 }
