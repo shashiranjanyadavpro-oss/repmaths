@@ -38,91 +38,73 @@ const itemListSchema = {
   title="Free Fitness Calculators — 1RM, TDEE, BMI & More | RepMaths"
   description="Free fitness calculators for strength, nutrition & body composition. Calculate 1RM, TDEE, BMI, macros, body fat & protein intake instantly."
 >
-  <script type="application/ld+json" set:html={JSON.stringify(itemListSchema)} />
+  <script
+    type="application/ld+json"
+    set:html={JSON.stringify(itemListSchema)}
+  />
 
-  <section class="hero-v2">
-    <div class="hero-left">
-      <span class="hero-badge">
-        <span class="pulse-dot" aria-hidden="true"></span>
-        {toolsData.length} tools and growing
-      </span>
+  <section class="intro">
+    <h1>
+      Free Fitness Calculators for Strength, Nutrition &amp; Body Composition
+    </h1>
 
-      <h1>
-        Free Fitness Calculators for Strength, Nutrition &amp; Body Composition
-      </h1>
+    <p class="tagline">
+      {toolsData.length} free tools. No sign-up. Formulas cited.
+    </p>
 
-      <p class="hero-sub">
-        RepMaths is a free collection of calculators covering strength,
-        training, nutrition and body composition — each built on established,
-        cited formulas such as Mifflin-St Jeor, the US Navy body-fat method
-        and ISSN protein guidelines.
-      </p>
-
-      <ul class="hero-trust">
-        <li>✓ Formulas and sources cited on every page</li>
-        <li>✓ No sign-up required</li>
-        <li>✓ Works in lb and kg</li>
-      </ul>
-
-      <p class="hero-about">
-        Built by a lifter. <a href="/about/">Read the RepMaths story →</a>
-      </p>
-
-      <div class="hero-actions">
-        <a href="/tools/" class="btn-hero-primary">
-          Browse all calculators →
-        </a>
-        <a
-          href="/tools/strength/strength-standards-calculator/"
-          class="btn-hero-secondary"
+    <div class="search-wrap">
+      <div class="search-input-wrap">
+        <svg
+          class="search-icon"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          aria-hidden="true"
         >
-          Strength Standards →
-        </a>
+          <circle cx="11" cy="11" r="8"></circle>
+          <path d="m21 21-4.35-4.35"></path>
+        </svg>
+
+        <input
+          type="search"
+          id="tool-search"
+          placeholder="Search calculators — 1RM, TDEE, BMI…"
+          aria-label="Search calculators"
+          autocomplete="off"
+        />
       </div>
 
-      <div class="search-wrap">
-        <div class="search-input-wrap">
-          <svg
-            class="search-icon"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            aria-hidden="true"
-          >
-            <circle cx="11" cy="11" r="8"></circle>
-            <path d="m21 21-4.35-4.35"></path>
-          </svg>
-
-          <input
-            type="search"
-            id="tool-search"
-            placeholder="Search calculators — 1RM, TDEE, BMI…"
-            aria-label="Search calculators"
-            autocomplete="off"
-          />
-        </div>
-
-        <p
-          id="search-count"
-          class="search-count"
-          aria-live="polite"
-          hidden
-        ></p>
-      </div>
+      <p
+        id="search-count"
+        class="search-count"
+        aria-live="polite"
+        hidden
+      ></p>
     </div>
   </section>
 
   {
     groupedTools.map((group) => (
       <section class="cluster-section">
-        <h2>
-          <a class="cluster-link" href={`/tools/${group.id}/`}>
-            {group.label}
+        <div class="cluster-head">
+          <h2>
+            <a class="cluster-link" href={`/tools/${group.id}/`}>
+              {group.label}
+            </a>
+          </h2>
+
+          <a
+            class="cluster-view-all"
+            href={`/tools/${group.id}/`}
+            aria-hidden="true"
+            tabindex="-1"
+          >
+            View All &rarr;
           </a>
-        </h2>
+        </div>
 
         <div class="tool-grid">
           {group.tools.map((tool) => (
@@ -139,122 +121,56 @@ const itemListSchema = {
     ))
   }
 
+  <section class="about-section">
+    <h2>About RepMaths</h2>
+
+    <p>
+      RepMaths is a free collection of fitness calculators covering
+      strength, training, nutrition and body composition — each built on
+      established, cited formulas such as Mifflin-St Jeor for BMR and
+      TDEE, the US Navy body-fat method, Epley and Brzycki for one-rep
+      max, the Reactive Training Systems RPE scale, and ISSN protein
+      guidelines.
+    </p>
+
+    <ul class="trust-list">
+      <li>✓ Formulas and sources cited on every page</li>
+      <li>✓ No sign-up required</li>
+      <li>✓ Works in lb and kg</li>
+    </ul>
+
+    <p class="about-link">
+      Built by a lifter.
+      <a href="/about/">Read the RepMaths story →</a>
+    </p>
+  </section>
+
   <style>
-    .hero-v2 {
-      padding: 32px 0 8px;
+    /* ===== INTRO ===== */
+
+    .intro {
+      padding: 16px 0 8px;
     }
 
-    .hero-left {
-      max-width: 720px;
-    }
-
-    .hero-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      font-size: 0.78rem;
-      font-weight: 600;
-      color: var(--text-muted);
-      border: 1px solid var(--border);
-      background: var(--surface);
-      border-radius: 999px;
-      padding: 6px 14px;
-    }
-
-    .pulse-dot {
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      background: var(--success);
-      animation: pulse 2s infinite;
-    }
-
-    @keyframes pulse {
-      50% {
-        opacity: 0.4;
-      }
-    }
-
-    .hero-left h1 {
-      font-size: clamp(1.75rem, 4.5vw, 2.4rem);
-      line-height: 1.12;
+    .intro h1 {
+      font-size: clamp(1.4rem, 4.5vw, 2rem);
+      line-height: 1.15;
       letter-spacing: -0.02em;
-      margin: 16px 0 12px;
+      margin: 0 0 8px;
+      font-weight: 700;
     }
 
-    .hero-sub {
-      color: var(--text-muted);
-      font-size: 1rem;
-      max-width: 36rem;
+    .tagline {
       margin: 0 0 16px;
-      line-height: 1.6;
-    }
-
-    .hero-trust {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 16px;
-      list-style: none;
-      margin: 0 0 12px;
-      padding: 0;
       color: var(--text-muted);
-      font-size: 0.83rem;
+      font-size: 0.92rem;
+      line-height: 1.5;
     }
 
-    .hero-about {
-      margin: 0 0 20px;
-      font-size: 0.83rem;
-      color: var(--text-muted);
-    }
-
-    .hero-about a {
-      color: var(--accent);
-      text-decoration: none;
-    }
-
-    .hero-about a:hover {
-      color: var(--accent-hover);
-    }
-
-    .hero-actions {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
-    }
-
-    .btn-hero-primary {
-      padding: 12px 22px;
-      border-radius: 999px;
-      background: var(--accent);
-      color: #fff;
-      font-weight: 600;
-      text-decoration: none;
-      transition: background-color 0.15s ease;
-    }
-
-    .btn-hero-primary:hover {
-      background: var(--accent-hover);
-      color: #fff;
-    }
-
-    .btn-hero-secondary {
-      padding: 12px 22px;
-      border-radius: 999px;
-      background: var(--surface);
-      border: 1px solid var(--border);
-      color: var(--text);
-      font-weight: 600;
-      text-decoration: none;
-      transition: border-color 0.15s ease, color 0.15s ease;
-    }
-
-    .btn-hero-secondary:hover {
-      border-color: var(--accent);
-      color: var(--accent);
-    }
+    /* ===== SEARCH ===== */
 
     .search-wrap {
-      margin: 20px 0 0;
+      margin: 0 0 24px;
       max-width: 480px;
     }
 
@@ -275,19 +191,22 @@ const itemListSchema = {
 
     .search-input-wrap input {
       width: 100%;
-      padding: 12px 14px 12px 40px;
+      padding: 11px 14px 11px 40px;
       background: var(--surface);
       border: 1px solid var(--border);
       border-radius: 10px;
       color: var(--text);
       font-size: 0.95rem;
       font-family: inherit;
-      transition: border-color 0.15s ease;
+      transition:
+        border-color 0.15s ease,
+        box-shadow 0.15s ease;
     }
 
     .search-input-wrap input:focus {
       outline: none;
       border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(255, 91, 46, 0.15);
     }
 
     .search-input-wrap input::placeholder {
@@ -300,17 +219,33 @@ const itemListSchema = {
       color: var(--text-muted);
     }
 
+    /* ===== TOOLS ===== */
+
     .cluster-section {
-      margin: 32px 0 40px;
+      margin: 28px 0;
       content-visibility: auto;
       contain-intrinsic-size: auto 500px;
     }
 
-    .cluster-section h2 {
-      font-size: 1.25rem;
-      margin-bottom: 14px;
+    .cluster-section:first-of-type {
+      margin-top: 0;
+    }
+
+    .cluster-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 12px;
+      margin: 0 0 12px;
       padding-bottom: 8px;
       border-bottom: 1px solid var(--border);
+    }
+
+    .cluster-head h2 {
+      font-size: 1.15rem;
+      margin: 0;
+      padding: 0;
+      border: none;
     }
 
     .cluster-link {
@@ -322,6 +257,19 @@ const itemListSchema = {
 
     .cluster-link:hover {
       color: var(--accent);
+    }
+
+    .cluster-view-all {
+      font-size: 0.82rem;
+      color: var(--accent);
+      text-decoration: none;
+      font-weight: 500;
+      white-space: nowrap;
+      transition: color 0.15s ease;
+    }
+
+    .cluster-view-all:hover {
+      color: var(--accent-hover);
     }
 
     .tool-grid {
@@ -359,6 +307,52 @@ const itemListSchema = {
       color: var(--text-muted);
       font-size: 0.78rem;
       display: block;
+      line-height: 1.4;
+    }
+
+    /* ===== ABOUT ===== */
+
+    .about-section {
+      margin: 48px 0 24px;
+      padding-top: 32px;
+      border-top: 1px solid var(--border);
+    }
+
+    .about-section h2 {
+      font-size: 1.2rem;
+      margin: 0 0 12px;
+    }
+
+    .about-section p {
+      color: #c7cbd2;
+      font-size: 0.95rem;
+      line-height: 1.7;
+    }
+
+    .trust-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px 20px;
+      list-style: none;
+      margin: 16px 0;
+      padding: 0;
+      color: var(--text-muted);
+      font-size: 0.85rem;
+    }
+
+    .about-link {
+      margin: 0;
+      font-size: 0.88rem;
+      color: var(--text-muted);
+    }
+
+    .about-link a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+
+    .about-link a:hover {
+      color: var(--accent-hover);
     }
   </style>
 
