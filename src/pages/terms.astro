@@ -1,27 +1,195 @@
 ---
 import Base from '../layouts/Base.astro';
+
+const breadcrumbs = [
+  { name: "Home", href: "/" },
+  { name: "Terms & Conditions" },
+];
 ---
-<Base title="Terms & Conditions — RepMaths" description="Terms and conditions for using RepMaths calculators.">
-  <article style="margin-top:32px;">
+
+<Base
+  title="Terms & Conditions — RepMaths"
+  description="Terms and conditions for using RepMaths free fitness, strength, and nutrition calculators."
+  breadcrumbs={breadcrumbs}
+>
+  <article class="legal-page">
     <h1>Terms &amp; Conditions</h1>
     <p>Last updated: September 13, 2026</p>
+
     <p>
-      By using RepMaths, you agree to use the calculators and content on this
-      site for personal, non-commercial purposes only.
+      These Terms &amp; Conditions ("Terms") govern your access to and use
+      of the RepMaths website and its calculators. By using RepMaths, you
+      agree to these Terms. If you do not agree, please do not use the
+      website.
     </p>
+
+    <h2>Use of the Website</h2>
+
     <p>
-      All content, including calculator logic, formulas descriptions, and
-      design, is the property of RepMaths unless otherwise stated. You may
-      not copy, redistribute, or republish this content without permission.
+      RepMaths provides free, browser-based fitness, strength, nutrition,
+      and body-composition calculators for personal, non-commercial use.
+      You may use the calculators and content on this site for personal
+      informational purposes.
     </p>
+
+    <h2>Permitted Use</h2>
+
+    <ul>
+      <li>
+        You may use RepMaths calculators for personal fitness, training,
+        nutrition, and educational purposes.
+      </li>
+      <li>
+        You may share links to RepMaths pages with others.
+      </li>
+      <li>
+        You may reference RepMaths results in personal notes, training
+        logs, or similar personal records.
+      </li>
+    </ul>
+
+    <h2>Prohibited Use</h2>
+
+    <p>You agree not to:</p>
+
+    <ul>
+      <li>
+        Copy, reproduce, scrape, or redistribute substantial portions of
+        RepMaths content, calculator logic, or design without permission.
+      </li>
+      <li>
+        Use automated tools to access RepMaths in a way that places
+        unreasonable load on the website or its infrastructure.
+      </li>
+      <li>
+        Attempt to reverse-engineer, modify, or interfere with the
+        website's operation or security.
+      </li>
+      <li>
+        Use RepMaths for commercial purposes, resale, or as part of a
+        competing product without written permission.
+      </li>
+      <li>
+        Represent RepMaths content or results as your own original work.
+      </li>
+    </ul>
+
+    <h2>Intellectual Property</h2>
+
     <p>
-      We reserve the right to update these terms at any time without prior
-      notice. Continued use of the site after changes means you accept the
-      updated terms.
+      All content on RepMaths — including calculator logic, formula
+      descriptions, design, layout, text, and branding — is the property
+      of RepMaths unless otherwise stated. The underlying formulas used
+      by RepMaths calculators are established, published methods from
+      the fitness and sports-nutrition literature; see our
+      <a href="/about/">About page</a> for details.
     </p>
+
     <p>
-      This site is provided "as is" without warranties of any kind. See our
-      <a href="/disclaimer">Disclaimer</a> for more details.
+      You may not copy, redistribute, or republish RepMaths content
+      without prior written permission.
+    </p>
+
+    <h2>No Professional Advice</h2>
+
+    <p>
+      RepMaths calculators and content are provided for informational and
+      educational purposes only. They are not medical, nutritional, or
+      fitness advice. See our
+      <a href="/disclaimer/">Disclaimer</a> for important limitations
+      and safety information.
+    </p>
+
+    <h2>Third-Party Services</h2>
+
+    <p>
+      RepMaths may use third-party services for analytics, advertising,
+      hosting, security, and other website functionality. These services
+      are governed by their own terms and privacy policies. See our
+      <a href="/privacy-policy/">Privacy Policy</a> for details about
+      third-party data handling.
+    </p>
+
+    <h2>Disclaimer of Warranties</h2>
+
+    <p>
+      RepMaths is provided "as is" and "as available" without warranties
+      of any kind, express or implied, including but not limited to
+      warranties of accuracy, reliability, merchantability, fitness for
+      a particular purpose, or non-infringement.
+    </p>
+
+    <p>
+      While RepMaths uses established formulas and methods, results are
+      estimates and may not be accurate for every individual or situation.
+    </p>
+
+    <h2>Limitation of Liability</h2>
+
+    <p>
+      To the maximum extent permitted by applicable law, RepMaths and its
+      operators will not be liable for any direct, indirect, incidental,
+      consequential, or special damages arising from or related to your
+      use of the website, its calculators, or its content.
+    </p>
+
+    <p>
+      You use RepMaths at your own risk and are responsible for how you
+      interpret and apply its results.
+    </p>
+
+    <h2>Changes to These Terms</h2>
+
+    <p>
+      We may update these Terms from time to time without prior notice.
+      The "Last updated" date at the top of this page indicates when the
+      Terms were most recently revised. Continued use of RepMaths after
+      changes means you accept the updated Terms.
+    </p>
+
+    <h2>Termination</h2>
+
+    <p>
+      We reserve the right to restrict or terminate access to RepMaths
+      for any user who violates these Terms or uses the website in a way
+      that is harmful to RepMaths, its infrastructure, or other users.
+    </p>
+
+    <h2>Contact</h2>
+
+    <p>
+      If you have questions about these Terms, please visit our
+      <a href="/contact/">Contact page</a>.
     </p>
   </article>
+
+  <style>
+    .legal-page {
+      margin-top: 32px;
+    }
+
+    .legal-page h2 {
+      font-size: 1.3rem;
+      margin-top: 32px;
+    }
+
+    .legal-page ul {
+      color: #c7cbd2;
+      font-size: 0.95rem;
+      padding-left: 20px;
+      margin: 12px 0;
+    }
+
+    .legal-page li {
+      margin-bottom: 8px;
+    }
+
+    .legal-page p {
+      line-height: 1.7;
+    }
+
+    .legal-page a {
+      color: var(--accent);
+    }
+  </style>
 </Base>
