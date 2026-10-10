@@ -18,102 +18,99 @@ const groupedTools = clusterOrder
     tools: toolsData.filter((t) => t.cluster === id),
   }))
   .filter((g) => g.tools.length > 0);
+
+const itemListSchema = {
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  name: "RepMaths Fitness Calculators",
+  description: `Free fitness calculators — ${toolsData.length} tools for strength, training, nutrition and body composition.`,
+  numberOfItems: toolsData.length,
+  itemListElement: toolsData.map((tool, i) => ({
+    "@type": "ListItem",
+    position: i + 1,
+    name: tool.name,
+    url: `https://repmaths.com${tool.url}`,
+  })),
+};
 ---
 
 <Base
   title="Free Fitness Calculators — 1RM, TDEE, BMI & More | RepMaths"
   description="Free fitness calculators for strength, training, nutrition and body composition — 1RM, bench press, squat, deadlift, TDEE, BMR, macros, body fat, FFMI. Built on Mifflin-St Jeor, the US Navy body-fat method and ISSN formulas. No sign-up required."
 >
+  <script type="application/ld+json" set:html={JSON.stringify(itemListSchema)} />
+
   <section class="hero-v2">
-    <div class="hero-grid">
-      <div class="hero-left">
-        <span class="hero-badge">
-          <span class="pulse-dot" aria-hidden="true"></span>
-          {toolsData.length} tools and growing
-        </span>
+    <div class="hero-left">
+      <span class="hero-badge">
+        <span class="pulse-dot" aria-hidden="true"></span>
+        {toolsData.length} tools and growing
+      </span>
 
-        <h1>
-          Free Fitness Calculators for Strength, Nutrition &amp; Body Composition
-        </h1>
+      <h1>
+        Free Fitness Calculators for Strength, Nutrition &amp; Body Composition
+      </h1>
 
-        <p class="hero-sub">
-          RepMaths is a free collection of calculators covering strength,
-          training, nutrition and body composition — each built on established,
-          cited formulas such as Mifflin-St Jeor, the US Navy body-fat method
-          and ISSN protein guidelines.
-        </p>
+      <p class="hero-sub">
+        RepMaths is a free collection of calculators covering strength,
+        training, nutrition and body composition — each built on established,
+        cited formulas such as Mifflin-St Jeor, the US Navy body-fat method
+        and ISSN protein guidelines.
+      </p>
 
-        <ul class="hero-trust">
-          <li>✓ Formulas and sources cited on every page</li>
-          <li>✓ No sign-up required</li>
-          <li>✓ Works in lb and kg</li>
-        </ul>
+      <ul class="hero-trust">
+        <li>✓ Formulas and sources cited on every page</li>
+        <li>✓ No sign-up required</li>
+        <li>✓ Works in lb and kg</li>
+      </ul>
 
-        <div class="hero-actions">
-          <a href="/tools/" class="btn-hero-primary">
-            Browse all calculators →
-          </a>
-          <a
-            href="/tools/strength/strength-standards-calculator/"
-            class="btn-hero-secondary"
-          >
-            Strength Standards →
-          </a>
-        </div>
+      <p class="hero-about">
+        Built by a lifter. <a href="/about/">Read the RepMaths story →</a>
+      </p>
+
+      <div class="hero-actions">
+        <a href="/tools/" class="btn-hero-primary">
+          Browse all calculators →
+        </a>
+        <a
+          href="/tools/strength/strength-standards-calculator/"
+          class="btn-hero-secondary"
+        >
+          Strength Standards →
+        </a>
       </div>
 
-      <div class="hero-card-wrap">
-        <div class="quick-card">
-          <div class="quick-card-head">
-            <span>Quick 1RM Estimate</span>
-            <span class="pulse-dot" aria-hidden="true"></span>
-          </div>
+      <div class="search-wrap">
+        <div class="search-input-wrap">
+          <svg
+            class="search-icon"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            aria-hidden="true"
+          >
+            <circle cx="11" cy="11" r="8"></circle>
+            <path d="m21 21-4.35-4.35"></path>
+          </svg>
 
-          <div class="quick-field">
-            <div class="quick-inputs">
-              <div class="quick-input">
-                <label for="qc-weight">Weight</label>
-                <input
-                  id="qc-weight"
-                  type="number"
-                  value="100"
-                  min="1"
-                  step="any"
-                  inputmode="decimal"
-                />
-                <span class="quick-unit">kg</span>
-              </div>
-
-              <div class="quick-input">
-                <label for="qc-reps">Reps</label>
-                <input
-                  id="qc-reps"
-                  type="number"
-                  value="5"
-                  min="1"
-                  max="30"
-                  step="1"
-                  inputmode="numeric"
-                />
-                <span class="quick-unit">reps</span>
-              </div>
-            </div>
-          </div>
-
-          <div class="quick-result" aria-live="polite">
-            <span class="quick-label">Estimated 1RM (Epley)</span>
-            <strong><span id="qc-result">116.7</span> kg</strong>
-            <div class="quick-bar">
-              <div id="qc-bar" style="width:58%"></div>
-            </div>
-          </div>
-
-          <p class="quick-note">
-            <a href="/tools/strength/1rm-calculator/">
-              Full 1RM calculator →
-            </a>
-          </p>
+          <input
+            type="search"
+            id="tool-search"
+            placeholder="Search calculators — 1RM, TDEE, BMI…"
+            aria-label="Search calculators"
+            autocomplete="off"
+          />
         </div>
+
+        <p
+          id="search-count"
+          class="search-count"
+          aria-live="polite"
+          hidden
+        ></p>
       </div>
     </div>
   </section>
@@ -144,20 +141,11 @@ const groupedTools = clusterOrder
 
   <style>
     .hero-v2 {
-      padding: 40px 0 8px;
+      padding: 32px 0 8px;
     }
 
-    .hero-grid {
-      display: grid;
-      grid-template-columns: 1.2fr 1fr;
-      gap: 32px;
-      align-items: center;
-    }
-
-    @media (max-width: 720px) {
-      .hero-grid {
-        grid-template-columns: 1fr;
-      }
+    .hero-left {
+      max-width: 720px;
     }
 
     .hero-badge {
@@ -188,8 +176,8 @@ const groupedTools = clusterOrder
     }
 
     .hero-left h1 {
-      font-size: clamp(2rem, 5vw, 2.8rem);
-      line-height: 1.08;
+      font-size: clamp(1.75rem, 4.5vw, 2.4rem);
+      line-height: 1.12;
       letter-spacing: -0.02em;
       margin: 16px 0 12px;
     }
@@ -207,10 +195,25 @@ const groupedTools = clusterOrder
       flex-wrap: wrap;
       gap: 16px;
       list-style: none;
-      margin: 0 0 20px;
+      margin: 0 0 12px;
       padding: 0;
       color: var(--text-muted);
       font-size: 0.83rem;
+    }
+
+    .hero-about {
+      margin: 0 0 20px;
+      font-size: 0.83rem;
+      color: var(--text-muted);
+    }
+
+    .hero-about a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+
+    .hero-about a:hover {
+      color: var(--accent-hover);
     }
 
     .hero-actions {
@@ -226,6 +229,7 @@ const groupedTools = clusterOrder
       color: #fff;
       font-weight: 600;
       text-decoration: none;
+      transition: background-color 0.15s ease;
     }
 
     .btn-hero-primary:hover {
@@ -241,6 +245,7 @@ const groupedTools = clusterOrder
       color: var(--text);
       font-weight: 600;
       text-decoration: none;
+      transition: border-color 0.15s ease, color 0.15s ease;
     }
 
     .btn-hero-secondary:hover {
@@ -248,112 +253,57 @@ const groupedTools = clusterOrder
       color: var(--accent);
     }
 
-    .quick-card {
+    .search-wrap {
+      margin: 20px 0 0;
+      max-width: 480px;
+    }
+
+    .search-input-wrap {
+      position: relative;
+    }
+
+    .search-icon {
+      position: absolute;
+      left: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 16px;
+      height: 16px;
+      color: var(--text-muted);
+      pointer-events: none;
+    }
+
+    .search-input-wrap input {
+      width: 100%;
+      padding: 12px 14px 12px 40px;
       background: var(--surface);
       border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 20px;
-    }
-
-    .quick-card-head {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      font-size: 0.72rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      color: var(--text-muted);
-      margin-bottom: 14px;
-    }
-
-    .quick-label {
-      display: block;
-      font-size: 0.8rem;
-      font-weight: 600;
-      color: var(--text-muted);
-      margin-bottom: 6px;
-    }
-
-    .quick-inputs {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 10px;
-      margin-bottom: 14px;
-    }
-
-    .quick-input {
-      background: var(--surface-2);
-      border: 1px solid var(--border);
       border-radius: 10px;
-      padding: 10px 12px;
-      display: flex;
-      flex-direction: column;
-    }
-
-    .quick-input label {
-      display: block;
-      font-size: 0.68rem;
-      text-transform: uppercase;
-      color: var(--text-muted);
-      margin-bottom: 2px;
-    }
-
-    .quick-input input {
-      width: 100%;
-      background: transparent;
-      border: none;
       color: var(--text);
-      font-size: 1.1rem;
-      font-weight: 700;
-      padding: 0;
-      outline: none;
+      font-size: 0.95rem;
       font-family: inherit;
+      transition: border-color 0.15s ease;
     }
 
-    .quick-input input:focus {
-      color: var(--accent);
+    .search-input-wrap input:focus {
+      outline: none;
+      border-color: var(--accent);
     }
 
-    .quick-unit {
-      font-size: 0.68rem;
+    .search-input-wrap input::placeholder {
       color: var(--text-muted);
-      margin-top: 2px;
     }
 
-    .quick-result {
-      background: var(--surface-2);
-      border-radius: 12px;
-      padding: 14px 16px;
-    }
-
-    .quick-result strong {
-      font-size: 1.6rem;
-      color: var(--text);
-      display: block;
-    }
-
-    .quick-bar {
-      margin-top: 10px;
-      height: 5px;
-      border-radius: 999px;
-      background: var(--border);
-      overflow: hidden;
-    }
-
-    .quick-bar div {
-      height: 100%;
-      background: var(--accent);
-      transition: width 0.15s ease;
-    }
-
-    .quick-note {
-      margin: 12px 0 0;
+    .search-count {
+      margin: 8px 0 0;
       font-size: 0.82rem;
-      text-align: center;
+      color: var(--text-muted);
     }
 
     .cluster-section {
       margin: 32px 0 40px;
+      content-visibility: auto;
+      contain-intrinsic-size: auto 500px;
     }
 
     .cluster-section h2 {
@@ -414,36 +364,52 @@ const groupedTools = clusterOrder
 
   <script is:inline>
     (function () {
-      var w = document.getElementById("qc-weight");
-      var r = document.getElementById("qc-reps");
-      var o = document.getElementById("qc-result");
-      var b = document.getElementById("qc-bar");
+      var input = document.getElementById("tool-search");
+      var count = document.getElementById("search-count");
+      var sections = document.querySelectorAll(".cluster-section");
 
-      if (!w || !r || !o) return;
+      if (!input) return;
 
-      function calculate() {
-        var wt = parseFloat(w.value) || 0;
-        var re = parseInt(r.value, 10) || 0;
+      function filter() {
+        var q = input.value.toLowerCase().trim();
 
-        if (wt <= 0 || re <= 0) {
-          o.textContent = "—";
-          if (b) b.style.width = "0%";
+        if (!q) {
+          sections.forEach(function (s) {
+            s.style.display = "";
+            s.querySelectorAll(".tool-card").forEach(function (c) {
+              c.style.display = "";
+            });
+          });
+          if (count) count.hidden = true;
           return;
         }
 
-        var rm = re === 1 ? wt : wt * (1 + re / 30);
+        var total = 0;
 
-        o.textContent = rm.toFixed(1);
+        sections.forEach(function (s) {
+          var visible = 0;
 
-        if (b) {
-          b.style.width = Math.min(100, (re / 12) * 100) + "%";
+          s.querySelectorAll(".tool-card").forEach(function (c) {
+            var match = c.textContent.toLowerCase().indexOf(q) !== -1;
+            c.style.display = match ? "" : "none";
+            if (match) visible++;
+          });
+
+          s.style.display = visible > 0 ? "" : "none";
+          total += visible;
+        });
+
+        if (count) {
+          count.textContent =
+            total +
+            " calculator" +
+            (total === 1 ? "" : "s") +
+            " found";
+          count.hidden = false;
         }
       }
 
-      w.addEventListener("input", calculate);
-      r.addEventListener("input", calculate);
-
-      calculate();
+      input.addEventListener("input", filter);
     })();
   </script>
 </Base>
