@@ -1,33 +1,115 @@
 ---
 import Base from '../../layouts/Base.astro';
-import toolsData from '../../data/tools.json';
-const tools = toolsData;
+
+const categories = [
+  {
+    id: "strength",
+    label: "1RM & Strength Calculators",
+    url: "/tools/strength/",
+    description:
+      "Estimate one-rep max with Epley, Brzycki, Lander, and Lombardi formulas. Includes lift-specific calculators for bench press, squat, deadlift, and overhead press, plus 1RM percentages and strength standards.",
+    count: 8,
+    icon: "1RM",
+  },
+  {
+    id: "training",
+    label: "Training & Programming",
+    url: "/tools/training/",
+    description:
+      "Convert 1RM into a training max, generate a full Wendler 5/3/1 cycle, build warm-up ramps, and convert RPE/RIR to estimated max using the RTS chart.",
+    count: 4,
+    icon: "531",
+  },
+  {
+    id: "equipment",
+    label: "Gym Equipment",
+    url: "/tools/equipment/",
+    description:
+      "Work out barbell plate loading per side of the bar for any target weight — no mental math required.",
+    count: 1,
+    icon: "PL",
+  },
+  {
+    id: "nutrition",
+    label: "Nutrition & Body Composition",
+    url: "/tools/nutrition/",
+    description:
+      "Calculate TDEE, BMR, macros, protein intake, body fat percentage, BMI, FFMI, lean body mass, ideal weight, water intake, and calories burned using established formulas.",
+    count: 12,
+    icon: "TDEE",
+  },
+];
 ---
 
 <Base
-  title="All Free Fitness & Strength Calculators | RepMaths"
-  description="Browse the complete directory of RepMaths calculators: 1RM, strength standards, training programs, plate loading, and nutrition & body composition tools."
-  breadcrumbs={[{ "name": "Home", "href": "/" }, { "name": "Tools" }]}
+  title="Fitness Calculator Categories | RepMaths"
+  description="Browse RepMaths fitness calculators by category: strength, training, gym equipment, and nutrition & body composition."
+  breadcrumbs={[{ name: "Home", href: "/" }, { name: "Tools" }]}
 >
   <section class="hero">
-    <h1>All Fitness Calculators</h1>
-    <p>The complete directory of every free RepMaths tool in one place.</p>
+    <h1>Browse Fitness Calculators by Category</h1>
+    <p>
+      RepMaths organizes its calculators into four categories. Pick a
+      category to see the individual tools.
+    </p>
   </section>
 
-  <div class="tool-grid">
-    {tools.map((tool) => (
-      <a class="tool-card" href={tool.url}>
-        <span class="icon" aria-hidden="true">{tool.icon}</span>
-        <span class="name">{tool.name}</span>
-        <span class="desc">{tool.shortDesc}</span>
+  <section class="category-grid">
+    {categories.map((cat) => (
+      <a class="category-card" href={cat.url}>
+        <span class="cat-icon" aria-hidden="true">{cat.icon}</span>
+        <span class="cat-label">{cat.label}</span>
+        <span class="cat-desc">{cat.description}</span>
+        <span class="cat-count">
+          {cat.count} {cat.count === 1 ? "calculator" : "calculators"}
+        </span>
       </a>
     ))}
-  </div>
+  </section>
 
-  <section class="seo-content">
-    <h2>Your Complete Toolkit for Strength & Fitness</h2>
+  <section class="article-section">
+    <h2>How RepMaths is Organized</h2>
+
     <p>
-      Whether you're calculating your true <strong>1 Rep Max</strong>, planning a powerlifting peaking block, or dialing in your <strong>macros and TDEE</strong>, our comprehensive suite of fitness calculators has you covered. Built on reliable formulas and completely free to use with no sign-ups required, RepMaths provides the accurate data you need to reach your strength and body composition goals.
+      RepMaths provides a complete suite of free fitness calculators for
+      lifters, athletes, and anyone tracking training or nutrition. Every
+      tool runs directly in your browser, requires no sign-up, and uses
+      established, cited formulas.
+    </p>
+
+    <p>
+      The <strong>strength</strong> category covers one-rep max estimation
+      using Epley, Brzycki, Lander, and Lombardi formulas, along with
+      lift-specific calculators for bench press, squat, deadlift, and
+      overhead press, 1RM percentage tables, and bodyweight-based strength
+      standards.
+    </p>
+
+    <p>
+      The <strong>training</strong> category handles programming — training
+      max, 5/3/1 cycles, warm-up ramps, and RPE/RIR conversion using the
+      Reactive Training Systems chart.
+    </p>
+
+    <p>
+      The <strong>equipment</strong> category covers gym math, including
+      barbell plate loading for any target weight.
+    </p>
+
+    <p>
+      The <strong>nutrition</strong> category includes energy and body
+      composition tools: TDEE and BMR using Mifflin-St Jeor, macro and
+      protein targets based on ISSN guidance, body fat using the US Navy
+      tape method, BMI, FFMI, lean body mass, ideal weight, water intake,
+      and calories burned using MET values.
+    </p>
+
+    <p>
+      Not sure where to start? The
+      <a href="/tools/strength/1rm-calculator/">1RM Calculator</a>,
+      <a href="/tools/nutrition/tdee-calculator/">TDEE Calculator</a>, and
+      <a href="/tools/nutrition/bmi-calculator/">BMI Calculator</a>
+      are among the most widely used tools on RepMaths.
     </p>
   </section>
 
@@ -35,66 +117,82 @@ const tools = toolsData;
     .hero {
       margin-bottom: 24px;
     }
-    
+
     .hero p {
       color: var(--text-muted);
       font-size: 1.05rem;
       max-width: 600px;
     }
 
-    .tool-grid {
+    .category-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-      gap: 12px;
-      margin: 24px 0 48px;
+      grid-template-columns: 1fr;
+      gap: 16px;
+      margin: 24px 0 40px;
     }
 
-    .tool-card {
+    @media (min-width: 640px) {
+      .category-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    .category-card {
+      display: block;
       background: var(--surface);
       border: 1px solid var(--border);
       border-radius: var(--radius);
-      padding: 18px 14px;
-      text-align: center;
+      padding: 22px 20px;
+      text-decoration: none;
       transition:
         border-color 0.15s ease,
         transform 0.15s ease;
     }
 
-    .tool-card:hover {
+    .category-card:hover {
       border-color: var(--accent);
       transform: translateY(-2px);
     }
 
-    .tool-card .name {
-      color: var(--text);
-      font-weight: 600;
-      font-size: 0.92rem;
+    .cat-icon {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 42px;
+      height: 42px;
+      margin-bottom: 14px;
+      background: var(--surface-2);
+      border: 1px solid var(--accent);
+      border-radius: 12px;
+      color: var(--accent);
+      font-size: 0.85rem;
+      font-weight: 800;
+      letter-spacing: 0;
+    }
+
+    .cat-label {
       display: block;
-      margin-bottom: 4px;
-    }
-
-    .tool-card .desc {
-      color: var(--text-muted);
-      font-size: 0.78rem;
-    }
-
-    /* SEO Content Styling */
-    .seo-content {
-      border-top: 1px solid var(--border);
-      padding-top: 32px;
-      margin-top: 32px;
-    }
-
-    .seo-content h2 {
-      font-size: 1.25rem;
       color: var(--text);
+      font-size: 1.05rem;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    .cat-desc {
+      display: block;
+      color: var(--text-muted);
+      font-size: 0.88rem;
+      line-height: 1.55;
       margin-bottom: 12px;
     }
 
-    .seo-content p {
-      color: var(--text-muted);
-      line-height: 1.6;
-      font-size: 0.95rem;
+    .cat-count {
+      display: inline-block;
+      font-size: 0.75rem;
+      color: var(--accent);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
     }
   </style>
 </Base>
