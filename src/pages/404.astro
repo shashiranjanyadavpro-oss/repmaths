@@ -2,7 +2,18 @@
 import Base from '../layouts/Base.astro';
 import toolsData from '../data/tools.json';
 
-const popularTools = toolsData.slice(0, 6);
+const popularIds = [
+  "1rm-calculator",
+  "strength-standards-calculator",
+  "bmi-calculator",
+  "tdee-calculator",
+  "protein-calculator",
+  "plate-calculator",
+];
+
+const popularTools = popularIds
+  .map((id) => toolsData.find((t) => t.id === id))
+  .filter((t): t is NonNullable<typeof t> => Boolean(t));
 ---
 
 <Base
@@ -17,10 +28,8 @@ const popularTools = toolsData.slice(0, 6);
     </p>
   </section>
 
-  <section class="calc-card" style="text-align:center;">
-    <p style="margin:0 0 8px;">
-      Try one of our popular calculators instead:
-    </p>
+  <section class="calc-card notfound-card">
+    <p class="notfound-lead">Try one of our popular calculators instead:</p>
 
     <div class="tool-grid">
       {popularTools.map((tool) => (
@@ -31,12 +40,35 @@ const popularTools = toolsData.slice(0, 6);
       ))}
     </div>
 
-    <p style="margin:20px 0 0;">
+    <p class="notfound-back">
       <a href="/">&larr; Back to all calculators</a>
+    </p>
+
+    <p class="notfound-contact">
+      Looking for something specific?
+      <a href="/contact/">Contact us</a>.
     </p>
   </section>
 
   <style>
+    .notfound-card {
+      text-align: center;
+    }
+
+    .notfound-lead {
+      margin: 0 0 8px;
+    }
+
+    .notfound-back {
+      margin: 20px 0 0;
+    }
+
+    .notfound-contact {
+      margin: 12px 0 0;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+
     .tool-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
