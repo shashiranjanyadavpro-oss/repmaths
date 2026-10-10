@@ -6,24 +6,31 @@
     "shortDesc": "Estimate your one-rep max from any weight and rep count.",
     "icon": "1RM",
     "cluster": "strength",
-    "related": ["bench-press-1rm-calculator", "squat-1rm-calculator", "deadlift-1rm-calculator", "rep-max-calculator"]
+    "related": [
+      "bench-press-1rm-calculator",
+      "squat-1rm-calculator",
+      "deadlift-1rm-calculator",
+      "overhead-press-1rm-calculator",
+      "rep-max-calculator",
+      "1rm-percentage-calculator"
+    ]
   },
   {
-  "id": "bench-press-1rm-calculator",
-  "name": "Bench Press Max Calculator",
-  "url": "/tools/strength/bench-press-1rm-calculator/",
-  "shortDesc": "Estimate your max bench press from weight and reps.",
-  "icon": "BP",
-  "cluster": "strength",
-  "related": [
-    "1rm-calculator",
-    "squat-1rm-calculator",
-    "overhead-press-1rm-calculator",
-    "1rm-percentage-calculator",
-    "rep-max-calculator",
-    "strength-standards-calculator"
-  ]
-},
+    "id": "bench-press-1rm-calculator",
+    "name": "Bench Press Max Calculator",
+    "url": "/tools/strength/bench-press-1rm-calculator/",
+    "shortDesc": "Estimate your max bench press from weight and reps.",
+    "icon": "BP",
+    "cluster": "strength",
+    "related": [
+      "1rm-calculator",
+      "squat-1rm-calculator",
+      "deadlift-1rm-calculator",
+      "overhead-press-1rm-calculator",
+      "rep-max-calculator",
+      "strength-standards-calculator"
+    ]
+  },
   {
     "id": "squat-1rm-calculator",
     "name": "Squat Max Calculator",
@@ -31,7 +38,14 @@
     "shortDesc": "Estimate your max squat from weight and reps.",
     "icon": "SQ",
     "cluster": "strength",
-    "related": ["1rm-calculator", "bench-press-1rm-calculator", "deadlift-1rm-calculator"]
+    "related": [
+      "1rm-calculator",
+      "bench-press-1rm-calculator",
+      "deadlift-1rm-calculator",
+      "overhead-press-1rm-calculator",
+      "rep-max-calculator",
+      "1rm-percentage-calculator"
+    ]
   },
   {
     "id": "deadlift-1rm-calculator",
@@ -40,7 +54,14 @@
     "shortDesc": "Estimate your max deadlift from weight and reps.",
     "icon": "DL",
     "cluster": "strength",
-    "related": ["1rm-calculator", "squat-1rm-calculator", "rep-max-calculator", "1rm-percentage-calculator", "bench-press-1rm-calculator"]
+    "related": [
+      "1rm-calculator",
+      "bench-press-1rm-calculator",
+      "squat-1rm-calculator",
+      "overhead-press-1rm-calculator",
+      "rep-max-calculator",
+      "1rm-percentage-calculator"
+    ]
   },
   {
     "id": "overhead-press-1rm-calculator",
@@ -49,10 +70,14 @@
     "shortDesc": "Estimate your strict press or military press max from weight and reps.",
     "icon": "OH",
     "cluster": "strength",
-    "related": ["1rm-calculator",
-  "bench-press-1rm-calculator",
-  "rep-max-calculator",
-  "1rm-percentage-calculator"]
+    "related": [
+      "1rm-calculator",
+      "bench-press-1rm-calculator",
+      "squat-1rm-calculator",
+      "deadlift-1rm-calculator",
+      "rep-max-calculator",
+      "1rm-percentage-calculator"
+    ]
   },
   {
     "id": "rep-max-calculator",
@@ -61,7 +86,14 @@
     "shortDesc": "Convert a known weight and reps to any target rep count.",
     "icon": "RM",
     "cluster": "strength",
-    "related": ["1rm-calculator", "1rm-percentage-calculator", "training-max-calculator"]
+    "related": [
+      "1rm-calculator",
+      "1rm-percentage-calculator",
+      "training-max-calculator",
+      "bench-press-1rm-calculator",
+      "squat-1rm-calculator",
+      "deadlift-1rm-calculator"
+    ]
   },
   {
     "id": "1rm-percentage-calculator",
@@ -71,12 +103,29 @@
     "icon": "%",
     "cluster": "strength",
     "related": [
-  "1rm-calculator",
-  "rep-max-calculator",
-  "training-max-calculator",
-  "bench-press-1rm-calculator",
-  "squat-1rm-calculator",
-  "deadlift-1rm-calculator"]
+      "1rm-calculator",
+      "rep-max-calculator",
+      "training-max-calculator",
+      "bench-press-1rm-calculator",
+      "squat-1rm-calculator",
+      "deadlift-1rm-calculator"
+    ]
+  },
+  {
+    "id": "strength-standards-calculator",
+    "name": "Strength Standards Calculator",
+    "url": "/tools/strength/strength-standards-calculator/",
+    "shortDesc": "Compare your bench, squat, deadlift, or OHP 1RM with bodyweight-based reference standards.",
+    "icon": "STD",
+    "cluster": "strength",
+    "related": [
+      "1rm-calculator",
+      "bench-press-1rm-calculator",
+      "squat-1rm-calculator",
+      "deadlift-1rm-calculator",
+      "overhead-press-1rm-calculator",
+      "training-max-calculator"
+    ]
   },
   {
     "id": "training-max-calculator",
@@ -85,7 +134,14 @@
     "shortDesc": "Convert your 1RM into a safe training max for 5/3/1 programs.",
     "icon": "TM",
     "cluster": "training",
-    "related": ["1rm-calculator", "1rm-percentage-calculator", "531-calculator"]
+    "related": [
+      "1rm-calculator",
+      "1rm-percentage-calculator",
+      "531-calculator",
+      "rep-max-calculator",
+      "rpe-rir-calculator",
+      "warmup-set-calculator"
+    ]
   },
   {
     "id": "531-calculator",
@@ -94,7 +150,14 @@
     "shortDesc": "Generate the full Wendler 5/3/1 four-week cycle from your training max.",
     "icon": "531",
     "cluster": "training",
-    "related": ["training-max-calculator", "1rm-calculator"]
+    "related": [
+      "training-max-calculator",
+      "1rm-calculator",
+      "1rm-percentage-calculator",
+      "rep-max-calculator",
+      "rpe-rir-calculator",
+      "warmup-set-calculator"
+    ]
   },
   {
     "id": "warmup-set-calculator",
@@ -103,7 +166,14 @@
     "shortDesc": "Generate your full warm-up ramp from the empty bar to your working weight.",
     "icon": "WU",
     "cluster": "training",
-    "related": ["1rm-calculator", "1rm-percentage-calculator"]
+    "related": [
+      "1rm-calculator",
+      "1rm-percentage-calculator",
+      "training-max-calculator",
+      "531-calculator",
+      "rpe-rir-calculator",
+      "plate-calculator"
+    ]
   },
   {
     "id": "rpe-rir-calculator",
@@ -112,7 +182,14 @@
     "shortDesc": "Convert a completed set into your estimated 1RM using the RTS RPE chart.",
     "icon": "RPE",
     "cluster": "training",
-    "related": ["1rm-calculator", "1rm-percentage-calculator", "training-max-calculator"]
+    "related": [
+      "1rm-calculator",
+      "1rm-percentage-calculator",
+      "training-max-calculator",
+      "531-calculator",
+      "rep-max-calculator",
+      "strength-standards-calculator"
+    ]
   },
   {
     "id": "plate-calculator",
@@ -121,7 +198,14 @@
     "shortDesc": "Find exactly which plates to load on each side of the bar.",
     "icon": "PL",
     "cluster": "equipment",
-    "related": ["1rm-calculator", "warmup-set-calculator"]
+    "related": [
+      "1rm-calculator",
+      "warmup-set-calculator",
+      "rep-max-calculator",
+      "1rm-percentage-calculator",
+      "training-max-calculator",
+      "531-calculator"
+    ]
   },
   {
     "id": "tdee-calculator",
@@ -130,7 +214,14 @@
     "shortDesc": "Find your daily maintenance calories using the Mifflin-St Jeor equation.",
     "icon": "TDEE",
     "cluster": "nutrition",
-    "related": ["1rm-calculator", "bmr-calculator", "calorie-deficit-calculator", "bmi-calculator", "lean-body-mass-calculator", "calories-burned-calculator"]
+    "related": [
+      "bmr-calculator",
+      "macro-calculator",
+      "calorie-deficit-calculator",
+      "protein-calculator",
+      "calories-burned-calculator",
+      "bmi-calculator"
+    ]
   },
   {
     "id": "bmr-calculator",
@@ -139,7 +230,14 @@
     "shortDesc": "Find your Basal Metabolic Rate using Mifflin-St Jeor or Harris-Benedict.",
     "icon": "BMR",
     "cluster": "nutrition",
-    "related": ["tdee-calculator", "calorie-deficit-calculator", "bmi-calculator","lean-body-mass-calculator","calories-burned-calculator"]
+    "related": [
+      "tdee-calculator",
+      "macro-calculator",
+      "calorie-deficit-calculator",
+      "protein-calculator",
+      "calories-burned-calculator",
+      "body-fat-calculator"
+    ]
   },
   {
     "id": "macro-calculator",
@@ -148,7 +246,14 @@
     "shortDesc": "Convert your daily calories into protein, carb, and fat targets.",
     "icon": "MAC",
     "cluster": "nutrition",
-    "related": ["tdee-calculator", "bmr-calculator", "calorie-deficit-calculator","calories-burned-calculator"]
+    "related": [
+      "tdee-calculator",
+      "bmr-calculator",
+      "protein-calculator",
+      "calorie-deficit-calculator",
+      "calories-burned-calculator",
+      "bmi-calculator"
+    ]
   },
   {
     "id": "protein-calculator",
@@ -157,7 +262,14 @@
     "shortDesc": "Find your daily protein range based on ISSN sports nutrition guidelines.",
     "icon": "PRO",
     "cluster": "nutrition",
-    "related": ["tdee-calculator", "macro-calculator", "calorie-deficit-calculator","lean-body-mass-calculator", "ffmi-calculator","calories-burned-calculator"]
+    "related": [
+      "tdee-calculator",
+      "macro-calculator",
+      "calorie-deficit-calculator",
+      "lean-body-mass-calculator",
+      "ffmi-calculator",
+      "calories-burned-calculator"
+    ]
   },
   {
     "id": "water-intake-calculator",
@@ -166,16 +278,30 @@
     "shortDesc": "Find your daily water target based on body weight and activity level.",
     "icon": "H2O",
     "cluster": "nutrition",
-    "related": ["tdee-calculator", "protein-calculator"]
+    "related": [
+      "tdee-calculator",
+      "bmr-calculator",
+      "macro-calculator",
+      "protein-calculator",
+      "calorie-deficit-calculator",
+      "calories-burned-calculator"
+    ]
   },
   {
-  "id": "calorie-deficit-calculator",
-  "name": "Calorie Deficit Calculator",
-  "url": "/tools/nutrition/calorie-deficit-calculator/",
-  "shortDesc": "Calculate your daily calorie deficit, weight-loss target, and estimated timeline.",
-  "icon": "DEF",
-  "cluster": "nutrition",
-  "related": ["tdee-calculator","bmr-calculator","macro-calculator","protein-calculator", "bmi-calculator", "ideal-weight-calculator","calories-burned-calculator"]
+    "id": "calorie-deficit-calculator",
+    "name": "Calorie Deficit Calculator",
+    "url": "/tools/nutrition/calorie-deficit-calculator/",
+    "shortDesc": "Calculate your daily calorie deficit, weight-loss target, and estimated timeline.",
+    "icon": "DEF",
+    "cluster": "nutrition",
+    "related": [
+      "tdee-calculator",
+      "bmr-calculator",
+      "macro-calculator",
+      "protein-calculator",
+      "calories-burned-calculator",
+      "ideal-weight-calculator"
+    ]
   },
   {
     "id": "body-fat-calculator",
@@ -184,77 +310,93 @@
     "shortDesc": "Estimate your body fat percentage using the US Navy tape-measure method.",
     "icon": "BF%",
     "cluster": "nutrition",
-    "related": ["tdee-calculator", "macro-calculator", "calorie-deficit-calculator","lean-body-mass-calculator", "ffmi-calculator", "ideal-weight-calculator"]
+    "related": [
+      "bmi-calculator",
+      "lean-body-mass-calculator",
+      "ffmi-calculator",
+      "ideal-weight-calculator",
+      "protein-calculator",
+      "tdee-calculator"
+    ]
   },
   {
-  "id": "bmi-calculator",
-  "name": "BMI Calculator",
-  "url": "/tools/nutrition/bmi-calculator/",
-  "shortDesc": "Calculate your BMI and see your adult BMI category and BMI-based weight range.",
-  "icon": "BMI",
-  "cluster": "nutrition",
-  "related": ["bmr-calculator", "tdee-calculator", "body-fat-calculator", "calorie-deficit-calculator", "lean-body-mass-calculator", "ffmi-calculator", "ideal-weight-calculator"]
+    "id": "bmi-calculator",
+    "name": "BMI Calculator",
+    "url": "/tools/nutrition/bmi-calculator/",
+    "shortDesc": "Calculate your BMI and see your adult BMI category and BMI-based weight range.",
+    "icon": "BMI",
+    "cluster": "nutrition",
+    "related": [
+      "body-fat-calculator",
+      "lean-body-mass-calculator",
+      "ffmi-calculator",
+      "ideal-weight-calculator",
+      "tdee-calculator",
+      "bmr-calculator"
+    ]
   },
   {
-  "id": "lean-body-mass-calculator",
-  "name": "Lean Body Mass Calculator",
-  "url": "/tools/nutrition/lean-body-mass-calculator/",
-  "shortDesc": "Calculate lean body mass from body fat percentage or estimate it with the Boer, James, or Hume formula.",
-  "icon": "LBM",
-  "cluster": "nutrition",
-  "related": ["bmi-calculator", "body-fat-calculator", "protein-calculator", "bmr-calculator", "tdee-calculator", "ffmi-calculator", "ideal-weight-calculator"]
+    "id": "lean-body-mass-calculator",
+    "name": "Lean Body Mass Calculator",
+    "url": "/tools/nutrition/lean-body-mass-calculator/",
+    "shortDesc": "Calculate lean body mass from body fat percentage or estimate it with the Boer, James, or Hume formula.",
+    "icon": "LBM",
+    "cluster": "nutrition",
+    "related": [
+      "body-fat-calculator",
+      "bmi-calculator",
+      "ffmi-calculator",
+      "ideal-weight-calculator",
+      "protein-calculator",
+      "bmr-calculator"
+    ]
   },
   {
-  "id": "ffmi-calculator",
-  "name": "FFMI Calculator",
-  "url": "/tools/nutrition/ffmi-calculator/",
-  "shortDesc": "Calculate your fat-free mass index, normalized FFMI, and lean mass from body composition.",
-  "icon": "FFMI",
-  "cluster": "nutrition",
-  "related": [
-    "lean-body-mass-calculator",
-    "body-fat-calculator",
-    "bmi-calculator",
-    "protein-calculator",
-    "macro-calculator",
-    "ideal-weight-calculator"]
+    "id": "ffmi-calculator",
+    "name": "FFMI Calculator",
+    "url": "/tools/nutrition/ffmi-calculator/",
+    "shortDesc": "Calculate your fat-free mass index, normalized FFMI, and lean mass from body composition.",
+    "icon": "FFMI",
+    "cluster": "nutrition",
+    "related": [
+      "lean-body-mass-calculator",
+      "body-fat-calculator",
+      "bmi-calculator",
+      "ideal-weight-calculator",
+      "protein-calculator",
+      "macro-calculator"
+    ]
   },
   {
-  "id": "ideal-weight-calculator",
-  "name": "Ideal Weight Calculator",
-  "url": "/tools/nutrition/ideal-weight-calculator/",
-  "shortDesc": "Compare Devine, Robinson, Miller, and Hamwi ideal body weight estimates with a BMI-based healthy weight range.",
-  "icon": "IBW",
-  "cluster": "nutrition",
-  "related": [
-    "bmi-calculator",
-    "body-fat-calculator",
-    "lean-body-mass-calculator",
-    "ffmi-calculator",
-    "calorie-deficit-calculator",
-    "macro-calculator"]
+    "id": "ideal-weight-calculator",
+    "name": "Ideal Weight Calculator",
+    "url": "/tools/nutrition/ideal-weight-calculator/",
+    "shortDesc": "Compare Devine, Robinson, Miller, and Hamwi ideal body weight estimates with a BMI-based healthy weight range.",
+    "icon": "IBW",
+    "cluster": "nutrition",
+    "related": [
+      "bmi-calculator",
+      "body-fat-calculator",
+      "lean-body-mass-calculator",
+      "ffmi-calculator",
+      "calorie-deficit-calculator",
+      "tdee-calculator"
+    ]
   },
   {
-  "id": "calories-burned-calculator",
-  "name": "Calories Burned Calculator",
-  "url": "/tools/nutrition/calories-burned-calculator/",
-  "shortDesc": "Estimate calories burned from walking, running, lifting, cycling, cardio, and other activities using MET values.",
-  "icon": "CAL",
-  "cluster": "nutrition",
-  "related": [
-    "tdee-calculator",
-    "calorie-deficit-calculator",
-    "macro-calculator",
-    "protein-calculator",
-    "bmr-calculator"]
-  },
-  {
-  "id": "strength-standards-calculator",
-  "name": "Strength Standards Calculator",
-  "url": "/tools/strength/strength-standards-calculator/",
-  "shortDesc": "Compare your bench, squat, deadlift, or OHP 1RM with bodyweight-based reference standards.",
-  "icon": "STD",
-  "cluster": "strength",
-  "related": ["1rm-calculator", "1rm-percentage-calculator", "training-max-calculator", "rpe-rir-calculator"]
+    "id": "calories-burned-calculator",
+    "name": "Calories Burned Calculator",
+    "url": "/tools/nutrition/calories-burned-calculator/",
+    "shortDesc": "Estimate calories burned from walking, running, lifting, cycling, cardio, and other activities using MET values.",
+    "icon": "CAL",
+    "cluster": "nutrition",
+    "related": [
+      "tdee-calculator",
+      "bmr-calculator",
+      "macro-calculator",
+      "calorie-deficit-calculator",
+      "protein-calculator",
+      "bmi-calculator"
+    ]
   }
 ]
