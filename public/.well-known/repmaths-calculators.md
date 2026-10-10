@@ -1,6 +1,17 @@
 # RepMaths Fitness Calculator Suite
 
-> RepMaths is a free fitness calculator website providing practical calculators for strength training, gym programming, nutrition, body composition, and equipment loading.
+> RepMaths is a free fitness calculator suite with 25+ tools covering strength training, gym programming, nutrition, body composition, and equipment loading. All calculators are ad-free and run entirely in the browser.
+
+## How RepMaths is organized
+
+RepMaths calculators are organized into four categories:
+
+- [Strength calculators](https://repmaths.com/tools/strength/) — 1RM, bench press, squat, deadlift, overhead press
+- [Training calculators](https://repmaths.com/tools/training/) — 5/3/1, training max, RPE/RIR, warm-up sets
+- [Equipment calculators](https://repmaths.com/tools/equipment/) — barbell plate loading
+- [Nutrition calculators](https://repmaths.com/tools/nutrition/) — TDEE, BMR, macros, protein, body fat, BMI, FFMI
+
+Full calculator directory: [All tools](https://repmaths.com/tools/)
 
 ## Strength calculators
 
@@ -38,6 +49,15 @@
 - [FFMI Calculator](https://repmaths.com/tools/nutrition/ffmi-calculator/) — Calculate fat-free mass index and normalized FFMI from body composition.
 - [Ideal Weight Calculator](https://repmaths.com/tools/nutrition/ideal-weight-calculator/) — Compare ideal body weight estimates with a BMI-based healthy weight range.
 - [Calories Burned Calculator](https://repmaths.com/tools/nutrition/calories-burned-calculator/) — Estimate calories burned from walking, running, lifting, cycling, cardio, and other activities using MET values.
+
+## Formulas used
+
+- **1RM estimation:** Epley, Brzycki, Lander, Lombardi
+- **BMR/TDEE:** Mifflin-St Jeor, Harris-Benedict
+- **Body fat:** US Navy tape-measure method
+- **RPE/RIR:** Reactive Training Systems (RTS) chart
+- **Protein intake:** ISSN sports nutrition guidance
+- **Calories burned:** MET values
 
 ## How RepMaths calculators work
 
