@@ -1,10 +1,16 @@
 ---
 import Base from '../layouts/Base.astro';
+
+const breadcrumbs = [
+  { name: "Home", href: "/" },
+  { name: "Disclaimer" },
+];
 ---
 
 <Base
   title="Disclaimer — RepMaths"
   description="Disclaimer for RepMaths fitness, strength, nutrition, and body composition calculators."
+  breadcrumbs={breadcrumbs}
 >
   <article class="legal-page">
     <h1>Disclaimer</h1>
@@ -14,7 +20,7 @@ import Base from '../layouts/Base.astro';
       The calculators on RepMaths use established, published formulas
       and methods from strength training, exercise science, and sports
       nutrition research. See our
-      <a href="/about">Methods &amp; Formulas</a> page for more information.
+      <a href="/about/">Methods &amp; Formulas</a> page for more information.
     </p>
 
     <p>
