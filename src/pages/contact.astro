@@ -1,13 +1,100 @@
 ---
 import Base from '../layouts/Base.astro';
+
+const breadcrumbs = [
+  { name: "Home", href: "/" },
+  { name: "Contact" },
+];
 ---
-<Base title="Contact — RepMaths" description="Contact the RepMaths team with questions or suggestions.">
-  <article style="margin-top:32px;">
-    <h1>Contact</h1>
+
+<Base
+  title="Contact — RepMaths"
+  description="Contact RepMaths with questions, bug reports, or calculator suggestions. Reach our team at contact@repmaths.com."
+  breadcrumbs={breadcrumbs}
+>
+  <article class="contact-page">
+    <h1>Contact RepMaths</h1>
+
     <p>
-      Found an error in a calculation, or have a suggestion for a new
-      calculator? We'd like to hear from you.
+      Found an error in a calculation? Have a suggestion for a new
+      calculator? Want to report a bug or share feedback? We'd like to
+      hear from you.
     </p>
-    <p><strong>Email:</strong> <a href="mailto:contact@repmaths.com">contact@repmaths.com</a></p>
+
+    <h2>Get in Touch</h2>
+
+    <p>
+      <strong>Email:</strong>
+      <a href="mailto:contact@repmaths.com">contact@repmaths.com</a>
+    </p>
+
+    <p class="contact-note">
+      We typically respond within 2–3 business days.
+    </p>
+
+    <h2>What to Contact Us About</h2>
+
+    <ul>
+      <li>
+        <strong>Bug reports</strong> — if a calculator gives an unexpected
+        result or an error.
+      </li>
+      <li>
+        <strong>Formula corrections</strong> — if you believe a formula or
+        assumption should be updated.
+      </li>
+      <li>
+        <strong>New calculator suggestions</strong> — tools you'd find
+        useful for strength, training, or nutrition.
+      </li>
+      <li>
+        <strong>General feedback</strong> — anything else about the site
+        or user experience.
+      </li>
+    </ul>
+
+    <h2>What We Can't Help With</h2>
+
+    <p>
+      RepMaths provides general fitness and nutrition calculators for
+      educational purposes. We cannot provide individualized medical,
+      dietary, or training advice. For personal health or training
+      decisions, please consult an appropriately qualified professional.
+    </p>
+
+    <p>
+      See our <a href="/disclaimer/">Disclaimer</a> for more information.
+    </p>
   </article>
+
+  <style>
+    .contact-page {
+      margin-top: 32px;
+    }
+
+    .contact-page h2 {
+      font-size: 1.2rem;
+      margin-top: 28px;
+    }
+
+    .contact-page ul {
+      color: #c7cbd2;
+      font-size: 0.95rem;
+      padding-left: 20px;
+      margin: 12px 0;
+    }
+
+    .contact-page li {
+      margin-bottom: 8px;
+    }
+
+    .contact-page p {
+      line-height: 1.7;
+    }
+
+    .contact-note {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+  </style>
 </Base>
