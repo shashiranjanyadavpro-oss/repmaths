@@ -2,7 +2,7 @@
   {
     "id": "1rm-calculator",
     "name": "1RM Calculator",
-    "url": "/tools/strength/1rm-calculator",
+    "url": "/tools/strength/1rm-calculator/",
     "shortDesc": "Estimate your one-rep max from any weight and rep count.",
     "icon": "1RM",
     "cluster": "strength",
@@ -11,7 +11,7 @@
   {
   "id": "bench-press-1rm-calculator",
   "name": "Bench Press Max Calculator",
-  "url": "/tools/strength/bench-press-1rm-calculator",
+  "url": "/tools/strength/bench-press-1rm-calculator/",
   "shortDesc": "Estimate your max bench press from weight and reps.",
   "icon": "BP",
   "cluster": "strength",
@@ -27,7 +27,7 @@
   {
     "id": "squat-1rm-calculator",
     "name": "Squat Max Calculator",
-    "url": "/tools/strength/squat-1rm-calculator",
+    "url": "/tools/strength/squat-1rm-calculator/",
     "shortDesc": "Estimate your max squat from weight and reps.",
     "icon": "SQ",
     "cluster": "strength",
@@ -36,7 +36,7 @@
   {
     "id": "deadlift-1rm-calculator",
     "name": "Deadlift Max Calculator",
-    "url": "/tools/strength/deadlift-1rm-calculator",
+    "url": "/tools/strength/deadlift-1rm-calculator/",
     "shortDesc": "Estimate your max deadlift from weight and reps.",
     "icon": "DL",
     "cluster": "strength",
@@ -45,7 +45,7 @@
   {
     "id": "overhead-press-1rm-calculator",
     "name": "Overhead Press Max Calculator",
-    "url": "/tools/strength/overhead-press-1rm-calculator",
+    "url": "/tools/strength/overhead-press-1rm-calculator/",
     "shortDesc": "Estimate your strict press or military press max from weight and reps.",
     "icon": "OH",
     "cluster": "strength",
@@ -57,7 +57,7 @@
   {
     "id": "rep-max-calculator",
     "name": "Rep Max Calculator",
-    "url": "/tools/strength/rep-max-calculator",
+    "url": "/tools/strength/rep-max-calculator/",
     "shortDesc": "Convert a known weight and reps to any target rep count.",
     "icon": "RM",
     "cluster": "strength",
@@ -66,7 +66,7 @@
   {
     "id": "1rm-percentage-calculator",
     "name": "1RM Percentage Calculator",
-    "url": "/tools/strength/1rm-percentage-calculator",
+    "url": "/tools/strength/1rm-percentage-calculator/",
     "shortDesc": "Find your weight at any training percentage, or reverse-calculate your 1RM.",
     "icon": "%",
     "cluster": "strength",
@@ -81,7 +81,7 @@
   {
     "id": "training-max-calculator",
     "name": "Training Max Calculator",
-    "url": "/tools/training/training-max-calculator",
+    "url": "/tools/training/training-max-calculator/",
     "shortDesc": "Convert your 1RM into a safe training max for 5/3/1 programs.",
     "icon": "TM",
     "cluster": "training",
@@ -90,7 +90,7 @@
   {
     "id": "531-calculator",
     "name": "5/3/1 Calculator",
-    "url": "/tools/training/531-calculator",
+    "url": "/tools/training/531-calculator/",
     "shortDesc": "Generate the full Wendler 5/3/1 four-week cycle from your training max.",
     "icon": "531",
     "cluster": "training",
@@ -99,7 +99,7 @@
   {
     "id": "warmup-set-calculator",
     "name": "Warm-Up Set Calculator",
-    "url": "/tools/training/warmup-set-calculator",
+    "url": "/tools/training/warmup-set-calculator/",
     "shortDesc": "Generate your full warm-up ramp from the empty bar to your working weight.",
     "icon": "WU",
     "cluster": "training",
@@ -108,7 +108,7 @@
   {
     "id": "rpe-rir-calculator",
     "name": "RPE & RIR Calculator",
-    "url": "/tools/training/rpe-rir-calculator",
+    "url": "/tools/training/rpe-rir-calculator/",
     "shortDesc": "Convert a completed set into your estimated 1RM using the RTS RPE chart.",
     "icon": "RPE",
     "cluster": "training",
@@ -117,7 +117,7 @@
   {
     "id": "plate-calculator",
     "name": "Barbell Plate Calculator",
-    "url": "/tools/equipment/plate-calculator",
+    "url": "/tools/equipment/plate-calculator/",
     "shortDesc": "Find exactly which plates to load on each side of the bar.",
     "icon": "PL",
     "cluster": "equipment",
@@ -126,7 +126,7 @@
   {
     "id": "tdee-calculator",
     "name": "TDEE Calculator",
-    "url": "/tools/nutrition/tdee-calculator",
+    "url": "/tools/nutrition/tdee-calculator/",
     "shortDesc": "Find your daily maintenance calories using the Mifflin-St Jeor equation.",
     "icon": "TDEE",
     "cluster": "nutrition",
@@ -135,7 +135,7 @@
   {
     "id": "bmr-calculator",
     "name": "BMR Calculator",
-    "url": "/tools/nutrition/bmr-calculator",
+    "url": "/tools/nutrition/bmr-calculator/",
     "shortDesc": "Find your Basal Metabolic Rate using Mifflin-St Jeor or Harris-Benedict.",
     "icon": "BMR",
     "cluster": "nutrition",
@@ -144,7 +144,7 @@
   {
     "id": "macro-calculator",
     "name": "Macro Calculator",
-    "url": "/tools/nutrition/macro-calculator",
+    "url": "/tools/nutrition/macro-calculator/",
     "shortDesc": "Convert your daily calories into protein, carb, and fat targets.",
     "icon": "MAC",
     "cluster": "nutrition",
@@ -153,7 +153,7 @@
   {
     "id": "protein-calculator",
     "name": "Protein Intake Calculator",
-    "url": "/tools/nutrition/protein-calculator",
+    "url": "/tools/nutrition/protein-calculator/",
     "shortDesc": "Find your daily protein range based on ISSN sports nutrition guidelines.",
     "icon": "PRO",
     "cluster": "nutrition",
@@ -162,7 +162,7 @@
   {
     "id": "water-intake-calculator",
     "name": "Water Intake Calculator",
-    "url": "/tools/nutrition/water-intake-calculator",
+    "url": "/tools/nutrition/water-intake-calculator/",
     "shortDesc": "Find your daily water target based on body weight and activity level.",
     "icon": "H2O",
     "cluster": "nutrition",
@@ -171,7 +171,7 @@
   {
   "id": "calorie-deficit-calculator",
   "name": "Calorie Deficit Calculator",
-  "url": "/tools/nutrition/calorie-deficit-calculator",
+  "url": "/tools/nutrition/calorie-deficit-calculator/",
   "shortDesc": "Calculate your daily calorie deficit, weight-loss target, and estimated timeline.",
   "icon": "DEF",
   "cluster": "nutrition",
@@ -180,7 +180,7 @@
   {
     "id": "body-fat-calculator",
     "name": "Body Fat Calculator",
-    "url": "/tools/nutrition/body-fat-calculator",
+    "url": "/tools/nutrition/body-fat-calculator/",
     "shortDesc": "Estimate your body fat percentage using the US Navy tape-measure method.",
     "icon": "BF%",
     "cluster": "nutrition",
@@ -189,7 +189,7 @@
   {
   "id": "bmi-calculator",
   "name": "BMI Calculator",
-  "url": "/tools/nutrition/bmi-calculator",
+  "url": "/tools/nutrition/bmi-calculator/",
   "shortDesc": "Calculate your BMI and see your adult BMI category and BMI-based weight range.",
   "icon": "BMI",
   "cluster": "nutrition",
@@ -198,7 +198,7 @@
   {
   "id": "lean-body-mass-calculator",
   "name": "Lean Body Mass Calculator",
-  "url": "/tools/nutrition/lean-body-mass-calculator",
+  "url": "/tools/nutrition/lean-body-mass-calculator/",
   "shortDesc": "Calculate lean body mass from body fat percentage or estimate it with the Boer, James, or Hume formula.",
   "icon": "LBM",
   "cluster": "nutrition",
@@ -207,7 +207,7 @@
   {
   "id": "ffmi-calculator",
   "name": "FFMI Calculator",
-  "url": "/tools/nutrition/ffmi-calculator",
+  "url": "/tools/nutrition/ffmi-calculator/",
   "shortDesc": "Calculate your fat-free mass index, normalized FFMI, and lean mass from body composition.",
   "icon": "FFMI",
   "cluster": "nutrition",
@@ -222,7 +222,7 @@
   {
   "id": "ideal-weight-calculator",
   "name": "Ideal Weight Calculator",
-  "url": "/tools/nutrition/ideal-weight-calculator",
+  "url": "/tools/nutrition/ideal-weight-calculator/",
   "shortDesc": "Compare Devine, Robinson, Miller, and Hamwi ideal body weight estimates with a BMI-based healthy weight range.",
   "icon": "IBW",
   "cluster": "nutrition",
@@ -237,7 +237,7 @@
   {
   "id": "calories-burned-calculator",
   "name": "Calories Burned Calculator",
-  "url": "/tools/nutrition/calories-burned-calculator",
+  "url": "/tools/nutrition/calories-burned-calculator/",
   "shortDesc": "Estimate calories burned from walking, running, lifting, cycling, cardio, and other activities using MET values.",
   "icon": "CAL",
   "cluster": "nutrition",
@@ -251,7 +251,7 @@
   {
   "id": "strength-standards-calculator",
   "name": "Strength Standards Calculator",
-  "url": "/tools/strength/strength-standards-calculator",
+  "url": "/tools/strength/strength-standards-calculator/",
   "shortDesc": "Compare your bench, squat, deadlift, or OHP 1RM with bodyweight-based reference standards.",
   "icon": "STD",
   "cluster": "strength",
