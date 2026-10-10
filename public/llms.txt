@@ -1,25 +1,76 @@
 # RepMaths
 
+> Free, fast, ad-free fitness calculator suite — 25+ tools covering strength, training, nutrition, and body composition.
+
+Last updated: 2026-10-11
+
 ## About
-RepMaths is a premium, lightning-fast suite of fitness calculators, strength training generators, and nutrition planners. Designed for powerlifters, bodybuilders, athletes, and fitness enthusiasts, it provides evidence-based tools for optimizing workout programming, auto-regulation, body composition, and macronutrient tracking.
+
+RepMaths is a free suite of fitness calculators, strength training generators, and nutrition planners. Designed for powerlifters, bodybuilders, athletes, and fitness enthusiasts. It provides evidence-based tools for workout programming, auto-regulation, body composition, and macronutrient tracking.
+
+All calculators run client-side in the browser — no sign-up, no ads, no paywall.
 
 ## Key Tools & Calculators
-- **Strength & Powerlifting:** One Rep Max (1RM) Calculator (including specific Bench Press Max Calculator and Military Press 1RM Estimator), Overhead Press 1RM (Brzycki/Epley), Training Max (TM) Calculator, Wendler 5/3/1 Program Planner, Warm-up Set Generator (CNS Priming), RPE to RIR Calculator.
-- **Gym Math & Equipment:** Barbell Plate Loading Calculator (easily determine how much is a 45 on each side, or how many plates is 135, 225, or 315), Weight Plate Calculator.
-- **Nutrition & Body Composition:** TDEE Calculator (Mifflin-St Jeor), BMR Calculator (Mifflin St Jeor Formula Calculator), Macro Split Calculator (Cutting/Bulking/Maintenance), Protein Intake Calculator (Hypertrophy/Fat Loss), Daily Water Intake Calculator (Calculate daily water intake or how much water should I drink), Body Fat Percentage Calculator (US Navy Method).
 
-## Key Pages & Navigation
+### Strength & Powerlifting
+- **1RM Calculator** — estimates one-rep max using Epley, Brzycki, Lander, or Lombardi formulas
+- **Bench Press / Squat / Deadlift / Overhead Press Max Calculators** — lift-specific 1RM estimators
+- **Rep Max Calculator** — converts known weight and reps to any target rep count
+- **1RM Percentage Calculator** — finds training weight at any percentage of 1RM
+- **Strength Standards Calculator** — compares 1RM to bodyweight-based reference standards
+
+### Training & Programming
+- **Training Max Calculator** — converts 1RM into a training max for 5/3/1 programs
+- **5/3/1 Calculator** — generates the full Wendler 5/3/1 four-week cycle
+- **Warm-Up Set Calculator** — builds a warm-up ramp from empty bar to working weight
+- **RPE & RIR Calculator** — converts a completed set to an estimated 1RM using the RTS RPE chart
+
+### Gym Math & Equipment
+- **Barbell Plate Calculator** — determines plates to load on each side of the bar
+
+### Nutrition & Body Composition
+- **TDEE Calculator** — daily maintenance calories using Mifflin-St Jeor
+- **BMR Calculator** — Basal Metabolic Rate using Mifflin-St Jeor or Harris-Benedict
+- **Macro Calculator** — protein, carbohydrate, and fat targets for cutting, bulking, or maintenance
+- **Protein Intake Calculator** — daily protein range based on ISSN sports nutrition guidance
+- **Water Intake Calculator** — daily water target based on body weight and activity level
+- **Calorie Deficit Calculator** — daily calorie deficit and estimated weight-loss timeline
+- **Body Fat Calculator** — body fat percentage using the US Navy tape-measure method
+- **BMI Calculator** — adult BMI, category, and BMI-based weight range
+- **Lean Body Mass Calculator** — LBM from body fat percentage or predictive equations
+- **FFMI Calculator** — fat-free mass index and normalized FFMI
+- **Ideal Weight Calculator** — ideal body weight estimates and BMI-based healthy range
+- **Calories Burned Calculator** — calories burned from activity using MET values
+
+## How RepMaths is organized
+
+RepMaths calculators are organized into four categories:
+
+- [Strength calculators](https://repmaths.com/tools/strength/) — 1RM, bench press, squat, deadlift, overhead press
+- [Training calculators](https://repmaths.com/tools/training/) — 5/3/1, training max, RPE/RIR, warm-up sets
+- [Equipment calculators](https://repmaths.com/tools/equipment/) — barbell plate loading
+- [Nutrition calculators](https://repmaths.com/tools/nutrition/) — TDEE, BMR, macros, protein, body fat, BMI, FFMI
+
+Full calculator directory: [All tools](https://repmaths.com/tools/)
+
+## Key Pages
+
 - [RepMaths Home](https://repmaths.com/)
-- [All Tools Directory](https://repmaths.com/tools/)
-- [Strength & Lifting Tools](https://repmaths.com/tools/strength/)
-- [Training Programs](https://repmaths.com/tools/training/)
-- [Gym Math & Equipment](https://repmaths.com/tools/equipment/)
-- [Nutrition & Health Tools](https://repmaths.com/tools/nutrition/)
+- [About RepMaths](https://repmaths.com/about/)
+- [Contact](https://repmaths.com/contact/)
 
 ## Content & Methodology
-- Strictly utilizes scientifically validated algorithms and models (e.g., Mifflin-St Jeor, US DoD Navy Tape Method, Reactive Training Systems RPE scale).
-- Core focus areas: CNS fatigue management, determining one rep max safely, submaximal training, muscle hypertrophy, absolute strength programming, and sustainable body recomposition.
-- Application design: Ad-free, instant client-side calculation, mobile-first responsive architecture.
+
+- Uses scientifically validated algorithms: Mifflin-St Jeor for BMR/TDEE, US Navy tape method for body fat, Epley/Brzycki/Lander/Lombardi for 1RM, Reactive Training Systems (RTS) RPE scale, ISSN protein guidelines, and MET values for calories burned.
+- Core focus areas: CNS fatigue management, safe one-rep max determination, submaximal training, muscle hypertrophy, absolute strength programming, and sustainable body recomposition.
+- Application design: ad-free, instant client-side calculation, mobile-first responsive architecture.
+
+## Machine-readable resources
+
+- [AI catalog](https://repmaths.com/.well-known/ard.json) — structured metadata for AI systems
+- [Calculator index](https://repmaths.com/.well-known/repmaths-calculators.md) — full machine-readable tool list
+- [Sitemap](https://repmaths.com/sitemap.xml) — XML sitemap
 
 ## Usage & Disclaimer
+
 All content, tools, and generated calculations are provided for informational and educational purposes only. They do not constitute medical advice. Users should consult a qualified healthcare or certified fitness professional before beginning any new rigorous training block or severe caloric diet regimen.
