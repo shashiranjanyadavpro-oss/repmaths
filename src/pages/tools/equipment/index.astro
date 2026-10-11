@@ -1,22 +1,74 @@
 ---
 import Base from '../../../layouts/Base.astro';
 import toolsData from '../../../data/tools.json';
+
 const tools = toolsData.filter((t) => t.cluster === "equipment");
+
+const categorySchema = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "CollectionPage",
+      "@id": "https://repmaths.com/tools/equipment/#webpage",
+      "url": "https://repmaths.com/tools/equipment/",
+      "name": "Gym Equipment & Barbell Plate Calculators",
+      "description":
+        "Free gym equipment calculators: determine the correct barbell plates for any target weight in kg or lb.",
+      "isPartOf": {
+        "@id": "https://repmaths.com/#website",
+      },
+    },
+    {
+      "@type": "ItemList",
+      "@id": "https://repmaths.com/tools/equipment/#itemlist",
+      "name": "Equipment Calculators",
+      "itemListElement": tools.map((tool, index) => ({
+        "@type": "ListItem",
+        "position": index + 1,
+        "name": tool.name,
+        "url": `https://repmaths.com${tool.url}`,
+      })),
+    },
+  ],
+};
 ---
 
 <Base
-  title="Plate & Equipment Calculators | RepMaths"
-  description="Free gym equipment calculators: Barbell plate loading calculator to quickly determine the correct plates for any target weight."
-  breadcrumbs={[{ "name": "Home", "href": "/" }, { "name": "Tools", "href": "/tools/" }, { "name": "Plate & Equipment" }]}
+  title="Gym Equipment & Plate Calculators (Lb & Kg) | RepMaths"
+  description="Free gym equipment calculators. Instantly calculate barbell plate loading for any target weight in kilograms (kg) or pounds (lb). No mental math required."
+  breadcrumbs={[
+    { name: "Home", href: "/" },
+    { name: "Tools", href: "/tools/" },
+    { name: "Plate & Equipment" },
+  ]}
 >
+  <script
+    type="application/ld+json"
+    set:html={JSON.stringify(categorySchema)}
+  />
+
   <section class="hero">
-    <h1>Plate & Equipment</h1>
-    <p>Load the bar correctly, every time without the math headache.</p>
+    <h1>Plate &amp; Equipment Calculators</h1>
+    <p>
+      Load the bar correctly, every time. Stop doing mental gym math and
+      save your energy for the lift.
+    </p>
   </section>
+
+  <aside class="quick-answer" aria-label="Quick answer">
+    <p>
+      <strong>Why use an equipment calculator?</strong> Figuring out
+      barbell plates mid-workout causes friction. Our tools handle
+      standard plate denominations for both <strong>kilograms (kg)</strong>
+      and <strong>pounds (lb)</strong>, factoring in common bar weights
+      (45 lb, 35 lb, 20 kg, 15 kg) so you can load the exact weight safely
+      and accurately.
+    </p>
+  </aside>
 
   <div class="tool-grid">
     {tools.map((tool) => (
-      <a class="tool-card" href={tool.url}>
+      <a class="tool-card" href={tool.url} title={tool.name}>
         <span class="icon" aria-hidden="true">{tool.icon}</span>
         <span class="name">{tool.name}</span>
         <span class="desc">{tool.shortDesc}</span>
@@ -24,29 +76,97 @@ const tools = toolsData.filter((t) => t.cluster === "equipment");
     ))}
   </div>
 
-  <section class="seo-content">
-    <h2>Why Use a Plate Loading Calculator?</h2>
+  <section class="article-section">
+    <h2>Barbell Plate Loading, Made Simple</h2>
+
     <p>
-      Figuring out exactly which plates to load on the barbell can be confusing and time-consuming, especially when fatigue sets in or when dealing with different bar weights. Our <strong>Plate Loading Calculator</strong> eliminates the mental math, ensuring you load the bar accurately every single time. Spend less time calculating and more time lifting safely.
+      Figuring out which plates to load for a target weight is a common
+      source of mental math in the gym — especially when jumping between
+      US standard (lb) and international Olympic (kg) equipment. The
+      RepMaths <strong>Barbell Plate Calculator</strong> removes that
+      friction completely. Just enter your target weight and bar weight,
+      and it shows exactly which plates to load on each side of the bar.
     </p>
+
+    <p>
+      Whether you are lifting in a commercial gym or building a home gym,
+      our calculators support standard plate sets:
+    </p>
+
+    <ul>
+      <li>
+        <strong>Kilogram (kg) plates:</strong> 25, 20, 15, 10, 5, 2.5,
+        and 1.25 kg
+      </li>
+      <li>
+        <strong>Pound (lb) plates:</strong> 45, 35, 25, 10, 5, and 2.5 lb
+      </li>
+    </ul>
+
+    <p>
+      Use these equipment tools alongside our
+      <a href="/tools/strength/1rm-calculator/">1RM Calculator</a>
+      to plan your top working sets, or the
+      <a href="/tools/training/warmup-set-calculator/">Warm-Up Set Calculator</a>
+      to build a complete, safe ramp-up from the empty bar to your
+      heaviest lift.
+    </p>
+  </section>
+
+  <section class="article-section">
+    <h2>Explore Related Calculators</h2>
+
+    <ul>
+      <li>
+        <a href="/tools/strength/">1RM &amp; Strength Calculators</a>
+        — 1RM estimation, bench press, squat, deadlift, overhead press
+      </li>
+      <li>
+        <a href="/tools/training/">Training &amp; Programming</a>
+        — 5/3/1 planning, training max, RPE/RIR, warm-up sets
+      </li>
+      <li>
+        <a href="/tools/nutrition/">Nutrition &amp; Body Composition</a>
+        — TDEE, macros, protein intake, body fat, BMI, FFMI
+      </li>
+    </ul>
   </section>
 
   <style>
     .hero {
       margin-bottom: 24px;
     }
-    
+
     .hero p {
       color: var(--text-muted);
       font-size: 1.05rem;
       max-width: 600px;
     }
 
+    .quick-answer {
+      background: var(--surface);
+      border-left: 4px solid var(--accent);
+      border-radius: 6px;
+      padding: 16px 18px;
+      margin: 0 0 24px;
+    }
+
+    .quick-answer p {
+      margin: 0;
+      color: #c7cbd2;
+      font-size: 0.92rem;
+      line-height: 1.6;
+    }
+
+    .quick-answer strong {
+      color: var(--accent);
+    }
+
     .tool-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
       gap: 12px;
-      margin: 24px 0 48px;
+      margin: 0 0 32px;
     }
 
     .tool-card {
@@ -55,46 +175,32 @@ const tools = toolsData.filter((t) => t.cluster === "equipment");
       border-radius: var(--radius);
       padding: 18px 14px;
       text-align: center;
+      text-decoration: none;
       transition:
         border-color 0.15s ease,
-        transform 0.15s ease;
+        transform 0.15s ease,
+        box-shadow 0.15s ease;
     }
 
     .tool-card:hover {
       border-color: var(--accent);
       transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
     }
 
     .tool-card .name {
       color: var(--text);
       font-weight: 600;
-      font-size: 0.92rem;
+      font-size: 0.95rem;
       display: block;
-      margin-bottom: 4px;
+      margin-bottom: 6px;
     }
 
     .tool-card .desc {
       color: var(--text-muted);
-      font-size: 0.78rem;
-    }
-
-    /* SEO Content Styling */
-    .seo-content {
-      border-top: 1px solid var(--border);
-      padding-top: 32px;
-      margin-top: 32px;
-    }
-
-    .seo-content h2 {
-      font-size: 1.25rem;
-      color: var(--text);
-      margin-bottom: 12px;
-    }
-
-    .seo-content p {
-      color: var(--text-muted);
-      line-height: 1.6;
-      font-size: 0.95rem;
+      font-size: 0.8rem;
+      display: block;
+      line-height: 1.4;
     }
   </style>
 </Base>
