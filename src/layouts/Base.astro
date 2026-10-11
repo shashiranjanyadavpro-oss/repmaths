@@ -27,24 +27,28 @@ const {
   faqs = [],
 } = Astro.props;
 
-// Keep canonical URLs clean by removing query strings and hashes.
-const canonicalUrl = new URL(Astro.url);
+// Always use the production domain so preview hosts never become canonical.
+const siteUrl = (Astro.site ?? new URL("https://repmaths.com")).origin;
+const canonicalUrl = new URL(Astro.url.pathname, siteUrl);
 canonicalUrl.search = "";
 canonicalUrl.hash = "";
 
-// Normalize trailing slash — matches how Google has indexed the site.
+// Keep the site's trailing-slash URL format consistent.
 if (!canonicalUrl.pathname.endsWith("/")) {
   canonicalUrl.pathname += "/";
 }
 
-const siteUrl = canonicalUrl.origin;
-
-// Only output breadcrumb data when there is a real hierarchy.
+// Only output breadcrumb data when a real hierarchy is provided.
 const hasBreadcrumbs = breadcrumbs.length >= 2;
 
-// Normalize breadcrumb hrefs to trailing slash as well.
-const normalizeHref = (href: string) =>
-  href.endsWith("/") ? href : href + "/";
+// Resolve both root-relative and absolute hrefs against the production domain.
+const normalizeHref = (href: string) => {
+  const url = new URL(href, siteUrl);
+  url.search = "";
+  url.hash = "";
+  if (!url.pathname.endsWith("/")) url.pathname += "/";
+  return url.href;
+};
 
 const breadcrumbSchema = hasBreadcrumbs
   ? {
@@ -56,12 +60,7 @@ const breadcrumbSchema = hasBreadcrumbs
           position: index + 1,
           name: item.name,
         };
-
-        // Google allows the final breadcrumb item to omit "item".
-        if (item.href) {
-          listItem.item = new URL(normalizeHref(item.href), siteUrl).href;
-        }
-
+        if (item.href) listItem.item = normalizeHref(item.href);
         return listItem;
       }),
     }
@@ -74,8 +73,8 @@ const websiteSchema = {
   name: "RepMaths",
   url: siteUrl,
   inLanguage: "en",
-  description:
-    "Free strength, fitness and training calculators with clear formulas and practical results.",
+  description: "Free strength, fitness, nutrition and training calculators with clear formulas and practical results.",
+  publisher: { "@id": `${siteUrl}/#organization` },
 };
 
 const organizationSchema = {
@@ -84,8 +83,31 @@ const organizationSchema = {
   "@id": `${siteUrl}/#organization`,
   name: "RepMaths",
   url: siteUrl,
-  logo: `${siteUrl}/icon-512.png`,
+  logo: {
+    "@type": "ImageObject",
+    url: `${siteUrl}/icon-512.png`,
+  },
 };
+
+const webPageSchema = {
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "@id": `${canonicalUrl.href}#webpage`,
+  url: canonicalUrl.href,
+  name: title,
+  description,
+  inLanguage: "en",
+  isPartOf: { "@id": `${siteUrl}/#website` },
+  publisher: { "@id": `${siteUrl}/#organization` },
+  ...(hasBreadcrumbs ? { breadcrumb: { "@id": `${canonicalUrl.href}#breadcrumbs` } } : {}),
+};
+
+const breadcrumbJsonLd = breadcrumbSchema
+  ? { ...breadcrumbSchema, "@id": `${canonicalUrl.href}#breadcrumbs` }
+  : null;
+
+// Keep structured FAQ content aligned with FAQs visible on the page.
+// FAQ rich-result display is controlled by search engines and is not guaranteed.
 
 // FAQ structured data (AEO/GEO) — pages can pass their FAQ items.
 const faqSchema =
@@ -96,13 +118,13 @@ const faqSchema =
         mainEntity: faqs.map((faq) => ({
           "@type": "Question",
           name: faq.question,
-          acceptedAnswer: {
-            "@type": "Answer",
-            text: faq.answer,
-          },
+          acceptedAnswer: { "@type": "Answer", text: faq.answer },
         })),
       }
     : null;
+
+// Prevent user-controlled text from accidentally closing a JSON-LD script tag.
+const jsonLd = (value: unknown) => JSON.stringify(value).replace(/</g, "\\u003c");
 ---
 
 <!DOCTYPE html>
@@ -111,7 +133,19 @@ const faqSchema =
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
+  <!-- GA4: preconnect early, load async -->
+  <link rel="preconnect" href="https://www.googletagmanager.com" />
+  <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-DC5Y64ZHYT"></script>
+  <script is:inline>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-DC5Y64ZHYT');
+  </script>
+
   <meta name="theme-color" content="#0f1115" />
+  <meta name="color-scheme" content="dark" />
 
   <!-- Favicon & PWA -->
   <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
@@ -120,10 +154,9 @@ const faqSchema =
 
   <title>{title}</title>
   <meta name="description" content={description} />
+  <meta name="robots" content={noindex ? "noindex, nofollow" : "index, follow, max-image-preview:large"} />
 
   <link rel="canonical" href={canonicalUrl.href} />
-
-  {noindex && <meta name="robots" content="noindex, nofollow" />}
 
   <!-- RepMaths machine-readable resources (GEO) -->
   <link
@@ -148,10 +181,7 @@ const faqSchema =
   <meta property="og:image" content={`${siteUrl}/og-image.png`} />
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="630" />
-  <meta
-    property="og:image:alt"
-    content="RepMaths — Free strength, fitness and nutrition calculators"
-  />
+  <meta property="og:image:alt" content="RepMaths — Free strength and nutrition calculators" />
   <meta property="og:image:type" content="image/png" />
 
   <!-- Twitter -->
@@ -159,31 +189,14 @@ const faqSchema =
   <meta name="twitter:title" content={title} />
   <meta name="twitter:description" content={description} />
   <meta name="twitter:image" content={`${siteUrl}/og-image.png`} />
-  <meta
-    name="twitter:image:alt"
-    content="RepMaths — Free strength, fitness and nutrition calculators"
-  />
+  <meta name="twitter:image:alt" content="RepMaths — free strength, fitness and nutrition calculators" />
 
-  <!-- Global structured data -->
-  <script type="application/ld+json" set:html={JSON.stringify(websiteSchema)} />
-  <script
-    type="application/ld+json"
-    set:html={JSON.stringify(organizationSchema)}
-  />
-
-  {breadcrumbSchema && (
-    <script
-      type="application/ld+json"
-      set:html={JSON.stringify(breadcrumbSchema)}
-    />
-  )}
-
-  {faqSchema && (
-    <script
-      type="application/ld+json"
-      set:html={JSON.stringify(faqSchema)}
-    />
-  )}
+  <!-- Global and page-specific structured data; content must match the page. -->
+  <script type="application/ld+json" set:html={jsonLd(websiteSchema)} />
+  <script type="application/ld+json" set:html={jsonLd(organizationSchema)} />
+  <script type="application/ld+json" set:html={jsonLd(webPageSchema)} />
+  {breadcrumbJsonLd && <script type="application/ld+json" set:html={jsonLd(breadcrumbJsonLd)} />}
+  {faqSchema && <script type="application/ld+json" set:html={jsonLd(faqSchema)} />}
 
   <style is:global>
     :root {
@@ -204,20 +217,21 @@ const faqSchema =
       box-sizing: border-box;
     }
 
-    html,
+    html {
+      scroll-behavior: smooth;
+      scroll-padding-top: 88px;
+    }
+
     body {
       margin: 0;
       padding: 0;
       background: var(--bg);
       color: var(--text);
-      font-family:
-        -apple-system,
-        BlinkMacSystemFont,
-        "Segoe UI",
-        Roboto,
-        sans-serif;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
       line-height: 1.55;
     }
+
+    img, video, iframe { max-width: 100%; }
 
     a {
       color: var(--accent);
@@ -227,6 +241,30 @@ const faqSchema =
     a:hover {
       color: var(--accent-hover);
     }
+
+    a:focus-visible,
+    button:focus-visible,
+    input:focus-visible,
+    select:focus-visible,
+    textarea:focus-visible {
+      outline: 3px solid var(--accent-hover);
+      outline-offset: 3px;
+    }
+
+    .skip-link {
+      position: absolute;
+      top: 8px;
+      left: 8px;
+      z-index: 1000;
+      padding: 10px 14px;
+      transform: translateY(-160%);
+      background: var(--surface);
+      color: var(--text);
+      border: 2px solid var(--accent);
+      border-radius: 8px;
+    }
+
+    .skip-link:focus { transform: translateY(0); }
 
     .container {
       max-width: var(--max-width);
@@ -348,7 +386,8 @@ const faqSchema =
       margin-bottom: 16px;
     }
 
-    .field label {
+    .field label,
+    .field-label {
       display: block;
       font-size: 0.85rem;
       color: var(--text-muted);
@@ -356,7 +395,8 @@ const faqSchema =
     }
 
     .field input,
-    .field select {
+    .field select,
+    .field textarea {
       width: 100%;
       padding: 12px 14px;
       background: var(--surface-2);
@@ -367,8 +407,10 @@ const faqSchema =
     }
 
     .field input:focus,
-    .field select:focus {
-      outline: none;
+    .field select:focus,
+    .field textarea:focus {
+      outline: 2px solid var(--accent);
+      outline-offset: 1px;
       border-color: var(--accent);
     }
 
@@ -381,6 +423,7 @@ const faqSchema =
     .unit-toggle button {
       flex: 1;
       min-width: 70px;
+      min-height: 44px;
       padding: 10px;
       background: var(--surface-2);
       border: 1px solid var(--border);
@@ -397,6 +440,7 @@ const faqSchema =
 
     .btn-primary {
       width: 100%;
+      min-height: 44px;
       padding: 14px;
       background: var(--accent);
       color: #fff;
@@ -421,14 +465,14 @@ const faqSchema =
       display: none;
     }
 
-    .result-box.show {
-      display: block;
-    }
+    .result-box.show { display: block; }
+    .result-box[hidden] { display: none !important; }
 
     .result-box .big-number {
-      font-size: 2.4rem;
+      font-size: clamp(1.8rem, 7vw, 2.4rem);
       font-weight: 700;
       color: var(--success);
+      overflow-wrap: anywhere;
     }
 
     .result-box .label {
@@ -447,6 +491,12 @@ const faqSchema =
     .result-table td {
       padding: 8px 6px;
       border-bottom: 1px solid var(--border);
+    }
+
+    .result-table caption {
+      text-align: left;
+      color: var(--text-muted);
+      padding: 0 0 8px;
     }
 
     .result-table td:last-child {
@@ -540,6 +590,7 @@ const faqSchema =
 
     .result-actions {
       display: flex;
+      flex-wrap: wrap;
       gap: 8px;
       margin-top: 14px;
     }
@@ -556,30 +607,40 @@ const faqSchema =
       color: var(--text-muted);
       margin-top: 4px;
     }
+
+    .error-message {
+      color: #ffb4a8;
+      font-size: 0.9rem;
+      margin-top: 8px;
+    }
+
+    @media (max-width: 480px) {
+      .container { padding-left: 16px; padding-right: 16px; }
+      .calc-card { padding: 18px; }
+      .result-box { padding: 16px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+      }
+    }
   </style>
-
-  <!-- Preconnect for GA4 -->
-  <link rel="preconnect" href="https://www.googletagmanager.com" />
-  <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
-
-  <!-- Google tag (gtag.js) -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-DC5Y64ZHYT"></script>
-  <script is:inline>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'G-DC5Y64ZHYT');
-  </script>
 </head>
 
 <body>
+  <a class="skip-link" href="#main-content">Skip to main content</a>
   <header class="site-header">
     <div class="container">
-      <a href="/" class="logo">Rep<span>Maths</span></a>
+      <a href="/" class="logo" aria-label="RepMaths home">Rep<span>Maths</span></a>
     </div>
   </header>
 
-  <main class="container">
+  <main id="main-content" class="container" tabindex="-1">
     {hasBreadcrumbs && (
       <nav class="breadcrumbs" aria-label="Breadcrumb">
         <ol>
@@ -600,20 +661,22 @@ const faqSchema =
   </main>
 
   <footer class="site-footer">
-  <div class="container">
-    <a href="/tools/">All Tools</a>
-    <a href="/about/">About</a>
-    <a href="/privacy-policy/">Privacy Policy</a>
-    <a href="/contact/">Contact</a>
-    <a href="/disclaimer/">Disclaimer</a>
-    <a href="/terms/">Terms</a>
+    <div class="container">
+      <nav aria-label="Footer">
+      <a href="/tools/">All Tools</a>
+      <a href="/about/">About</a>
+      <a href="/privacy-policy/">Privacy Policy</a>
+      <a href="/contact/">Contact</a>
+      <a href="/disclaimer/">Disclaimer</a>
+      <a href="/terms/">Terms</a>
+      </nav>
 
-    <p>
-      &copy; 2026 RepMaths. Calculators use established, peer-referenced
-      formulas for educational purposes only.
-      <a href="/about/">See our methods</a>.
-    </p>
-  </div>
-</footer>
+      <p>
+        &copy; 2026 RepMaths. Calculators use established, peer-referenced
+        formulas for educational purposes only.
+        <a href="/about/">See our methods</a>.
+      </p>
+    </div>
+  </footer>
 </body>
 </html>
