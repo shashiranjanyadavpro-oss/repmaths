@@ -7,45 +7,77 @@ const categories = [
     label: "1RM & Strength Calculators",
     url: "/tools/strength/",
     description:
-      "Estimate one-rep max with Epley, Brzycki, Lander, and Lombardi formulas. Includes lift-specific calculators for bench press, squat, deadlift, and overhead press, plus 1RM percentages and strength standards.",
+      "Estimate one rep max for bench press, squat, deadlift, and overhead press. Includes 1RM percentages, rep max conversion, and strength standards.",
     count: 8,
-    icon: "1RM",
   },
   {
     id: "training",
     label: "Training & Programming",
     url: "/tools/training/",
     description:
-      "Convert 1RM into a training max, generate a full Wendler 5/3/1 cycle, build warm-up ramps, and convert RPE/RIR to estimated max using the RTS chart.",
+      "Convert 1RM into a training max, generate a 5/3/1 cycle, build warm-up ramps, and convert RPE or RIR to estimated max.",
     count: 4,
-    icon: "531",
   },
   {
     id: "equipment",
-    label: "Gym Equipment",
+    label: "Plate & Equipment",
     url: "/tools/equipment/",
     description:
-      "Work out barbell plate loading per side of the bar for any target weight — no mental math required.",
+      "Work out barbell plate loading per side for any target weight in kilograms or pounds.",
     count: 1,
-    icon: "PL",
   },
   {
     id: "nutrition",
     label: "Nutrition & Body Composition",
     url: "/tools/nutrition/",
     description:
-      "Calculate TDEE, BMR, macros, protein intake, body fat percentage, BMI, FFMI, lean body mass, ideal weight, water intake, and calories burned using established formulas.",
+      "Calculate TDEE, BMR, macros, protein, body fat, BMI, FFMI, lean body mass, ideal weight, water intake, and calories burned.",
     count: 12,
-    icon: "TDEE",
   },
 ];
+
+const pageSchema = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "CollectionPage",
+      "@id": "https://repmaths.com/tools/#webpage",
+      "url": "https://repmaths.com/tools/",
+      "name": "Fitness Calculator Categories",
+      "description":
+        "Browse RepMaths fitness calculators by category: strength, training, equipment, and nutrition.",
+      "isPartOf": {
+        "@id": "https://repmaths.com/#website",
+      },
+    },
+    {
+      "@type": "ItemList",
+      "@id": "https://repmaths.com/tools/#itemlist",
+      "name": "Calculator Categories",
+      "itemListElement": categories.map((cat, index) => ({
+        "@type": "ListItem",
+        "position": index + 1,
+        "name": cat.label,
+        "url": `https://repmaths.com${cat.url}`,
+      })),
+    },
+  ],
+};
 ---
 
 <Base
   title="Fitness Calculator Categories | RepMaths"
-  description="Browse RepMaths fitness calculators by category: strength, training, gym equipment, and nutrition & body composition."
-  breadcrumbs={[{ name: "Home", href: "/" }, { name: "Tools" }]}
+  description="Browse RepMaths fitness calculators by category: strength, training, equipment, and nutrition & body composition."
+  breadcrumbs={[
+    { name: "Home", href: "/" },
+    { name: "Tools" },
+  ]}
 >
+  <script
+    type="application/ld+json"
+    set:html={JSON.stringify(pageSchema)}
+  />
+
   <section class="hero">
     <h1>Browse Fitness Calculators by Category</h1>
     <p>
@@ -54,10 +86,9 @@ const categories = [
     </p>
   </section>
 
-  <section class="category-grid">
+  <div class="category-grid">
     {categories.map((cat) => (
       <a class="category-card" href={cat.url}>
-        <span class="cat-icon" aria-hidden="true">{cat.icon}</span>
         <span class="cat-label">{cat.label}</span>
         <span class="cat-desc">{cat.description}</span>
         <span class="cat-count">
@@ -65,51 +96,33 @@ const categories = [
         </span>
       </a>
     ))}
-  </section>
+  </div>
 
   <section class="article-section">
-    <h2>How RepMaths is Organized</h2>
+    <h2>How RepMaths Is Organized</h2>
 
     <p>
-      RepMaths provides a complete suite of free fitness calculators for
-      lifters, athletes, and anyone tracking training or nutrition. Every
-      tool runs directly in your browser, requires no sign-up, and uses
-      established, cited formulas.
-    </p>
-
-    <p>
-      The <strong>strength</strong> category covers one-rep max estimation
-      using Epley, Brzycki, Lander, and Lombardi formulas, along with
-      lift-specific calculators for bench press, squat, deadlift, and
-      overhead press, 1RM percentage tables, and bodyweight-based strength
+      The <strong>strength</strong> category covers one rep max
+      estimation for the four main barbell lifts, along with 1RM
+      percentages, rep max conversion, and bodyweight-based strength
       standards.
     </p>
 
     <p>
-      The <strong>training</strong> category handles programming — training
-      max, 5/3/1 cycles, warm-up ramps, and RPE/RIR conversion using the
-      Reactive Training Systems chart.
+      The <strong>training</strong> category handles programming —
+      training max, 5/3/1 cycles, warm-up ramps, and RPE/RIR conversion.
     </p>
 
     <p>
-      The <strong>equipment</strong> category covers gym math, including
+      The <strong>equipment</strong> category handles gym math, including
       barbell plate loading for any target weight.
     </p>
 
     <p>
-      The <strong>nutrition</strong> category includes energy and body
-      composition tools: TDEE and BMR using Mifflin-St Jeor, macro and
-      protein targets based on ISSN guidance, body fat using the US Navy
-      tape method, BMI, FFMI, lean body mass, ideal weight, water intake,
-      and calories burned using MET values.
-    </p>
-
-    <p>
-      Not sure where to start? The
-      <a href="/tools/strength/1rm-calculator/">1RM Calculator</a>,
-      <a href="/tools/nutrition/tdee-calculator/">TDEE Calculator</a>, and
-      <a href="/tools/nutrition/bmi-calculator/">BMI Calculator</a>
-      are among the most widely used tools on RepMaths.
+      The <strong>nutrition</strong> category includes energy balance and
+      body composition tools: TDEE, BMR, macros, protein, body fat, BMI,
+      FFMI, lean body mass, ideal weight, water intake, and calories
+      burned.
     </p>
   </section>
 
@@ -127,8 +140,8 @@ const categories = [
     .category-grid {
       display: grid;
       grid-template-columns: 1fr;
-      gap: 16px;
-      margin: 24px 0 40px;
+      gap: 14px;
+      margin: 0 0 32px;
     }
 
     @media (min-width: 640px) {
@@ -142,32 +155,18 @@ const categories = [
       background: var(--surface);
       border: 1px solid var(--border);
       border-radius: var(--radius);
-      padding: 22px 20px;
+      padding: 20px;
       text-decoration: none;
       transition:
         border-color 0.15s ease,
-        transform 0.15s ease;
+        transform 0.15s ease,
+        box-shadow 0.15s ease;
     }
 
     .category-card:hover {
       border-color: var(--accent);
       transform: translateY(-2px);
-    }
-
-    .cat-icon {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      width: 42px;
-      height: 42px;
-      margin-bottom: 14px;
-      background: var(--surface-2);
-      border: 1px solid var(--accent);
-      border-radius: 12px;
-      color: var(--accent);
-      font-size: 0.85rem;
-      font-weight: 800;
-      letter-spacing: 0;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
     }
 
     .cat-label {
