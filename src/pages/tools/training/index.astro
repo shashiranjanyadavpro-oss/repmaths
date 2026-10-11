@@ -1,22 +1,77 @@
 ---
 import Base from '../../../layouts/Base.astro';
 import toolsData from '../../../data/tools.json';
+
 const tools = toolsData.filter((t) => t.cluster === "training");
+
+const categorySchema = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "CollectionPage",
+      "@id": "https://repmaths.com/tools/training/#webpage",
+      "url": "https://repmaths.com/tools/training/",
+      "name": "Training & Programming Calculators",
+      "description":
+        "Free training calculators for 5/3/1 programming, training max, warm-up sets, and RPE to RIR conversion.",
+      "isPartOf": {
+        "@id": "https://repmaths.com/#website",
+      },
+    },
+    {
+      "@type": "ItemList",
+      "@id": "https://repmaths.com/tools/training/#itemlist",
+      "name": "Training Calculators",
+      "itemListElement": tools.map((tool, index) => ({
+        "@type": "ListItem",
+        "position": index + 1,
+        "name": tool.name,
+        "url": `https://repmaths.com${tool.url}`,
+      })),
+    },
+  ],
+};
 ---
 
 <Base
-  title="Training & Programming Calculators | RepMaths"
-  description="Free training and programming calculators: Wendler 5/3/1, training max, RPE to RIR conversions, and warm-up set generators."
-  breadcrumbs={[{ "name": "Home", "href": "/" }, { "name": "Tools", "href": "/tools/" }, { "name": "Training & Programming" }]}
+  title="Training & Programming Calculators — 5/3/1, RPE, Warm-Up | RepMaths"
+  description="Free training calculators for 5/3/1 programming, training max, warm-up sets, and RPE/RIR conversion. Plan smarter workouts with established programming methods."
+  breadcrumbs={[
+    { name: "Home", href: "/" },
+    { name: "Tools", href: "/tools/" },
+    { name: "Training & Programming" },
+  ]}
 >
+  <script
+    type="application/ld+json"
+    set:html={JSON.stringify(categorySchema)}
+  />
+
   <section class="hero">
-    <h1>Training & Programming</h1>
-    <p>Plan your workouts, auto-regulate with RPE/RIR, and structure your training blocks effectively.</p>
+    <h1>Training &amp; Programming Calculators</h1>
+    <p>
+      Turn a one rep max into structured working weights — plan your
+      cycle, set your training max, and auto-regulate each session.
+    </p>
   </section>
+
+  <aside class="quick-answer" aria-label="Quick answer">
+    <p>
+      <strong>Where to start?</strong> Convert your 1RM into a
+      sustainable working weight with the
+      <a href="/tools/training/training-max-calculator/">Training Max Calculator</a>,
+      then build a full Wendler cycle with the
+      <a href="/tools/training/531-calculator/">5/3/1 Calculator</a>. For
+      autoregulated training, use the
+      <a href="/tools/training/rpe-rir-calculator/">RPE &amp; RIR Calculator</a>,
+      and plan your ramp-up with the
+      <a href="/tools/training/warmup-set-calculator/">Warm-Up Set Calculator</a>.
+    </p>
+  </aside>
 
   <div class="tool-grid">
     {tools.map((tool) => (
-      <a class="tool-card" href={tool.url}>
+      <a class="tool-card" href={tool.url} title={tool.name}>
         <span class="icon" aria-hidden="true">{tool.icon}</span>
         <span class="name">{tool.name}</span>
         <span class="desc">{tool.shortDesc}</span>
@@ -24,29 +79,119 @@ const tools = toolsData.filter((t) => t.cluster === "training");
     ))}
   </div>
 
-  <section class="seo-content">
-    <h2>Optimize Your Training Blocks</h2>
+  <section class="article-section">
+    <h2>Programming Turns Effort Into Progress</h2>
+
     <p>
-      Structured programming is the key to long-term strength and muscle gains. Our training calculators take the guesswork out of your routine. Whether you are calculating your <strong>Training Max</strong> for a Wendler 5/3/1 cycle, converting RPE (Rate of Perceived Exertion) to RIR (Reps in Reserve) for auto-regulation, or generating optimal warm-up sets, these tools help you train smarter, manage fatigue, and avoid overtraining.
+      Good programming makes progress predictable. It defines what to
+      lift, how heavy, when to add weight, and when to back off — so you
+      stop guessing and start tracking. The RepMaths training
+      calculators handle the math behind common training systems, from
+      <strong>Wendler's 5/3/1</strong> to autoregulated RPE-based
+      approaches.
     </p>
+
+    <p>
+      The <strong>training max</strong> concept is central to most
+      percentage-based programs. Instead of training off your true 1RM,
+      you train off a slightly lower number (typically 85–90% of 1RM) so
+      working sets stay sustainable, recovery stays consistent, and
+      progress compounds week over week.
+    </p>
+  </section>
+
+  <section class="article-section">
+    <h2>Which Calculator to Use</h2>
+
+    <p>
+      For <strong>5/3/1</strong>, start with the
+      <a href="/tools/training/training-max-calculator/">Training Max Calculator</a>
+      and feed the result into the
+      <a href="/tools/training/531-calculator/">5/3/1 Calculator</a> to
+      generate the four-week cycle with the correct percentages and rep
+      schemes.
+    </p>
+
+    <p>
+      For <strong>autoregulated training</strong>, the
+      <a href="/tools/training/rpe-rir-calculator/">RPE &amp; RIR Calculator</a>
+      converts how a set actually felt into an estimated 1RM — useful
+      when daily readiness varies or when you're training without a
+      fixed program.
+    </p>
+
+    <p>
+      The
+      <a href="/tools/training/warmup-set-calculator/">Warm-Up Set Calculator</a>
+      builds a proper ramp from the empty bar to your working weight,
+      which helps with both heavy singles and volume days where the
+      first working set matters most.
+    </p>
+  </section>
+
+  <section class="article-section">
+    <h2>Explore Related Calculators</h2>
+
+    <ul>
+      <li>
+        <a href="/tools/strength/">1RM &amp; Strength Calculators</a>
+        — 1RM estimation, bench press, squat, deadlift, overhead press
+      </li>
+      <li>
+        <a href="/tools/equipment/">Plate &amp; Equipment</a>
+        — barbell plate loading for any target weight
+      </li>
+      <li>
+        <a href="/tools/nutrition/">Nutrition &amp; Body Composition</a>
+        — TDEE, macros, protein, body fat, BMI, FFMI
+      </li>
+    </ul>
   </section>
 
   <style>
     .hero {
       margin-bottom: 24px;
     }
-    
+
     .hero p {
       color: var(--text-muted);
       font-size: 1.05rem;
       max-width: 600px;
     }
 
+    .quick-answer {
+      background: var(--surface);
+      border-left: 4px solid var(--accent);
+      border-radius: 6px;
+      padding: 16px 18px;
+      margin: 0 0 24px;
+    }
+
+    .quick-answer p {
+      margin: 0;
+      color: #c7cbd2;
+      font-size: 0.92rem;
+      line-height: 1.6;
+    }
+
+    .quick-answer strong {
+      color: var(--accent);
+    }
+
+    .quick-answer a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+
+    .quick-answer a:hover {
+      color: var(--accent-hover);
+    }
+
     .tool-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
       gap: 12px;
-      margin: 24px 0 48px;
+      margin: 0 0 32px;
     }
 
     .tool-card {
@@ -55,46 +200,32 @@ const tools = toolsData.filter((t) => t.cluster === "training");
       border-radius: var(--radius);
       padding: 18px 14px;
       text-align: center;
+      text-decoration: none;
       transition:
         border-color 0.15s ease,
-        transform 0.15s ease;
+        transform 0.15s ease,
+        box-shadow 0.15s ease;
     }
 
     .tool-card:hover {
       border-color: var(--accent);
       transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
     }
 
     .tool-card .name {
       color: var(--text);
       font-weight: 600;
-      font-size: 0.92rem;
+      font-size: 0.95rem;
       display: block;
-      margin-bottom: 4px;
+      margin-bottom: 6px;
     }
 
     .tool-card .desc {
       color: var(--text-muted);
-      font-size: 0.78rem;
-    }
-
-    /* SEO Content Styling */
-    .seo-content {
-      border-top: 1px solid var(--border);
-      padding-top: 32px;
-      margin-top: 32px;
-    }
-
-    .seo-content h2 {
-      font-size: 1.25rem;
-      color: var(--text);
-      margin-bottom: 12px;
-    }
-
-    .seo-content p {
-      color: var(--text-muted);
-      line-height: 1.6;
-      font-size: 0.95rem;
+      font-size: 0.8rem;
+      display: block;
+      line-height: 1.4;
     }
   </style>
 </Base>
