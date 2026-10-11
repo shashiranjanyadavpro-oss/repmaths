@@ -1,22 +1,74 @@
 ---
 import Base from '../../../layouts/Base.astro';
 import toolsData from '../../../data/tools.json';
+
 const tools = toolsData.filter((t) => t.cluster === "strength");
+
+const categorySchema = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "CollectionPage",
+      "@id": "https://repmaths.com/tools/strength/#webpage",
+      "url": "https://repmaths.com/tools/strength/",
+      "name": "1RM Calculator & Strength Calculators",
+      "description":
+        "Free 1RM calculator and strength tools for bench press, squat, deadlift, and overhead press using Epley, Brzycki, Lander, and Lombardi formulas.",
+      "isPartOf": {
+        "@id": "https://repmaths.com/#website",
+      },
+    },
+    {
+      "@type": "ItemList",
+      "@id": "https://repmaths.com/tools/strength/#itemlist",
+      "name": "Strength Calculators",
+      "itemListElement": tools.map((tool, index) => ({
+        "@type": "ListItem",
+        "position": index + 1,
+        "name": tool.name,
+        "url": `https://repmaths.com${tool.url}`,
+      })),
+    },
+  ],
+};
 ---
 
 <Base
-  title="1RM & Strength Calculators | RepMaths"
-  description="Free strength calculators: 1RM estimators for bench, squat, deadlift, overhead press, rep max, 1RM percentages, and strength standards."
-  breadcrumbs={[{ "name": "Home", "href": "/" }, { "name": "Tools", "href": "/tools/" }, { "name": "1RM & Strength Calculators" }]}
+  title="1RM Calculator & Strength Calculators | RepMaths"
+  description="Free 1RM calculator and strength calculators for bench press, squat, deadlift, and overhead press. Estimate your one rep max using Epley and Brzycki formulas."
+  breadcrumbs={[
+    { name: "Home", href: "/" },
+    { name: "Tools", href: "/tools/" },
+    { name: "1RM & Strength" },
+  ]}
 >
+  <script
+    type="application/ld+json"
+    set:html={JSON.stringify(categorySchema)}
+  />
+
   <section class="hero">
-    <h1>1RM & Strength Calculators</h1>
-    <p>Estimate your one-rep max, plan percentage-based training blocks, and track your true lifting potential safely.</p>
+    <h1>1RM &amp; Strength Calculators</h1>
+    <p>
+      Estimate your one rep max for bench press, squat, deadlift, and
+      overhead press — no max-out required.
+    </p>
   </section>
+
+  <aside class="quick-answer" aria-label="Quick answer">
+    <p>
+      <strong>Where to start?</strong> Estimate your one rep max with the
+      <a href="/tools/strength/1rm-calculator/">1RM Calculator</a>, then
+      convert it into training weights using the
+      <a href="/tools/strength/1rm-percentage-calculator/">1RM Percentage Calculator</a>.
+      Compare your lifts against bodyweight benchmarks with the
+      <a href="/tools/strength/strength-standards-calculator/">Strength Standards Calculator</a>.
+    </p>
+  </aside>
 
   <div class="tool-grid">
     {tools.map((tool) => (
-      <a class="tool-card" href={tool.url}>
+      <a class="tool-card" href={tool.url} title={tool.name}>
         <span class="icon" aria-hidden="true">{tool.icon}</span>
         <span class="name">{tool.name}</span>
         <span class="desc">{tool.shortDesc}</span>
@@ -24,29 +76,197 @@ const tools = toolsData.filter((t) => t.cluster === "strength");
     ))}
   </div>
 
-  <section class="seo-content">
-    <h2>Why Track Your Strength Metrics?</h2>
+  <section class="article-section">
+    <h2>What Is a One Rep Max?</h2>
+
     <p>
-      Whether you are a powerlifter or training for general fitness, knowing your exact numbers is crucial for progressive overload. Our free strength calculators use highly accurate, established formulas (like Epley and Brzycki) to help you estimate your <strong>1 Rep Max (1RM)</strong>, find optimal training loads, and compare your lifts against global standards—all without the injury risk of lifting your absolute max every session.
+      Your <strong>one rep max (1RM)</strong> is the heaviest weight you
+      can lift for a single repetition with proper form. It's the
+      reference number behind percentage-based strength programs, and
+      it's used to set training loads, track progress, and compare
+      performance across lifts.
     </p>
+
+    <p>
+      Testing a true 1RM is fatiguing and carries injury risk. A 1RM
+      calculator estimates it from a lighter set using established
+      formulas — Epley, Brzycki, Lander, and Lombardi — so you can get a
+      useful working number without maxing out every session.
+    </p>
+  </section>
+
+  <section class="article-section">
+    <h2>Why Track Your Strength Metrics?</h2>
+
+    <p>
+      Progressive overload depends on knowing your numbers. Without a
+      reference 1RM, it's hard to program training intensity — you end up
+      guessing at weights, progressing unevenly, or leaving strength on
+      the table. An estimated 1RM gives you a working number to plan
+      percentages, compare sessions, and track long-term progress.
+    </p>
+
+    <p>
+      Tracking 1RM also helps you spot plateaus early. If your bench 1RM
+      hasn't moved in 8 weeks but your squat is climbing, that's a signal
+      to adjust bench volume, frequency, or technique work — instead of
+      waiting until a competition or test day to discover the stall.
+    </p>
+  </section>
+
+  <section class="article-section">
+    <h2>1RM Calculator by Lift</h2>
+
+    <p>
+      Different lifts benefit from different rep ranges for accurate
+      1RM estimation. While the general 1RM Calculator works for any
+      exercise, the lift-specific tools account for common differences
+      in technique and rep-range accuracy:
+    </p>
+
+    <ul>
+      <li>
+        <a href="/tools/strength/bench-press-1rm-calculator/">Bench Press Max Calculator</a>
+        — for pressed movements, the Epley formula tends to be most
+        consistent in the 3–8 rep range
+      </li>
+      <li>
+        <a href="/tools/strength/squat-1rm-calculator/">Squat Max Calculator</a>
+        — squats often produce slightly lower estimated 1RMs due to
+        technical breakdown at high reps
+      </li>
+      <li>
+        <a href="/tools/strength/deadlift-1rm-calculator/">Deadlift Max Calculator</a>
+        — deadlift 1RM estimation is typically most reliable under 5 reps
+      </li>
+      <li>
+        <a href="/tools/strength/overhead-press-1rm-calculator/">Overhead Press Max Calculator</a>
+        — OHP estimation works well at lower reps due to high
+        technical demand
+      </li>
+    </ul>
+  </section>
+
+  <section class="article-section">
+    <h2>1RM Percentage Chart &amp; Training Zones</h2>
+
+    <p>
+      Once you know your estimated 1RM, a percentage chart converts it
+      into training loads. The most common zones:
+    </p>
+
+    <ul>
+      <li>
+        <strong>90–100% of 1RM</strong> — maximal strength, 1–3 reps per set
+      </li>
+      <li>
+        <strong>80–85% of 1RM</strong> — strength focus, 4–6 reps
+      </li>
+      <li>
+        <strong>70–75% of 1RM</strong> — hypertrophy and volume work, 8–12 reps
+      </li>
+      <li>
+        <strong>60–65% of 1RM</strong> — technique work, 12+ reps
+      </li>
+    </ul>
+
+    <p>
+      Use the
+      <a href="/tools/strength/1rm-percentage-calculator/">1RM Percentage Calculator</a>
+      to generate a full percentage table, or the
+      <a href="/tools/training/training-max-calculator/">Training Max Calculator</a>
+      to set a sustainable working max for 5/3/1 programming.
+    </p>
+  </section>
+
+  <section class="article-section">
+    <h2>1RM vs Rep Max vs Training Max</h2>
+
+    <p>
+      Three related numbers often get confused:
+    </p>
+
+    <ul>
+      <li>
+        <strong>1RM (one rep max)</strong> — your absolute maximum for
+        one rep. Used as the reference for percentage-based training.
+      </li>
+      <li>
+        <strong>Rep max (RM)</strong> — the weight you can lift for a
+        specific rep count (5RM, 8RM, 10RM, etc.). The
+        <a href="/tools/strength/rep-max-calculator/">Rep Max Calculator</a>
+        converts between rep targets.
+      </li>
+      <li>
+        <strong>Training max (TM)</strong> — typically 85–90% of 1RM,
+        used in programs like 5/3/1 to keep working sets sustainable.
+      </li>
+    </ul>
+  </section>
+
+  <section class="article-section">
+    <h2>Explore Related Calculators</h2>
+
+    <ul>
+      <li>
+        <a href="/tools/training/">Training &amp; Programming</a>
+        — 5/3/1, training max, RPE/RIR, warm-up sets
+      </li>
+      <li>
+        <a href="/tools/equipment/">Plate &amp; Equipment</a>
+        — barbell plate loading for any target weight
+      </li>
+      <li>
+        <a href="/tools/nutrition/">Nutrition &amp; Body Composition</a>
+        — TDEE, macros, protein, body fat, BMI, FFMI
+      </li>
+    </ul>
   </section>
 
   <style>
     .hero {
       margin-bottom: 24px;
     }
-    
+
     .hero p {
       color: var(--text-muted);
       font-size: 1.05rem;
       max-width: 600px;
     }
 
+    .quick-answer {
+      background: var(--surface);
+      border-left: 4px solid var(--accent);
+      border-radius: 6px;
+      padding: 16px 18px;
+      margin: 0 0 24px;
+    }
+
+    .quick-answer p {
+      margin: 0;
+      color: #c7cbd2;
+      font-size: 0.92rem;
+      line-height: 1.6;
+    }
+
+    .quick-answer strong {
+      color: var(--accent);
+    }
+
+    .quick-answer a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+
+    .quick-answer a:hover {
+      color: var(--accent-hover);
+    }
+
     .tool-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
       gap: 12px;
-      margin: 24px 0 48px;
+      margin: 0 0 32px;
     }
 
     .tool-card {
@@ -55,46 +275,32 @@ const tools = toolsData.filter((t) => t.cluster === "strength");
       border-radius: var(--radius);
       padding: 18px 14px;
       text-align: center;
+      text-decoration: none;
       transition:
         border-color 0.15s ease,
-        transform 0.15s ease;
+        transform 0.15s ease,
+        box-shadow 0.15s ease;
     }
 
     .tool-card:hover {
       border-color: var(--accent);
       transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
     }
 
     .tool-card .name {
       color: var(--text);
       font-weight: 600;
-      font-size: 0.92rem;
+      font-size: 0.95rem;
       display: block;
-      margin-bottom: 4px;
+      margin-bottom: 6px;
     }
 
     .tool-card .desc {
       color: var(--text-muted);
-      font-size: 0.78rem;
-    }
-
-    /* SEO Content Styling */
-    .seo-content {
-      border-top: 1px solid var(--border);
-      padding-top: 32px;
-      margin-top: 32px;
-    }
-
-    .seo-content h2 {
-      font-size: 1.25rem;
-      color: var(--text);
-      margin-bottom: 12px;
-    }
-
-    .seo-content p {
-      color: var(--text-muted);
-      line-height: 1.6;
-      font-size: 0.95rem;
+      font-size: 0.8rem;
+      display: block;
+      line-height: 1.4;
     }
   </style>
 </Base>
