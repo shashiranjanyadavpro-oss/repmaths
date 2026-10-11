@@ -1,22 +1,76 @@
 ---
 import Base from '../../../layouts/Base.astro';
 import toolsData from '../../../data/tools.json';
+
 const tools = toolsData.filter((t) => t.cluster === "nutrition");
+
+const categorySchema = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "CollectionPage",
+      "@id": "https://repmaths.com/tools/nutrition/#webpage",
+      "url": "https://repmaths.com/tools/nutrition/",
+      "name": "Nutrition & Body Composition Calculators",
+      "description":
+        "Free nutrition calculators: TDEE, BMR, BMI, macros, protein, body fat, FFMI, ideal weight, and water intake.",
+      "isPartOf": {
+        "@id": "https://repmaths.com/#website",
+      },
+    },
+    {
+      "@type": "ItemList",
+      "@id": "https://repmaths.com/tools/nutrition/#itemlist",
+      "name": "Nutrition & Body Composition Calculators",
+      "itemListElement": tools.map((tool, index) => ({
+        "@type": "ListItem",
+        "position": index + 1,
+        "name": tool.name,
+        "url": `https://repmaths.com${tool.url}`,
+      })),
+    },
+  ],
+};
 ---
 
 <Base
   title="Nutrition & Body Composition Calculators | RepMaths"
-  description="Free nutrition calculators: TDEE, BMR, BMI, macros, protein, body fat, FFMI, ideal weight, and water intake."
-  breadcrumbs={[{ "name": "Home", "href": "/" }, { "name": "Tools", "href": "/tools/" }, { "name": "Nutrition & Body Composition" }]}
+  description="Free nutrition calculators: TDEE, BMR, BMI, macros, protein, body fat, FFMI, ideal weight, and water intake. Built on Mifflin-St Jeor and US Navy methods."
+  breadcrumbs={[
+    { name: "Home", href: "/" },
+    { name: "Tools", href: "/tools/" },
+    { name: "Nutrition & Body Composition" },
+  ]}
 >
+  <script
+    type="application/ld+json"
+    set:html={JSON.stringify(categorySchema)}
+  />
+
   <section class="hero">
-    <h1>Nutrition & Body Composition</h1>
-    <p>Dial in your calories, macros, and track your body composition accurately.</p>
+    <h1>Nutrition &amp; Body Composition Calculators</h1>
+    <p>
+      Dial in your calories, macros, and body composition — no sign-up
+      required.
+    </p>
   </section>
+
+  <aside class="quick-answer" aria-label="Quick answer">
+    <p>
+      <strong>Where should you start?</strong> Begin with the
+      <a href="/tools/nutrition/tdee-calculator/">TDEE Calculator</a>
+      to find your daily maintenance calories using Mifflin-St Jeor. Then
+      use the <a href="/tools/nutrition/macro-calculator/">Macro Calculator</a>
+      and <a href="/tools/nutrition/protein-calculator/">Protein Calculator</a>
+      to split those calories into targets. For body composition, use the
+      <a href="/tools/nutrition/body-fat-calculator/">Body Fat Calculator</a>
+      (US Navy method) or <a href="/tools/nutrition/ffmi-calculator/">FFMI Calculator</a>.
+    </p>
+  </aside>
 
   <div class="tool-grid">
     {tools.map((tool) => (
-      <a class="tool-card" href={tool.url}>
+      <a class="tool-card" href={tool.url} title={tool.name}>
         <span class="icon" aria-hidden="true">{tool.icon}</span>
         <span class="name">{tool.name}</span>
         <span class="desc">{tool.shortDesc}</span>
@@ -24,29 +78,99 @@ const tools = toolsData.filter((t) => t.cluster === "nutrition");
     ))}
   </div>
 
-  <section class="seo-content">
-    <h2>Master Your Diet & Body Composition</h2>
+  <section class="article-section">
+    <h2>Master Your Diet &amp; Body Composition</h2>
+
     <p>
-      Whether your goal is to lose fat, build muscle, or maintain your current physique, nutrition is the foundation. Our free calculators help you determine your baseline metrics like <strong>BMR (Basal Metabolic Rate)</strong> and <strong>TDEE (Total Daily Energy Expenditure)</strong>. From there, you can easily break down your daily <strong>macronutrient</strong> and protein requirements, or track advanced metrics like Body Fat Percentage and FFMI (Fat-Free Mass Index) to monitor your true progress.
+      Whether your goal is to lose fat, build muscle, or maintain your
+      current physique, nutrition is the foundation. Our free calculators
+      help you determine your baseline metrics — <strong>BMR (Basal
+      Metabolic Rate)</strong> using Mifflin-St Jeor or Harris-Benedict,
+      and <strong>TDEE (Total Daily Energy Expenditure)</strong> with
+      standard activity multipliers.
     </p>
+
+    <p>
+      From there, you can break down daily
+      <strong>macronutrient</strong> and <strong>protein</strong>
+      requirements based on ISSN sports nutrition guidance, or track
+      advanced metrics like <strong>body fat percentage</strong> (US Navy
+      tape method) and <strong>FFMI (Fat-Free Mass Index)</strong> to
+      monitor your true progress.
+    </p>
+
+    <p>
+      Use these tools alongside the
+      <a href="/tools/strength/1rm-calculator/">1RM Calculator</a>
+      to plan training intensity, or the
+      <a href="/tools/training/531-calculator/">5/3/1 Calculator</a>
+      to structure your programming blocks.
+    </p>
+  </section>
+
+  <section class="article-section">
+    <h2>Explore Related Calculators</h2>
+
+    <ul>
+      <li>
+        <a href="/tools/strength/">1RM &amp; Strength Calculators</a>
+        — 1RM estimation, bench press, squat, deadlift, overhead press
+      </li>
+      <li>
+        <a href="/tools/training/">Training &amp; Programming</a>
+        — 5/3/1 planning, training max, RPE/RIR, warm-up sets
+      </li>
+      <li>
+        <a href="/tools/equipment/">Plate &amp; Equipment</a>
+        — barbell plate loading for any target weight
+      </li>
+    </ul>
   </section>
 
   <style>
     .hero {
       margin-bottom: 24px;
     }
-    
+
     .hero p {
       color: var(--text-muted);
       font-size: 1.05rem;
       max-width: 600px;
     }
 
+    .quick-answer {
+      background: var(--surface);
+      border-left: 4px solid var(--accent);
+      border-radius: 6px;
+      padding: 16px 18px;
+      margin: 0 0 24px;
+    }
+
+    .quick-answer p {
+      margin: 0;
+      color: #c7cbd2;
+      font-size: 0.92rem;
+      line-height: 1.6;
+    }
+
+    .quick-answer strong {
+      color: var(--accent);
+    }
+
+    .quick-answer a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+
+    .quick-answer a:hover {
+      color: var(--accent-hover);
+    }
+
     .tool-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
       gap: 12px;
-      margin: 24px 0 48px;
+      margin: 0 0 32px;
     }
 
     .tool-card {
@@ -55,46 +179,32 @@ const tools = toolsData.filter((t) => t.cluster === "nutrition");
       border-radius: var(--radius);
       padding: 18px 14px;
       text-align: center;
+      text-decoration: none;
       transition:
         border-color 0.15s ease,
-        transform 0.15s ease;
+        transform 0.15s ease,
+        box-shadow 0.15s ease;
     }
 
     .tool-card:hover {
       border-color: var(--accent);
       transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
     }
 
     .tool-card .name {
       color: var(--text);
       font-weight: 600;
-      font-size: 0.92rem;
+      font-size: 0.95rem;
       display: block;
-      margin-bottom: 4px;
+      margin-bottom: 6px;
     }
 
     .tool-card .desc {
       color: var(--text-muted);
-      font-size: 0.78rem;
-    }
-
-    /* SEO Content Styling */
-    .seo-content {
-      border-top: 1px solid var(--border);
-      padding-top: 32px;
-      margin-top: 32px;
-    }
-
-    .seo-content h2 {
-      font-size: 1.25rem;
-      color: var(--text);
-      margin-bottom: 12px;
-    }
-
-    .seo-content p {
-      color: var(--text-muted);
-      line-height: 1.6;
-      font-size: 0.95rem;
+      font-size: 0.8rem;
+      display: block;
+      line-height: 1.4;
     }
   </style>
 </Base>
