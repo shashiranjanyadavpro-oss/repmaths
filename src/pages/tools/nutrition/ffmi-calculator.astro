@@ -1,58 +1,142 @@
 ---
 import Base from '../../../layouts/Base.astro';
 import RelatedTools from '../../../components/RelatedTools.astro';
+
+const breadcrumbs = [
+  { name: 'Home', href: '/' },
+  { name: 'Tools', href: '/tools/' },
+  { name: 'Nutrition & Body Composition', href: '/tools/nutrition/' },
+  { name: 'FFMI Calculator' },
+];
+
+const faqs = [
+  {
+    question: 'At what FFMI do you look muscular?',
+    answer:
+      'A <strong>normalized FFMI of 21–23</strong> combined with low body fat (typically 10–15%) usually produces a visibly lean, muscular appearance. Values around <strong>24–25</strong> represent an advanced, elite natural level. Individual appearance also depends on bone structure, muscle insertions, and body-fat distribution — not just FFMI.',
+  },
+  {
+    question: 'Can you have an FFMI over 25 without steroids?',
+    answer:
+      '<strong>Yes.</strong> Research on drug-free sumo wrestlers and American football players has documented natural FFMI values well over 25. The original 25 value from Kouri et al. (1995) was a well-defined upper value within that specific sample of male athletes, not a universal biological ceiling. A single FFMI number cannot determine whether someone uses performance-enhancing drugs.',
+  },
+  {
+    question: 'What is a good FFMI for a natural bodybuilder?',
+    answer:
+      'A competitive natural bodybuilder typically aims for a <strong>normalized FFMI of 23–25 on stage</strong>. For most male natural lifters, 20–21.9 is good and 22–23.9 is excellent. For female natural lifters, 17–17.9 is good and 18–18.9 is excellent.',
+  },
+  {
+    question: 'Does creatine increase FFMI?',
+    answer:
+      '<strong>Yes, temporarily — for some people.</strong> Creatine increases intracellular water retention in muscle tissue, which increases total fat-free mass. This can boost FFMI in some individuals, though the size of any change depends on individual response, training status, and how body composition is measured. This increase mostly reflects muscle water content rather than newly built muscle tissue. True muscle growth from creatine only occurs when combined with resistance training.',
+  },
+  {
+    question: 'What is the natural limit for FFMI?',
+    answer:
+      'The often-cited <strong>25</strong> comes from Kouri et al. (1995), which reported a well-defined upper value around 25 among the non-steroid-using men in that study. Later research has documented natural values above 25 in specific athletic populations, so 25 should be treated as a research reference rather than an absolute ceiling.',
+  },
+  {
+    question: 'Does FFMI include bone weight?',
+    answer:
+      '<strong>Yes.</strong> FFMI uses fat-free mass, which includes bone mineral, organs, body water, connective tissue, and muscle. It does not isolate skeletal muscle mass. This is why FFMI should not be interpreted as a direct measure of muscle mass.',
+  },
+  {
+    question: 'Why do tall lifters need Normalized FFMI?',
+    answer:
+      'Raw FFMI does not scale perfectly across different heights. Normalized FFMI applies the height correction proposed by Kouri et al. relative to a <strong>1.80 m reference</strong>, helping improve comparisons between individuals of different statures.',
+  },
+  {
+    question: 'Do women use the FFMI scale?',
+    answer:
+      '<strong>Yes.</strong> FFMI can be calculated for women using the same formula. However, the commonly cited 25 came from a male sample and should not be applied to women. Female collegiate-athlete research has reported upper 97.5th-percentile FFMI thresholds around <strong>23.90 kg/m²</strong>.',
+  },
+  {
+    question: 'How accurate is an FFMI calculator?',
+    answer:
+      'The arithmetic is straightforward, but FFMI is only as accurate as the body-fat estimate used. Different methods — DEXA, skinfolds, tape-measure equations, and bioelectrical impedance — can produce meaningfully different body-fat percentages. For a starting estimate, use our <a href="/tools/nutrition/body-fat-calculator/">Body Fat Calculator</a>.',
+  },
+  {
+    question: 'What should I calculate after my FFMI?',
+    answer:
+      'Use our <a href="/tools/nutrition/lean-body-mass-calculator/">Lean Body Mass Calculator</a> for the underlying lean-mass number, our <a href="/tools/nutrition/body-fat-calculator/">Body Fat Calculator</a> for body-composition context, or our <a href="/tools/nutrition/protein-calculator/">Protein Calculator</a> for daily protein targets based on your goal.',
+  },
+];
+
+const appSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'WebApplication',
+  '@id': 'https://repmaths.com/tools/nutrition/ffmi-calculator/#calculator',
+  name: 'RepMaths FFMI Calculator',
+  alternateName: 'Fat-Free Mass Index Calculator',
+  url: 'https://repmaths.com/tools/nutrition/ffmi-calculator/',
+  description:
+    'Free FFMI calculator — calculate raw and normalized Fat-Free Mass Index from weight, height, and body fat. Supports lb and kg.',
+  applicationCategory: 'HealthApplication',
+  operatingSystem: 'Any',
+  browserRequirements: 'Requires JavaScript',
+  inLanguage: 'en',
+  isAccessibleForFree: true,
+  offers: {
+    '@type': 'Offer',
+    price: '0',
+    priceCurrency: 'USD',
+  },
+  publisher: {
+    '@id': 'https://repmaths.com/#organization',
+  },
+  isPartOf: {
+    '@id': 'https://repmaths.com/#website',
+  },
+};
+
+const jsonLdSafe = (value: unknown) =>
+  JSON.stringify(value).replace(/</g, '\\u003c');
 ---
 
 <Base
   title="FFMI Calculator — Fat-Free Mass Index & Normalized FFMI"
-  description="Calculate your FFMI, Fat-Free Mass Index, and Normalized FFMI using pounds and inches or kilograms and centimeters. See fat-free mass, fat mass, lean mass percentage, and BMI."
+  description="Free FFMI calculator — calculate raw and normalized Fat-Free Mass Index from weight, height, and body fat. Supports lb and kg."
+  breadcrumbs={breadcrumbs}
+  faqs={faqs}
 >
-  <script type="application/ld+json" set:html={JSON.stringify({
-    "@context": "https://schema.org",
-    "@type": "SoftwareApplication",
-    "name": "FFMI Calculator",
-    "applicationCategory": "HealthApplication",
-    "operatingSystem": "Any",
-    "offers": {
-      "@type": "Offer",
-      "price": "0",
-      "priceCurrency": "USD"
-    },
-    "description": "Free Fat-Free Mass Index calculator. Calculate raw FFMI, normalized FFMI, fat-free mass, fat mass, lean mass percentage, and BMI from weight, height, and body-fat percentage."
-  })} />
+  <script
+    type="application/ld+json"
+    set:html={jsonLdSafe(appSchema)}
+  />
 
   <section class="hero">
-    <h1>FFMI Calculator — Find Your Fat-Free Mass Index</h1>
-
+    <h1>FFMI Calculator</h1>
     <p>
-      Calculate your <strong>Raw FFMI</strong> and
-      <strong>Normalized FFMI</strong> using pounds and inches or kilograms
-      and centimeters. See your fat-free mass, fat mass, lean mass
-      percentage, and BMI.
+      Calculate your <strong>raw FFMI</strong> and
+      <strong>normalized FFMI</strong> using pounds and inches or kilograms
+      and centimeters. See where your fat-free mass index sits relative to
+      common natural-lifter reference ranges.
     </p>
   </section>
 
+  <aside class="quick-answer" aria-label="FFMI quick answer">
+    <p>
+      <strong>What is FFMI?</strong> FFMI (Fat-Free Mass Index) estimates
+      how much lean mass you carry relative to height. Formula:
+      <code>fat-free mass (kg) ÷ height² (m)</code>. Normalized FFMI
+      adjusts for height, making it possible to compare lifters of
+      different statures. A typical natural male lifter falls around
+      <strong>20–21.9</strong>; women around <strong>17–17.9</strong>.
+    </p>
+  </aside>
+
   <section class="calc-card" aria-labelledby="calculator-heading">
-    <h2 id="calculator-heading">Calculate Your FFMI</h2>
+    <h2 id="calculator-heading" class="calculator-heading">
+      Calculate Your FFMI
+    </h2>
 
     <div class="field">
-      <label>Unit</label>
-
-      <div class="unit-toggle">
-        <button
-          type="button"
-          id="unit-lb"
-          class="active"
-          aria-pressed="true"
-        >
+      <span class="field-label" id="unit-label">Unit</span>
+      <div class="unit-toggle" role="group" aria-labelledby="unit-label">
+        <button type="button" id="unit-lb" class="active" aria-pressed="true">
           lb &amp; inches
         </button>
-
-        <button
-          type="button"
-          id="unit-kg"
-          aria-pressed="false"
-        >
+        <button type="button" id="unit-kg" aria-pressed="false">
           kg &amp; cm
         </button>
       </div>
@@ -60,7 +144,6 @@ import RelatedTools from '../../../components/RelatedTools.astro';
 
     <div class="field">
       <label for="sex">Sex</label>
-
       <select id="sex">
         <option value="male">Male</option>
         <option value="female">Female</option>
@@ -68,8 +151,7 @@ import RelatedTools from '../../../components/RelatedTools.astro';
     </div>
 
     <div class="field">
-      <label for="weight">Body Weight</label>
-
+      <label for="weight" id="weight-label">Body weight (lb)</label>
       <div class="input-with-suffix">
         <input
           type="number"
@@ -86,8 +168,7 @@ import RelatedTools from '../../../components/RelatedTools.astro';
 
     <div id="height-imperial">
       <div class="field">
-        <label>Height</label>
-
+        <span class="field-label">Height</span>
         <div class="height-grid">
           <div class="input-with-suffix">
             <input
@@ -102,7 +183,6 @@ import RelatedTools from '../../../components/RelatedTools.astro';
             />
             <span>ft</span>
           </div>
-
           <div class="input-with-suffix">
             <input
               type="number"
@@ -123,7 +203,6 @@ import RelatedTools from '../../../components/RelatedTools.astro';
     <div id="height-metric" hidden>
       <div class="field">
         <label for="height-cm">Height</label>
-
         <div class="input-with-suffix">
           <input
             type="number"
@@ -140,8 +219,7 @@ import RelatedTools from '../../../components/RelatedTools.astro';
     </div>
 
     <div class="field">
-      <label for="bodyfat">Body Fat Percentage</label>
-
+      <label for="bodyfat">Body fat percentage</label>
       <div class="input-with-suffix">
         <input
           type="number"
@@ -154,26 +232,52 @@ import RelatedTools from '../../../components/RelatedTools.astro';
         />
         <span>%</span>
       </div>
-
       <p class="field-help">
         Don't know your body-fat percentage?
-        <a href="/tools/nutrition/body-fat-calculator">
+        <a href="/tools/nutrition/body-fat-calculator/">
           Estimate it with our US Navy Body Fat Calculator
         </a>.
       </p>
     </div>
 
-    <button class="btn-primary" id="calc-btn">
+    <p id="input-error" class="input-error" role="alert" aria-live="assertive" hidden></p>
+
+    <button type="button" class="btn-primary" id="calc-btn">
       Calculate FFMI
     </button>
 
-    <div class="result-box" id="result-box" aria-live="polite">
+    <div class="result-box" id="result-box" hidden>
+      <div
+        id="result-announcement"
+        class="sr-only"
+        role="status"
+        aria-live="polite"
+        aria-atomic="true"
+      ></div>
+
       <div class="result-primary">
         <div class="result-title">Normalized FFMI</div>
-
         <div class="big-number" id="result-normalized">–</div>
-
         <div class="result-unit">kg/m²</div>
+      </div>
+
+      <div class="ffmi-positioning" id="ffmi-positioning">
+        <div class="positioning-bar" aria-hidden="true">
+          <span class="position-segment seg-1"></span>
+          <span class="position-segment seg-2"></span>
+          <span class="position-segment seg-3"></span>
+          <span class="position-segment seg-4"></span>
+          <span class="position-segment seg-5"></span>
+          <span class="position-marker" id="position-marker"></span>
+        </div>
+        <div class="positioning-labels" aria-hidden="true">
+          <span id="pos-label-1">&lt;18</span>
+          <span id="pos-label-2">18–20</span>
+          <span id="pos-label-3">20–22</span>
+          <span id="pos-label-4">22–25</span>
+          <span id="pos-label-5">25+</span>
+        </div>
+        <p class="positioning-note">Illustrative positioning — not to scale</p>
       </div>
 
       <div class="result-secondary">
@@ -181,22 +285,18 @@ import RelatedTools from '../../../components/RelatedTools.astro';
           <span class="metric-label">Raw FFMI</span>
           <strong id="result-ffmi">–</strong>
         </div>
-
         <div class="metric-card">
-          <span class="metric-label">Fat-Free Mass</span>
+          <span class="metric-label">Fat-free mass</span>
           <strong id="result-ffm">–</strong>
         </div>
-
         <div class="metric-card">
-          <span class="metric-label">Fat Mass</span>
+          <span class="metric-label">Fat mass</span>
           <strong id="result-fat">–</strong>
         </div>
-
         <div class="metric-card">
-          <span class="metric-label">Lean Mass</span>
+          <span class="metric-label">Fat-free mass (%)</span>
           <strong id="result-lean-percent">–</strong>
         </div>
-
         <div class="metric-card">
           <span class="metric-label">BMI</span>
           <strong id="result-bmi">–</strong>
@@ -205,62 +305,30 @@ import RelatedTools from '../../../components/RelatedTools.astro';
 
       <div class="ffmi-interpretation">
         <strong id="result-level">–</strong>
-
         <p id="result-interpretation">–</p>
       </div>
 
-      <div class="ffmi-scale">
-        <h3>FFMI Reference Guide</h3>
+      <div class="next-level" id="next-level" hidden>
+        <span class="next-level-label">To reach the next reference band:</span>
+        <span id="next-level-text">–</span>
+      </div>
 
-        <table class="result-table">
+      <div class="ffmi-scale">
+        <h3 id="reference-guide-title">FFMI Reference Guide — Male</h3>
+        <table class="result-table" id="reference-table">
+          <caption>Broad educational reference bands — not medical classifications</caption>
           <thead>
             <tr>
               <th scope="col">Normalized FFMI</th>
               <th scope="col">General interpretation</th>
             </tr>
           </thead>
-
-          <tbody>
-            <tr>
-              <td>Below 18</td>
-              <td>Lower muscularity range</td>
-            </tr>
-
-            <tr>
-              <td>18–20</td>
-              <td>Moderate muscularity range</td>
-            </tr>
-
-            <tr>
-              <td>20–22</td>
-              <td>Higher muscularity range</td>
-            </tr>
-
-            <tr>
-              <td>22–25</td>
-              <td>Very high muscularity range</td>
-            </tr>
-
-            <tr>
-              <td>25+</td>
-              <td>Above the commonly cited Kouri reference point</td>
-            </tr>
-          </tbody>
+          <tbody id="reference-tbody"></tbody>
         </table>
-
         <p class="scale-note">
           These are broad educational reference bands, not medical
-          classifications and not proof of natural or enhanced status.
+          classifications, and not proof of natural or enhanced status.
         </p>
-      </div>
-
-      <div class="natural-limit-note">
-        <strong>About the "25 FFMI" number:</strong>
-        Kouri et al. (1995) reported normalized FFMI values up to about
-        25 among the non-steroid-using men in their study. This finding is
-        commonly cited as a natural-limit reference, but it is not a
-        universal biological ceiling and cannot determine whether an
-        individual uses performance-enhancing drugs.
       </div>
     </div>
   </section>
@@ -270,50 +338,70 @@ import RelatedTools from '../../../components/RelatedTools.astro';
 
     <p>
       <strong>FFMI (Fat-Free Mass Index)</strong> is a body-composition
-      metric that expresses estimated fat-free mass relative to height.
-      It has a similar mathematical structure to BMI, but FFMI uses
-      fat-free mass instead of total body weight.
+      metric that expresses estimated fat-free mass relative to height. It
+      has a similar mathematical structure to BMI, but FFMI uses fat-free
+      mass instead of total body weight.
     </p>
 
     <p>
-      This makes FFMI particularly useful for lifters and athletes who want
-      additional context about muscularity that BMI alone cannot provide.
-      FFMI does not directly measure muscle mass because fat-free mass can
-      include bone, organs, body water, and other non-fat tissues.
+      This makes FFMI useful for lifters and athletes who want additional
+      context about muscularity that BMI alone cannot provide. FFMI does
+      not directly measure muscle mass, because fat-free mass includes
+      bone, organs, body water, and other non-fat tissues.
     </p>
 
     <p>
-      This calculator reports both <strong>Raw FFMI</strong> and
-      <strong>Normalized FFMI</strong>, so you can see the underlying
+      This calculator reports both <strong>raw FFMI</strong> and
+      <strong>normalized FFMI</strong>, so you can see the underlying
       calculation as well as the height-adjusted value.
     </p>
   </article>
 
   <article class="article-section">
-    <h2>How Do You Calculate FFMI?</h2>
+    <h2>Step-by-Step: How to Calculate Your FFMI</h2>
 
     <p>
-      FFMI is calculated in two main steps. First, estimate your
-      fat-free mass from body weight and body-fat percentage. Then divide
-      fat-free mass by height in metres squared.
+      FFMI is calculated in two main steps. First, estimate fat-free mass
+      from body weight and body-fat percentage. Then divide fat-free mass
+      by height in metres squared.
     </p>
 
+    <h3>Step 1: Calculate fat-free mass</h3>
     <p>
-      <code>
-        Fat-Free Mass = Weight × (1 − Body Fat % ÷ 100)
-      </code>
+      <code>Fat-Free Mass = Weight × (1 − Body Fat % ÷ 100)</code>
     </p>
 
+    <h3>Step 2: Calculate FFMI</h3>
     <p>
-      <code>
-        FFMI = Fat-Free Mass (kg) ÷ Height² (m)
-      </code>
+      <code>FFMI = Fat-Free Mass (kg) ÷ Height² (m)</code>
     </p>
 
+    <h3>Worked example</h3>
+
     <p>
-      For example, someone weighing 80 kg at 15% body fat has approximately
-      68 kg of fat-free mass. At 1.80 m, their raw FFMI is approximately
-      21.0 kg/m².
+      Consider a 25-year-old male lifter who weighs 180 lb (81.6 kg), is
+      5'11" tall (approximately 1.80 m), and has an estimated 15% body fat:
+    </p>
+
+    <ol>
+      <li>
+        Fat-free mass = 81.6 × (1 − 0.15) = <strong>69.4 kg</strong>
+      </li>
+      <li>
+        Height squared = 1.80 × 1.80 = <strong>3.24 m²</strong>
+      </li>
+      <li>
+        Raw FFMI = 69.4 ÷ 3.24 ≈ <strong>21.4 kg/m²</strong>
+      </li>
+      <li>
+        At exactly 1.80 m, raw and normalized FFMI are the same value
+      </li>
+    </ol>
+
+    <p>
+      That puts this lifter solidly in the <strong>higher muscularity
+      range</strong> for a natural male lifter — roughly aligned with the
+      typical "good" band reported for trained men.
     </p>
   </article>
 
@@ -321,10 +409,12 @@ import RelatedTools from '../../../components/RelatedTools.astro';
     <h2>What Is Normalized FFMI?</h2>
 
     <p>
-      Raw FFMI uses height squared, while normalized FFMI applies a height
-      correction to express the result relative to a 1.80 m reference
-      height. This is particularly useful when comparing people with
-      different heights.
+      Raw FFMI divides fat-free mass by height squared, but body
+      composition does not scale perfectly with height. Normalized FFMI
+      applies the height correction proposed by
+      <a href="https://pubmed.ncbi.nlm.nih.gov/7496846/" target="_blank" rel="noopener noreferrer">Kouri et al. (1995)</a>
+      to improve comparisons across different statures. The correction is
+      positive below 1.80 m and negative above 1.80 m.
     </p>
 
     <p>
@@ -332,21 +422,213 @@ import RelatedTools from '../../../components/RelatedTools.astro';
     </p>
 
     <p>
-      <code>
-        Normalized FFMI = FFMI + 6.3 × (1.80 − Height in metres)
-      </code>
+      <code>Normalized FFMI = FFMI + 6.3 × (1.80 − Height in metres)</code>
     </p>
 
     <p>
-      A shorter person receives a positive adjustment and a taller person
-      receives a negative adjustment. At exactly 1.80 m, raw and normalized
-      FFMI are the same.
+      At exactly 1.80 m, raw and normalized FFMI are the same value.
+    </p>
+
+    <h3>Worked example (taller individual)</h3>
+
+    <p>
+      Consider a lifter weighing 90 kg at 15% body fat and 1.90 m tall:
+    </p>
+
+    <ol>
+      <li>Fat-free mass = 90 × 0.85 = <strong>76.5 kg</strong></li>
+      <li>Height squared = 1.90 × 1.90 = <strong>3.61 m²</strong></li>
+      <li>Raw FFMI = 76.5 ÷ 3.61 ≈ <strong>21.2 kg/m²</strong></li>
+      <li>Height correction = 6.3 × (1.80 − 1.90) = <strong>−0.63</strong></li>
+      <li>Normalized FFMI = 21.2 − 0.63 ≈ <strong>20.6 kg/m²</strong></li>
+    </ol>
+
+    <p>
+      The height correction used here follows the method reported by
+      Kouri et al. and should not be confused with calculators that use
+      different normalization methods.
+    </p>
+  </article>
+
+  <article class="article-section">
+    <h2>FFMI Ranges for Men and Women</h2>
+
+    <p>
+      FFMI ranges are commonly reported separately for men and women,
+      because average muscle mass and hormonal profiles differ. The
+      following bands combine published reference ranges from fitness
+      research and are consistent with commonly cited interpretation
+      guides.
+    </p>
+
+    <h3>Men</h3>
+
+    <table class="result-table">
+      <caption>Normalized FFMI ranges — men</caption>
+      <thead>
+        <tr>
+          <th scope="col">Normalized FFMI</th>
+          <th scope="col">Typical body fat</th>
+          <th scope="col">Category</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>17–18</td><td>10–18%</td><td>Lean / untrained</td></tr>
+        <tr><td>18–20</td><td>20–27%</td><td>Average</td></tr>
+        <tr><td>20–21</td><td>10–18%</td><td>Athlete / intermediate</td></tr>
+        <tr><td>22–23</td><td>6–12%</td><td>Advanced natural</td></tr>
+        <tr><td>24–25</td><td>8–20%</td><td>Elite natural</td></tr>
+        <tr><td>26+</td><td>—</td><td>Above common natural reference</td></tr>
+      </tbody>
+    </table>
+
+    <h3>Women</h3>
+
+    <table class="result-table">
+      <caption>Normalized FFMI ranges — women</caption>
+      <thead>
+        <tr>
+          <th scope="col">Normalized FFMI</th>
+          <th scope="col">Typical body fat</th>
+          <th scope="col">Category</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>14–15</td><td>20–25%</td><td>Lean / untrained</td></tr>
+        <tr><td>14–17</td><td>22–35%</td><td>Average</td></tr>
+        <tr><td>16–17</td><td>18–25%</td><td>Athlete / intermediate</td></tr>
+        <tr><td>18–20</td><td>15–22%</td><td>Advanced</td></tr>
+        <tr><td>19–21</td><td>15–30%</td><td>Bodybuilder / strength athlete</td></tr>
+      </tbody>
+    </table>
+
+    <p class="calc-note">
+      The bands and body-fat percentages shown are
+      <strong>illustrative fitness reference ranges</strong>, not
+      scientific cutoffs or diagnostic categories. They are provided as
+      general context for interpreting FFMI — not as target ranges, not
+      as required companions, and not as medical guidance. Individual
+      physiques can span these bands with wide variation in body-fat
+      level.
+    </p>
+  </article>
+
+  <article class="article-section">
+    <h2>At What FFMI Do You Look Muscular?</h2>
+
+    <p>
+      Visual muscularity depends on more than FFMI alone — bone structure,
+      muscle insertions, body-fat distribution, and lighting all play a
+      role. However, broad ranges are commonly cited:
+    </p>
+
+    <ul>
+      <li>
+        <strong>Normalized FFMI 18–19:</strong> lean, but not obviously
+        muscular — often an untrained or lightly-trained physique.
+      </li>
+      <li>
+        <strong>Normalized FFMI 20–21:</strong> visibly athletic. Muscle
+        definition begins to show when body fat is under roughly 18%.
+      </li>
+      <li>
+        <strong>Normalized FFMI 21–23 with 10–15% body fat:</strong>
+        clearly muscular, lean look — often described as the "aesthetic"
+        range.
+      </li>
+      <li>
+        <strong>Normalized FFMI 24–25:</strong> elite natural level —
+        dense, highly developed musculature across the body.
+      </li>
+    </ul>
+
+    <p>
+      In practice, a lifter with an FFMI of <strong>21–22 and body fat
+      around 12%</strong> often looks more muscular than someone with a
+      higher FFMI but higher body fat. Body-fat percentage strongly
+      affects how visible muscle definition is.
+    </p>
+  </article>
+
+  <article class="article-section">
+    <h2>How to Increase Your FFMI</h2>
+
+    <p>
+      Increasing FFMI means increasing fat-free mass relative to height.
+      In practice, that means building muscle. Several evidence-based
+      factors matter:
+    </p>
+
+    <ol>
+      <li>
+        <strong>Progressive resistance training.</strong> Consistently
+        increasing weight, volume, or intensity over time is the primary
+        driver of muscle growth. Aim for 2–4 sessions per week hitting
+        each major muscle group.
+      </li>
+      <li>
+        <strong>Adequate protein intake.</strong> Roughly 1.4–2.0 g/kg of
+        body weight per day is a commonly cited sports-nutrition range.
+        See our <a href="/tools/nutrition/protein-calculator/">Protein Calculator</a>
+        for a goal-based estimate.
+      </li>
+      <li>
+        <strong>Sufficient calories.</strong> Building muscle typically
+        requires a small calorie surplus — roughly 250–400 kcal above
+        maintenance. Use our
+        <a href="/tools/nutrition/tdee-calculator/">TDEE Calculator</a>
+        as a starting point.
+      </li>
+      <li>
+        <strong>Sleep and recovery.</strong> Muscle repair happens during
+        recovery. Aim for 7–9 hours per night for most adults.
+      </li>
+      <li>
+        <strong>Patience and consistency.</strong> Muscle gain is slow —
+        a rate of roughly 0.5–1% of body weight per month is realistic
+        for well-trained lifters during a bulk.
+      </li>
+    </ol>
+
+    <p>
+      For nutrition targets alongside your training plan, see our
+      <a href="/tools/nutrition/macro-calculator/">Macro Calculator</a>
+      and
+      <a href="/tools/nutrition/calorie-deficit-calculator/">Calorie Deficit Calculator</a>.
+    </p>
+  </article>
+
+  <article class="article-section">
+    <h2>How Age and Genetics Impact Your FFMI</h2>
+
+    <p>
+      Age and genetics both affect how much fat-free mass you can build
+      and maintain.
+    </p>
+
+    <h3>Age</h3>
+    <p>
+      Muscle mass tends to peak between the late 20s and mid-30s and
+      gradually declines afterward if training stops. Adults who train
+      consistently can maintain high FFMI well into their 40s and 50s,
+      but natural anabolic potential generally declines with age. For
+      older adults, higher protein intakes (roughly 1.0–1.5 g/kg/day) are
+      often recommended to help preserve muscle mass.
+    </p>
+
+    <h3>Genetics</h3>
+    <p>
+      Bone structure, frame size, limb lengths, and muscle-fiber
+      composition all influence how much fat-free mass a person can carry.
+      A lifter with a broader frame and naturally higher baseline muscle
+      may reach FFMI values that another lifter with a smaller frame
+      cannot match — even with identical training.
     </p>
 
     <p>
-      The correction used here follows the method reported by Kouri et al.
-      and should not be confused with calculators that use different
-      normalization methods.
+      Because of this variability, the 25 FFMI number should be treated
+      as a reference point, not a hard biological limit for every
+      individual.
     </p>
   </article>
 
@@ -354,31 +636,30 @@ import RelatedTools from '../../../components/RelatedTools.astro';
     <h2>FFMI Natural Limit: What Does 25 Mean?</h2>
 
     <p>
-      The number <strong>25</strong> is one of the most frequently discussed
-      FFMI benchmarks in bodybuilding.
+      The number <strong>25</strong> is one of the most frequently
+      discussed FFMI benchmarks in bodybuilding.
     </p>
 
     <p>
       In a 1995 study, Kouri and colleagues calculated FFMI in 157 male
       athletes, including 83 anabolic-androgenic steroid users and 74
       non-users. The normalized FFMI values among the non-users extended
-      up to a reported value of 25.0. 3
+      up to a well-defined value of 25.0.
     </p>
 
     <p>
       This is the historical basis for the commonly cited
-      <strong>maximum natural FFMI</strong> or "natural FFMI limit of 25"
-      idea. However, the original study described its findings as
-      preliminary, and the sample was limited to male athletes.
+      <strong>maximum natural FFMI</strong> idea. However, the original
+      study described its findings as preliminary and the sample was
+      limited to male athletes.
     </p>
 
     <p>
-      Later research has reported FFMI values above 25 in athletic
-      populations. In one collegiate American football study, 26.4% of
-      participants had height-adjusted FFMI values above 25 and the
-      97.5th percentile was 28.1. That study was not a natural-athlete
-      sample, so it does not establish that those values were achieved
-      without performance-enhancing drugs. 4
+      Later research has reported FFMI values above 25 in drug-free
+      athletic populations. In one collegiate American football study,
+      26.4% of participants had height-adjusted FFMI values above 25 and
+      the 97.5th percentile was 28.1. Research on drug-free sumo wrestlers
+      has also documented values well above 25.
     </p>
 
     <p>
@@ -388,77 +669,85 @@ import RelatedTools from '../../../components/RelatedTools.astro';
   </article>
 
   <article class="article-section">
-    <h2>Is an FFMI of 26 Possible Naturally?</h2>
+    <h2>Does Creatine Increase FFMI?</h2>
 
     <p>
-      An FFMI above 25 is mathematically possible and has been observed in
-      athletic populations. However, an FFMI value by itself cannot
-      establish whether a particular person is natural or uses
-      performance-enhancing drugs.
+      <strong>Yes, temporarily — for some people.</strong> Creatine
+      supplementation increases intracellular water retention in muscle
+      tissue, which increases total fat-free mass. This can boost FFMI in
+      some individuals, though the size of any change depends on
+      individual response, training status, starting muscle creatine
+      levels, and the body-composition method used to estimate fat-free
+      mass.
     </p>
 
     <p>
-      Genetics, training history, body-fat measurement error, population,
-      age, sex, and the method used to estimate fat-free mass can all affect
-      FFMI. The 25 value should therefore be treated as a historical
-      research reference rather than an absolute biological ceiling.
-    </p>
-  </article>
-
-  <article class="article-section">
-    <h2>Why Do Tall Lifters Need Normalized FFMI?</h2>
-
-    <p>
-      Height affects the relationship between body size and fat-free mass.
-      Raw FFMI simply divides fat-free mass by height squared, while
-      normalized FFMI applies a height correction to make comparisons
-      relative to a 1.80 m reference.
+      Critically, this increase mostly reflects water retained inside the
+      muscle cell — not newly built muscle tissue. Creatine-induced
+      muscle growth only occurs when supplementation is combined with
+      resistance training, which is why creatine is often described as a
+      "training amplifier" rather than an independent driver of muscle
+      gain.
     </p>
 
     <p>
-      This does not make normalized FFMI a perfect measure of muscularity.
-      It is simply a different way to account for height when comparing
-      people of different statures.
+      If your FFMI increases noticeably in the first few weeks of taking
+      creatine, that increase is expected and mostly reflects cellular
+      hydration. It is not automatically a sign of new muscle.
     </p>
   </article>
 
   <article class="article-section">
-    <h2>Do Women Use the FFMI Scale?</h2>
+    <h2>Does Your Body-Fat Measurement Method Affect FFMI?</h2>
 
     <p>
-      Yes. FFMI can be calculated for women using the same mathematical
-      index of fat-free mass relative to height.
+      <strong>Yes, substantially.</strong> FFMI depends directly on
+      estimated fat-free mass, which depends on body-fat percentage. Two
+      different measurement methods can produce different body-fat
+      estimates for the same person, and those differences carry through
+      to FFMI.
     </p>
 
-    <p>
-      However, the commonly cited 25 reference should not be treated as a
-      universal female cutoff. The original Kouri natural-limit analysis
-      used male athletes, while later research has reported sport-specific
-      FFMI distributions in female collegiate athletes. 5
-    </p>
+    <table class="result-table">
+      <caption>Typical reliability of common body-fat methods</caption>
+      <thead>
+        <tr>
+          <th scope="col">Method</th>
+          <th scope="col">Typical accuracy notes</th>
+          <th scope="col">Practical notes</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>DEXA scan</td>
+          <td>Widely used research reference</td>
+          <td>Requires a clinic; not error-free</td>
+        </tr>
+        <tr>
+          <td>Skinfold calipers</td>
+          <td>Varies with tester skill</td>
+          <td>Accuracy depends heavily on technique</td>
+        </tr>
+        <tr>
+          <td>US Navy tape method</td>
+          <td>General population estimate</td>
+          <td>Uses neck, waist, hip measurements</td>
+        </tr>
+        <tr>
+          <td>Bioelectrical impedance (BIA)</td>
+          <td>Strongly affected by hydration state</td>
+          <td>Sensitive to timing and conditions</td>
+        </tr>
+      </tbody>
+    </table>
 
-    <p>
-      One large study of female collegiate athletes reported an upper
-      97.5th-percentile FFMI threshold of 23.90 kg/m², illustrating why
-      sex- and sport-specific reference data can be more informative than
-      applying a single male-derived number. 6
-    </p>
-  </article>
-
-  <article class="article-section">
-    <h2>Does FFMI Include Bone Weight?</h2>
-
-    <p>
-      FFMI is based on <strong>fat-free mass</strong>, not isolated skeletal
-      muscle mass. Fat-free mass can include bone mineral, organs, body
-      water, connective tissue, and other non-fat components.
-    </p>
-
-    <p>
-      This is why FFMI should not be interpreted as a direct measurement of
-      muscle mass. Some research calculates FFMI from components such as
-      lean mass and bone mineral content, depending on the body-composition
-      method used. 7
+    <p class="calc-note">
+      DEXA is widely used as a research reference, but it is not an
+      error-free gold standard. All body-composition methods have
+      limitations, and accuracy depends on measurement conditions,
+      population, and equipment. For tracking change over time, using the
+      same method under similar conditions is generally more useful than
+      comparing isolated results from different methods.
     </p>
   </article>
 
@@ -470,7 +759,8 @@ import RelatedTools from '../../../components/RelatedTools.astro';
       different questions.
     </p>
 
-    <table class="comparison-table">
+    <table class="result-table">
+      <caption>BMI vs FFMI comparison</caption>
       <thead>
         <tr>
           <th scope="col">Metric</th>
@@ -478,14 +768,12 @@ import RelatedTools from '../../../components/RelatedTools.astro';
           <th scope="col">Main purpose</th>
         </tr>
       </thead>
-
       <tbody>
         <tr>
           <td>BMI</td>
           <td>Total body weight + height</td>
           <td>General weight-to-height screening metric</td>
         </tr>
-
         <tr>
           <td>FFMI</td>
           <td>Fat-free mass + height</td>
@@ -496,264 +784,103 @@ import RelatedTools from '../../../components/RelatedTools.astro';
 
     <p>
       If you want to calculate your general body-mass index, use our
-      <a href="/tools/nutrition/bmi-calculator">
-        BMI Calculator
-      </a>.
+      <a href="/tools/nutrition/bmi-calculator/">BMI Calculator</a>.
     </p>
   </article>
 
   <article class="article-section">
-    <h2>Why Body Fat Percentage Matters So Much</h2>
-
-    <p>
-      FFMI depends directly on your estimated fat-free mass. That means
-      errors in your body-fat percentage can move your FFMI result.
-    </p>
-
-    <p>
-      If your actual body-fat percentage is higher than the number you
-      enter, your calculated fat-free mass and FFMI will be overstated.
-      The opposite happens when body-fat percentage is underestimated.
-    </p>
-
-    <p>
-      Don't know your body-fat percentage? Start with our
-      <a href="/tools/nutrition/body-fat-calculator">
-        US Navy Body Fat Calculator
-      </a>
-      and treat the result as an estimate.
-    </p>
-  </article>
-
-  <article class="article-section">
-    <h2>FFMI, Lean Body Mass, and Protein</h2>
-
-    <p>
-      FFMI is calculated from fat-free mass, so lean body mass and FFMI are
-      closely connected. LBM describes an estimated amount of lean tissue,
-      while FFMI expresses that amount relative to height.
-    </p>
-
-    <p>
-      If you want the underlying lean-mass number rather than an index, use
-      our
-      <a href="/tools/nutrition/lean-body-mass-calculator">
-        Lean Body Mass Calculator
-      </a>.
-    </p>
-
-    <p>
-      If your goal is muscle gain, use our
-      <a href="/tools/nutrition/protein-calculator">
-        Protein Intake Calculator
-      </a>
-      to estimate a practical daily protein target. You can also use our
-      <a href="/tools/nutrition/macro-calculator">
-        Macro Calculator
-      </a>
-      to turn a calorie target into protein, carbohydrate, and fat targets.
-    </p>
-  </article>
-
-  <article class="article-section">
-    <h2>How Accurate Is an FFMI Calculator?</h2>
-
-    <p>
-      The arithmetic is straightforward, but the result is only as accurate
-      as the measurements used to calculate it. A major practical source
-      of uncertainty is the body-fat percentage used to estimate
-      fat-free mass.
-    </p>
-
-    <p>
-      Different methods such as DEXA, skinfold measurements, tape-measure
-      equations, and bioelectrical impedance can produce different
-      body-composition estimates. Those differences can carry through to
-      the calculated FFMI.
-    </p>
-
-    <p>
-      For tracking changes, using the same measurement method under similar
-      conditions can make trends more useful than comparing isolated
-      results from different methods.
-    </p>
+    <h2>Frequently Asked Questions</h2>
+    {faqs.map((faq) => (
+      <div class="faq-item">
+        <h3>{faq.question}</h3>
+        <p set:html={faq.answer} />
+      </div>
+    ))}
   </article>
 
   <article class="article-section">
     <h2>Sources &amp; Methodology</h2>
+
+    <p>
+      RepMaths uses FFMI as an educational body-composition metric. It is
+      not a medical diagnosis and it is not a definitive test for
+      performance-enhancing drug use.
+    </p>
 
     <ul>
       <li>
         Kouri EM, Pope HG Jr, Katz DL, Oliva P.
         <em>Fat-free mass index in users and nonusers of
         anabolic-androgenic steroids.</em>
-        <a
-          href="https://pubmed.ncbi.nlm.nih.gov/7496846/"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          PubMed
-        </a>
+        <a href="https://pubmed.ncbi.nlm.nih.gov/7496846/" target="_blank" rel="noopener noreferrer">PubMed</a>.
       </li>
-
       <li>
         Harty PS et al.
         <em>Upper and lower thresholds of fat-free mass index in a large
         cohort of female collegiate athletes.</em>
-        <a
-          href="https://pubmed.ncbi.nlm.nih.gov/31238804/"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          PubMed
-        </a>
+        <a href="https://pubmed.ncbi.nlm.nih.gov/31238804/" target="_blank" rel="noopener noreferrer">PubMed</a>.
       </li>
-
       <li>
         Blue MNM et al.
         <em>Normative fat-free mass index values for a diverse sample of
         collegiate female athletes.</em>
-        <a
-          href="https://pubmed.ncbi.nlm.nih.gov/30893018/"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          PubMed
-        </a>
+        <a href="https://pubmed.ncbi.nlm.nih.gov/30893018/" target="_blank" rel="noopener noreferrer">PubMed</a>.
       </li>
-
       <li>
         <em>Fat-Free Mass Index in NCAA Division I and II Collegiate
         American Football Players.</em>
-        <a
-          href="https://pubmed.ncbi.nlm.nih.gov/27930454/"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          PubMed
-        </a>
+        <a href="https://pubmed.ncbi.nlm.nih.gov/27930454/" target="_blank" rel="noopener noreferrer">PubMed</a>.
+      </li>
+      <li>
+        Schutz Y, Kyle UU, Pichard C.
+        <em>Fat-free mass index and fat mass index percentiles in
+        Caucasians aged 18–98 y.</em>
+        <a href="https://pubmed.ncbi.nlm.nih.gov/12080404/" target="_blank" rel="noopener noreferrer">PubMed</a>.
       </li>
     </ul>
-
-    <p>
-      RepMaths uses FFMI as an educational body-composition metric.
-      It is not a medical diagnosis and it is not a definitive test for
-      performance-enhancing drug use.
-    </p>
-  </article>
-
-  <article class="article-section">
-    <h2>Frequently Asked Questions</h2>
-
-    <div class="faq-item">
-      <h3>What is a good FFMI for a natural bodybuilder?</h3>
-
-      <p>
-        There is no universal FFMI score that defines a good or natural
-        physique. FFMI describes fat-free mass relative to height. The
-        commonly discussed value near 25 comes from a 1995 study of male
-        athletes and should be treated as a research observation, not a
-        diagnostic cutoff or proof of natural status.
-      </p>
-    </div>
-
-    <div class="faq-item">
-      <h3>What is the natural limit for FFMI?</h3>
-
-      <p>
-        The often-cited FFMI value of 25 comes from Kouri et al. (1995),
-        which reported a well-defined upper value around 25 among the
-        non-steroid-using men in that study. It is not established as a
-        universal biological limit for every person or population.
-      </p>
-    </div>
-
-    <div class="faq-item">
-      <h3>Is an FFMI of 26 possible naturally?</h3>
-
-      <p>
-        Values above 25 have been observed in athletic populations, but an
-        FFMI number alone cannot establish whether someone uses
-        performance-enhancing drugs. The original 25 reference came from a
-        limited male sample, so it should not be treated as an absolute
-        biological ceiling.
-      </p>
-    </div>
-
-    <div class="faq-item">
-      <h3>Why do tall lifters need Normalized FFMI?</h3>
-
-      <p>
-        Normalized FFMI applies a height correction relative to a 1.80 metre
-        reference. This allows raw FFMI values from people of different
-        heights to be compared using the same height-adjusted framework.
-      </p>
-    </div>
-
-    <div class="faq-item">
-      <h3>Does FFMI include bone weight?</h3>
-
-      <p>
-        FFMI uses fat-free mass rather than isolated muscle mass. Fat-free
-        mass can include bone mineral, organs, body water, connective tissue,
-        and other non-fat components, depending on how body composition is
-        measured.
-      </p>
-    </div>
-
-    <div class="faq-item">
-      <h3>How do you calculate normalized FFMI?</h3>
-
-      <p>
-        First calculate fat-free mass from body weight and body-fat
-        percentage. Then divide fat-free mass in kilograms by height in
-        metres squared. The normalized calculation applies a height
-        correction relative to a 1.80 metre reference.
-      </p>
-    </div>
-
-    <div class="faq-item">
-      <h3>What is the difference between BMI and FFMI?</h3>
-
-      <p>
-        BMI uses total body weight divided by height squared. FFMI uses
-        estimated fat-free mass divided by height squared. BMI does not
-        separate fat from lean tissue, while FFMI focuses on fat-free mass.
-      </p>
-    </div>
-
-    <div class="faq-item">
-      <h3>Do women use the FFMI scale?</h3>
-
-      <p>
-        Yes. FFMI can be calculated for women, but the commonly cited
-        natural-limit value near 25 came from a male sample and should not
-        be treated as a universal female cutoff. Female-athlete research
-        has its own FFMI distributions.
-      </p>
-    </div>
   </article>
 
   <RelatedTools currentToolId="ffmi-calculator" />
 
   <style>
-    .height-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 10px;
+    .calculator-heading { font-size: 1.12rem; margin: 0 0 20px; }
+
+    .quick-answer {
+      background: var(--surface);
+      border-left: 4px solid var(--accent);
+      border-radius: 6px;
+      padding: 16px 18px;
+      margin: 0 0 24px;
+    }
+    .quick-answer p { margin: 0; color: #c7cbd2; font-size: 0.92rem; line-height: 1.6; }
+    .quick-answer strong { color: var(--accent); }
+    .quick-answer code {
+      background: var(--surface-2);
+      padding: 2px 5px;
+      border-radius: 4px;
+      font-size: 0.86em;
     }
 
-    .input-with-suffix {
-      display: flex;
-      align-items: stretch;
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
     }
 
+    .height-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+
+    .input-with-suffix { display: flex; align-items: stretch; }
     .input-with-suffix input {
       flex: 1;
       min-width: 0;
       border-radius: 8px 0 0 8px;
     }
-
     .input-with-suffix span {
       display: flex;
       align-items: center;
@@ -767,20 +894,21 @@ import RelatedTools from '../../../components/RelatedTools.astro';
       white-space: nowrap;
     }
 
-    .field-help {
-      margin: 7px 0 0;
-      color: var(--text-muted);
-      font-size: 0.82rem;
+    .field-help { margin: 7px 0 0; color: var(--text-muted); font-size: 0.82rem; }
+    .field-help a { font-weight: 600; }
+
+    .input-error {
+      margin: 12px 0 0;
+      padding: 10px 12px;
+      border: 1px solid #dc2626;
+      border-radius: 8px;
+      background: rgba(220, 38, 38, 0.08);
+      color: var(--text);
+      line-height: 1.45;
+      font-size: 0.92rem;
     }
 
-    .field-help a {
-      font-weight: 600;
-    }
-
-    .result-primary {
-      padding: 4px 0 18px;
-    }
-
+    .result-primary { padding: 4px 0 18px; text-align: center; }
     .result-title {
       color: var(--text-muted);
       font-size: 0.82rem;
@@ -788,14 +916,63 @@ import RelatedTools from '../../../components/RelatedTools.astro';
       letter-spacing: 0.04em;
       font-weight: 700;
     }
+    .result-primary .big-number { margin-top: 2px; }
+    .result-unit { color: var(--text-muted); font-size: 0.82rem; }
 
-    .result-primary .big-number {
-      margin-top: 2px;
+    .ffmi-positioning { margin: 8px 0 22px; }
+    .positioning-bar {
+      position: relative;
+      display: flex;
+      width: 100%;
+      height: 12px;
+      border-radius: 999px;
+      overflow: visible;
+      background: var(--surface-2);
     }
-
-    .result-unit {
+    .position-segment { height: 12px; }
+    .position-segment.seg-1 { background: #4b83d1; flex: 2; }
+    .position-segment.seg-2 { background: #3e9b62; flex: 2; }
+    .position-segment.seg-3 { background: #7cb342; flex: 2; }
+    .position-segment.seg-4 { background: #d5a83a; flex: 3; }
+    .position-segment.seg-5 { background: #c95548; flex: 1; }
+    .position-segment:first-child { border-radius: 999px 0 0 999px; }
+    .position-segment:nth-child(5) { border-radius: 0 999px 999px 0; }
+    .position-marker {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 16px;
+      height: 16px;
+      border: 2px solid #fff;
+      border-radius: 50%;
+      background: var(--accent);
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.45);
+      transform: translate(-50%, -50%);
+      transition: left 0.3s ease;
+    }
+    .positioning-labels {
+      display: flex;
+      margin-top: 8px;
       color: var(--text-muted);
-      font-size: 0.82rem;
+      font-size: 0.72rem;
+    }
+    .positioning-labels span {
+      text-align: center;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      padding: 0 2px;
+    }
+    .positioning-labels span:nth-child(1),
+    .positioning-labels span:nth-child(2),
+    .positioning-labels span:nth-child(3) { flex: 2; }
+    .positioning-labels span:nth-child(4) { flex: 3; }
+    .positioning-labels span:nth-child(5) { flex: 1; }
+    .positioning-note {
+      margin: 8px 0 0;
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      text-align: center;
     }
 
     .result-secondary {
@@ -803,24 +980,19 @@ import RelatedTools from '../../../components/RelatedTools.astro';
       grid-template-columns: repeat(5, 1fr);
       gap: 8px;
     }
-
     .metric-card {
       padding: 12px 8px;
       background: var(--surface);
       border: 1px solid var(--border);
       border-radius: 10px;
     }
-
     .metric-label {
       display: block;
       color: var(--text-muted);
       font-size: 0.74rem;
       margin-bottom: 5px;
     }
-
-    .metric-card strong {
-      font-size: 0.95rem;
-    }
+    .metric-card strong { font-size: 0.95rem; }
 
     .ffmi-interpretation {
       margin-top: 16px;
@@ -830,544 +1002,445 @@ import RelatedTools from '../../../components/RelatedTools.astro';
       text-align: left;
       background: var(--surface);
     }
-
-    .ffmi-interpretation strong {
-      color: var(--accent);
-    }
-
+    .ffmi-interpretation strong { color: var(--accent); }
     .ffmi-interpretation p {
       margin: 5px 0 0;
       color: var(--text-muted);
       font-size: 0.88rem;
     }
 
-    .ffmi-scale {
-      margin-top: 18px;
-      text-align: left;
-    }
-
-    .ffmi-scale h3 {
-      margin: 0 0 8px;
-      font-size: 0.98rem;
-    }
-
-    .scale-note {
-      color: var(--text-muted);
-      font-size: 0.78rem;
-      margin: 8px 0 0;
-    }
-
-    .natural-limit-note {
-      margin-top: 16px;
-      padding: 14px;
-      border-left: 3px solid var(--accent);
-      border-radius: 8px;
-      background: var(--surface);
-      color: var(--text-muted);
-      font-size: 0.86rem;
-      line-height: 1.55;
-      text-align: left;
-    }
-
-    .comparison-table {
-      width: 100%;
-      border-collapse: collapse;
-      margin: 14px 0;
+    .next-level {
+      margin-top: 12px;
+      padding: 12px 14px;
+      border-radius: 10px;
+      background: var(--surface-2);
+      border: 1px dashed var(--border);
       font-size: 0.88rem;
+      color: #c7cbd2;
+      line-height: 1.55;
+    }
+    .next-level-label {
+      color: var(--accent);
+      font-weight: 700;
+      display: block;
+      margin-bottom: 3px;
     }
 
-    .comparison-table th,
-    .comparison-table td {
-      padding: 10px 8px;
-      border-bottom: 1px solid var(--border);
-      text-align: left;
-    }
+    .ffmi-scale { margin-top: 18px; text-align: left; }
+    .ffmi-scale h3 { margin: 0 0 8px; font-size: 0.98rem; }
+    .scale-note { color: var(--text-muted); font-size: 0.78rem; margin: 8px 0 0; }
 
-    .comparison-table th {
+    .calc-note {
       color: var(--text-muted);
-      font-size: 0.8rem;
+      font-size: 0.84rem;
+      line-height: 1.6;
+      margin: 10px 0;
     }
+
+    .result-table caption {
+      text-align: left;
+      color: var(--text-muted);
+      font-size: 0.84rem;
+      padding: 0 0 8px;
+    }
+
+    .article-section ol {
+      color: #c7cbd2;
+      font-size: 0.95rem;
+      padding-left: 22px;
+    }
+    .article-section ol li { margin-bottom: 6px; }
 
     @media (max-width: 700px) {
-      .result-secondary {
-        grid-template-columns: repeat(2, 1fr);
-      }
+      .result-secondary { grid-template-columns: repeat(2, 1fr); }
     }
-
     @media (max-width: 480px) {
-      .height-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .result-secondary {
-        grid-template-columns: 1fr 1fr;
-      }
+      .height-grid { grid-template-columns: 1fr; }
+      .result-secondary { grid-template-columns: 1fr 1fr; }
+      .positioning-labels { font-size: 0.65rem; }
     }
   </style>
 
   <script>
-    type Unit = "lb" | "kg";
+    type Unit = 'lb' | 'kg';
+    type Sex = 'male' | 'female';
 
-    let unit: Unit = "lb";
+    let unit: Unit = 'lb';
+    let sex: Sex = 'male';
 
-    const unitLb = document.getElementById("unit-lb");
-    const unitKg = document.getElementById("unit-kg");
+    let preservedKg: number | null = null;
+    let preservedCm: number | null = null;
 
-    const weightInput =
-      document.getElementById("weight") as HTMLInputElement | null;
+    const LB_PER_KG = 2.2046226218;
 
-    const heightFtInput =
-      document.getElementById("height-ft") as HTMLInputElement | null;
+    const unitLb = document.getElementById('unit-lb');
+    const unitKg = document.getElementById('unit-kg');
 
-    const heightInInput =
-      document.getElementById("height-in") as HTMLInputElement | null;
+    const sexInput = document.getElementById('sex') as HTMLSelectElement | null;
 
-    const heightCmInput =
-      document.getElementById("height-cm") as HTMLInputElement | null;
+    const weightInput = document.getElementById('weight') as HTMLInputElement | null;
+    const weightLabel = document.getElementById('weight-label');
+    const weightUnit = document.getElementById('weight-unit');
 
-    const bodyFatInput =
-      document.getElementById("bodyfat") as HTMLInputElement | null;
+    const heightFtInput = document.getElementById('height-ft') as HTMLInputElement | null;
+    const heightInInput = document.getElementById('height-in') as HTMLInputElement | null;
+    const heightCmInput = document.getElementById('height-cm') as HTMLInputElement | null;
 
-    const sexInput =
-      document.getElementById("sex") as HTMLSelectElement | null;
+    const bodyFatInput = document.getElementById('bodyfat') as HTMLInputElement | null;
 
-    const heightImperial =
-      document.getElementById("height-imperial");
+    const heightImperial = document.getElementById('height-imperial');
+    const heightMetric = document.getElementById('height-metric');
 
-    const heightMetric =
-      document.getElementById("height-metric");
+    const calcBtn = document.getElementById('calc-btn');
+    const inputError = document.getElementById('input-error');
 
-    const weightUnit =
-      document.getElementById("weight-unit");
+    const resultBox = document.getElementById('result-box');
+    const resultNormalized = document.getElementById('result-normalized');
+    const resultFfmi = document.getElementById('result-ffmi');
+    const resultFfm = document.getElementById('result-ffm');
+    const resultFat = document.getElementById('result-fat');
+    const resultLeanPercent = document.getElementById('result-lean-percent');
+    const resultBmi = document.getElementById('result-bmi');
+    const resultLevel = document.getElementById('result-level');
+    const resultInterpretation = document.getElementById('result-interpretation');
+    const resultAnnouncement = document.getElementById('result-announcement');
+    const positionMarker = document.getElementById('position-marker');
+    const nextLevelBox = document.getElementById('next-level');
+    const nextLevelText = document.getElementById('next-level-text');
 
-    const calcBtn =
-      document.getElementById("calc-btn");
+    const referenceTbody = document.getElementById('reference-tbody');
+    const referenceGuideTitle = document.getElementById('reference-guide-title');
 
-    const resultBox =
-      document.getElementById("result-box");
+    const posLabel1 = document.getElementById('pos-label-1');
+    const posLabel2 = document.getElementById('pos-label-2');
+    const posLabel3 = document.getElementById('pos-label-3');
+    const posLabel4 = document.getElementById('pos-label-4');
+    const posLabel5 = document.getElementById('pos-label-5');
 
-    const resultNormalized =
-      document.getElementById("result-normalized");
-
-    const resultFfmi =
-      document.getElementById("result-ffmi");
-
-    const resultFfm =
-      document.getElementById("result-ffm");
-
-    const resultFat =
-      document.getElementById("result-fat");
-
-    const resultLeanPercent =
-      document.getElementById("result-lean-percent");
-
-    const resultBmi =
-      document.getElementById("result-bmi");
-
-    const resultLevel =
-      document.getElementById("result-level");
-
-    const resultInterpretation =
-      document.getElementById("result-interpretation");
-
-    function round(value: number, decimals = 1): number {
+    const round = (value: number, decimals = 1) => {
       const factor = Math.pow(10, decimals);
       return Math.round(value * factor) / factor;
+    };
+
+    const referenceBands: Record<Sex, { label: string; text: string }[]> = {
+      male: [
+        { label: 'Below 18', text: 'Lower muscularity range' },
+        { label: '18–20', text: 'Moderate muscularity range' },
+        { label: '20–22', text: 'Higher muscularity range (typical trained male)' },
+        { label: '22–25', text: 'Very high muscularity range (advanced natural)' },
+        { label: '25+', text: 'Above the commonly cited Kouri reference point' },
+      ],
+      female: [
+        { label: 'Below 14', text: 'Lower muscularity range' },
+        { label: '14–16', text: 'Moderate muscularity range' },
+        { label: '16–18', text: 'Higher muscularity range (typical trained female)' },
+        { label: '18–21', text: 'Very high muscularity range (advanced natural)' },
+        { label: '21+', text: 'Above broad female-athlete reference ranges' },
+      ],
+    };
+
+    // Numerical position scale for the marker.
+    // Male bands: <18, 18-20, 20-22, 22-25, 25+ → spans 16-26 (10 units).
+    // Female bands: <14, 14-16, 16-18, 18-21, 21+ → spans 12-22 (10 units).
+    // Segment flex ratios 2:2:2:3:1 match the actual band widths in both cases.
+    const positionScale: Record<Sex, [number, number]> = {
+      male: [16, 26],
+      female: [12, 22],
+    };
+
+    function updatePositionLabels(selectedSex: Sex) {
+      const labels = selectedSex === 'female'
+        ? ['<14', '14–16', '16–18', '18–21', '21+']
+        : ['<18', '18–20', '20–22', '22–25', '25+'];
+
+      const nodes = [posLabel1, posLabel2, posLabel3, posLabel4, posLabel5];
+      nodes.forEach((node, i) => { if (node) node.textContent = labels[i]; });
     }
 
-    function setUnit(newUnit: Unit) {
-      if (newUnit === unit) return;
+    function renderReferenceTable(selectedSex: Sex) {
+      if (!referenceTbody) return;
 
-      /*
-       * Weight conversion
-       */
-      if (weightInput) {
-        const currentWeight = parseFloat(weightInput.value);
+      if (referenceGuideTitle) {
+        referenceGuideTitle.textContent = `FFMI Reference Guide — ${selectedSex === 'female' ? 'Female' : 'Male'}`;
+      }
 
-        if (
-          Number.isFinite(currentWeight) &&
-          currentWeight > 0
-        ) {
-          weightInput.value =
-            newUnit === "kg"
-              ? (currentWeight / 2.2046226218).toFixed(1)
-              : (currentWeight * 2.2046226218).toFixed(1);
+      referenceTbody.replaceChildren();
+
+      for (const band of referenceBands[selectedSex]) {
+        const tr = document.createElement('tr');
+
+        const labelCell = document.createElement('td');
+        labelCell.textContent = band.label;
+
+        const textCell = document.createElement('td');
+        textCell.textContent = band.text;
+
+        tr.append(labelCell, textCell);
+        referenceTbody.appendChild(tr);
+      }
+    }
+
+    function syncPreservedWeight() {
+      if (!weightInput) return;
+      const raw = weightInput.value.trim();
+      if (raw === '') { preservedKg = null; return; }
+      const value = Number(raw);
+      if (!Number.isFinite(value) || value <= 0) { preservedKg = null; return; }
+      preservedKg = unit === 'lb' ? value / LB_PER_KG : value;
+    }
+
+    function syncPreservedHeightFromImperial() {
+      if (!heightFtInput || !heightInInput) return;
+      const feetRaw = heightFtInput.value.trim();
+      const inchesRaw = heightInInput.value.trim();
+      if (feetRaw === '' && inchesRaw === '') { preservedCm = null; return; }
+      const feet = feetRaw === '' ? 0 : Number(feetRaw);
+      const inches = inchesRaw === '' ? 0 : Number(inchesRaw);
+      if (!Number.isFinite(feet) || !Number.isFinite(inches) || feet < 0 || inches < 0 || inches >= 12) {
+        preservedCm = null; return;
+      }
+      const totalInches = feet * 12 + inches;
+      if (totalInches <= 0) { preservedCm = null; return; }
+      preservedCm = totalInches * 2.54;
+    }
+
+    function syncPreservedHeightFromMetric() {
+      if (!heightCmInput) return;
+      const raw = heightCmInput.value.trim();
+      if (raw === '') { preservedCm = null; return; }
+      const value = Number(raw);
+      if (!Number.isFinite(value) || value <= 0) { preservedCm = null; return; }
+      preservedCm = value;
+    }
+
+    function resetResult() {
+      clearError();
+      if (resultBox) {
+        resultBox.hidden = true;
+        resultBox.classList.remove('show');
+      }
+      if (resultAnnouncement) resultAnnouncement.textContent = '';
+    }
+
+    function updateWeightLimits() {
+      if (!weightInput) return;
+
+      if (unit === 'lb') {
+        weightInput.min = '66';
+        weightInput.max = '660';
+      } else {
+        weightInput.min = '30';
+        weightInput.max = '300';
+      }
+    }
+
+    function setUnit(next: Unit) {
+      if (next === unit) return;
+
+      if (preservedKg !== null && preservedKg > 0 && weightInput) {
+        weightInput.value = next === 'lb'
+          ? (preservedKg * LB_PER_KG).toFixed(1)
+          : preservedKg.toFixed(1);
+      }
+
+      if (preservedCm !== null && preservedCm > 0) {
+        if (next === 'kg' && heightCmInput) {
+          heightCmInput.value = preservedCm.toFixed(1);
+        }
+        if (next === 'lb' && heightFtInput && heightInInput) {
+          const totalInches = preservedCm / 2.54;
+          const feet = Math.floor(totalInches / 12);
+          const inches = totalInches - feet * 12;
+          heightFtInput.value = String(feet);
+          heightInInput.value = inches.toFixed(1);
         }
       }
 
-      /*
-       * Height conversion
-       *
-       * Always convert through total inches.
-       * This prevents the lb/ft/in ↔ kg/cm switch
-       * from changing the underlying height.
-       */
-      if (unit === "lb" && newUnit === "kg") {
-        if (heightFtInput && heightInInput && heightCmInput) {
-          const feet = parseFloat(heightFtInput.value);
-          const inches = parseFloat(heightInInput.value);
+      unit = next;
+      updateUnitUI();
+      resetResult();
+    }
 
-          if (
-            Number.isFinite(feet) &&
-            Number.isFinite(inches) &&
-            feet >= 0 &&
-            inches >= 0 &&
-            inches < 12
-          ) {
-            const totalInches =
-              feet * 12 + inches;
-
-            heightCmInput.value =
-              (totalInches * 2.54).toFixed(1);
-          }
-        }
-      }
-
-      if (unit === "kg" && newUnit === "lb") {
-        if (heightCmInput && heightFtInput && heightInInput) {
-          const cm = parseFloat(heightCmInput.value);
-
-          if (
-            Number.isFinite(cm) &&
-            cm > 0
-          ) {
-            const totalInches = cm / 2.54;
-
-            const feet =
-              Math.floor(totalInches / 12);
-
-            const inches =
-              totalInches - feet * 12;
-
-            heightFtInput.value =
-              String(feet);
-
-            heightInInput.value =
-              inches.toFixed(1);
-          }
-        }
-      }
-
-      unit = newUnit;
-
+    function updateUnitUI() {
       if (unitLb) {
-        unitLb.classList.toggle(
-          "active",
-          unit === "lb"
-        );
-
-        unitLb.setAttribute(
-          "aria-pressed",
-          String(unit === "lb")
-        );
+        unitLb.classList.toggle('active', unit === 'lb');
+        unitLb.setAttribute('aria-pressed', String(unit === 'lb'));
       }
-
       if (unitKg) {
-        unitKg.classList.toggle(
-          "active",
-          unit === "kg"
-        );
-
-        unitKg.setAttribute(
-          "aria-pressed",
-          String(unit === "kg")
-        );
+        unitKg.classList.toggle('active', unit === 'kg');
+        unitKg.setAttribute('aria-pressed', String(unit === 'kg'));
       }
-
-      if (weightUnit) {
-        weightUnit.textContent =
-          unit === "lb" ? "lb" : "kg";
+      if (weightUnit) weightUnit.textContent = unit === 'lb' ? 'lb' : 'kg';
+      if (weightLabel) {
+        weightLabel.textContent = unit === 'lb' ? 'Body weight (lb)' : 'Body weight (kg)';
       }
-
-      if (heightImperial) {
-        heightImperial.hidden =
-          unit !== "lb";
+      if (weightInput) {
+        weightInput.placeholder = unit === 'lb' ? 'e.g. 180' : 'e.g. 82';
       }
+      if (heightImperial) heightImperial.hidden = unit !== 'lb';
+      if (heightMetric) heightMetric.hidden = unit !== 'kg';
 
-      if (heightMetric) {
-        heightMetric.hidden =
-          unit !== "kg";
+      updateWeightLimits();
+    }
+
+    function showError(message: string) {
+      if (!inputError) return;
+      inputError.textContent = message;
+      inputError.hidden = false;
+      if (resultBox) {
+        resultBox.hidden = true;
+        resultBox.classList.remove('show');
       }
+    }
+
+    function clearError() {
+      if (!inputError) return;
+      inputError.textContent = '';
+      inputError.hidden = true;
     }
 
     function getWeightKg(): number {
-      const raw =
-        parseFloat(weightInput?.value || "");
-
-      if (!Number.isFinite(raw)) {
-        return NaN;
-      }
-
-      return unit === "lb"
-        ? raw / 2.2046226218
-        : raw;
+      if (preservedKg !== null) return preservedKg;
+      const raw = Number(weightInput?.value ?? '');
+      if (!Number.isFinite(raw) || raw <= 0) return NaN;
+      return unit === 'lb' ? raw / LB_PER_KG : raw;
     }
 
     function getHeightCm(): number {
-      if (unit === "kg") {
-        return parseFloat(
-          heightCmInput?.value || ""
-        );
+      if (preservedCm !== null) return preservedCm;
+      if (unit === 'kg') {
+        const cm = Number(heightCmInput?.value ?? '');
+        return Number.isFinite(cm) && cm > 0 ? cm : NaN;
       }
-
-      const feet =
-        parseFloat(heightFtInput?.value || "");
-
-      const inches =
-        parseFloat(heightInInput?.value || "");
-
-      if (
-        !Number.isFinite(feet) ||
-        !Number.isFinite(inches)
-      ) {
-        return NaN;
-      }
-
-      if (
-        feet < 3 ||
-        feet > 8 ||
-        inches < 0 ||
-        inches >= 12
-      ) {
-        return NaN;
-      }
-
-      const totalInches =
-        feet * 12 + inches;
-
-      return totalInches * 2.54;
+      const feet = Number(heightFtInput?.value ?? '');
+      const inches = Number(heightInInput?.value ?? '');
+      if (!Number.isFinite(feet) || !Number.isFinite(inches)) return NaN;
+      if (feet < 3 || feet > 8 || inches < 0 || inches >= 12) return NaN;
+      return (feet * 12 + inches) * 2.54;
     }
 
-    function getInterpretation(
-      normalized: number,
-      sex: string
-    ) {
-      if (sex === "female") {
-        if (normalized < 16) {
-          return {
-            level: "Lower FFMI range",
-            text:
-              "Your calculated FFMI is in a lower range. Female FFMI values vary across populations and sports, so this number should be interpreted as a body-composition metric rather than a pass/fail standard."
-          };
-        }
-
-        if (normalized < 18) {
-          return {
-            level: "Moderate FFMI range",
-            text:
-              "Your calculated FFMI falls in a moderate range. There is no universal female FFMI cutoff for athletic or natural status."
-          };
-        }
-
-        if (normalized < 20) {
-          return {
-            level: "Higher FFMI range",
-            text:
-              "Your calculated FFMI falls in a higher range. Female athletes can show substantial sport-specific differences in FFMI."
-          };
-        }
-
-        if (normalized < 23) {
-          return {
-            level: "Very high FFMI range",
-            text:
-              "Your calculated FFMI is relatively high. Interpret it alongside your sport, training history, body-fat measurement method, and population."
-          };
-        }
-
-        return {
-          level: "High FFMI value",
-          text:
-            "Your calculated FFMI is high relative to broad female-athlete reference data. This is not a diagnosis and should not be used to infer drug use."
-        };
+    function getInterpretation(normalized: number, selectedSex: Sex) {
+      if (selectedSex === 'female') {
+        if (normalized < 14) return { level: 'Lower FFMI range', text: 'Your calculated FFMI is in a lower range. Female FFMI values vary across populations and sports, so this number should be interpreted as a body-composition metric rather than a pass/fail standard.' };
+        if (normalized < 16) return { level: 'Moderate FFMI range', text: 'Your calculated FFMI falls in a moderate range. There is no universal female FFMI cutoff for athletic or natural status.' };
+        if (normalized < 18) return { level: 'Higher FFMI range', text: 'Your calculated FFMI falls in a higher range. Female athletes can show substantial sport-specific differences in FFMI.' };
+        if (normalized < 21) return { level: 'Very high FFMI range', text: 'Your calculated FFMI is relatively high. Interpret it alongside your sport, training history, body-fat measurement method, and population.' };
+        return { level: 'High FFMI value', text: 'Your calculated FFMI is high relative to broad female-athlete reference data. This is not a diagnosis and should not be used to infer drug use.' };
       }
-
-      if (normalized < 18) {
-        return {
-          level: "Lower FFMI range",
-          text:
-            "Your calculated FFMI is in a lower muscularity range. FFMI is descriptive and should be interpreted alongside training history and body-fat measurement quality."
-        };
-      }
-
-      if (normalized < 20) {
-        return {
-          level: "Moderate FFMI range",
-          text:
-            "Your calculated FFMI falls in a moderate muscularity range."
-        };
-      }
-
-      if (normalized < 22) {
-        return {
-          level: "Higher FFMI range",
-          text:
-            "Your calculated FFMI indicates a relatively high amount of fat-free mass for your height."
-        };
-      }
-
-      if (normalized < 25) {
-        return {
-          level: "Very high FFMI range",
-          text:
-            "Your calculated FFMI is in a very high muscularity range. The result remains an estimate because it depends on your body-fat measurement."
-        };
-      }
-
-      return {
-        level: "25+ FFMI reference range",
-        text:
-          "Your normalized FFMI is at or above the commonly cited 25 reference point from Kouri et al. This does not prove or disprove performance-enhancing drug use."
-      };
+      if (normalized < 18) return { level: 'Lower FFMI range', text: 'Your calculated FFMI is in a lower muscularity range. FFMI is descriptive and should be interpreted alongside training history and body-fat measurement quality.' };
+      if (normalized < 20) return { level: 'Moderate FFMI range', text: 'Your calculated FFMI falls in a moderate muscularity range.' };
+      if (normalized < 22) return { level: 'Higher FFMI range', text: 'Your calculated FFMI indicates a relatively high amount of fat-free mass for your height — typical of a trained male lifter.' };
+      if (normalized < 25) return { level: 'Very high FFMI range', text: 'Your calculated FFMI is in a very high muscularity range, aligned with an advanced natural level. The result remains an estimate because it depends on your body-fat measurement.' };
+      return { level: '25+ FFMI reference range', text: 'Your normalized FFMI is at or above the commonly cited 25 reference point from Kouri et al. This does not prove or disprove performance-enhancing drug use.' };
     }
 
-    if (unitLb) {
-      unitLb.addEventListener(
-        "click",
-        () => setUnit("lb")
-      );
+    function updatePositionMarker(normalized: number, selectedSex: Sex) {
+      if (!positionMarker) return;
+      const [min, max] = positionScale[selectedSex];
+      const clamped = Math.max(min, Math.min(max, normalized));
+      const percent = ((clamped - min) / (max - min)) * 100;
+      positionMarker.style.left = `${percent}%`;
     }
 
-    if (unitKg) {
-      unitKg.addEventListener(
-        "click",
-        () => setUnit("kg")
-      );
-    }
+    unitLb?.addEventListener('click', () => setUnit('lb'));
+    unitKg?.addEventListener('click', () => setUnit('kg'));
 
-    if (calcBtn) {
-      calcBtn.addEventListener("click", () => {
-        const weightKg = getWeightKg();
-        const heightCm = getHeightCm();
+    weightInput?.addEventListener('input', () => { syncPreservedWeight(); resetResult(); });
+    heightFtInput?.addEventListener('input', () => { syncPreservedHeightFromImperial(); resetResult(); });
+    heightInInput?.addEventListener('input', () => { syncPreservedHeightFromImperial(); resetResult(); });
+    heightCmInput?.addEventListener('input', () => { syncPreservedHeightFromMetric(); resetResult(); });
+    bodyFatInput?.addEventListener('input', resetResult);
 
-        const bodyFat =
-          parseFloat(bodyFatInput?.value || "");
+    sexInput?.addEventListener('change', () => {
+      sex = (sexInput.value as Sex) || 'male';
+      updatePositionLabels(sex);
+      renderReferenceTable(sex);
+      resetResult();
+    });
 
-        const sex =
-          sexInput?.value || "male";
+    calcBtn?.addEventListener('click', () => {
+      clearError();
 
-        if (
-          !Number.isFinite(weightKg) ||
-          weightKg < 30 ||
-          weightKg > 300
-        ) {
-          alert(
-            "Please enter a body weight between 30 and 300 kg."
-          );
-          return;
+      if (preservedKg === null) syncPreservedWeight();
+      if (preservedCm === null) {
+        if (unit === 'lb') syncPreservedHeightFromImperial();
+        else syncPreservedHeightFromMetric();
+      }
+
+      const weightKg = getWeightKg();
+      const heightCm = getHeightCm();
+      const bodyFat = Number(bodyFatInput?.value ?? '');
+
+      if (!Number.isFinite(weightKg) || weightKg < 30 || weightKg > 300) {
+        showError('Please enter a body weight between 30 and 300 kg (approximately 66–660 lb).');
+        return;
+      }
+      if (!Number.isFinite(heightCm) || heightCm < 120 || heightCm > 250) {
+        showError('Please enter a height between 120 and 250 cm (approximately 4 ft – 8 ft).');
+        return;
+      }
+      if (!Number.isFinite(bodyFat) || bodyFat < 3 || bodyFat > 60) {
+        showError('Please enter a body-fat percentage between 3% and 60%.');
+        return;
+      }
+
+      const heightM = heightCm / 100;
+      const fatMassKg = weightKg * (bodyFat / 100);
+      const fatFreeMassKg = weightKg - fatMassKg;
+      const ffmi = fatFreeMassKg / Math.pow(heightM, 2);
+      const normalizedFfmi = ffmi + 6.3 * (1.8 - heightM);
+      const bmi = weightKg / Math.pow(heightM, 2);
+      const leanPercent = (fatFreeMassKg / weightKg) * 100;
+
+      const displayFfm = unit === 'lb' ? fatFreeMassKg * LB_PER_KG : fatFreeMassKg;
+      const displayFat = unit === 'lb' ? fatMassKg * LB_PER_KG : fatMassKg;
+
+      if (resultNormalized) resultNormalized.textContent = round(normalizedFfmi).toFixed(1);
+      if (resultFfmi) resultFfmi.textContent = `${round(ffmi).toFixed(1)} kg/m²`;
+      if (resultFfm) resultFfm.textContent = `${round(displayFfm).toFixed(1)} ${unit}`;
+      if (resultFat) resultFat.textContent = `${round(displayFat).toFixed(1)} ${unit}`;
+      if (resultLeanPercent) resultLeanPercent.textContent = `${round(leanPercent).toFixed(1)}%`;
+      if (resultBmi) resultBmi.textContent = round(bmi).toFixed(1);
+
+      const interpretation = getInterpretation(normalizedFfmi, sex);
+      if (resultLevel) resultLevel.textContent = interpretation.level;
+      if (resultInterpretation) resultInterpretation.textContent = interpretation.text;
+
+      updatePositionMarker(normalizedFfmi, sex);
+
+      if (nextLevelBox && nextLevelText) {
+        const bands = sex === 'female' ? [14, 16, 18, 21] : [18, 20, 22, 25];
+        const nextBand = bands.find((band) => band > normalizedFfmi);
+
+        if (!nextBand) {
+          nextLevelBox.hidden = true;
+        } else {
+          const rawTarget = nextBand - 6.3 * (1.80 - heightM);
+          const ffmTargetKg = rawTarget * Math.pow(heightM, 2);
+          const ffmGainKg = ffmTargetKg - fatFreeMassKg;
+          const ffmGain = unit === 'lb' ? ffmGainKg * LB_PER_KG : ffmGainKg;
+
+          if (ffmGain > 0.1) {
+            nextLevelBox.hidden = false;
+            nextLevelText.textContent = `Reach a normalized FFMI of ${nextBand.toFixed(1)} — approximately ${round(ffmGain).toFixed(1)} ${unit} of additional fat-free mass at your current height.`;
+          } else {
+            nextLevelBox.hidden = true;
+          }
         }
+      }
 
-        if (
-          !Number.isFinite(heightCm) ||
-          heightCm < 120 ||
-          heightCm > 250
-        ) {
-          alert(
-            "Please enter a height between 120 and 250 cm."
-          );
-          return;
-        }
+      if (resultBox) {
+        resultBox.hidden = false;
+        resultBox.classList.add('show');
+      }
 
-        if (
-          !Number.isFinite(bodyFat) ||
-          bodyFat < 3 ||
-          bodyFat > 60
-        ) {
-          alert(
-            "Please enter a body-fat percentage between 3% and 60%."
-          );
-          return;
-        }
+      if (resultAnnouncement) {
+        resultAnnouncement.textContent = `Normalized FFMI: ${round(normalizedFfmi).toFixed(1)} kg per square meter. Raw FFMI: ${round(ffmi).toFixed(1)}. Fat-free mass: ${round(displayFfm).toFixed(1)} ${unit}. ${interpretation.level}.`;
+      }
+    });
 
-        const heightM =
-          heightCm / 100;
-
-        const fatMassKg =
-          weightKg * (bodyFat / 100);
-
-        const fatFreeMassKg =
-          weightKg - fatMassKg;
-
-        const ffmi =
-          fatFreeMassKg /
-          Math.pow(heightM, 2);
-
-        /*
-         * Kouri et al. (1995):
-         * Normalized FFMI =
-         * FFMI + 6.3 × (1.80 − height in metres)
-         */
-        const normalizedFfmi =
-          ffmi +
-          6.3 * (1.8 - heightM);
-
-        const bmi =
-          weightKg /
-          Math.pow(heightM, 2);
-
-        const leanPercent =
-          (fatFreeMassKg / weightKg) * 100;
-
-        const displayFfm =
-          unit === "lb"
-            ? fatFreeMassKg * 2.2046226218
-            : fatFreeMassKg;
-
-        const displayFat =
-          unit === "lb"
-            ? fatMassKg * 2.2046226218
-            : fatMassKg;
-
-        if (resultNormalized) {
-          resultNormalized.textContent =
-            round(normalizedFfmi).toFixed(1);
-        }
-
-        if (resultFfmi) {
-          resultFfmi.textContent =
-            `${round(ffmi).toFixed(1)} kg/m²`;
-        }
-
-        if (resultFfm) {
-          resultFfm.textContent =
-            `${round(displayFfm).toFixed(1)} ${unit}`;
-        }
-
-        if (resultFat) {
-          resultFat.textContent =
-            `${round(displayFat).toFixed(1)} ${unit}`;
-        }
-
-        if (resultLeanPercent) {
-          resultLeanPercent.textContent =
-            `${round(leanPercent).toFixed(1)}%`;
-        }
-
-        if (resultBmi) {
-          resultBmi.textContent =
-            round(bmi).toFixed(1);
-        }
-
-        const interpretation =
-          getInterpretation(
-            normalizedFfmi,
-            sex
-          );
-
-        if (resultLevel) {
-          resultLevel.textContent =
-            interpretation.level;
-        }
-
-        if (resultInterpretation) {
-          resultInterpretation.textContent =
-            interpretation.text;
-        }
-
-        if (resultBox) {
-          resultBox.classList.add("show");
-        }
-      });
-    }
+    updateUnitUI();
+    updatePositionLabels(sex);
+    renderReferenceTable(sex);
   </script>
 </Base>
