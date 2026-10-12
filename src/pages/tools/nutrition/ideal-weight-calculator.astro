@@ -56,6 +56,11 @@ const faqs = [
       '"Ideal weight" refers to formula-based reference estimates. "Healthy weight" is a broader concept that can involve BMI, body composition, health history, physical activity, and other individual factors. The terms should not be treated as interchangeable.',
   },
   {
+    question: 'Are these formulas accurate for heights below 5 feet?',
+    answer:
+      'Traditional IBW equations use 5 feet (152 cm) as their baseline. Below 5 feet, the calculation extrapolates below the standard baseline, so results should be treated as reference estimates rather than values validated against original clinical data.',
+  },
+  {
     question: 'What should I calculate after my ideal weight?',
     answer:
       'Use our <a href="/tools/nutrition/bmi-calculator/">BMI Calculator</a> to see where your current weight falls, our <a href="/tools/nutrition/body-fat-calculator/">Body Fat Calculator</a> for body-composition context, or our <a href="/tools/nutrition/tdee-calculator/">TDEE Calculator</a> for maintenance calorie estimates.',
@@ -202,6 +207,12 @@ const jsonLdSafe = (value: unknown) =>
       </div>
     </div>
 
+    <p class="field-help">
+      Traditional IBW formulas use 5 feet (152 cm) as their baseline.
+      Heights below 5 feet produce extrapolated reference estimates rather
+      than values validated in the original clinical data.
+    </p>
+
     <p id="input-error" class="input-error" role="alert" aria-live="assertive" hidden></p>
 
     <button type="button" class="btn-primary" id="calc-btn">
@@ -343,9 +354,10 @@ const jsonLdSafe = (value: unknown) =>
     </p>
 
     <p>
-      <strong>Limitation:</strong> Hamwi produces generally higher estimates
-      than Devine for the same height, and it was developed before modern
-      body-composition standards.
+      <strong>Limitation:</strong> Hamwi often produces different estimates
+      than Devine, and the direction and size of the difference varies with
+      height and sex. It was developed before modern body-composition
+      standards.
     </p>
 
     <h3>Robinson Formula (1983)</h3>
@@ -401,6 +413,22 @@ const jsonLdSafe = (value: unknown) =>
     <p>
       <strong>Limitation:</strong> Least commonly used in clinical settings.
       Same historical data limitations as the other formulas.
+    </p>
+
+    <h3>Below 5 Feet: Extrapolated Estimates</h3>
+
+    <p>
+      Traditional IBW equations use 5 feet (152 cm) as their baseline and
+      add a fixed amount for each additional inch. For heights below
+      5 feet, the calculation extrapolates below this baseline. The
+      extrapolated values are reference estimates rather than results
+      validated in the original clinical datasets.
+    </p>
+
+    <p>
+      If your height is below 5 feet, treat the formula results with
+      additional caution. A BMI-based range may provide a more useful
+      secondary reference in this height range.
     </p>
   </article>
 
@@ -667,6 +695,13 @@ const jsonLdSafe = (value: unknown) =>
       color: var(--accent);
     }
 
+    .field-help {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      margin-top: 8px;
+      line-height: 1.5;
+    }
+
     .sr-only {
       position: absolute;
       width: 1px;
@@ -896,9 +931,15 @@ const jsonLdSafe = (value: unknown) =>
         }
 
         if (next === 'lb' && heightFt && heightIn) {
-          const totalInches = Math.round(preservedCm / 2.54);
-          heightFt.value = String(Math.floor(totalInches / 12));
-          heightIn.value = String(totalInches % 12);
+          // Use decimal precision — do not round to whole inches.
+          // This keeps the displayed imperial value aligned with the
+          // original metric input.
+          const totalInches = preservedCm / 2.54;
+          const feet = Math.floor(totalInches / 12);
+          const inches = totalInches - feet * 12;
+
+          heightFt.value = String(feet);
+          heightIn.value = inches.toFixed(1);
         }
       }
 
@@ -1041,6 +1082,7 @@ const jsonLdSafe = (value: unknown) =>
       clearError();
 
       // Only sync from input when no preserved value exists yet.
+      // This keeps the original metric precision through unit toggles.
       if (preservedCm === null) {
         if (unit === 'lb') {
           syncPreservedHeightFromImperial();
