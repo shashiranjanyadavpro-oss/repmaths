@@ -1,72 +1,152 @@
 ---
 import Base from '../../../layouts/Base.astro';
 import RelatedTools from '../../../components/RelatedTools.astro';
+
+const breadcrumbs = [
+  { name: 'Home', href: '/' },
+  { name: 'Tools', href: '/tools/' },
+  { name: 'Nutrition & Body Composition', href: '/tools/nutrition/' },
+  { name: 'Ideal Weight Calculator' },
+];
+
+const faqs = [
+  {
+    question: 'What is my ideal weight for my height and age?',
+    answer:
+      'The four adult IBW formulas used here do not use age. They estimate a reference weight from height and sex. Your appropriate health or fitness target can depend on additional factors.',
+  },
+  {
+    question: 'Which ideal body weight formula is most accurate?',
+    answer:
+      'There is no universally most accurate formula. Devine, Hamwi, Robinson, and Miller can produce different estimates, so comparing all four gives more context than treating one formula as definitive.',
+  },
+  {
+    question: 'How much should a 5\'5 woman weigh?',
+    answer:
+      'There is no single ideal weight for every 5\'5 woman. This calculator provides four reference IBW estimates plus a BMI-based healthy weight range for comparison.',
+  },
+  {
+    question: 'Does ideal weight include muscle mass?',
+    answer:
+      'No. Traditional IBW formulas do not directly account for above-average muscle mass. This is especially important for bodybuilders and strength athletes. For body-composition context, see our <a href="/tools/nutrition/body-fat-calculator/">Body Fat Calculator</a> or <a href="/tools/nutrition/lean-body-mass-calculator/">Lean Body Mass Calculator</a>.',
+  },
+  {
+    question: 'What is the difference between BMI and Ideal Body Weight?',
+    answer:
+      'IBW formulas estimate a reference weight from height and sex. BMI relates weight to height and can be used to calculate a range of weights at a selected BMI. Neither directly measures body composition. Compare with our <a href="/tools/nutrition/bmi-calculator/">BMI Calculator</a>.',
+  },
+  {
+    question: 'Are ideal weight formulas outdated?',
+    answer:
+      'The classic equations are old and have known limitations, but they remain useful as reference equations. They should not be treated as a universal definition of the weight every person should reach.',
+  },
+  {
+    question: 'Which formula does the Devine equation use?',
+    answer:
+      'The Devine formula was published in 1974 and estimates IBW from height and sex using a base weight at 5 feet plus a fixed amount per additional inch. It is widely used in clinical pharmacology and drug dosing.',
+  },
+  {
+    question: 'Which IBW formula is used most often in clinical practice?',
+    answer:
+      'The Devine formula is the most commonly cited IBW equation in clinical and pharmacological contexts. Other equations like Robinson, Miller, and Hamwi provide alternative estimates but are used less frequently.',
+  },
+  {
+    question: 'Is ideal weight the same as healthy weight?',
+    answer:
+      '"Ideal weight" refers to formula-based reference estimates. "Healthy weight" is a broader concept that can involve BMI, body composition, health history, physical activity, and other individual factors. The terms should not be treated as interchangeable.',
+  },
+  {
+    question: 'What should I calculate after my ideal weight?',
+    answer:
+      'Use our <a href="/tools/nutrition/bmi-calculator/">BMI Calculator</a> to see where your current weight falls, our <a href="/tools/nutrition/body-fat-calculator/">Body Fat Calculator</a> for body-composition context, or our <a href="/tools/nutrition/tdee-calculator/">TDEE Calculator</a> for maintenance calorie estimates.',
+  },
+];
+
+const appSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'WebApplication',
+  '@id': 'https://repmaths.com/tools/nutrition/ideal-weight-calculator/#calculator',
+  name: 'RepMaths Ideal Weight Calculator',
+  alternateName: 'IBW Calculator',
+  url: 'https://repmaths.com/tools/nutrition/ideal-weight-calculator/',
+  description:
+    'Free ideal weight calculator using Devine, Robinson, Miller, and Hamwi formulas, alongside a BMI-based healthy weight range.',
+  applicationCategory: 'HealthApplication',
+  operatingSystem: 'Any',
+  browserRequirements: 'Requires JavaScript',
+  inLanguage: 'en',
+  isAccessibleForFree: true,
+  offers: {
+    '@type': 'Offer',
+    price: '0',
+    priceCurrency: 'USD',
+  },
+  publisher: {
+    '@id': 'https://repmaths.com/#organization',
+  },
+  isPartOf: {
+    '@id': 'https://repmaths.com/#website',
+  },
+};
+
+const jsonLdSafe = (value: unknown) =>
+  JSON.stringify(value).replace(/</g, '\\u003c');
 ---
 
 <Base
-  title="Ideal Weight Calculator — Find Your Target Weight (4 Formulas)"
-  description="Free ideal weight calculator using Devine, Robinson, Miller, and Hamwi formulas. Compare reference body weights with a healthy BMI weight range in lb or kg."
+  title="Ideal Weight Calculator — 4 Reference Formulas | RepMaths"
+  description="Free ideal weight calculator using 4 formulas (Devine, Robinson, Miller, Hamwi). Compare IBW estimates with a healthy BMI weight range."
+  breadcrumbs={breadcrumbs}
+  faqs={faqs}
 >
-  <script type="application/ld+json" set:html={JSON.stringify({
-    "@context": "https://schema.org",
-    "@type": "SoftwareApplication",
-    "name": "Ideal Weight Calculator",
-    "applicationCategory": "HealthApplication",
-    "operatingSystem": "Any",
-    "offers": {
-      "@type": "Offer",
-      "price": "0",
-      "priceCurrency": "USD"
-    },
-    "description": "Free ideal weight calculator that compares four commonly used ideal body weight formulas with a BMI-based healthy weight range."
-  })} />
+  <script
+    type="application/ld+json"
+    set:html={jsonLdSafe(appSchema)}
+  />
 
   <section class="hero">
-    <h1>Ideal Weight Calculator — Find Your Target Weight</h1>
+    <h1>Ideal Weight Calculator</h1>
     <p>
-      Compare four commonly used ideal body weight formulas with a
-      healthy BMI-based weight range in pounds or kilograms.
+      Compare four commonly used ideal body weight formulas with a healthy
+      BMI-based weight range in pounds or kilograms.
     </p>
   </section>
 
-  <section class="calc-card">
+  <aside class="quick-answer" aria-label="Ideal weight quick answer">
+    <p>
+      <strong>What is ideal body weight?</strong> Ideal body weight (IBW)
+      is a reference estimate based on height and sex. This calculator
+      compares four traditional formulas — Devine, Robinson, Miller, and
+      Hamwi — and shows a BMI-based healthy weight range. These formulas
+      were not designed to measure muscle mass or body fat, so they are
+      best treated as reference estimates rather than individual targets.
+    </p>
+  </aside>
+
+  <section class="calc-card" aria-labelledby="calculator-heading">
+    <h2 id="calculator-heading" class="calculator-heading">
+      Calculate Your Ideal Weight Reference
+    </h2>
+
     <div class="field">
-      <label>Unit</label>
-      <div class="unit-toggle">
-        <button
-          type="button"
-          id="unit-lb"
-          class="active"
-          aria-pressed="true"
-        >
+      <span class="field-label" id="unit-label">Unit</span>
+      <div class="unit-toggle" role="group" aria-labelledby="unit-label">
+        <button type="button" id="unit-lb" class="active" aria-pressed="true">
           lb / ft
         </button>
-        <button
-          type="button"
-          id="unit-kg"
-          aria-pressed="false"
-        >
+        <button type="button" id="unit-kg" aria-pressed="false">
           kg / cm
         </button>
       </div>
     </div>
 
     <div class="field">
-      <label>Sex</label>
-      <div class="unit-toggle">
-        <button
-          type="button"
-          id="sex-male"
-          class="active"
-          aria-pressed="true"
-        >
+      <span class="field-label" id="sex-label">Sex</span>
+      <div class="unit-toggle" role="group" aria-labelledby="sex-label">
+        <button type="button" id="sex-male" class="active" aria-pressed="true">
           Male
         </button>
-        <button
-          type="button"
-          id="sex-female"
-          aria-pressed="false"
-        >
+        <button type="button" id="sex-female" aria-pressed="false">
           Female
         </button>
       </div>
@@ -74,9 +154,9 @@ import RelatedTools from '../../../components/RelatedTools.astro';
 
     <div id="imperial-height">
       <div class="field">
-        <label for="height-ft">Height</label>
+        <span class="field-label" id="imperial-height-label">Height</span>
 
-        <div class="height-grid">
+        <div class="height-grid" role="group" aria-labelledby="imperial-height-label">
           <input
             type="number"
             id="height-ft"
@@ -87,9 +167,7 @@ import RelatedTools from '../../../components/RelatedTools.astro';
             step="1"
             aria-label="Height in feet"
           />
-
           <span>ft</span>
-
           <input
             type="number"
             id="height-in"
@@ -100,7 +178,6 @@ import RelatedTools from '../../../components/RelatedTools.astro';
             step="0.1"
             aria-label="Height in inches"
           />
-
           <span>in</span>
         </div>
       </div>
@@ -109,7 +186,6 @@ import RelatedTools from '../../../components/RelatedTools.astro';
     <div id="metric-height" hidden>
       <div class="field">
         <label for="height-cm">Height</label>
-
         <div class="height-single">
           <input
             type="number"
@@ -121,53 +197,56 @@ import RelatedTools from '../../../components/RelatedTools.astro';
             step="0.1"
             aria-label="Height in centimeters"
           />
-
           <span>cm</span>
         </div>
       </div>
     </div>
 
-    <button class="btn-primary" id="calc-btn">
+    <p id="input-error" class="input-error" role="alert" aria-live="assertive" hidden></p>
+
+    <button type="button" class="btn-primary" id="calc-btn">
       Calculate Ideal Weight
     </button>
 
-    <div class="result-box" id="result-box">
+    <div class="result-box" id="result-box" hidden>
+      <div
+        id="result-announcement"
+        class="sr-only"
+        role="status"
+        aria-live="polite"
+        aria-atomic="true"
+      ></div>
 
       <div class="big-number" id="result-range">–</div>
 
-      <div class="label">
-        Four-Formula IBW Reference Range
-      </div>
+      <div class="label">Four-Formula IBW Reference Range</div>
 
       <div class="lifter-note">
-        <strong>Note for lifters:</strong>
-        Traditional ideal body weight formulas do not measure muscle mass
-        or body fat. If you lift regularly or have above-average lean mass,
-        your healthy body weight may be higher than these reference estimates.
+        <strong>Note for lifters:</strong> Traditional ideal body weight
+        formulas do not measure muscle mass or body fat. If you lift
+        regularly or have above-average lean mass, your healthy body weight
+        may be higher than these reference estimates.
       </div>
 
       <table class="result-table">
         <caption>Ideal body weight estimates</caption>
-
         <thead>
           <tr>
             <th scope="col">Formula</th>
             <th scope="col">Reference Weight</th>
           </tr>
         </thead>
-
         <tbody id="formula-results"></tbody>
       </table>
 
       <div class="bmi-result">
         <h3>Healthy BMI Weight Range</h3>
-
         <div class="bmi-range" id="bmi-range">–</div>
-
-        <p>
-          This range corresponds to an adult BMI of 18.5–24.9.
-          BMI is a screening measure and does not directly measure body fat,
-          muscle mass, or fat distribution.
+        <p class="calc-note">
+          This range corresponds to an adult BMI of 18.5–24.9. BMI is a
+          screening measure and does not directly measure body fat, muscle
+          mass, or fat distribution. For your own BMI, see our
+          <a href="/tools/nutrition/bmi-calculator/">BMI Calculator</a>.
         </p>
       </div>
 
@@ -196,7 +275,7 @@ import RelatedTools from '../../../components/RelatedTools.astro';
       These approaches are not interchangeable, and neither should be treated
       as a precise definition of the weight every person should reach.
       Research and clinical reviews have highlighted important limitations
-      in traditional IBW equations. 
+      in traditional IBW equations.
     </p>
   </article>
 
@@ -210,23 +289,37 @@ import RelatedTools from '../../../components/RelatedTools.astro';
       were developed from different historical data and approaches.
     </p>
 
-    <h3>Devine Formula</h3>
+    <h3>Devine Formula (1974)</h3>
 
     <p>
       The Devine formula was published in 1974 and became widely used for
-      ideal body weight estimation in clinical and drug-dosing contexts.
+      ideal body weight estimation in clinical and drug-dosing contexts. It
+      is the most commonly cited IBW equation in clinical pharmacology.
     </p>
 
     <ul>
-      <li>
-        <strong>Men:</strong> 50.0 kg + 2.3 kg × each inch over 5 ft
-      </li>
-      <li>
-        <strong>Women:</strong> 45.5 kg + 2.3 kg × each inch over 5 ft
-      </li>
+      <li><strong>Men:</strong> 50.0 kg + 2.3 kg × each inch over 5 ft</li>
+      <li><strong>Women:</strong> 45.5 kg + 2.3 kg × each inch over 5 ft</li>
     </ul>
 
-    <h3>Hamwi Formula</h3>
+    <p>
+      <strong>Worked example (men, 5'10"):</strong> 50 + 2.3 × 10 =
+      <strong>73 kg (≈ 161 lb)</strong>.
+    </p>
+
+    <p>
+      <strong>Best for:</strong> Clinical drug-dosing and pharmacokinetic
+      calculations. It remains the standard reference in many medical
+      contexts.
+    </p>
+
+    <p>
+      <strong>Limitation:</strong> Because it was developed for drug dosing,
+      it was not designed to identify healthy body-composition targets for
+      athletes or the general population.
+    </p>
+
+    <h3>Hamwi Formula (1964)</h3>
 
     <p>
       The Hamwi method is traditionally expressed in pounds. This calculator
@@ -235,15 +328,27 @@ import RelatedTools from '../../../components/RelatedTools.astro';
     </p>
 
     <ul>
-      <li>
-        <strong>Men:</strong> 106 lb + 6 lb × each inch over 5 ft
-      </li>
-      <li>
-        <strong>Women:</strong> 100 lb + 5 lb × each inch over 5 ft
-      </li>
+      <li><strong>Men:</strong> 106 lb + 6 lb × each inch over 5 ft</li>
+      <li><strong>Women:</strong> 100 lb + 5 lb × each inch over 5 ft</li>
     </ul>
 
-    <h3>Robinson Formula</h3>
+    <p>
+      <strong>Worked example (men, 5'10"):</strong> 106 + 6 × 10 =
+      <strong>166 lb (≈ 75.3 kg)</strong>.
+    </p>
+
+    <p>
+      <strong>Best for:</strong> A widely recognized imperial reference.
+      Sometimes used alongside Devine in clinical settings.
+    </p>
+
+    <p>
+      <strong>Limitation:</strong> Hamwi produces generally higher estimates
+      than Devine for the same height, and it was developed before modern
+      body-composition standards.
+    </p>
+
+    <h3>Robinson Formula (1983)</h3>
 
     <p>
       The Robinson equation was published in 1983 using height-weight data
@@ -251,15 +356,27 @@ import RelatedTools from '../../../components/RelatedTools.astro';
     </p>
 
     <ul>
-      <li>
-        <strong>Men:</strong> 52.0 kg + 1.9 kg × each inch over 5 ft
-      </li>
-      <li>
-        <strong>Women:</strong> 49.0 kg + 1.7 kg × each inch over 5 ft
-      </li>
+      <li><strong>Men:</strong> 52.0 kg + 1.9 kg × each inch over 5 ft</li>
+      <li><strong>Women:</strong> 49.0 kg + 1.7 kg × each inch over 5 ft</li>
     </ul>
 
-    <h3>Miller Formula</h3>
+    <p>
+      <strong>Worked example (men, 5'10"):</strong> 52 + 1.9 × 10 =
+      <strong>71 kg (≈ 156.5 lb)</strong>.
+    </p>
+
+    <p>
+      <strong>Best for:</strong> A moderate estimate between Devine and
+      Miller. Sometimes preferred when a slightly lower reference value is
+      appropriate.
+    </p>
+
+    <p>
+      <strong>Limitation:</strong> Also derived from historical insurance
+      data that may not reflect modern body compositions.
+    </p>
+
+    <h3>Miller Formula (1983)</h3>
 
     <p>
       The Miller equation is another 1983 reference equation with different
@@ -267,20 +384,31 @@ import RelatedTools from '../../../components/RelatedTools.astro';
     </p>
 
     <ul>
-      <li>
-        <strong>Men:</strong> 56.2 kg + 1.41 kg × each inch over 5 ft
-      </li>
-      <li>
-        <strong>Women:</strong> 53.1 kg + 1.36 kg × each inch over 5 ft
-      </li>
+      <li><strong>Men:</strong> 56.2 kg + 1.41 kg × each inch over 5 ft</li>
+      <li><strong>Women:</strong> 53.1 kg + 1.36 kg × each inch over 5 ft</li>
     </ul>
+
+    <p>
+      <strong>Worked example (men, 5'10"):</strong> 56.2 + 1.41 × 10 =
+      <strong>70.3 kg (≈ 155 lb)</strong>.
+    </p>
+
+    <p>
+      <strong>Best for:</strong> A reference estimate that tends to
+      produce lower values than Devine or Hamwi for the same height.
+    </p>
+
+    <p>
+      <strong>Limitation:</strong> Least commonly used in clinical settings.
+      Same historical data limitations as the other formulas.
+    </p>
   </article>
 
   <article class="article-section">
     <h2>Which Ideal Body Weight Formula Is Most Accurate?</h2>
 
     <p>
-      There is no universally accepted “most accurate” IBW formula.
+      There is no universally accepted "most accurate" IBW formula.
       Devine, Hamwi, Robinson, and Miller can produce different results for
       the same height because they were developed from different historical
       datasets and methods.
@@ -311,7 +439,7 @@ import RelatedTools from '../../../components/RelatedTools.astro';
     </p>
 
     <p>
-      So a search such as “ideal weight by age” should not be interpreted
+      So a search such as "ideal weight by age" should not be interpreted
       as though every adult age has a separate IBW number from these
       equations. Age can matter when assessing health, body composition,
       or other individual factors, but it is not an input to these four
@@ -320,7 +448,7 @@ import RelatedTools from '../../../components/RelatedTools.astro';
 
     <p>
       For adults, you can use the
-      <a href="/tools/nutrition/bmi-calculator">BMI Calculator</a>
+      <a href="/tools/nutrition/bmi-calculator/">BMI Calculator</a>
       alongside this tool to see how weight relates to height using a
       BMI-based reference range.
     </p>
@@ -330,7 +458,7 @@ import RelatedTools from '../../../components/RelatedTools.astro';
     <h2>Ideal Weight vs Healthy Weight</h2>
 
     <p>
-      “Ideal weight” and “healthy weight” are not interchangeable terms.
+      "Ideal weight" and "healthy weight" are not interchangeable terms.
       Traditional IBW formulas return mathematical reference estimates,
       while a broader healthy-weight assessment can involve BMI, body
       composition, health history, physical activity, and other individual
@@ -365,21 +493,15 @@ import RelatedTools from '../../../components/RelatedTools.astro';
     <p>
       If you are a lifter, use the result as a reference rather than as a
       mandatory target. Our
-      <a href="/tools/nutrition/body-fat-calculator">
-        Body Fat Calculator
-      </a>
+      <a href="/tools/nutrition/body-fat-calculator/">Body Fat Calculator</a>
       can provide additional body-composition context.
     </p>
 
     <p>
       You can also use the
-      <a href="/tools/nutrition/lean-body-mass-calculator">
-        Lean Body Mass Calculator
-      </a>
+      <a href="/tools/nutrition/lean-body-mass-calculator/">Lean Body Mass Calculator</a>
       to estimate fat-free mass, or the
-      <a href="/tools/nutrition/ffmi-calculator">
-        FFMI Calculator
-      </a>
+      <a href="/tools/nutrition/ffmi-calculator/">FFMI Calculator</a>
       to put lean mass into a height-adjusted context.
     </p>
   </article>
@@ -407,17 +529,13 @@ import RelatedTools from '../../../components/RelatedTools.astro';
 
     <p>
       If your goal is to move toward a specific body weight, the
-      <a href="/tools/nutrition/calorie-deficit-calculator">
-        Calorie Deficit Calculator
-      </a>
+      <a href="/tools/nutrition/calorie-deficit-calculator/">Calorie Deficit Calculator</a>
       can help estimate a calorie target and projected timeline.
     </p>
 
     <p>
       If your goal is nutrition planning rather than weight loss, the
-      <a href="/tools/nutrition/macro-calculator">
-        Macro Calculator
-      </a>
+      <a href="/tools/nutrition/macro-calculator/">Macro Calculator</a>
       can help you set starting protein, carbohydrate, and fat targets.
     </p>
   </article>
@@ -472,7 +590,17 @@ import RelatedTools from '../../../components/RelatedTools.astro';
   </article>
 
   <article class="article-section">
-    <h2>Sources & Methodology</h2>
+    <h2>Frequently Asked Questions</h2>
+    {faqs.map((faq) => (
+      <div class="faq-item">
+        <h3>{faq.question}</h3>
+        <p set:html={faq.answer} />
+      </div>
+    ))}
+  </article>
+
+  <article class="article-section">
+    <h2>Sources &amp; Methodology</h2>
 
     <p>
       RepMaths uses four commonly published adult ideal body weight
@@ -483,24 +611,24 @@ import RelatedTools from '../../../components/RelatedTools.astro';
 
     <ul>
       <li>
-        Devine BJ. Gentamicin therapy. Drug Intelligence and Clinical
-        Pharmacy, 1974.
+        Devine BJ. <em>Gentamicin therapy.</em> Drug Intelligence and
+        Clinical Pharmacy, 1974.
       </li>
-
       <li>
         Robinson JD, Lupkiewicz SM, Palenik L, Lopez LM, Ariet M.
-        Determination of ideal body weight for drug dosage calculations,
-        1983.
+        <em>Determination of ideal body weight for drug dosage calculations.</em>
+        American Journal of Hospital Pharmacy, 1983.
       </li>
-
       <li>
-        Pai MP, Paloucek FP. The origin of the “ideal” body weight
-        equations, 2000.
+        Pai MP, Paloucek FP.
+        <em>The origin of the "ideal" body weight equations.</em>
+        Annals of Pharmacotherapy, 2000.
       </li>
-
       <li>
-        Peterson CM et al. Comparison of ideal body weight equations and
-        BMI-based weight ranges, 2016.
+        Peterson CM, Thomas DM, Blackburn GL, Heymsfield SB.
+        <em>Universal equation for estimating ideal body weight and body
+        weight at any given body mass index.</em>
+        PLoS ONE, 2016.
       </li>
     </ul>
 
@@ -512,424 +640,45 @@ import RelatedTools from '../../../components/RelatedTools.astro';
     </p>
   </article>
 
-  <article class="article-section">
-    <h2>Frequently Asked Questions</h2>
-
-    <div class="faq-item">
-      <h3>What is my ideal weight for my height and age?</h3>
-
-      <p>
-        The four adult IBW formulas used here do not use age. They estimate
-        a reference weight from height and sex. Your appropriate health or
-        fitness target can depend on additional factors.
-      </p>
-    </div>
-
-    <div class="faq-item">
-      <h3>Which ideal body weight formula is most accurate?</h3>
-
-      <p>
-        There is no universally most accurate formula. Devine, Hamwi,
-        Robinson, and Miller can produce different estimates, so comparing
-        all four gives more context than treating one formula as definitive.
-      </p>
-    </div>
-
-    <div class="faq-item">
-      <h3>How much should a 5'5 woman weigh?</h3>
-
-      <p>
-        There is no single ideal weight for every 5'5 woman. This calculator
-        provides four reference IBW estimates plus a BMI-based healthy
-        weight range for comparison.
-      </p>
-    </div>
-
-    <div class="faq-item">
-      <h3>Does ideal weight include muscle mass?</h3>
-
-      <p>
-        No. Traditional IBW formulas do not directly account for above-
-        average muscle mass. This is especially important for bodybuilders
-        and strength athletes.
-      </p>
-    </div>
-
-    <div class="faq-item">
-      <h3>What is the difference between BMI and Ideal Body Weight?</h3>
-
-      <p>
-        IBW formulas estimate a reference weight from height and sex.
-        BMI relates weight to height and can be used to calculate a range
-        of weights at a selected BMI. Neither directly measures body
-        composition.
-      </p>
-    </div>
-
-    <div class="faq-item">
-      <h3>Are ideal weight formulas outdated?</h3>
-
-      <p>
-        The classic equations are old and have known limitations, but they
-        remain useful as reference equations. They should not be treated
-        as a universal definition of the weight every person should reach.
-      </p>
-    </div>
-  </article>
-
   <RelatedTools currentToolId="ideal-weight-calculator" />
 
-  <script>
-    type Unit = "lb" | "kg";
-    type Sex = "male" | "female";
-
-    let unit: Unit = "lb";
-    let sex: Sex = "male";
-
-    const unitLb = document.getElementById("unit-lb");
-    const unitKg = document.getElementById("unit-kg");
-
-    const sexMale = document.getElementById("sex-male");
-    const sexFemale = document.getElementById("sex-female");
-
-    const imperialHeight = document.getElementById("imperial-height");
-    const metricHeight = document.getElementById("metric-height");
-
-    const heightFt = document.getElementById(
-      "height-ft"
-    ) as HTMLInputElement | null;
-
-    const heightIn = document.getElementById(
-      "height-in"
-    ) as HTMLInputElement | null;
-
-    const heightCm = document.getElementById(
-      "height-cm"
-    ) as HTMLInputElement | null;
-
-    const calcBtn = document.getElementById("calc-btn");
-
-    const resultBox = document.getElementById("result-box");
-    const resultRange = document.getElementById("result-range");
-    const formulaResults = document.getElementById("formula-results");
-    const bmiRange = document.getElementById("bmi-range");
-    const resultSummary = document.getElementById("result-summary");
-
-    if (unitLb) {
-      unitLb.addEventListener("click", () => setUnit("lb"));
-    }
-
-    if (unitKg) {
-      unitKg.addEventListener("click", () => setUnit("kg"));
-    }
-
-    if (sexMale) {
-      sexMale.addEventListener("click", () => setSex("male"));
-    }
-
-    if (sexFemale) {
-      sexFemale.addEventListener("click", () => setSex("female"));
-    }
-
-    function setUnit(newUnit: Unit) {
-  if (newUnit === unit) return;
-
-  if (unit === "lb" && newUnit === "kg") {
-    if (heightFt && heightIn && heightCm) {
-      const feet = parseFloat(heightFt.value);
-      const inches = parseFloat(heightIn.value);
-
-      if (
-        Number.isFinite(feet) &&
-        Number.isFinite(inches) &&
-        feet >= 0 &&
-        inches >= 0 &&
-        inches < 12
-      ) {
-        // Convert the complete height to total inches first.
-        const totalInches = feet * 12 + inches;
-
-        // Then convert total inches to centimeters.
-        heightCm.value = (totalInches * 2.54).toFixed(1);
-      }
-    }
-  }
-
-  if (unit === "kg" && newUnit === "lb") {
-    if (heightCm && heightFt && heightIn) {
-      const cm = parseFloat(heightCm.value);
-
-      if (Number.isFinite(cm) && cm > 0) {
-        // Convert centimeters to total inches first.
-        const totalInches = cm / 2.54;
-
-        // Keep feet as the integer part.
-        const feet = Math.floor(totalInches / 12);
-
-        // Remaining inches belong to the inches field.
-        const inches = totalInches - feet * 12;
-
-        heightFt.value = String(feet);
-        heightIn.value = inches.toFixed(1);
-      }
-    }
-  }
-
-  unit = newUnit;
-  updateUnitUI();
-}
-
-    function updateUnitUI() {
-      if (unitLb) {
-        unitLb.classList.toggle("active", unit === "lb");
-        unitLb.setAttribute("aria-pressed", String(unit === "lb"));
-      }
-
-      if (unitKg) {
-        unitKg.classList.toggle("active", unit === "kg");
-        unitKg.setAttribute("aria-pressed", String(unit === "kg"));
-      }
-
-      if (imperialHeight) {
-        imperialHeight.hidden = unit !== "lb";
-      }
-
-      if (metricHeight) {
-        metricHeight.hidden = unit !== "kg";
-      }
-    }
-
-    function setSex(newSex: Sex) {
-      sex = newSex;
-
-      if (sexMale) {
-        sexMale.classList.toggle("active", sex === "male");
-        sexMale.setAttribute("aria-pressed", String(sex === "male"));
-      }
-
-      if (sexFemale) {
-        sexFemale.classList.toggle("active", sex === "female");
-        sexFemale.setAttribute("aria-pressed", String(sex === "female"));
-      }
-    }
-
-    function round(value: number, decimals = 1): number {
-      const factor = Math.pow(10, decimals);
-      return Math.round(value * factor) / factor;
-    }
-
-    function kgToLb(kg: number): number {
-      return kg * 2.2046226218;
-    }
-
-    function lbToKg(lb: number): number {
-      return lb / 2.2046226218;
-    }
-
-    function getHeightCm(): number | null {
-  if (unit === "kg") {
-    const cm = parseFloat(heightCm?.value || "");
-
-    if (!Number.isFinite(cm)) return null;
-
-    return cm;
-  }
-
-  const feet = parseFloat(heightFt?.value || "");
-  const inches = parseFloat(heightIn?.value || "");
-
-  if (!Number.isFinite(feet) || !Number.isFinite(inches)) {
-    return null;
-  }
-
-  if (feet < 4 || feet > 8 || inches < 0 || inches >= 12) {
-    return null;
-  }
-
-  // Convert the complete imperial height to centimeters.
-  const totalInches = feet * 12 + inches;
-
-  return totalInches * 2.54;
-}
-
-    function formatWeight(kg: number): string {
-      if (unit === "kg") {
-        return `${round(kg, 1)} kg`;
-      }
-
-      return `${round(kgToLb(kg), 1)} lb`;
-    }
-
-    function formatDualWeight(kg: number): string {
-      return `${round(kgToLb(kg), 1)} lb / ${round(kg, 1)} kg`;
-    }
-
-    function calculateIBW(
-      heightInches: number,
-      selectedSex: Sex
-    ) {
-      const inchesOverFiveFeet = heightInches - 60;
-
-      let devine: number;
-      let hamwi: number;
-      let robinson: number;
-      let miller: number;
-
-      if (selectedSex === "male") {
-        devine =
-          50.0 + 2.3 * inchesOverFiveFeet;
-
-        hamwi =
-          lbToKg(106 + 6 * inchesOverFiveFeet);
-
-        robinson =
-          52.0 + 1.9 * inchesOverFiveFeet;
-
-        miller =
-          56.2 + 1.41 * inchesOverFiveFeet;
-      } else {
-        devine =
-          45.5 + 2.3 * inchesOverFiveFeet;
-
-        hamwi =
-          lbToKg(100 + 5 * inchesOverFiveFeet);
-
-        robinson =
-          49.0 + 1.7 * inchesOverFiveFeet;
-
-        miller =
-          53.1 + 1.36 * inchesOverFiveFeet;
-      }
-
-      return {
-        devine,
-        hamwi,
-        robinson,
-        miller
-      };
-    }
-
-    function calculateBMIWeightRange(heightM: number) {
-      return {
-        min: 18.5 * heightM * heightM,
-        max: 24.9 * heightM * heightM
-      };
-    }
-
-    function showError(message: string) {
-      alert(message);
-    }
-
-    if (calcBtn) {
-      calcBtn.addEventListener("click", () => {
-        const heightCmValue = getHeightCm();
-
-        if (
-          heightCmValue === null ||
-          !Number.isFinite(heightCmValue) ||
-          heightCmValue < 120 ||
-          heightCmValue > 240
-        ) {
-          showError(
-            "Please enter a valid adult height between 120 and 240 cm."
-          );
-          return;
-        }
-
-        const heightInches = heightCmValue / 2.54;
-        const heightM = heightCmValue / 100;
-
-        const ibw = calculateIBW(heightInches, sex);
-
-        const values = [
-          ibw.devine,
-          ibw.hamwi,
-          ibw.robinson,
-          ibw.miller
-        ];
-
-        if (
-          values.some(
-            (value) => !Number.isFinite(value) || value <= 0
-          )
-        ) {
-          showError(
-            "This height does not produce a valid reference estimate."
-          );
-          return;
-        }
-
-        const minimum = Math.min(...values);
-        const maximum = Math.max(...values);
-
-        const average =
-          values.reduce(
-            (sum, value) => sum + value,
-            0
-          ) / values.length;
-
-        const bmi = calculateBMIWeightRange(heightM);
-
-        if (resultRange) {
-          resultRange.textContent =
-            `${formatWeight(minimum)} – ${formatWeight(maximum)}`;
-        }
-
-        if (formulaResults) {
-          formulaResults.innerHTML = `
-            <tr>
-              <td>Devine</td>
-              <td>${formatDualWeight(ibw.devine)}</td>
-            </tr>
-
-            <tr>
-              <td>Hamwi</td>
-              <td>${formatDualWeight(ibw.hamwi)}</td>
-            </tr>
-
-            <tr>
-              <td>Robinson</td>
-              <td>${formatDualWeight(ibw.robinson)}</td>
-            </tr>
-
-            <tr>
-              <td>Miller</td>
-              <td>${formatDualWeight(ibw.miller)}</td>
-            </tr>
-          `;
-        }
-
-        if (bmiRange) {
-          bmiRange.textContent =
-            `${formatDualWeight(bmi.min)} – ${formatDualWeight(bmi.max)}`;
-        }
-
-        if (resultSummary) {
-          resultSummary.innerHTML = `
-            <p>
-              The four formulas produce a reference range of
-              <strong>${formatWeight(minimum)}</strong>
-              to
-              <strong>${formatWeight(maximum)}</strong>.
-              Their arithmetic average is
-              <strong>${formatWeight(average)}</strong>,
-              but that average is shown only as a mathematical comparison,
-              not as a medically validated “ideal” target.
-            </p>
-          `;
-        }
-
-        if (resultBox) {
-          resultBox.classList.add("show");
-        }
-      });
-    }
-
-    updateUnitUI();
-    setSex("male");
-  </script>
-
   <style>
+    .calculator-heading {
+      font-size: 1.12rem;
+      margin: 0 0 20px;
+    }
+
+    .quick-answer {
+      background: var(--surface);
+      border-left: 4px solid var(--accent);
+      border-radius: 6px;
+      padding: 16px 18px;
+      margin: 0 0 24px;
+    }
+
+    .quick-answer p {
+      margin: 0;
+      color: #c7cbd2;
+      font-size: 0.92rem;
+      line-height: 1.6;
+    }
+
+    .quick-answer strong {
+      color: var(--accent);
+    }
+
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+
     .height-grid {
       display: grid;
       grid-template-columns: minmax(70px, 1fr) auto minmax(80px, 1fr) auto;
@@ -953,7 +702,18 @@ import RelatedTools from '../../../components/RelatedTools.astro';
     .height-grid span,
     .height-single span {
       font-weight: 700;
-      color: var(--text-muted, #666);
+      color: var(--text-muted);
+    }
+
+    .input-error {
+      margin: 12px 0 0;
+      padding: 10px 12px;
+      border: 1px solid #dc2626;
+      border-radius: 8px;
+      background: rgba(220, 38, 38, 0.08);
+      color: var(--text);
+      line-height: 1.45;
+      font-size: 0.92rem;
     }
 
     .lifter-note {
@@ -969,26 +729,42 @@ import RelatedTools from '../../../components/RelatedTools.astro';
       text-align: left;
       font-weight: 700;
       margin-bottom: 8px;
+      color: var(--text-muted);
     }
 
     .bmi-result {
       margin-top: 22px;
       padding-top: 18px;
-      border-top: 1px solid var(--border, #ddd);
+      border-top: 1px solid var(--border);
     }
 
     .bmi-result h3 {
       margin-top: 0;
+      font-size: 1.05rem;
     }
 
     .bmi-range {
       font-size: 1.35rem;
       font-weight: 800;
       margin: 8px 0;
+      color: var(--success);
+    }
+
+    .calc-note {
+      color: var(--text-muted);
+      font-size: 0.84rem;
+      line-height: 1.6;
+      margin: 10px 0;
     }
 
     .result-summary {
       margin-top: 18px;
+    }
+
+    .result-summary p {
+      color: #c7cbd2;
+      font-size: 0.95rem;
+      line-height: 1.7;
     }
 
     @media (max-width: 520px) {
@@ -998,4 +774,370 @@ import RelatedTools from '../../../components/RelatedTools.astro';
       }
     }
   </style>
+
+  <script>
+    type Unit = 'lb' | 'kg';
+    type Sex = 'male' | 'female';
+
+    let unit: Unit = 'lb';
+    let sex: Sex = 'male';
+
+    // Canonical metric value — preserved across unit toggles to avoid
+    // cumulative rounding loss from repeated conversions.
+    let preservedCm: number | null = null;
+
+    const unitLb = document.getElementById('unit-lb');
+    const unitKg = document.getElementById('unit-kg');
+
+    const sexMale = document.getElementById('sex-male');
+    const sexFemale = document.getElementById('sex-female');
+
+    const imperialHeight = document.getElementById('imperial-height');
+    const metricHeight = document.getElementById('metric-height');
+
+    const heightFt = document.getElementById('height-ft') as HTMLInputElement | null;
+    const heightIn = document.getElementById('height-in') as HTMLInputElement | null;
+    const heightCm = document.getElementById('height-cm') as HTMLInputElement | null;
+
+    const calcBtn = document.getElementById('calc-btn');
+    const inputError = document.getElementById('input-error');
+
+    const resultBox = document.getElementById('result-box');
+    const resultRange = document.getElementById('result-range');
+    const formulaResults = document.getElementById('formula-results');
+    const bmiRange = document.getElementById('bmi-range');
+    const resultSummary = document.getElementById('result-summary');
+    const resultAnnouncement = document.getElementById('result-announcement');
+
+    const round = (value: number, decimals = 1) => {
+      const factor = Math.pow(10, decimals);
+      return Math.round(value * factor) / factor;
+    };
+
+    const kgToLb = (kg: number) => kg * 2.2046226218;
+    const lbToKg = (lb: number) => lb / 2.2046226218;
+
+    // ---------- Preserved value sync ----------
+
+    function syncPreservedHeightFromImperial() {
+      if (!heightFt || !heightIn) return;
+
+      const feetRaw = heightFt.value.trim();
+      const inchesRaw = heightIn.value.trim();
+
+      if (feetRaw === '' && inchesRaw === '') {
+        preservedCm = null;
+        return;
+      }
+
+      const feet = feetRaw === '' ? 0 : Number(feetRaw);
+      const inches = inchesRaw === '' ? 0 : Number(inchesRaw);
+
+      if (!Number.isFinite(feet) || !Number.isFinite(inches)) {
+        preservedCm = null;
+        return;
+      }
+
+      if (feet < 0 || inches < 0 || inches >= 12) {
+        preservedCm = null;
+        return;
+      }
+
+      const totalInches = feet * 12 + inches;
+
+      if (totalInches <= 0) {
+        preservedCm = null;
+        return;
+      }
+
+      preservedCm = totalInches * 2.54;
+    }
+
+    function syncPreservedHeightFromMetric() {
+      if (!heightCm) return;
+
+      const raw = heightCm.value.trim();
+
+      if (raw === '') {
+        preservedCm = null;
+        return;
+      }
+
+      const value = Number(raw);
+
+      if (!Number.isFinite(value) || value <= 0) {
+        preservedCm = null;
+        return;
+      }
+
+      preservedCm = value;
+    }
+
+    // ---------- UI state ----------
+
+    function resetResult() {
+      clearError();
+      if (resultBox) {
+        resultBox.hidden = true;
+        resultBox.classList.remove('show');
+      }
+      if (resultAnnouncement) {
+        resultAnnouncement.textContent = '';
+      }
+    }
+
+    function setUnit(next: Unit) {
+      if (next === unit) return;
+
+      // Render height from preserved cm value.
+      if (preservedCm !== null && preservedCm > 0) {
+        if (next === 'kg' && heightCm) {
+          heightCm.value = preservedCm.toFixed(1);
+        }
+
+        if (next === 'lb' && heightFt && heightIn) {
+          const totalInches = Math.round(preservedCm / 2.54);
+          heightFt.value = String(Math.floor(totalInches / 12));
+          heightIn.value = String(totalInches % 12);
+        }
+      }
+
+      unit = next;
+      updateUnitUI();
+      resetResult();
+    }
+
+    function updateUnitUI() {
+      if (unitLb) {
+        unitLb.classList.toggle('active', unit === 'lb');
+        unitLb.setAttribute('aria-pressed', String(unit === 'lb'));
+      }
+      if (unitKg) {
+        unitKg.classList.toggle('active', unit === 'kg');
+        unitKg.setAttribute('aria-pressed', String(unit === 'kg'));
+      }
+      if (imperialHeight) imperialHeight.hidden = unit !== 'lb';
+      if (metricHeight) metricHeight.hidden = unit !== 'kg';
+    }
+
+    function setSex(next: Sex) {
+      sex = next;
+
+      if (sexMale) {
+        sexMale.classList.toggle('active', sex === 'male');
+        sexMale.setAttribute('aria-pressed', String(sex === 'male'));
+      }
+      if (sexFemale) {
+        sexFemale.classList.toggle('active', sex === 'female');
+        sexFemale.setAttribute('aria-pressed', String(sex === 'female'));
+      }
+
+      resetResult();
+    }
+
+    function showError(message: string) {
+      if (!inputError) return;
+      inputError.textContent = message;
+      inputError.hidden = false;
+      if (resultBox) {
+        resultBox.hidden = true;
+        resultBox.classList.remove('show');
+      }
+    }
+
+    function clearError() {
+      if (!inputError) return;
+      inputError.textContent = '';
+      inputError.hidden = true;
+    }
+
+    // ---------- Calculation helpers ----------
+
+    function getHeightCm(): number | null {
+      if (unit === 'kg') {
+        const cm = Number(heightCm?.value ?? '');
+        if (!Number.isFinite(cm) || cm <= 0) return null;
+        return cm;
+      }
+
+      const feet = Number(heightFt?.value ?? '');
+      const inches = Number(heightIn?.value ?? '');
+
+      if (!Number.isFinite(feet) || !Number.isFinite(inches)) {
+        return null;
+      }
+
+      if (feet < 4 || feet > 8 || inches < 0 || inches >= 12) {
+        return null;
+      }
+
+      const totalInches = feet * 12 + inches;
+
+      return totalInches * 2.54;
+    }
+
+    function formatWeight(kg: number): string {
+      return unit === 'kg'
+        ? `${round(kg, 1)} kg`
+        : `${round(kgToLb(kg), 1)} lb`;
+    }
+
+    function formatDualWeight(kg: number): string {
+      return `${round(kgToLb(kg), 1)} lb / ${round(kg, 1)} kg`;
+    }
+
+    function calculateIBW(heightInches: number, selectedSex: Sex) {
+      const inchesOverFiveFeet = heightInches - 60;
+
+      if (selectedSex === 'male') {
+        return {
+          devine: 50.0 + 2.3 * inchesOverFiveFeet,
+          hamwi: lbToKg(106 + 6 * inchesOverFiveFeet),
+          robinson: 52.0 + 1.9 * inchesOverFiveFeet,
+          miller: 56.2 + 1.41 * inchesOverFiveFeet,
+        };
+      }
+
+      return {
+        devine: 45.5 + 2.3 * inchesOverFiveFeet,
+        hamwi: lbToKg(100 + 5 * inchesOverFiveFeet),
+        robinson: 49.0 + 1.7 * inchesOverFiveFeet,
+        miller: 53.1 + 1.36 * inchesOverFiveFeet,
+      };
+    }
+
+    function calculateBMIWeightRange(heightM: number) {
+      return {
+        min: 18.5 * heightM * heightM,
+        max: 24.9 * heightM * heightM,
+      };
+    }
+
+    // ---------- Event listeners ----------
+
+    unitLb?.addEventListener('click', () => setUnit('lb'));
+    unitKg?.addEventListener('click', () => setUnit('kg'));
+    sexMale?.addEventListener('click', () => setSex('male'));
+    sexFemale?.addEventListener('click', () => setSex('female'));
+
+    heightFt?.addEventListener('input', () => {
+      syncPreservedHeightFromImperial();
+      resetResult();
+    });
+
+    heightIn?.addEventListener('input', () => {
+      syncPreservedHeightFromImperial();
+      resetResult();
+    });
+
+    heightCm?.addEventListener('input', () => {
+      syncPreservedHeightFromMetric();
+      resetResult();
+    });
+
+    // ---------- Calculate ----------
+
+    calcBtn?.addEventListener('click', () => {
+      clearError();
+
+      // Only sync from input when no preserved value exists yet.
+      if (preservedCm === null) {
+        if (unit === 'lb') {
+          syncPreservedHeightFromImperial();
+        } else {
+          syncPreservedHeightFromMetric();
+        }
+      }
+
+      const heightCmValue = getHeightCm();
+
+      if (
+        heightCmValue === null ||
+        !Number.isFinite(heightCmValue) ||
+        heightCmValue < 120 ||
+        heightCmValue > 240
+      ) {
+        showError('Please enter a valid adult height between 120 and 240 cm (approximately 4 ft – 8 ft).');
+        return;
+      }
+
+      const heightInches = heightCmValue / 2.54;
+      const heightM = heightCmValue / 100;
+
+      const ibw = calculateIBW(heightInches, sex);
+      const values = [ibw.devine, ibw.hamwi, ibw.robinson, ibw.miller];
+
+      if (values.some((value) => !Number.isFinite(value) || value <= 0)) {
+        showError('This height does not produce a valid reference estimate.');
+        return;
+      }
+
+      const minimum = Math.min(...values);
+      const maximum = Math.max(...values);
+      const average = values.reduce((sum, value) => sum + value, 0) / values.length;
+
+      const bmi = calculateBMIWeightRange(heightM);
+
+      if (resultRange) {
+        resultRange.textContent = `${formatWeight(minimum)} – ${formatWeight(maximum)}`;
+      }
+
+      if (formulaResults) {
+        formulaResults.replaceChildren();
+
+        const formulaRows = [
+          { name: 'Devine', value: ibw.devine },
+          { name: 'Hamwi', value: ibw.hamwi },
+          { name: 'Robinson', value: ibw.robinson },
+          { name: 'Miller', value: ibw.miller },
+        ];
+
+        for (const row of formulaRows) {
+          const tr = document.createElement('tr');
+
+          const nameCell = document.createElement('td');
+          nameCell.textContent = row.name;
+
+          const valueCell = document.createElement('td');
+          valueCell.textContent = formatDualWeight(row.value);
+
+          tr.append(nameCell, valueCell);
+          formulaResults.appendChild(tr);
+        }
+      }
+
+      if (bmiRange) {
+        bmiRange.textContent = `${formatDualWeight(bmi.min)} – ${formatDualWeight(bmi.max)}`;
+      }
+
+      if (resultSummary) {
+        resultSummary.innerHTML = `
+          <p>
+            The four formulas produce a reference range of
+            <strong>${formatWeight(minimum)}</strong>
+            to
+            <strong>${formatWeight(maximum)}</strong>.
+            Their arithmetic average is
+            <strong>${formatWeight(average)}</strong>,
+            but that average is shown only as a mathematical comparison,
+            not as a medically validated "ideal" target.
+          </p>
+        `;
+      }
+
+      if (resultBox) {
+        resultBox.hidden = false;
+        resultBox.classList.add('show');
+      }
+
+      if (resultAnnouncement) {
+        resultAnnouncement.textContent = `Ideal body weight reference range: ${formatWeight(minimum)} to ${formatWeight(maximum)}. Healthy BMI weight range: ${formatDualWeight(bmi.min)} to ${formatDualWeight(bmi.max)}.`;
+      }
+    });
+
+    // ---------- Initialize ----------
+
+    updateUnitUI();
+    setSex('male');
+  </script>
 </Base>
