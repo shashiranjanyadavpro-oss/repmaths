@@ -53,12 +53,12 @@ const faqs = [
   {
     question: 'How much protein should I eat based on my lean body mass?',
     answer:
-      'A common practical approach for exercisers is about 1.0–1.2 g of protein per pound of lean body mass (2.2–2.6 g/kg LBM) per day. For general health, the RDA is 0.8 g/kg of total body weight. For a goal-based estimate, use our <a href="/tools/nutrition/protein-calculator/">Protein Calculator</a>.',
+      'One optional planning framework used in some fitness contexts is approximately 1.0–1.2 g of protein per pound of lean body mass (2.2–2.6 g/kg LBM) per day. For general health, the RDA is 0.8 g/kg of total body weight. For a goal-based estimate, use our <a href="/tools/nutrition/protein-calculator/">Protein Calculator</a>.',
   },
   {
     question: 'What is a healthy lean mass percentage?',
     answer:
-      'A commonly cited healthy lean body mass range is approximately 68–90% of total body weight. A woman\'s minimum healthy lean body mass is slightly lower than a man\'s (about 68% vs 75%). Individual variation is significant — sex, age, training history, and measurement method all affect interpretation.',
+      'There is no single universal healthy lean mass percentage. Interpretation varies significantly with sex, age, training status, body composition, and the method used to estimate body fat. A commonly cited general reference is roughly 68–90% of body weight, but this is not an individual target.',
   },
   {
     question: 'How can I increase my lean body mass?',
@@ -68,7 +68,7 @@ const faqs = [
   {
     question: 'Which LBM formula is most accurate?',
     answer:
-      'No formula is universally most accurate. Boer is often used in pharmacology and nephrology. James tends to perform best at lower BMI ranges. Hume shows strong correlation with DXA. Research comparing these equations with CT measurements found none were practically equivalent to direct imaging for individual estimates.',
+      'No formula is universally most accurate. Boer is often used in pharmacology and nephrology. James is sometimes preferred at lower BMI ranges. Hume shows strong correlation with DXA. Research comparing these equations with CT measurements found none were practically equivalent to direct imaging for individual estimates.',
   },
   {
     question: 'What should I calculate after my LBM?',
@@ -135,8 +135,6 @@ const jsonLdSafe = (value: unknown) =>
       bone, organs, skin, and body water. This calculator estimates LBM
       in two ways: directly from body-fat percentage, or from predictive
       equations like Boer, James, and Hume that use height and weight.
-      A commonly cited healthy lean mass range is approximately 68–90%
-      of total body weight.
     </p>
   </aside>
 
@@ -355,167 +353,169 @@ const jsonLdSafe = (value: unknown) =>
   </article>
 
   <article class="article-section">
-  <h2>The Math Behind Lean Body Mass Estimates</h2>
+    <h2>The Math Behind Lean Body Mass Estimates</h2>
 
-  <p>
-    There are two main approaches available in this calculator. If you
-    already have a body-fat estimate, lean mass can be calculated directly
-    from body weight and estimated fat mass. If body-fat percentage is not
-    available, predictive equations can estimate lean body mass from
-    measurements such as height, weight, and sex.
-  </p>
+    <p>
+      There are two main approaches available in this calculator. If you
+      already have a body-fat estimate, lean mass can be calculated directly
+      from body weight and estimated fat mass. If body-fat percentage is not
+      available, predictive equations can estimate lean body mass from
+      measurements such as height, weight, and sex.
+    </p>
 
-  <h3>Method 1: Body Fat Percentage (Direct Subtraction)</h3>
+    <h3>Method 1: Body Fat Percentage (Direct Subtraction)</h3>
 
-  <p>
-    The body-fat percentage method calculates lean mass directly from your
-    measured (or estimated) body fat. Unlike predictive equations, it does
-    not rely on height-weight averages.
-  </p>
+    <p>
+      The body-fat percentage method calculates lean mass directly from your
+      measured (or estimated) body fat. Unlike predictive equations, it does
+      not rely on height-weight averages.
+    </p>
 
-  <p>
-    <strong>Formula:</strong><br />
-    <code>Fat Mass = Body Weight × Body Fat %</code><br />
-    <code>Lean Body Mass = Body Weight − Fat Mass</code>
-  </p>
+    <p>
+      <strong>Formula:</strong><br />
+      <code>Fat Mass = Body Weight × Body Fat %</code><br />
+      <code>Lean Body Mass = Body Weight − Fat Mass</code>
+    </p>
 
-  <p>
-    <strong>Worked example:</strong> A 180 lb person with an estimated
-    20% body fat has 36 lb of fat mass (180 × 0.20), giving an estimated
-    lean body mass of 144 lb (180 − 36).
-  </p>
+    <p>
+      <strong>Worked example:</strong> A 180 lb person with an estimated
+      20% body fat has 36 lb of fat mass (180 × 0.20), giving an estimated
+      lean body mass of 144 lb (180 − 36).
+    </p>
 
-  <p>
-    <strong>Best for:</strong> Anyone with a reasonably accurate body-fat
-    estimate from DEXA, skinfolds, or a validated tape-measure equation.
-  </p>
+    <p>
+      <strong>Best for:</strong> Anyone with a reasonably accurate body-fat
+      estimate from DEXA, skinfolds, or a validated tape-measure equation.
+    </p>
 
-  <p>
-    <strong>Limitation:</strong> Accuracy is entirely dependent on the
-    quality of the body-fat input. Consumer BIA devices, for example, can
-    vary several percentage points from DEXA readings. If you do not know
-    your body-fat percentage, first use our
-    <a href="/tools/nutrition/body-fat-calculator/">Body Fat Calculator</a>
-    for a tape-measure estimate.
-  </p>
+    <p>
+      <strong>Limitation:</strong> Accuracy is entirely dependent on the
+      quality of the body-fat input. Consumer BIA devices, for example, can
+      vary several percentage points from DEXA readings. If you do not know
+      your body-fat percentage, first use our
+      <a href="/tools/nutrition/body-fat-calculator/">Body Fat Calculator</a>
+      for a tape-measure estimate.
+    </p>
 
-  <h3>Method 2: Boer Formula (1984)</h3>
+    <h3>Method 2: Boer Formula (1984)</h3>
 
-  <p>
-    The Boer equation estimates lean body mass from body weight and height.
-    It was developed by Boer in 1984 as an index for normalizing body-fluid
-    volumes in humans and is widely used in clinical pharmacology and
-    nephrology for drug dosing.
-  </p>
+    <p>
+      The Boer equation estimates lean body mass from body weight and height.
+      It was developed by Boer in 1984 as an index for normalizing body-fluid
+      volumes in humans and is widely used in clinical pharmacology and
+      nephrology for drug dosing.
+    </p>
 
-  <p>
-    <strong>Formula for men:</strong><br />
-    <code>LBM = 0.407 × weight(kg) + 0.267 × height(cm) − 19.2</code>
-  </p>
+    <p>
+      <strong>Formula for men:</strong><br />
+      <code>LBM = 0.407 × weight(kg) + 0.267 × height(cm) − 19.2</code>
+    </p>
 
-  <p>
-    <strong>Formula for women:</strong><br />
-    <code>LBM = 0.252 × weight(kg) + 0.473 × height(cm) − 48.3</code>
-  </p>
+    <p>
+      <strong>Formula for women:</strong><br />
+      <code>LBM = 0.252 × weight(kg) + 0.473 × height(cm) − 48.3</code>
+    </p>
 
-  <p>
-    <strong>Worked example (men):</strong> An 80 kg man at 180 cm —
-    (0.407 × 80) + (0.267 × 180) − 19.2 = 32.56 + 48.06 − 19.2 ≈
-    <strong>61.4 kg LBM</strong>.
-  </p>
+    <p>
+      <strong>Worked example (men):</strong> An 80 kg man at 180 cm —
+      (0.407 × 80) + (0.267 × 180) − 19.2 = 32.56 + 48.06 − 19.2 ≈
+      <strong>61.4 kg LBM</strong>.
+    </p>
 
-  <p>
-    <strong>Best for:</strong> Clinical and pharmacological contexts,
-    general adult populations, and anyone wanting a widely-cited LBM
-    estimate from height and weight alone.
-  </p>
+    <p>
+      <strong>Best for:</strong> Clinical and pharmacological contexts,
+      general adult populations, and anyone wanting a widely-cited LBM
+      estimate from height and weight alone.
+    </p>
 
-  <p>
-    <strong>Limitation:</strong> May overestimate lean mass at very low
-    BMI. Less accurate for children and populations outside the original
-    study group.
-  </p>
+    <p>
+      <strong>Limitation:</strong> May overestimate lean mass at very low
+      BMI. Less accurate for children and populations outside the original
+      study group.
+    </p>
 
-  <h3>Method 3: James Formula (1976)</h3>
+    <h3>Method 3: James Formula (1976)</h3>
 
-  <p>
-    The James equation also estimates lean body mass from body weight and
-    height, with sex-specific constants. It is notably responsive to the
-    weight-to-height ratio, which makes it more sensitive at different
-    body sizes than simple linear equations.
-  </p>
+    <p>
+      The James equation also estimates lean body mass from body weight and
+      height, with sex-specific constants. It is notably responsive to the
+      weight-to-height ratio, which makes it more sensitive at different
+      body sizes than simple linear equations.
+    </p>
 
-  <p>
-    <strong>Formula for men:</strong><br />
-    <code>LBM = 1.10 × weight(kg) − 128 × (weight(kg) / height(cm))²</code>
-  </p>
+    <p>
+      <strong>Formula for men:</strong><br />
+      <code>LBM = 1.10 × weight(kg) − 128 × (weight(kg) / height(cm))²</code>
+    </p>
 
-  <p>
-    <strong>Formula for women:</strong><br />
-    <code>LBM = 1.07 × weight(kg) − 148 × (weight(kg) / height(cm))²</code>
-  </p>
+    <p>
+      <strong>Formula for women:</strong><br />
+      <code>LBM = 1.07 × weight(kg) − 148 × (weight(kg) / height(cm))²</code>
+    </p>
 
-  <p>
-    <strong>Worked example (men):</strong> An 80 kg man at 180 cm —
-    (1.10 × 80) − 128 × (80 / 180)² = 88 − 128 × 0.1975 ≈
-    <strong>62.7 kg LBM</strong>.
-  </p>
+    <p>
+      <strong>Worked example (men):</strong> An 80 kg man at 180 cm —
+      (1.10 × 80) − 128 × (80 / 180)² = 88 − 128 × 0.1975 ≈
+      <strong>62.7 kg LBM</strong>.
+    </p>
 
-  <p>
-    <strong>Note on units:</strong> The James equation uses height in
-    centimeters, not meters. Using meters in the ratio without adjusting
-    the equation's scale would produce an incorrect result.
-  </p>
+    <p>
+      <strong>Note on units:</strong> The James equation uses height in
+      centimeters, not meters. Using meters in the ratio without adjusting
+      the equation's scale would produce an incorrect result.
+    </p>
 
-  <p>
-    <strong>Best for:</strong> Lower BMI ranges and underweight
-    individuals, where weight-to-height ratios tend to be more variable.
-  </p>
+    <p>
+      <strong>Often used for:</strong> Lower BMI ranges and underweight
+      individuals, where weight-to-height ratios tend to be more variable.
+      The squared weight-to-height ratio makes this formula more responsive
+      at different body sizes, though accuracy varies by population.
+    </p>
 
-  <p>
-    <strong>Limitation:</strong> Less accurate at higher BMI ranges.
-    The squared ratio term can amplify small input differences at the
-    extremes.
-  </p>
+    <p>
+      <strong>Limitation:</strong> Less accurate at higher BMI ranges.
+      The squared ratio term can amplify small input differences at the
+      extremes.
+    </p>
 
-  <h3>Method 4: Hume Formula (1966)</h3>
+    <h3>Method 4: Hume Formula (1966)</h3>
 
-  <p>
-    The Hume equation is one of the earliest sex-specific formulas for
-    estimating lean body mass from height and weight. It has been
-    validated against DXA measurements, showing strong correlation with
-    measured lean body mass.
-  </p>
+    <p>
+      The Hume equation is one of the earliest sex-specific formulas for
+      estimating lean body mass from height and weight. It has been
+      validated against DXA measurements, showing strong correlation with
+      measured lean body mass.
+    </p>
 
-  <p>
-    <strong>Formula for men:</strong><br />
-    <code>LBM = 0.32810 × weight(kg) + 0.33929 × height(cm) − 29.5336</code>
-  </p>
+    <p>
+      <strong>Formula for men:</strong><br />
+      <code>LBM = 0.32810 × weight(kg) + 0.33929 × height(cm) − 29.5336</code>
+    </p>
 
-  <p>
-    <strong>Formula for women:</strong><br />
-    <code>LBM = 0.29569 × weight(kg) + 0.41813 × height(cm) − 43.2933</code>
-  </p>
+    <p>
+      <strong>Formula for women:</strong><br />
+      <code>LBM = 0.29569 × weight(kg) + 0.41813 × height(cm) − 43.2933</code>
+    </p>
 
-  <p>
-    <strong>Worked example (men):</strong> An 80 kg man at 180 cm —
-    (0.32810 × 80) + (0.33929 × 180) − 29.5336 = 26.25 + 61.07 − 29.53 ≈
-    <strong>57.8 kg LBM</strong>.
-  </p>
+    <p>
+      <strong>Worked example (men):</strong> An 80 kg man at 180 cm —
+      (0.32810 × 80) + (0.33929 × 180) − 29.5336 = 26.25 + 61.07 − 29.53 ≈
+      <strong>57.8 kg LBM</strong>.
+    </p>
 
-  <p>
-    <strong>Best for:</strong> Adults in the original study population
-    range. Often used in clinical and research contexts where its DXA
-    validation is relevant.
-  </p>
+    <p>
+      <strong>Best for:</strong> Adults in the original study population
+      range. Often used in clinical and research contexts where its DXA
+      validation is relevant.
+    </p>
 
-  <p>
-    <strong>Limitation:</strong> A DXA validation study found strong
-    correlation but some systematic difference from direct measurement.
-    Like all height-weight equations, it cannot capture individual
-    variation in muscle mass.
-  </p>
-</article>
+    <p>
+      <strong>Limitation:</strong> A DXA validation study found strong
+      correlation but some systematic difference from direct measurement.
+      Like all height-weight equations, it cannot capture individual
+      variation in muscle mass.
+    </p>
+  </article>
 
   <article class="article-section">
     <h2>Formula Comparison: Which LBM Equation Is Most Accurate?</h2>
@@ -736,14 +736,16 @@ const jsonLdSafe = (value: unknown) =>
     </p>
 
     <p>
-      A common practical range used in fitness and sports-nutrition contexts
-      is approximately <strong>1.0–1.2 g of protein per pound of lean body
-      mass</strong> (roughly 2.2–2.6 g/kg LBM) per day.
+      One optional planning framework used in some fitness and
+      sports-nutrition contexts is approximately <strong>1.0–1.2 g of
+      protein per pound of lean body mass</strong> (roughly 2.2–2.6 g/kg LBM)
+      per day. This is not a universal recommendation.
     </p>
 
     <p>
       For example, someone with an estimated 140 lb of lean body mass might
-      target 140–168 grams of protein per day using this framework.
+      use 140–168 grams of protein per day as a starting point within this
+      framework.
     </p>
 
     <p>
@@ -834,11 +836,12 @@ const jsonLdSafe = (value: unknown) =>
       80% of their body weight classified as lean by this simple calculation.
     </p>
     <p>
-      A commonly cited healthy lean body mass range is approximately
-      <strong>68–90%</strong> of body weight. A woman's minimum healthy lean
-      body mass is slightly lower than a man's (about 68% vs 75%).
-      Interpretation varies with sex, age, training status, body composition,
-      and the method used to estimate body fat.
+      There is no single universal healthy lean mass percentage. A commonly
+      cited general reference is roughly 68–90% of body weight, with a
+      slightly lower minimum for women (about 68% vs 75%). Interpretation
+      varies with sex, age, training status, body composition, and the
+      method used to estimate body fat. Treat this as a broad reference
+      range rather than an individual target.
     </p>
   </article>
 
@@ -1246,6 +1249,8 @@ const jsonLdSafe = (value: unknown) =>
 
     const round = (value: number) => Math.round(value * 10) / 10;
 
+    // ---------- Preserved value sync ----------
+
     function syncPreservedWeight() {
       if (!weightInput) return;
       const raw = weightInput.value.trim();
@@ -1279,6 +1284,19 @@ const jsonLdSafe = (value: unknown) =>
       preservedCm = value;
     }
 
+    // ---------- UI state ----------
+
+    function resetResult() {
+      clearError();
+      if (resultBox) {
+        resultBox.hidden = true;
+        resultBox.classList.remove('show');
+      }
+      if (resultAnnouncement) {
+        resultAnnouncement.textContent = '';
+      }
+    }
+
     function setUnit(next: Unit) {
       if (next === unit) return;
 
@@ -1301,7 +1319,7 @@ const jsonLdSafe = (value: unknown) =>
 
       unit = next;
       updateUnitUI();
-      clearError();
+      resetResult();
     }
 
     function updateUnitUI() {
@@ -1345,7 +1363,7 @@ const jsonLdSafe = (value: unknown) =>
       if (sexField) sexField.hidden = !needsHeight;
 
       updateHeightFields();
-      clearError();
+      resetResult();
     }
 
     function updateHeightFields() {
@@ -1372,6 +1390,8 @@ const jsonLdSafe = (value: unknown) =>
       inputError.textContent = '';
       inputError.hidden = true;
     }
+
+    // ---------- Calculation helpers ----------
 
     function getBoerLbm(weightKg: number, heightCm: number, sex: string) {
       return sex === 'female'
@@ -1401,6 +1421,8 @@ const jsonLdSafe = (value: unknown) =>
       if (visualFatPercent) visualFatPercent.textContent = `${round(safeFat)}%`;
     }
 
+    // ---------- Event listeners ----------
+
     unitLb?.addEventListener('click', () => setUnit('lb'));
     unitKg?.addEventListener('click', () => setUnit('kg'));
     methodBodyFat?.addEventListener('click', () => setMethod('bodyfat'));
@@ -1408,16 +1430,40 @@ const jsonLdSafe = (value: unknown) =>
     methodJames?.addEventListener('click', () => setMethod('james'));
     methodHume?.addEventListener('click', () => setMethod('hume'));
 
-    weightInput?.addEventListener('input', () => { syncPreservedWeight(); clearError(); });
-    heightFtInput?.addEventListener('input', () => { syncPreservedHeightFromImperial(); clearError(); });
-    heightInInput?.addEventListener('input', () => { syncPreservedHeightFromImperial(); clearError(); });
-    heightCmInput?.addEventListener('input', () => { syncPreservedHeightFromMetric(); clearError(); });
-    bodyFatInput?.addEventListener('input', clearError);
+    weightInput?.addEventListener('input', () => {
+      syncPreservedWeight();
+      resetResult();
+    });
+
+    heightFtInput?.addEventListener('input', () => {
+      syncPreservedHeightFromImperial();
+      resetResult();
+    });
+
+    heightInInput?.addEventListener('input', () => {
+      syncPreservedHeightFromImperial();
+      resetResult();
+    });
+
+    heightCmInput?.addEventListener('input', () => {
+      syncPreservedHeightFromMetric();
+      resetResult();
+    });
+
+    bodyFatInput?.addEventListener('input', resetResult);
+    sexInput?.addEventListener('change', resetResult);
+
+    // ---------- Calculate ----------
 
     calcBtn?.addEventListener('click', () => {
       clearError();
 
-      if (preservedKg === null) syncPreservedWeight();
+      // Use preserved value if available; only sync from input when none exists.
+      // This prevents the rounded display value from overwriting the original
+      // precise metric value after a unit toggle.
+      if (preservedKg === null) {
+        syncPreservedWeight();
+      }
 
       if (preservedKg === null || preservedKg < 25 || preservedKg > 300) {
         showError('Please enter a body weight between 25 and 300 kg (approximately 55–660 lb).');
@@ -1437,8 +1483,14 @@ const jsonLdSafe = (value: unknown) =>
         lbmKg = weightKg * (1 - bodyFat / 100);
         methodName = 'Body fat percentage';
       } else {
-        if (unit === 'lb') syncPreservedHeightFromImperial();
-        else syncPreservedHeightFromMetric();
+        // Only sync from input when no preserved value exists yet.
+        if (preservedCm === null) {
+          if (unit === 'lb') {
+            syncPreservedHeightFromImperial();
+          } else {
+            syncPreservedHeightFromMetric();
+          }
+        }
 
         if (preservedCm === null || preservedCm < 120 || preservedCm > 250) {
           showError('Please enter a height between 120 and 250 cm (approximately 4 ft – 8 ft).');
@@ -1474,12 +1526,17 @@ const jsonLdSafe = (value: unknown) =>
 
       updateCompositionVisual(leanPercent, fatPercent);
 
-      if (resultBox) { resultBox.hidden = false; resultBox.classList.add('show'); }
+      if (resultBox) {
+        resultBox.hidden = false;
+        resultBox.classList.add('show');
+      }
 
       if (resultAnnouncement) {
         resultAnnouncement.textContent = `Estimated lean body mass: ${round(displayLbm)} ${unit}. Body weight: ${round(displayWeight)} ${unit}. Estimated fat mass: ${round(displayFat)} ${unit}. Lean mass percentage: ${round(leanPercent)}%.`;
       }
     });
+
+    // ---------- Initialize ----------
 
     setMethod('bodyfat');
     updateUnitUI();
