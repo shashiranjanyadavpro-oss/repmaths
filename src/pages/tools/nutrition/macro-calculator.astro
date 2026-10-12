@@ -1,42 +1,140 @@
 ---
 import Base from '../../../layouts/Base.astro';
 import RelatedTools from '../../../components/RelatedTools.astro';
+
+const breadcrumbs = [
+  { name: 'Home', href: '/' },
+  { name: 'Tools', href: '/tools/' },
+  { name: 'Nutrition & Body Composition', href: '/tools/nutrition/' },
+  { name: 'Macro Calculator' },
+];
+
+const faqs = [
+  {
+    question: 'What is a good macro split for fat loss?',
+    answer:
+      'There is no single macro split that works for everyone. A higher-protein approach is commonly used during a calorie deficit, while carbohydrate and fat amounts can be adjusted based on training demands, preferences, and dietary needs. This calculator uses 40% protein, 30% carbs, and 30% fat as a sample cutting split.',
+  },
+  {
+    question: 'Why track macros instead of just calories?',
+    answer:
+      'Calories are central to changes in body weight, while macros determine where those calories come from. Protein supports tissue maintenance and repair, while carbohydrates and fat provide energy and other nutritional functions. For people who train regularly, macro tracking makes it easier to monitor protein intake and adjust carbs and fat around the calorie target.',
+  },
+  {
+    question: 'How many calories are in each macronutrient?',
+    answer:
+      'Protein and carbohydrates each provide approximately 4 calories per gram. Fat provides approximately 9 calories per gram. Alcohol provides approximately 7 calories per gram, though it is not a macronutrient required by the diet.',
+  },
+  {
+    question: 'What macro split works for keto?',
+    answer:
+      'Ketogenic diets commonly keep carbohydrate intake around 20–50 grams per day, or below roughly 10% of calories. This calculator uses 25% protein, 5% carbs, and 70% fat as a simplified example. Exact protein and fat targets vary between individuals, so a percentage split does not guarantee nutritional ketosis.',
+  },
+  {
+    question: 'Do I need to change my macros when I change my calorie intake?',
+    answer:
+      'If you keep the same percentage split, changing your calorie target will change the gram targets for protein, carbohydrates, and fat. You can keep the ratio the same or choose a different split when your goals or training needs change. Many people keep protein relatively fixed and adjust carbs and fat based on training and preference.',
+  },
+  {
+    question: 'Should I use my TDEE or a different calorie target in this calculator?',
+    answer:
+      'Use the daily calorie target you want to plan your diet around. TDEE is an estimate of maintenance energy needs; a cutting or bulking target may be set below or above that estimate. For a starting point, use our <a href="/tools/nutrition/tdee-calculator/">TDEE Calculator</a>.',
+  },
+  {
+    question: 'What if my custom macro percentages do not add up to 100%?',
+    answer:
+      'Protein, carbohydrate, and fat percentages should add up to 100% of your daily calories. The calculator will show an error if the total does not equal 100%. Adjust the percentages until they balance.',
+  },
+  {
+    question: 'How many grams of protein per pound should I eat?',
+    answer:
+      'For most healthy exercising adults, approximately 0.64–0.91 g/lb (1.4–2.0 g/kg) per day is a commonly cited sports-nutrition range for building or maintaining muscle. For a more detailed protein estimate, use our <a href="/tools/nutrition/protein-calculator/">Protein Calculator</a>.',
+  },
+  {
+    question: 'What should I calculate after my macros?',
+    answer:
+      'After setting macros, you can explore our <a href="/tools/nutrition/calorie-deficit-calculator/">Calorie Deficit Calculator</a> for a focused weight-loss plan, the <a href="/tools/nutrition/body-fat-calculator/">Body Fat Calculator</a> to track body-composition changes, or the <a href="/tools/nutrition/bmi-calculator/">BMI Calculator</a> for a quick weight-status reference.',
+  },
+];
+
+const appSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'WebApplication',
+  '@id': 'https://repmaths.com/tools/nutrition/macro-calculator/#calculator',
+  name: 'RepMaths Macro Calculator',
+  alternateName: 'Macro Split Calculator',
+  url: 'https://repmaths.com/tools/nutrition/macro-calculator/',
+  description:
+    'Free calculator that converts daily calories into protein, carbohydrate, and fat targets based on a selected goal or custom ratio.',
+  applicationCategory: 'HealthApplication',
+  operatingSystem: 'Any',
+  browserRequirements: 'Requires JavaScript',
+  inLanguage: 'en',
+  isAccessibleForFree: true,
+  offers: {
+    '@type': 'Offer',
+    price: '0',
+    priceCurrency: 'USD',
+  },
+  publisher: {
+    '@id': 'https://repmaths.com/#organization',
+  },
+  isPartOf: {
+    '@id': 'https://repmaths.com/#website',
+  },
+};
+
+const jsonLdSafe = (value: unknown) =>
+  JSON.stringify(value).replace(/</g, '\\u003c');
 ---
 
 <Base
   title="Macro Calculator — Protein, Carbs & Fat by Goal"
-  description="Free macro calculator. Enter your daily calories and choose a goal — cutting, bulking, maintenance, or keto — to get your protein, carb, and fat targets in grams."
+  description="Free macro calculator: convert daily calories into protein, carb, and fat targets. Choose cutting, maintenance, bulking, keto, or custom ratios."
+  breadcrumbs={breadcrumbs}
+  faqs={faqs}
 >
-  <script type="application/ld+json" set:html={JSON.stringify({
-    "@context": "https://schema.org",
-    "@type": "SoftwareApplication",
-    "name": "Macro Calculator",
-    "applicationCategory": "HealthApplication",
-    "operatingSystem": "Any",
-    "offers": {
-      "@type": "Offer",
-      "price": "0",
-      "priceCurrency": "USD"
-    },
-    "description": "Free online calculator that converts daily calories into protein, carbohydrate, and fat targets based on a selected goal or custom ratio."
-  })} />
+  <script
+    type="application/ld+json"
+    set:html={jsonLdSafe(appSchema)}
+  />
 
   <section class="hero">
     <h1>Macro Calculator</h1>
-    <p>Turn your daily calories into a protein, carb, and fat target based on your goal.</p>
+    <p>
+      Turn your daily calories into a protein, carb, and fat target based
+      on your goal.
+    </p>
   </section>
 
-  <section class="calc-card">
-    <p style="margin:0 0 16px; font-size:0.85rem; color:var(--text-muted);">
+  <aside class="quick-answer" aria-label="Macro calculator quick answer">
+    <p>
+      <strong>How do you calculate macros?</strong> Divide your daily
+      calories by the selected percentages for protein, carbs, and fat,
+      then convert each calorie target into grams. Protein and carbs
+      provide about 4 calories per gram, and fat provides about 9.
+      Use the calculator below to generate daily gram targets for
+      cutting, maintenance, bulking, keto, or a custom split.
+    </p>
+  </aside>
+
+  <section class="calc-card" aria-labelledby="calculator-heading">
+    <h2 id="calculator-heading" class="calculator-heading">
+      Calculate Your Daily Macros
+    </h2>
+
+    <p class="calc-hint">
       Don't know your daily calories?
-      <a href="/tools/nutrition/tdee-calculator">Calculate your TDEE first</a>
+      <a href="/tools/nutrition/tdee-calculator/">Calculate your TDEE first</a>
       or use our
-      <a href="/tools/nutrition/calorie-deficit-calculator">Calorie Deficit Calculator</a>
+      <a href="/tools/nutrition/calorie-deficit-calculator/">
+        Calorie Deficit Calculator
+      </a>
       if your goal is fat loss.
     </p>
 
     <div class="field">
-      <label for="calories">Daily Calories</label>
+      <label for="calories">Daily calories</label>
       <input
         type="number"
         id="calories"
@@ -44,25 +142,39 @@ import RelatedTools from '../../../components/RelatedTools.astro';
         inputmode="numeric"
         min="800"
         step="1"
-        aria-describedby="calorie-help"
+        aria-describedby="calorie-help calc-error"
       />
-      <p id="calorie-help" style="font-size:0.8rem; color:var(--text-muted); margin-top:6px;">
+      <p id="calorie-help" class="field-help">
         Enter the calorie target you want to build your macros around.
       </p>
     </div>
 
     <div class="field">
-      <label>Goal / Split</label>
-      <div class="unit-toggle" role="group" aria-label="Macro goal">
-        <button type="button" id="goal-cutting" class="active" aria-pressed="true">Cutting</button>
-        <button type="button" id="goal-maintenance" aria-pressed="false">Maintenance</button>
-        <button type="button" id="goal-bulking" aria-pressed="false">Bulking</button>
-        <button type="button" id="goal-keto" aria-pressed="false">Keto</button>
-        <button type="button" id="goal-custom" aria-pressed="false">Custom</button>
+      <span class="field-label" id="goal-label">Goal / Split</span>
+      <div
+        class="unit-toggle"
+        role="group"
+        aria-labelledby="goal-label"
+      >
+        <button type="button" id="goal-cutting" class="active" aria-pressed="true">
+          Cutting
+        </button>
+        <button type="button" id="goal-maintenance" aria-pressed="false">
+          Maintenance
+        </button>
+        <button type="button" id="goal-bulking" aria-pressed="false">
+          Bulking
+        </button>
+        <button type="button" id="goal-keto" aria-pressed="false">
+          Keto
+        </button>
+        <button type="button" id="goal-custom" aria-pressed="false">
+          Custom
+        </button>
       </div>
     </div>
 
-    <div id="custom-fields" style="display:none;">
+    <div id="custom-fields" hidden>
       <div class="field">
         <label for="custom-protein">Protein %</label>
         <input
@@ -102,18 +214,36 @@ import RelatedTools from '../../../components/RelatedTools.astro';
         />
       </div>
 
-      <p style="font-size:0.8rem; color:var(--text-muted); margin-top:-8px;">
+      <p class="field-help">
         Protein, carbs, and fat must add up to 100%.
       </p>
     </div>
 
-    <button class="btn-primary" id="calc-btn">Calculate Macros</button>
+    <p id="calc-error" class="calc-error" role="alert" hidden></p>
 
-    <div class="result-box" id="result-box" aria-live="polite">
-      <div class="label" id="result-label">Your Daily Macro Targets</div>
+    <button type="button" class="btn-primary" id="calc-btn">
+      Calculate Macros
+    </button>
+
+    <div
+      class="result-box"
+      id="result-box"
+      aria-labelledby="result-heading"
+    >
+      <div
+        id="result-announcement"
+        class="sr-only"
+        role="status"
+        aria-live="polite"
+        aria-atomic="true"
+      ></div>
+
+      <h3 id="result-heading" class="result-heading">
+        Your Daily Macro Targets
+      </h3>
 
       <table class="result-table" id="result-table">
-        <caption style="position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0;">
+        <caption>
           Daily protein, carbohydrate, and fat targets
         </caption>
         <thead>
@@ -126,7 +256,22 @@ import RelatedTools from '../../../components/RelatedTools.astro';
         <tbody id="result-table-body"></tbody>
       </table>
 
-      <p id="result-note" style="font-size:0.8rem; color:var(--text-muted); margin:14px 0 0;"></p>
+      <p id="result-note" class="calc-note"></p>
+
+      <div class="result-actions">
+        <a href="/tools/nutrition/tdee-calculator/" class="btn-primary">
+          Calculate TDEE
+        </a>
+        <a href="/tools/nutrition/protein-calculator/" class="btn-primary">
+          Calculate Protein
+        </a>
+        <a
+          href="/tools/nutrition/calorie-deficit-calculator/"
+          class="btn-primary"
+        >
+          Calorie Deficit
+        </a>
+      </div>
     </div>
   </section>
 
@@ -135,24 +280,25 @@ import RelatedTools from '../../../components/RelatedTools.astro';
     <p>
       Macros (macronutrients) — protein, carbohydrates, and fat — each
       contribute calories to your diet. Protein and carbohydrates provide
-      about 4 calories per gram, while fat provides about 9 calories per gram.
-      To calculate a macro target, your daily calories are divided according
-      to the selected percentages, then each calorie target is converted into
-      grams.
+      about 4 calories per gram, while fat provides about 9 calories per
+      gram. To calculate a macro target, your daily calories are divided
+      according to the selected percentages, then each calorie target is
+      converted into grams.
     </p>
 
     <p>
-      For example, if 2,000 calories are split 40% protein, 30% carbohydrates,
-      and 30% fat, that gives 800 calories from protein, 600 from carbs, and
-      600 from fat. Dividing by 4, 4, and 9 respectively gives the
-      corresponding gram targets.
+      For example, if 2,000 calories are split 40% protein, 30%
+      carbohydrates, and 30% fat, that gives 800 calories from protein,
+      600 from carbs, and 600 from fat. Dividing by 4, 4, and 9 respectively
+      gives the corresponding gram targets.
     </p>
 
     <p>
       These calculations use the standard energy values of approximately
       4 kcal per gram for protein and carbohydrate and 9 kcal per gram for
       fat. The calculator is a planning tool, so actual food labels and
-      dietary intake can vary slightly because of rounding and food composition.
+      dietary intake can vary slightly because of rounding and food
+      composition.
     </p>
   </article>
 
@@ -174,12 +320,11 @@ import RelatedTools from '../../../components/RelatedTools.astro';
       calorie deficit, while carbohydrate and fat intake can be adjusted
       around training demands and personal preference.
     </p>
-
     <p>
       For a more individualized protein target, use our
-      <a href="/tools/nutrition/protein-calculator">Protein Calculator</a>.
+      <a href="/tools/nutrition/protein-calculator/">Protein Calculator</a>.
       If you still need to determine your calorie target, our
-      <a href="/tools/nutrition/calorie-deficit-calculator">
+      <a href="/tools/nutrition/calorie-deficit-calculator/">
         Calorie Deficit Calculator
       </a>
       can estimate a starting calorie target for weight loss.
@@ -192,7 +337,7 @@ import RelatedTools from '../../../components/RelatedTools.astro';
       the established adult Acceptable Macronutrient Distribution Ranges are
       10–35% of calories from protein, 45–65% from carbohydrate, and 20–35%
       from fat. These reference ranges are not individualized training
-      prescriptions. 
+      prescriptions.
     </p>
 
     <h3>Bulking (Muscle Gain)</h3>
@@ -202,7 +347,6 @@ import RelatedTools from '../../../components/RelatedTools.astro';
       carbohydrate availability can support resistance-training performance
       and muscle gain.
     </p>
-
     <p>
       If you are planning a muscle-gain diet, start with an appropriate
       calorie target and then adjust protein and the remaining calories
@@ -218,7 +362,6 @@ import RelatedTools from '../../../components/RelatedTools.astro';
       nutritional ketosis can vary, so a percentage split alone does not
       guarantee ketosis.
     </p>
-
     <p>
       People with diabetes, people taking glucose-lowering medications, and
       anyone using a ketogenic diet for a medical purpose should discuss the
@@ -256,22 +399,22 @@ import RelatedTools from '../../../components/RelatedTools.astro';
 
     <p>
       Enter the daily calorie target you actually want to use for your diet.
-      If you are maintaining weight, this may be close to your estimated TDEE.
-      For cutting or bulking, your target may be below or above estimated
-      maintenance calories.
+      If you are maintaining weight, this may be close to your estimated
+      TDEE. For cutting or bulking, your target may be below or above
+      estimated maintenance calories.
     </p>
 
     <p>
       If you do not know your maintenance calories, use our
-      <a href="/tools/nutrition/tdee-calculator">TDEE Calculator</a>
+      <a href="/tools/nutrition/tdee-calculator/">TDEE Calculator</a>
       first. For a more specific protein target, you can also use the
-      <a href="/tools/nutrition/protein-calculator">Protein Calculator</a>.
+      <a href="/tools/nutrition/protein-calculator/">Protein Calculator</a>.
     </p>
 
     <p>
       If your main goal is fat loss and you have not chosen a calorie target
       yet, use our
-      <a href="/tools/nutrition/calorie-deficit-calculator">
+      <a href="/tools/nutrition/calorie-deficit-calculator/">
         Calorie Deficit Calculator
       </a>
       to estimate a starting target before calculating your macros.
@@ -279,73 +422,90 @@ import RelatedTools from '../../../components/RelatedTools.astro';
   </article>
 
   <article class="article-section">
-    <h2>Frequently Asked Questions</h2>
+    <h2>Macro Food Sources: What to Eat</h2>
 
-    <div class="faq-item">
-      <h3>What is a good macro split for fat loss?</h3>
-      <p>
-        There is no single macro split that works for everyone. A
-        higher-protein approach is commonly used during a calorie deficit,
-        while carbohydrate and fat amounts can be adjusted based on training
-        demands, preferences, and dietary needs.
-      </p>
-    </div>
+    <p>
+      Once you have your daily macro targets, choosing foods that fit those
+      targets is the next step. Most whole foods provide a mix of macros,
+      but they tend to be higher in one:
+    </p>
 
-    <div class="faq-item">
-      <h3>Why track macros instead of just calories?</h3>
-      <p>
-        Calories are central to changes in body weight, while macros determine
-        where those calories come from. Protein supports tissue maintenance
-        and repair, while carbohydrates and fat provide energy and other
-        nutritional functions.
-      </p>
-    </div>
+    <h3>Protein sources</h3>
+    <ul>
+      <li>Chicken breast, turkey, lean beef, pork loin</li>
+      <li>Fish (salmon, tuna, cod), shrimp</li>
+      <li>Eggs and egg whites</li>
+      <li>Greek yogurt, cottage cheese, milk</li>
+      <li>Tofu, tempeh, soy, lentils, beans</li>
+      <li>Whey or plant-based protein powder</li>
+    </ul>
 
-    <div class="faq-item">
-      <h3>How many calories are in each macronutrient?</h3>
-      <p>
-        Protein and carbs provide about 4 kcal per gram. Fat provides about
-        9 kcal per gram. Alcohol provides about 7 kcal per gram.
-      </p>
-    </div>
+    <h3>Carbohydrate sources</h3>
+    <ul>
+      <li>Rice, oats, quinoa, whole-grain bread and pasta</li>
+      <li>Potatoes, sweet potatoes, corn</li>
+      <li>Fruit (bananas, berries, apples, oranges)</li>
+      <li>Beans and legumes</li>
+      <li>Vegetables (broccoli, spinach, peppers)</li>
+    </ul>
 
-    <div class="faq-item">
-      <h3>What macro split works for keto?</h3>
-      <p>
-        Ketogenic diets commonly keep carbohydrate intake around 20–50 grams
-        per day or below roughly 10% of calories. Exact protein and fat
-        targets vary, so a fixed percentage split does not guarantee ketosis.
-      </p>
-    </div>
+    <h3>Fat sources</h3>
+    <ul>
+      <li>Olive oil, avocado, nuts, seeds</li>
+      <li>Fatty fish (salmon, mackerel, sardines)</li>
+      <li>Nut butters</li>
+      <li>Whole eggs and cheese (in moderation)</li>
+      <li>Dark chocolate (in small amounts)</li>
+    </ul>
 
-    <div class="faq-item">
-      <h3>Do I need to change my macros when I change my calorie intake?</h3>
-      <p>
-        If you keep the same percentage split, changing your calorie target
-        will change the gram targets for protein, carbohydrates, and fat.
-        You can keep the ratio the same or choose a different split when your
-        goals or training needs change.
-      </p>
-    </div>
-
-    <div class="faq-item">
-      <h3>Should I use my TDEE or calorie target in this calculator?</h3>
-      <p>
-        Use the daily calorie target you want to plan your diet around.
-        TDEE is an estimate of maintenance energy needs; a cutting or bulking
-        target may be set below or above that estimate.
-      </p>
-    </div>
+    <p>
+      To plan protein alongside your other macros, see our
+      <a href="/tools/nutrition/protein-calculator/">Protein Calculator</a>.
+    </p>
   </article>
 
   <article class="article-section">
-    <h2>Sources & Methodology</h2>
+    <h2>How to Adjust Your Macros Over Time</h2>
+
+    <p>
+      Macro targets are starting estimates, not permanent prescriptions.
+      Most people need to adjust them based on how their body responds.
+    </p>
+
+    <ol>
+      <li>Follow your starting macro targets consistently for 2–3 weeks.</li>
+      <li>Track body-weight trend and, if possible, training performance.</li>
+      <li>If weight is not moving toward the goal, adjust calories by 100–200 kcal.</li>
+      <li>Keep protein relatively stable; adjust carbs and fat to match the new calorie target.</li>
+      <li>Reassess every 4–6 weeks.</li>
+    </ol>
+
+    <p>
+      For more on calorie adjustments during a cut, use our
+      <a href="/tools/nutrition/calorie-deficit-calculator/">
+        Calorie Deficit Calculator
+      </a>.
+    </p>
+  </article>
+
+  <article class="article-section">
+    <h2>Frequently Asked Questions</h2>
+    {faqs.map((faq) => (
+      <div class="faq-item">
+        <h3>{faq.question}</h3>
+        <p set:html={faq.answer} />
+      </div>
+    ))}
+  </article>
+
+  <article class="article-section">
+    <h2>Sources &amp; Methodology</h2>
 
     <p>
       RepMaths uses established calorie-per-gram conversion factors for
-      protein, carbohydrate, and fat. Goal presets are intentionally presented
-      as starting examples rather than individualized medical or dietary
-      prescriptions.
+      protein, carbohydrate, and fat. Goal presets are intentionally
+      presented as starting examples rather than individualized medical or
+      dietary prescriptions.
     </p>
 
     <ul>
@@ -378,7 +538,7 @@ import RelatedTools from '../../../components/RelatedTools.astro';
       </li>
     </ul>
 
-    <p style="font-size:0.85rem; color:var(--text-muted);">
+    <p class="calc-note">
       Calculator outputs are estimates for planning and education. They are
       not medical advice and should not be used to diagnose or treat a
       medical condition.
@@ -387,160 +547,347 @@ import RelatedTools from '../../../components/RelatedTools.astro';
 
   <RelatedTools currentToolId="macro-calculator" />
 
-  <script>
-    let goal = "cutting";
+  <style>
+    .calculator-heading {
+      font-size: 1.12rem;
+      margin: 0 0 16px;
+    }
 
-    const splits: Record<string, [number, number, number]> = {
+    .calc-hint {
+      margin: 0 0 16px;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    .quick-answer {
+      background: var(--surface);
+      border-left: 4px solid var(--accent);
+      border-radius: 6px;
+      padding: 16px 18px;
+      margin: 0 0 24px;
+    }
+
+    .quick-answer p {
+      margin: 0;
+      color: #c7cbd2;
+      font-size: 0.92rem;
+      line-height: 1.6;
+    }
+
+    .quick-answer strong {
+      color: var(--accent);
+    }
+
+    .field-help {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-top: 6px;
+      line-height: 1.5;
+    }
+
+    .calc-error {
+      color: #ffb4a8;
+      font-size: 0.9rem;
+      margin: 10px 0;
+      line-height: 1.5;
+    }
+
+    .result-heading {
+      font-size: 1rem;
+      margin: 0 0 12px;
+      color: var(--text);
+    }
+
+    .calc-note {
+      font-size: 0.84rem;
+      color: var(--text-muted);
+      margin: 14px 0 0;
+      line-height: 1.6;
+    }
+
+    .result-table caption {
+      text-align: left;
+      font-weight: 600;
+      margin-bottom: 0.6rem;
+      color: var(--text-muted);
+    }
+
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+
+    [hidden] {
+      display: none !important;
+    }
+
+    .unit-toggle button {
+      min-height: 44px;
+    }
+
+    @media (max-width: 480px) {
+      .unit-toggle button {
+        font-size: 0.85rem;
+        padding: 10px 6px;
+      }
+    }
+  </style>
+
+  <script>
+    type GoalKey = 'cutting' | 'maintenance' | 'bulking' | 'keto' | 'custom';
+
+    let goal: GoalKey = 'cutting';
+
+    const splits: Record<Exclude<GoalKey, 'custom'>, [number, number, number]> = {
       cutting: [40, 30, 30],
       maintenance: [30, 40, 30],
       bulking: [25, 50, 25],
       keto: [25, 5, 70],
     };
 
-    const goalButtons: Record<string, HTMLElement | null> = {
-      cutting: document.getElementById("goal-cutting"),
-      maintenance: document.getElementById("goal-maintenance"),
-      bulking: document.getElementById("goal-bulking"),
-      keto: document.getElementById("goal-keto"),
-      custom: document.getElementById("goal-custom"),
+    const goalButtons: Record<GoalKey, HTMLElement | null> = {
+      cutting: document.getElementById('goal-cutting'),
+      maintenance: document.getElementById('goal-maintenance'),
+      bulking: document.getElementById('goal-bulking'),
+      keto: document.getElementById('goal-keto'),
+      custom: document.getElementById('goal-custom'),
     };
 
-    const customFields = document.getElementById("custom-fields");
-    const caloriesInput =
-      document.getElementById("calories") as HTMLInputElement | null;
-    const customProtein =
-      document.getElementById("custom-protein") as HTMLInputElement | null;
-    const customCarbs =
-      document.getElementById("custom-carbs") as HTMLInputElement | null;
-    const customFat =
-      document.getElementById("custom-fat") as HTMLInputElement | null;
-    const calcBtn = document.getElementById("calc-btn");
-    const resultTableBody = document.getElementById("result-table-body");
-    const resultBox = document.getElementById("result-box");
-    const resultNote = document.getElementById("result-note");
+    const customFields = document.getElementById('custom-fields');
+    const caloriesInput = document.getElementById(
+      'calories'
+    ) as HTMLInputElement | null;
+    const customProtein = document.getElementById(
+      'custom-protein'
+    ) as HTMLInputElement | null;
+    const customCarbs = document.getElementById(
+      'custom-carbs'
+    ) as HTMLInputElement | null;
+    const customFat = document.getElementById(
+      'custom-fat'
+    ) as HTMLInputElement | null;
+    const calcBtn = document.getElementById('calc-btn');
+    const calcError = document.getElementById('calc-error');
+    const resultTableBody = document.getElementById('result-table-body');
+    const resultBox = document.getElementById('result-box');
+    const resultNote = document.getElementById('result-note');
+    const resultAnnouncement = document.getElementById(
+      'result-announcement'
+    );
 
-    for (const key in goalButtons) {
-      const btn = goalButtons[key];
-
-      if (btn) {
-        btn.addEventListener("click", () => setGoal(key));
+    function hideResult() {
+      resultBox?.classList.remove('show');
+      if (resultAnnouncement) {
+        resultAnnouncement.textContent = '';
       }
     }
 
-    function setGoal(g: string) {
-      goal = g;
+    function clearError() {
+      if (calcError) {
+        calcError.textContent = '';
+        calcError.hidden = true;
+      }
 
-      for (const key in goalButtons) {
-        const btn = goalButtons[key];
+      [
+        caloriesInput,
+        customProtein,
+        customCarbs,
+        customFat,
+      ].forEach((element) => {
+        element?.removeAttribute('aria-invalid');
+      });
+    }
 
-        if (btn) {
-          btn.classList.toggle("active", key === g);
-          btn.setAttribute("aria-pressed", String(key === g));
-        }
+    function showError(
+      message: string,
+      field?: HTMLInputElement | null
+    ) {
+      clearError();
+
+      if (calcError) {
+        calcError.textContent = message;
+        calcError.hidden = false;
+      }
+
+      field?.setAttribute('aria-invalid', 'true');
+      hideResult();
+      field?.focus();
+    }
+
+    function setPressed(button: HTMLElement | null, selected: boolean) {
+      button?.classList.toggle('active', selected);
+      button?.setAttribute('aria-pressed', String(selected));
+    }
+
+    function setGoal(next: GoalKey) {
+      if (!Object.prototype.hasOwnProperty.call(goalButtons, next)) return;
+
+      goal = next;
+
+      for (const key of Object.keys(goalButtons) as GoalKey[]) {
+        setPressed(goalButtons[key], key === next);
       }
 
       if (customFields) {
-        (customFields as HTMLElement).style.display =
-          g === "custom" ? "block" : "none";
+        (customFields as HTMLElement).hidden = next !== 'custom';
       }
+
+      clearError();
+      hideResult();
     }
 
     function isValidPercentage(value: number) {
       return Number.isFinite(value) && value >= 0 && value <= 100;
     }
 
-    if (calcBtn) {
-      calcBtn.addEventListener("click", () => {
-        if (!caloriesInput) return;
+    function calculateMacros() {
+      if (!caloriesInput) return;
 
-        const calories = parseFloat(caloriesInput.value);
+      clearError();
 
-        if (!Number.isFinite(calories) || calories < 800) {
-          alert("Please enter a valid daily calorie amount (800 or more).");
+      const caloriesRaw = caloriesInput.value.trim();
+      const calories = Number(caloriesRaw);
+
+      if (
+        caloriesRaw === '' ||
+        !Number.isFinite(calories) ||
+        calories < 800
+      ) {
+        showError(
+          'Enter a valid daily calorie target (800 kcal or more).',
+          caloriesInput
+        );
+        return;
+      }
+
+      let proteinPct: number;
+      let carbsPct: number;
+      let fatPct: number;
+
+      if (goal === 'custom') {
+        proteinPct = Number(customProtein?.value ?? '');
+        carbsPct = Number(customCarbs?.value ?? '');
+        fatPct = Number(customFat?.value ?? '');
+
+        if (
+          !isValidPercentage(proteinPct) ||
+          !isValidPercentage(carbsPct) ||
+          !isValidPercentage(fatPct)
+        ) {
+          showError(
+            'Enter valid percentages between 0% and 100% for protein, carbs, and fat.'
+          );
           return;
         }
 
-        let proteinPct: number;
-        let carbsPct: number;
-        let fatPct: number;
+        const total = proteinPct + carbsPct + fatPct;
 
-        if (goal === "custom") {
-          proteinPct = parseFloat(customProtein?.value || "");
-          carbsPct = parseFloat(customCarbs?.value || "");
-          fatPct = parseFloat(customFat?.value || "");
+        if (Math.abs(total - 100) > 0.01) {
+          showError(
+            `Your percentages add up to ${Number(total.toFixed(2))}%. They must total 100%.`
+          );
+          return;
+        }
+      } else {
+        const selectedSplit = splits[goal];
 
-          if (
-            !isValidPercentage(proteinPct) ||
-            !isValidPercentage(carbsPct) ||
-            !isValidPercentage(fatPct)
-          ) {
-            alert("Please enter valid percentages between 0% and 100%.");
-            return;
-          }
-
-          const total = proteinPct + carbsPct + fatPct;
-
-          if (Math.abs(total - 100) > 0.01) {
-            alert(
-              `Your percentages add up to ${Number(total.toFixed(2))}%. Please make them add up to 100%.`
-            );
-            return;
-          }
-        } else {
-          const selectedSplit = splits[goal];
-
-          if (!selectedSplit) {
-            alert("Please select a valid goal.");
-            return;
-          }
-
-          [proteinPct, carbsPct, fatPct] = selectedSplit;
+        if (!selectedSplit) {
+          showError('Please select a valid goal.');
+          return;
         }
 
-        const proteinCal = calories * (proteinPct / 100);
-        const carbsCal = calories * (carbsPct / 100);
-        const fatCal = calories * (fatPct / 100);
+        [proteinPct, carbsPct, fatPct] = selectedSplit;
+      }
 
-        const proteinG = Math.round(proteinCal / 4);
-        const carbsG = Math.round(carbsCal / 4);
-        const fatG = Math.round(fatCal / 9);
+      const proteinCal = calories * (proteinPct / 100);
+      const carbsCal = calories * (carbsPct / 100);
+      const fatCal = calories * (fatPct / 100);
 
-        const rows = [
-          {
-            name: `Protein (${proteinPct}%)`,
-            g: proteinG,
-            cal: Math.round(proteinCal),
-          },
-          {
-            name: `Carbs (${carbsPct}%)`,
-            g: carbsG,
-            cal: Math.round(carbsCal),
-          },
-          {
-            name: `Fat (${fatPct}%)`,
-            g: fatG,
-            cal: Math.round(fatCal),
-          },
-        ]
-          .map(
-            (r) =>
-              `<tr><td>${r.name}</td><td>${r.g} g</td><td>${r.cal} kcal</td></tr>`
-          )
-          .join("");
+      const proteinG = Math.round(proteinCal / 4);
+      const carbsG = Math.round(carbsCal / 4);
+      const fatG = Math.round(fatCal / 9);
 
-        if (resultTableBody) {
-          resultTableBody.innerHTML = rows;
+      const rows = [
+        {
+          name: `Protein (${proteinPct}%)`,
+          g: proteinG,
+          cal: Math.round(proteinCal),
+        },
+        {
+          name: `Carbs (${carbsPct}%)`,
+          g: carbsG,
+          cal: Math.round(carbsCal),
+        },
+        {
+          name: `Fat (${fatPct}%)`,
+          g: fatG,
+          cal: Math.round(fatCal),
+        },
+      ];
+
+      if (resultTableBody) {
+        resultTableBody.replaceChildren();
+
+        for (const row of rows) {
+          const tr = document.createElement('tr');
+
+          const cellName = document.createElement('td');
+          cellName.textContent = row.name;
+
+          const cellG = document.createElement('td');
+          cellG.textContent = `${row.g} g`;
+
+          const cellCal = document.createElement('td');
+          cellCal.textContent = `${row.cal} kcal`;
+
+          tr.append(cellName, cellG, cellCal);
+          resultTableBody.appendChild(tr);
         }
+      }
 
-        if (resultNote) {
-          resultNote.textContent =
-            "These are calculated starting targets. Actual nutrition needs vary by person, training, food choices, and overall diet.";
-        }
+      if (resultNote) {
+        resultNote.textContent =
+          'These are calculated starting targets. Actual nutrition needs vary by person, training, food choices, and overall diet.';
+      }
 
-        if (resultBox) {
-          resultBox.classList.add("show");
+      if (resultAnnouncement) {
+        resultAnnouncement.textContent = `Daily macro targets: ${proteinG} grams protein, ${carbsG} grams carbohydrate, ${fatG} grams fat.`;
+      }
+
+      resultBox?.classList.add('show');
+    }
+
+    for (const key of Object.keys(goalButtons) as GoalKey[]) {
+      goalButtons[key]?.addEventListener('click', () => setGoal(key));
+    }
+
+    calcBtn?.addEventListener('click', calculateMacros);
+
+    [
+      caloriesInput,
+      customProtein,
+      customCarbs,
+      customFat,
+    ].forEach((input) => {
+      input?.addEventListener('input', () => {
+        clearError();
+        hideResult();
+      });
+
+      input?.addEventListener('keydown', (event) => {
+        if (event.key === 'Enter') {
+          event.preventDefault();
+          calculateMacros();
         }
       });
-    }
+    });
   </script>
 </Base>
