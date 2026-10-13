@@ -1,170 +1,212 @@
 ---
 import Base from '../../../layouts/Base.astro';
 import RelatedTools from '../../../components/RelatedTools.astro';
+
+const breadcrumbs = [
+  { name: 'Home', href: '/' },
+  { name: 'Tools', href: '/tools/' },
+  { name: 'Nutrition & Body Composition', href: '/tools/nutrition/' },
+  { name: 'Calories Burned Calculator' },
+];
+
+const faqs = [
+  {
+    question: 'Why does my Apple Watch show different calories than this calculator?',
+    answer:
+      'A smartwatch and a MET-based calculator may use different inputs and algorithms. A wearable may incorporate heart rate, movement, GPS, activity type, and personal characteristics, while this calculator uses body weight, duration, and a standardized MET estimate.',
+  },
+  {
+    question: 'Should I eat back the calories I burn from exercise?',
+    answer:
+      '<strong>Not necessarily.</strong> Exercise-calorie estimates contain uncertainty, so automatically eating back every reported calorie can make your actual intake higher than intended. Use your overall calorie target and monitor body-weight and performance trends over time.',
+  },
+  {
+    question: 'Does weightlifting cause an afterburn effect (EPOC)?',
+    answer:
+      '<strong>Yes.</strong> Resistance exercise can increase oxygen consumption and energy expenditure after exercise, commonly referred to as excess post-exercise oxygen consumption (EPOC). This calculator does <strong>not</strong> add a separate EPOC adjustment to its displayed result, though the effect is real and varies by session intensity.',
+  },
+  {
+    question: 'Does sweating more mean I burned more calories?',
+    answer:
+      '<strong>No.</strong> Sweating is primarily a thermoregulatory response and can be affected by temperature, humidity, clothing, hydration, and individual differences. Sweat loss should not be used as a direct measure of calories burned.',
+  },
+  {
+    question: 'How accurate are MET-based calorie estimates?',
+    answer:
+      'MET-based calculations provide <strong>standardized estimates</strong> rather than direct measurements of individual energy expenditure. Accuracy can vary with activity intensity, body weight, exercise technique, fitness, rest periods, and other individual factors.',
+  },
+  {
+    question: 'Do heavier people burn more calories during the same activity?',
+    answer:
+      '<strong>Yes.</strong> For the same activity classification and duration, the MET calculation generally produces a higher estimated calorie expenditure at a higher body weight because the calculation scales with body mass.',
+  },
+  {
+    question: 'How many calories does a 30-minute weightlifting session burn?',
+    answer:
+      'It depends on body weight and training intensity. As a broad reference, a <strong>155 lb (70 kg)</strong> person lifting at moderate effort (5.0 MET) burns roughly <strong>170–180 kcal</strong> in 30 minutes. A 180 lb (82 kg) person at the same intensity would burn roughly <strong>200–210 kcal</strong>.',
+  },
+  {
+    question: 'How many calories do you burn walking 30 minutes?',
+    answer:
+      'For a moderate walking pace (3.5 MET), a <strong>155 lb (70 kg)</strong> person burns roughly <strong>125 kcal</strong> in 30 minutes, while a <strong>180 lb (82 kg)</strong> person burns roughly <strong>145 kcal</strong>. Brisk walking at higher MET values increases the estimate.',
+  },
+  {
+    question: 'How many calories do you burn running 30 minutes?',
+    answer:
+      'At a moderate running pace (8.3 MET), a <strong>155 lb (70 kg)</strong> person burns roughly <strong>305 kcal</strong> in 30 minutes, while a <strong>180 lb (82 kg)</strong> person burns roughly <strong>355 kcal</strong>. Faster speeds and higher MET values increase the estimate.',
+  },
+  {
+    question: 'Which exercise burns the most calories?',
+    answer:
+      'Per minute, the highest-burn activities include <strong>rope skipping</strong> (11.0 MET), <strong>vigorous running</strong> (11.5 MET), and <strong>high-intensity cycling</strong> (10.0 MET). However, the best exercise is the one you can perform consistently — total weekly burn matters more than any single session.',
+  },
+  {
+    question: 'What should I calculate after my calories burned estimate?',
+    answer:
+      'Use our <a href="/tools/nutrition/tdee-calculator/">TDEE Calculator</a> to estimate your daily energy needs, our <a href="/tools/nutrition/macro-calculator/">Macro Calculator</a> to split calories into protein, carbohydrate, and fat, or our <a href="/tools/nutrition/calorie-deficit-calculator/">Calorie Deficit Calculator</a> for a weight-loss target.',
+  },
+];
+
+const appSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'WebApplication',
+  '@id': 'https://repmaths.com/tools/nutrition/calories-burned-calculator/#calculator',
+  name: 'RepMaths Calories Burned Calculator',
+  alternateName: 'Calories Burned Calculator',
+  url: 'https://repmaths.com/tools/nutrition/calories-burned-calculator/',
+  description:
+    'Free calories burned calculator using MET values. Estimate calories burned from walking, running, cycling, and weightlifting.',
+  applicationCategory: 'HealthApplication',
+  operatingSystem: 'Any',
+  browserRequirements: 'Requires JavaScript',
+  inLanguage: 'en',
+  isAccessibleForFree: true,
+  offers: {
+    '@type': 'Offer',
+    price: '0',
+    priceCurrency: 'USD',
+  },
+  publisher: {
+    '@id': 'https://repmaths.com/#organization',
+  },
+  isPartOf: {
+    '@id': 'https://repmaths.com/#website',
+  },
+};
+
+const jsonLdSafe = (value: unknown) =>
+  JSON.stringify(value).replace(/</g, '\\u003c');
 ---
 
 <Base
-  title="Calories Burned Calculator — Track Your Workout & Daily Burn"
-  description="Free calories burned calculator using MET values. Estimate calories burned from walking, running, cycling, weightlifting, cardio, and other activities based on your weight and workout duration."
+  title="Calories Burned Calculator — MET-Based Exercise Burn"
+  description="Free calories burned calculator using MET values. Estimate calories burned from walking, running, cycling, and weightlifting in lb or kg."
+  breadcrumbs={breadcrumbs}
+  faqs={faqs}
 >
-  <script type="application/ld+json" set:html={JSON.stringify({
-    "@context": "https://schema.org",
-    "@type": "SoftwareApplication",
-    "name": "Calories Burned Calculator",
-    "applicationCategory": "HealthApplication",
-    "operatingSystem": "Any",
-    "offers": {
-      "@type": "Offer",
-      "price": "0",
-      "priceCurrency": "USD"
-    },
-    "description": "Free online calculator that estimates calories burned during exercise and physical activity using MET values, body weight, and activity duration."
-  })} />
+  <script
+    type="application/ld+json"
+    set:html={jsonLdSafe(appSchema)}
+  />
 
   <section class="hero">
     <h1>Calories Burned Calculator</h1>
     <p>
-      Estimate calories burned during walking, running, cycling, weightlifting,
-      cardio, and other activities using your body weight, workout duration,
-      and a MET-based activity estimate.
+      Estimate calories burned during walking, running, cycling,
+      weightlifting, cardio, and other activities using your body weight,
+      workout duration, and a MET-based activity estimate.
     </p>
   </section>
 
+  <aside class="quick-answer" aria-label="Calories burned quick answer">
+    <p>
+      <strong>How do you calculate calories burned?</strong> Most exercise
+      calculators use MET values (Metabolic Equivalent of Task) with the
+      formula: <code>kcal/min = MET × 3.5 × body weight (kg) ÷ 200</code>.
+      For example, a 180 lb (82 kg) person lifting weights at moderate
+      effort (5.0 MET) for 45 minutes burns roughly <strong>320 kcal</strong>.
+      Results are estimates — actual burn varies with intensity, rest
+      periods, and individual factors.
+    </p>
+  </aside>
+
   <section class="calc-card" aria-label="Calories burned calculator">
     <div class="field">
-      <label>Unit</label>
-      <div class="unit-toggle">
-        <button
-          type="button"
-          id="unit-lb"
-          class="active"
-          aria-pressed="true"
-        >
+      <span class="field-label" id="unit-label">Unit</span>
+      <div class="unit-toggle" role="group" aria-labelledby="unit-label">
+        <button type="button" id="unit-lb" class="active" aria-pressed="true">
           lb
         </button>
-        <button
-          type="button"
-          id="unit-kg"
-          aria-pressed="false"
-        >
+        <button type="button" id="unit-kg" aria-pressed="false">
           kg
         </button>
       </div>
     </div>
 
     <div class="field">
-      <label for="weight">Body Weight</label>
+      <label for="weight" id="weight-label">Body weight (lb)</label>
       <input
         type="number"
         id="weight"
         placeholder="e.g. 180"
         inputmode="decimal"
-        min="20"
-        max="350"
+        min="44"
+        max="772"
         step="any"
+        aria-describedby="weight-help calc-error"
       />
+      <p id="weight-help" class="field-help">
+        Between 44 lb and 772 lb (approximately 20–350 kg).
+      </p>
     </div>
 
     <div class="field">
       <label for="activity">Activity</label>
       <select id="activity">
-        <optgroup label="Weight Training & Gym">
-          <option value="3.5">
-            Resistance training — multiple exercises
-          </option>
-          <option value="5">
-            Resistance training — squats/deadlifts
-          </option>
-          <option value="5.8">
-            Resistance circuit / supersets
-          </option>
-          <option value="6">
-            Vigorous weightlifting / bodybuilding
-          </option>
-          <option value="7.5">
-            Vigorous circuit training
-          </option>
-          <option value="9.8">
-            Kettlebell swings
-          </option>
+        <optgroup label="Weight Training &amp; Gym">
+          <option value="3.5">Resistance training — multiple exercises (3.5 MET)</option>
+          <option value="5.0">Resistance training — squats/deadlifts (5.0 MET)</option>
+          <option value="5.8">Resistance circuit / supersets (5.8 MET)</option>
+          <option value="6.0">Vigorous weightlifting / bodybuilding (6.0 MET)</option>
+          <option value="7.5">Vigorous circuit training (7.5 MET)</option>
+          <option value="8.0">CrossFit-style WOD (8.0 MET)</option>
+          <option value="9.8">Kettlebell swings (9.8 MET)</option>
         </optgroup>
 
         <optgroup label="Walking">
-          <option value="2.8">
-            Walking — easy pace
-          </option>
-          <option value="3.5">
-            Walking — moderate pace
-          </option>
-          <option value="4.3">
-            Walking — brisk pace
-          </option>
-          <option value="5">
-            Walking — very brisk pace
-          </option>
+          <option value="2.8">Walking — easy pace (2.8 MET)</option>
+          <option value="3.5">Walking — moderate pace (3.5 MET)</option>
+          <option value="4.3">Walking — brisk pace (4.3 MET)</option>
+          <option value="5.0">Walking — very brisk pace (5.0 MET)</option>
         </optgroup>
 
         <optgroup label="Running">
-          <option value="7">
-            Running — easy pace
-          </option>
-          <option value="8.3">
-            Running — moderate pace
-          </option>
-          <option value="9.8">
-            Running — faster pace
-          </option>
-          <option value="11.5">
-            Running — vigorous pace
-          </option>
+          <option value="7.0">Running — easy pace (7.0 MET)</option>
+          <option value="8.3">Running — moderate pace (8.3 MET)</option>
+          <option value="9.8">Running — faster pace (9.8 MET)</option>
+          <option value="11.5">Running — vigorous pace (11.5 MET)</option>
         </optgroup>
 
         <optgroup label="Cycling">
-          <option value="4">
-            Cycling — light effort
-          </option>
-          <option value="6.8">
-            Cycling — moderate effort
-          </option>
-          <option value="8">
-            Cycling — vigorous effort
-          </option>
-          <option value="10">
-            Cycling — high-intensity effort
-          </option>
+          <option value="4.0">Cycling — light effort (4.0 MET)</option>
+          <option value="6.8">Cycling — moderate effort (6.8 MET)</option>
+          <option value="8.0">Cycling — vigorous effort (8.0 MET)</option>
+          <option value="10.0">Cycling — high-intensity effort (10.0 MET)</option>
         </optgroup>
 
         <optgroup label="Cardio Machines">
-          <option value="5">
-            Elliptical — moderate
-          </option>
-          <option value="9">
-            Elliptical — vigorous
-          </option>
-          <option value="5">
-            Rowing — moderate
-          </option>
-          <option value="7.3">
-            Rowing — vigorous
-          </option>
-          <option value="9.3">
-            Stair treadmill / stair machine
-          </option>
+          <option value="5.0">Elliptical — moderate (5.0 MET)</option>
+          <option value="9.0">Elliptical — vigorous (9.0 MET)</option>
+          <option value="5.0">Rowing — moderate (5.0 MET)</option>
+          <option value="7.3">Rowing — vigorous (7.3 MET)</option>
+          <option value="9.3">Stair treadmill / stair machine (9.3 MET)</option>
         </optgroup>
 
         <optgroup label="Other Activities">
-          <option value="3.8">
-            Calisthenics — moderate
-          </option>
-          <option value="7.5">
-            Calisthenics — vigorous
-          </option>
-          <option value="5">
-            Boot camp
-          </option>
-          <option value="11">
-            Rope skipping
-          </option>
+          <option value="3.8">Calisthenics — moderate (3.8 MET)</option>
+          <option value="7.5">Calisthenics — vigorous (7.5 MET)</option>
+          <option value="5.0">Boot camp (5.0 MET)</option>
+          <option value="11.0">Rope skipping (11.0 MET)</option>
         </optgroup>
       </select>
     </div>
@@ -181,7 +223,6 @@ import RelatedTools from '../../../components/RelatedTools.astro';
           max="1440"
           step="any"
         />
-
         <select id="duration-unit" aria-label="Duration unit">
           <option value="minutes">Minutes</option>
           <option value="hours">Hours</option>
@@ -189,17 +230,26 @@ import RelatedTools from '../../../components/RelatedTools.astro';
       </div>
     </div>
 
-    <button class="btn-primary" id="calc-btn">
+    <p id="calc-error" class="input-error" role="alert" aria-live="assertive" hidden></p>
+
+    <button type="button" class="btn-primary" id="calc-btn">
       Calculate Calories Burned
     </button>
 
-    <div class="result-box" id="result-box" aria-live="polite">
+    <div class="result-box" id="result-box" hidden>
+      <div
+        id="result-announcement"
+        class="sr-only"
+        role="status"
+        aria-live="polite"
+        aria-atomic="true"
+      ></div>
+
       <div class="result-grid">
         <div class="result-stat">
           <div class="big-number" id="result-total">–</div>
           <div class="label">Estimated Total Calories</div>
         </div>
-
         <div class="result-stat">
           <div class="big-number" id="result-active">–</div>
           <div class="label">Estimated Active Calories</div>
@@ -211,11 +261,20 @@ import RelatedTools from '../../../components/RelatedTools.astro';
           <strong id="result-kcal-minute">–</strong>
           <span>kcal/min</span>
         </div>
-
         <div>
           <strong id="result-met">–</strong>
           <span>MET</span>
         </div>
+      </div>
+
+      <div class="fat-loss-result" id="fat-loss-result">
+        <span class="fat-loss-label">Equivalent fat loss:</span>
+        <strong id="result-fat-loss">–</strong>
+        <p class="fat-loss-note">
+  Based on exercise-attributable (active) calories and approximately
+  7,700 kcal per kg of body fat (3,500 kcal per lb). This is a mathematical
+  comparison, not a claim that a single session directly converts to fat loss.
+</p>
       </div>
 
       <div class="reality-check">
@@ -231,6 +290,18 @@ import RelatedTools from '../../../components/RelatedTools.astro';
         These are estimates, not direct measurements of your individual energy
         expenditure.
       </p>
+
+      <div class="result-actions">
+        <a href="/tools/nutrition/tdee-calculator/" class="btn-primary">
+          Calculate TDEE
+        </a>
+        <a href="/tools/nutrition/macro-calculator/" class="btn-primary">
+          Calculate Macros
+        </a>
+        <a href="/tools/nutrition/calorie-deficit-calculator/" class="btn-primary">
+          Calorie Deficit
+        </a>
+      </div>
     </div>
   </section>
 
@@ -254,7 +325,7 @@ import RelatedTools from '../../../components/RelatedTools.astro';
   </article>
 
   <article class="article-section">
-    <h2>How Do You Calculate Calories Burned During Exercise?</h2>
+    <h2>Step-by-Step: How to Calculate Calories Burned</h2>
 
     <p>
       MET-based calorie calculations combine an activity's MET value with body
@@ -263,12 +334,37 @@ import RelatedTools from '../../../components/RelatedTools.astro';
       activity's MET value.
     </p>
 
+    <h3>Step 1: Convert weight to kilograms</h3>
     <p>
-      In simplified form, the calculation uses:
-      <strong>calories per minute = MET × 3.5 × body weight in kg ÷ 200</strong>.
-      Multiplying that value by exercise duration gives the estimated total
-      calories for the session.
+      <code>Weight (kg) = Weight (lb) ÷ 2.2046226218</code>
     </p>
+
+    <h3>Step 2: Calculate calories per minute</h3>
+    <p>
+      <code>kcal/min = MET × 3.5 × body weight (kg) ÷ 200</code>
+    </p>
+
+    <h3>Step 3: Multiply by duration</h3>
+    <p>
+      <code>Total kcal = kcal/min × exercise duration (minutes)</code>
+    </p>
+
+    <h3>Worked example</h3>
+
+    <p>
+      Consider a 180 lb (82 kg) person lifting weights at moderate effort
+      (5.0 MET) for 45 minutes:
+    </p>
+
+    <ol>
+      <li>MET value for moderate weightlifting = <strong>5.0</strong></li>
+      <li>
+        kcal/min = (5.0 × 3.5 × 82) ÷ 200 ≈ <strong>7.2 kcal/min</strong>
+      </li>
+      <li>
+        Total = 7.2 × 45 ≈ <strong>324 kcal</strong>
+      </li>
+    </ol>
 
     <p>
       For a practical nutrition estimate, the result should be treated as a
@@ -311,6 +407,119 @@ import RelatedTools from '../../../components/RelatedTools.astro';
   </article>
 
   <article class="article-section">
+    <h2>MET Values by Training Style</h2>
+
+    <p>
+      Resistance training covers a wide range of training styles with
+      substantially different energy costs. The MET values below are consistent
+      with the 2024 Adult Compendium and commonly cited in weightlifting
+      calorie research.
+    </p>
+
+    <table class="result-table">
+      <caption>MET values by training style (2024 Adult Compendium)</caption>
+      <thead>
+        <tr>
+          <th scope="col">Training style</th>
+          <th scope="col">MET</th>
+          <th scope="col">Typical characteristics</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Light machine work</td>
+          <td>3.5</td>
+          <td>Guided movements, extended rest, rehab or beginner</td>
+        </tr>
+        <tr>
+          <td>General free-weight training</td>
+          <td>5.0</td>
+          <td>Moderate loads (60–75% 1RM), balanced work-rest</td>
+        </tr>
+        <tr>
+          <td>Powerlifting</td>
+          <td>5.0</td>
+          <td>Heavy loads (80–95% 1RM), long rests (3–5 min)</td>
+        </tr>
+        <tr>
+          <td>Bodybuilding / hypertrophy</td>
+          <td>5.5</td>
+          <td>Higher volume (8–15 reps), shorter rests (60–90s)</td>
+        </tr>
+        <tr>
+          <td>Olympic lifting</td>
+          <td>6.5</td>
+          <td>Explosive compound lifts — clean, snatch, jerk</td>
+        </tr>
+        <tr>
+          <td>CrossFit-style WOD</td>
+          <td>8.0</td>
+          <td>Mixed-modality, minimal rest, circuit format</td>
+        </tr>
+      </tbody>
+    </table>
+  </article>
+
+  <article class="article-section">
+    <h2>What Exercise Burns the Most Calories?</h2>
+
+    <p>
+      Per minute of continuous effort, the following activities typically
+      produce the highest calorie burn based on 2024 Compendium MET values:
+    </p>
+
+    <table class="result-table">
+      <caption>Highest-burn exercises by MET value</caption>
+      <thead>
+        <tr>
+          <th scope="col">Exercise</th>
+          <th scope="col">MET</th>
+          <th scope="col">Approx. burn (155 lb / 70 kg, 30 min)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Running — vigorous pace</td>
+          <td>11.5</td>
+          <td>~375 kcal</td>
+        </tr>
+        <tr>
+          <td>Rope skipping</td>
+          <td>11.0</td>
+          <td>~360 kcal</td>
+        </tr>
+        <tr>
+          <td>Cycling — high-intensity</td>
+          <td>10.0</td>
+          <td>~325 kcal</td>
+        </tr>
+        <tr>
+          <td>Kettlebell swings</td>
+          <td>9.8</td>
+          <td>~320 kcal</td>
+        </tr>
+        <tr>
+          <td>Running — faster pace</td>
+          <td>9.8</td>
+          <td>~320 kcal</td>
+        </tr>
+        <tr>
+          <td>Stair treadmill</td>
+          <td>9.3</td>
+          <td>~305 kcal</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p class="calc-note">
+      High-burn exercises are not automatically the best choice. Total weekly
+      energy expenditure, sustainability, recovery, and enjoyment all matter.
+      For most people, the best exercise is the one they can perform
+      consistently.
+    </p>
+  </article>
+
+  <article class="article-section">
     <h2>The Science of Calorie Expenditure During Resistance Training</h2>
 
     <p>
@@ -344,20 +553,148 @@ import RelatedTools from '../../../components/RelatedTools.astro';
       conditioning session.
     </p>
 
+    <h3>Reference ranges by body weight and session length</h3>
+
     <p>
-      For example, the Adult Compendium lists different MET classifications
-      for general resistance training, squats and deadlifts, vigorous
-      weightlifting, and resistance circuits. The calculator therefore gives
-      you several resistance-training options instead of treating every gym
-      session as identical.
+      The following grid uses <strong>moderate lifting (5.0 MET)</strong> as a
+      reference. Actual burn varies with training style and rest periods.
+    </p>
+
+    <table class="result-table">
+      <caption>Estimated kcal at moderate lifting intensity (5.0 MET)</caption>
+      <thead>
+        <tr>
+          <th scope="col">Body weight</th>
+          <th scope="col">30 min</th>
+          <th scope="col">45 min</th>
+          <th scope="col">60 min</th>
+        </tr>
+      </thead>
+      <tbody>
+  <tr>
+    <td>130 lb (59 kg)</td>
+    <td>~155 kcal</td>
+    <td>~232 kcal</td>
+    <td>~310 kcal</td>
+  </tr>
+  <tr>
+    <td>155 lb (70 kg)</td>
+    <td>~184 kcal</td>
+    <td>~276 kcal</td>
+    <td>~368 kcal</td>
+  </tr>
+  <tr>
+    <td>180 lb (82 kg)</td>
+    <td>~215 kcal</td>
+    <td>~323 kcal</td>
+    <td>~431 kcal</td>
+  </tr>
+  <tr>
+    <td>205 lb (93 kg)</td>
+    <td>~244 kcal</td>
+    <td>~366 kcal</td>
+    <td>~488 kcal</td>
+  </tr>
+  <tr>
+    <td>230 lb (104 kg)</td>
+    <td>~273 kcal</td>
+    <td>~410 kcal</td>
+    <td>~546 kcal</td>
+  </tr>
+</tbody>
+    </table>
+
+    <p class="calc-note">
+      These values are broad reference estimates based on the MET formula.
+      Actual burn varies with rest periods, training intensity, exercise
+      selection, and individual physiology.
+    </p>
+  </article>
+
+  <article class="article-section">
+    <h2>Does Weightlifting Cause an Afterburn Effect (EPOC)?</h2>
+
+    <p>
+      Yes. Resistance exercise can increase oxygen consumption and energy
+      expenditure after exercise — commonly called
+      <strong>EPOC (Excess Post-exercise Oxygen Consumption)</strong> or the
+      "afterburn effect." This extra burn is real, but usually modest.
     </p>
 
     <p>
-      If you are tracking a lifting session for nutrition purposes, remember
-      that calorie expenditure is only one part of the training picture.
-      Training volume, recovery, performance, and progressive overload are
-      also important.
+  The size and duration of the afterburn effect depend on session intensity,
+  training volume, individual fitness, and the measurement window used in
+  research. Different studies report different EPOC estimates, so a single
+  universal number does not apply to every lifter.
+</p>
+
+<p>
+  Broadly, higher-intensity sessions with heavier loads, shorter rest
+  periods, or a circuit format tend to produce a larger EPOC response than
+  low-intensity or long-rest sessions. However, even a well-estimated EPOC
+  is usually a modest addition to the calories burned during the workout
+  itself.
+</p>
+
+<p class="calc-note">
+  RepMaths does not add a separate EPOC adjustment to its calculator result.
+  The calculator estimate reflects the activity performed, not post-exercise
+  energy expenditure. This is a conservative choice: EPOC is real, but it is
+  difficult to estimate accurately for an individual session.
+</p>
+  </article>
+
+  <article class="article-section">
+    <h2>Rep Range and Training Goal Reference</h2>
+
+    <p>
+      Different training goals use different rep ranges, rest periods, and
+      intensities — which affect how many calories a session burns.
     </p>
+
+    <table class="result-table">
+      <caption>Rep range and rest period by training goal</caption>
+      <thead>
+        <tr>
+          <th scope="col">Goal</th>
+          <th scope="col">Rep range</th>
+          <th scope="col">Rest period</th>
+          <th scope="col">Relative calorie burn</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Max strength</td>
+          <td>1–5 reps</td>
+          <td>3–5 min</td>
+          <td>Lower per minute</td>
+        </tr>
+        <tr>
+          <td>Hypertrophy</td>
+          <td>6–12 reps</td>
+          <td>60–90 sec</td>
+          <td>Moderate</td>
+        </tr>
+        <tr>
+          <td>Muscular endurance</td>
+          <td>12–20 reps</td>
+          <td>30–60 sec</td>
+          <td>Higher per minute</td>
+        </tr>
+        <tr>
+          <td>Power</td>
+          <td>1–5 reps (explosive)</td>
+          <td>2–4 min</td>
+          <td>Lower per minute</td>
+        </tr>
+        <tr>
+          <td>Circuit / fat loss</td>
+          <td>10–20 reps</td>
+          <td>15–45 sec</td>
+          <td>Highest per minute</td>
+        </tr>
+      </tbody>
+    </table>
   </article>
 
   <article class="article-section">
@@ -373,9 +710,9 @@ import RelatedTools from '../../../components/RelatedTools.astro';
 
     <p>
       You can use our
-      <a href="/tools/nutrition/tdee-calculator">TDEE Calculator</a>
+      <a href="/tools/nutrition/tdee-calculator/">TDEE Calculator</a>
       to estimate your daily energy needs, then use the
-      <a href="/tools/nutrition/macro-calculator">Macro Calculator</a>
+      <a href="/tools/nutrition/macro-calculator/">Macro Calculator</a>
       to turn a calorie target into protein, carbohydrate, and fat targets.
     </p>
   </article>
@@ -390,6 +727,23 @@ import RelatedTools from '../../../components/RelatedTools.astro';
       pace.
     </p>
 
+    <p>For a 30-minute walk, approximate burn by weight:</p>
+
+    <ul>
+      <li>
+        <strong>130 lb (59 kg):</strong> ~80 kcal (easy) to ~125 kcal (brisk)
+      </li>
+      <li>
+        <strong>155 lb (70 kg):</strong> ~95 kcal (easy) to ~150 kcal (brisk)
+      </li>
+      <li>
+        <strong>180 lb (82 kg):</strong> ~110 kcal (easy) to ~175 kcal (brisk)
+      </li>
+      <li>
+        <strong>205 lb (93 kg):</strong> ~125 kcal (easy) to ~200 kcal (brisk)
+      </li>
+    </ul>
+
     <p>
       The
       <a
@@ -402,11 +756,6 @@ import RelatedTools from '../../../components/RelatedTools.astro';
       provides different activity classifications for walking speeds and
       conditions rather than treating all walking as one activity.
     </p>
-
-    <p>
-      This makes a MET-based calculator useful for comparing different walking
-      durations and intensities, while still keeping the result as an estimate.
-    </p>
   </article>
 
   <article class="article-section">
@@ -418,6 +767,23 @@ import RelatedTools from '../../../components/RelatedTools.astro';
       terrain, and individual efficiency.
     </p>
 
+    <p>For a 30-minute run, approximate burn by weight:</p>
+
+    <ul>
+      <li>
+        <strong>130 lb (59 kg):</strong> ~185 kcal (easy) to ~305 kcal (vigorous)
+      </li>
+      <li>
+        <strong>155 lb (70 kg):</strong> ~220 kcal (easy) to ~360 kcal (vigorous)
+      </li>
+      <li>
+        <strong>180 lb (82 kg):</strong> ~255 kcal (easy) to ~420 kcal (vigorous)
+      </li>
+      <li>
+        <strong>205 lb (93 kg):</strong> ~290 kcal (easy) to ~475 kcal (vigorous)
+      </li>
+    </ul>
+
     <p>
       The
       <a
@@ -428,12 +794,6 @@ import RelatedTools from '../../../components/RelatedTools.astro';
         Compendium running classifications
       </a>
       distinguish between different running intensities and speeds.
-    </p>
-
-    <p>
-      If you want to compare running with walking for the same duration, select
-      each activity in the calculator and keep your body weight and duration
-      constant.
     </p>
   </article>
 
@@ -454,7 +814,7 @@ import RelatedTools from '../../../components/RelatedTools.astro';
   </article>
 
   <article class="article-section">
-    <h2>Heart Rate, Exercise Intensity & Energy Expenditure</h2>
+    <h2>Heart Rate, Exercise Intensity &amp; Energy Expenditure</h2>
 
     <p>
       Heart rate can provide useful information about exercise intensity, but
@@ -498,6 +858,42 @@ import RelatedTools from '../../../components/RelatedTools.astro';
       If you are comparing this result with a smartwatch, always compare the
       same activity duration and understand whether the device is reporting
       active calories, total calories, or another metric.
+    </p>
+  </article>
+
+  <article class="article-section">
+    <h2>Calories Burned vs BMR and TDEE</h2>
+
+    <p>
+      Exercise calories are only one piece of your total daily energy
+      expenditure. Your full daily burn combines several components:
+    </p>
+
+    <ul>
+      <li>
+        <strong>BMR (Basal Metabolic Rate)</strong> — calories burned at
+        complete rest to maintain basic functions.
+      </li>
+      <li>
+        <strong>TEF (Thermic Effect of Food)</strong> — calories used to
+        digest, absorb, and process food.
+      </li>
+      <li>
+        <strong>NEAT (Non-Exercise Activity Thermogenesis)</strong> — calories
+        burned from daily movement like walking, standing, and chores.
+      </li>
+      <li>
+        <strong>EAT (Exercise Activity Thermogenesis)</strong> — calories
+        burned from structured exercise, which is what this calculator
+        estimates.
+      </li>
+    </ul>
+
+    <p>
+      For a complete picture of your daily energy needs, use our
+      <a href="/tools/nutrition/bmr-calculator/">BMR Calculator</a>
+      and <a href="/tools/nutrition/tdee-calculator/">TDEE Calculator</a>
+      alongside this exercise calculator.
     </p>
   </article>
 
@@ -563,7 +959,7 @@ import RelatedTools from '../../../components/RelatedTools.astro';
     <p>
       If your goal is fat loss, use your estimated daily needs and real-world
       progress together. Our
-      <a href="/tools/nutrition/calorie-deficit-calculator">
+      <a href="/tools/nutrition/calorie-deficit-calculator/">
         Calorie Deficit Calculator
       </a>
       can estimate a daily calorie target and projected weight-loss timeline.
@@ -584,10 +980,10 @@ import RelatedTools from '../../../components/RelatedTools.astro';
       Calories burned estimates work best as one piece of a broader nutrition
       plan. For example, you can combine activity estimates with your
       estimated
-      <a href="/tools/nutrition/bmr-calculator">BMR</a>,
-      <a href="/tools/nutrition/tdee-calculator">TDEE</a>,
-      <a href="/tools/nutrition/macro-calculator">macros</a>, and
-      <a href="/tools/nutrition/protein-calculator">protein target</a>.
+      <a href="/tools/nutrition/bmr-calculator/">BMR</a>,
+      <a href="/tools/nutrition/tdee-calculator/">TDEE</a>,
+      <a href="/tools/nutrition/macro-calculator/">macros</a>, and
+      <a href="/tools/nutrition/protein-calculator/">protein target</a>.
     </p>
 
     <p>
@@ -599,7 +995,17 @@ import RelatedTools from '../../../components/RelatedTools.astro';
   </article>
 
   <article class="article-section">
-    <h2>Sources & Methodology</h2>
+    <h2>Frequently Asked Questions</h2>
+    {faqs.map((faq) => (
+      <div class="faq-item">
+        <h3>{faq.question}</h3>
+        <p set:html={faq.answer} />
+      </div>
+    ))}
+  </article>
+
+  <article class="article-section">
+    <h2>Sources &amp; Methodology</h2>
 
     <p>
       Activity classifications and MET values are based on the
@@ -626,271 +1032,60 @@ import RelatedTools from '../../../components/RelatedTools.astro';
     </p>
   </article>
 
-  <article class="article-section">
-    <h2>Frequently Asked Questions</h2>
-
-    <div class="faq-item">
-      <h3>
-        Why does my Apple Watch show different calories than this calculator?
-      </h3>
-      <p>
-        A smartwatch and a MET-based calculator may use different inputs and
-        algorithms. A wearable may incorporate heart rate, movement, GPS,
-        activity type, and personal characteristics, while this calculator
-        uses body weight, duration, and a standardized MET estimate.
-      </p>
-    </div>
-
-    <div class="faq-item">
-      <h3>Should I eat back the calories I burn from exercise?</h3>
-      <p>
-        Not necessarily. Exercise-calorie estimates contain uncertainty, so
-        automatically eating back every reported calorie can make your actual
-        intake higher than intended. Use your overall calorie target and
-        monitor body-weight and performance trends over time.
-      </p>
-    </div>
-
-    <div class="faq-item">
-      <h3>Does weightlifting cause an afterburn effect (EPOC)?</h3>
-      <p>
-        Resistance exercise can increase oxygen consumption and energy
-        expenditure after exercise, commonly referred to as excess post-exercise
-        oxygen consumption or EPOC. This calculator does not add a separate
-        EPOC adjustment to its displayed result.
-      </p>
-    </div>
-
-    <div class="faq-item">
-      <h3>Does sweating more mean I burned more calories?</h3>
-      <p>
-        Not necessarily. Sweating is primarily a thermoregulatory response and
-        can be affected by temperature, humidity, clothing, hydration, and
-        individual differences. Sweat loss should not be used as a direct
-        measure of calories burned.
-      </p>
-    </div>
-
-    <div class="faq-item">
-      <h3>How accurate are MET-based calorie estimates?</h3>
-      <p>
-        MET-based calculations provide standardized estimates rather than
-        direct measurements of individual energy expenditure. Accuracy can vary
-        with activity intensity, body weight, exercise technique, fitness,
-        rest periods, and other individual factors.
-      </p>
-    </div>
-
-    <div class="faq-item">
-      <h3>
-        Do heavier people burn more calories during the same activity?
-      </h3>
-      <p>
-        For the same activity classification and duration, the MET calculation
-        generally produces a higher estimated calorie expenditure at a higher
-        body weight because the calculation scales with body mass.
-      </p>
-    </div>
-  </article>
-
   <RelatedTools currentToolId="calories-burned-calculator" />
 
-  <script>
-    let unit = "lb";
-
-    const unitLb = document.getElementById("unit-lb");
-    const unitKg = document.getElementById("unit-kg");
-
-    const weightInput =
-      document.getElementById("weight") as HTMLInputElement | null;
-
-    const activityInput =
-      document.getElementById("activity") as HTMLSelectElement | null;
-
-    const durationInput =
-      document.getElementById("duration") as HTMLInputElement | null;
-
-    const durationUnitInput =
-      document.getElementById("duration-unit") as HTMLSelectElement | null;
-
-    const calcBtn = document.getElementById("calc-btn");
-
-    const resultBox = document.getElementById("result-box");
-    const resultTotal = document.getElementById("result-total");
-    const resultActive = document.getElementById("result-active");
-    const resultKcalMinute = document.getElementById("result-kcal-minute");
-    const resultMet = document.getElementById("result-met");
-    const realityText = document.getElementById("reality-text");
-
-    if (unitLb) {
-      unitLb.addEventListener("click", () => setUnit("lb"));
-    }
-
-    if (unitKg) {
-      unitKg.addEventListener("click", () => setUnit("kg"));
-    }
-
-    function setUnit(newUnit: string) {
-      if (newUnit === unit) return;
-
-      if (weightInput) {
-        const currentValue = parseFloat(weightInput.value);
-
-        if (Number.isFinite(currentValue) && currentValue > 0) {
-          weightInput.value =
-            newUnit === "kg"
-              ? (currentValue / 2.2046226218).toFixed(1)
-              : (currentValue * 2.2046226218).toFixed(1);
-        }
-      }
-
-      unit = newUnit;
-
-      if (unitLb) {
-        unitLb.classList.toggle("active", unit === "lb");
-        unitLb.setAttribute("aria-pressed", String(unit === "lb"));
-      }
-
-      if (unitKg) {
-        unitKg.classList.toggle("active", unit === "kg");
-        unitKg.setAttribute("aria-pressed", String(unit === "kg"));
-      }
-    }
-
-    function showError(message: string) {
-      alert(message);
-    }
-
-    function formatNumber(value: number, decimals = 0): string {
-      return value.toLocaleString(undefined, {
-        minimumFractionDigits: decimals,
-        maximumFractionDigits: decimals
-      });
-    }
-
-    if (calcBtn) {
-      calcBtn.addEventListener("click", () => {
-        if (
-          !weightInput ||
-          !activityInput ||
-          !durationInput ||
-          !durationUnitInput
-        ) {
-          return;
-        }
-
-        const inputWeight = parseFloat(weightInput.value);
-        const met = parseFloat(activityInput.value);
-        const durationValue = parseFloat(durationInput.value);
-        const durationUnit = durationUnitInput.value;
-
-        if (
-          !Number.isFinite(inputWeight) ||
-          inputWeight <= 0 ||
-          !Number.isFinite(met) ||
-          met <= 0 ||
-          !Number.isFinite(durationValue) ||
-          durationValue <= 0
-        ) {
-          showError(
-            "Please enter a valid body weight, activity, and workout duration."
-          );
-          return;
-        }
-
-        const weightKg =
-          unit === "lb"
-            ? inputWeight / 2.2046226218
-            : inputWeight;
-
-        if (weightKg < 20 || weightKg > 350) {
-          showError(
-            "Please enter a body weight between 20 and 350 kg (44 and 772 lb)."
-          );
-          return;
-        }
-
-        const durationMinutes =
-          durationUnit === "hours"
-            ? durationValue * 60
-            : durationValue;
-
-        if (
-          !Number.isFinite(durationMinutes) ||
-          durationMinutes <= 0 ||
-          durationMinutes > 1440
-        ) {
-          showError(
-            "Please enter a workout duration between 1 minute and 24 hours."
-          );
-          return;
-        }
-
-        const caloriesPerMinute =
-          (met * 3.5 * weightKg) / 200;
-
-        const totalCalories =
-          caloriesPerMinute * durationMinutes;
-
-        const activeCaloriesPerMinute =
-          (Math.max(met - 1, 0) * 3.5 * weightKg) / 200;
-
-        const totalActiveCalories =
-          activeCaloriesPerMinute * durationMinutes;
-
-        if (
-          !Number.isFinite(totalCalories) ||
-          !Number.isFinite(totalActiveCalories) ||
-          totalCalories <= 0
-        ) {
-          showError(
-            "This combination of inputs did not produce a valid estimate. Please try different values."
-          );
-          return;
-        }
-
-        if (resultTotal) {
-          resultTotal.textContent =
-            `${formatNumber(Math.round(totalCalories))} kcal`;
-        }
-
-        if (resultActive) {
-          resultActive.textContent =
-            `${formatNumber(Math.round(totalActiveCalories))} kcal`;
-        }
-
-        if (resultKcalMinute) {
-          resultKcalMinute.textContent =
-            formatNumber(caloriesPerMinute, 2);
-        }
-
-        if (resultMet) {
-          resultMet.textContent =
-            formatNumber(met, 1);
-        }
-
-        if (realityText) {
-          const selectedActivity =
-            activityInput.options[activityInput.selectedIndex]?.text ||
-            "this activity";
-
-          if (met >= 5.8) {
-            realityText.textContent =
-              `For ${selectedActivity.toLowerCase()}, the selected MET represents a relatively vigorous activity level. If your session contains long rest periods or substantial setup time, your actual average energy expenditure across the full gym visit may be lower than this continuous-activity estimate.`;
-          } else {
-            realityText.textContent =
-              `This estimate assumes the selected activity is performed at approximately the selected intensity for the full duration. During a real gym session, rest periods, setup time, changing weights, walking between equipment, and conversation can reduce continuous exercise time.`;
-          }
-        }
-
-        if (resultBox) {
-          resultBox.classList.add("show");
-        }
-      });
-    }
-  </script>
-
   <style>
+    .field-help {
+      margin: 7px 0 0;
+      color: var(--text-muted);
+      font-size: 0.82rem;
+      line-height: 1.5;
+    }
+
+    .quick-answer {
+      background: var(--surface);
+      border-left: 4px solid var(--accent);
+      border-radius: 6px;
+      padding: 16px 18px;
+      margin: 0 0 24px;
+    }
+    .quick-answer p {
+      margin: 0;
+      color: #c7cbd2;
+      font-size: 0.92rem;
+      line-height: 1.6;
+    }
+    .quick-answer strong { color: var(--accent); }
+    .quick-answer code {
+      background: var(--surface-2);
+      padding: 2px 5px;
+      border-radius: 4px;
+      font-size: 0.86em;
+    }
+
+    .input-error {
+      margin: 12px 0 0;
+      padding: 10px 12px;
+      border: 1px solid #dc2626;
+      border-radius: 8px;
+      background: rgba(220, 38, 38, 0.08);
+      color: var(--text);
+      line-height: 1.45;
+      font-size: 0.92rem;
+    }
+
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+
     .duration-row {
       display: grid;
       grid-template-columns: 1fr 150px;
@@ -950,6 +1145,39 @@ import RelatedTools from '../../../components/RelatedTools.astro';
       font-size: 0.82rem;
     }
 
+    .fat-loss-result {
+      margin-bottom: 20px;
+      padding: 14px 16px;
+      border: 1px solid var(--accent);
+      border-radius: 12px;
+      background: rgba(255, 91, 46, 0.06);
+      text-align: center;
+    }
+
+    .fat-loss-label {
+      display: block;
+      color: var(--text-muted);
+      font-size: 0.82rem;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+
+    .fat-loss-result strong {
+      display: block;
+      font-size: 1.25rem;
+      color: var(--accent);
+      font-weight: 800;
+    }
+
+    .fat-loss-note {
+      margin: 8px 0 0;
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
     .reality-check {
       padding: 16px;
       border-left: 4px solid var(--accent);
@@ -974,18 +1202,284 @@ import RelatedTools from '../../../components/RelatedTools.astro';
       color: var(--text-muted);
     }
 
+    .calc-note {
+      color: var(--text-muted);
+      font-size: 0.84rem;
+      line-height: 1.6;
+      margin: 10px 0;
+    }
+
+    .result-table caption {
+      text-align: left;
+      color: var(--text-muted);
+      font-size: 0.84rem;
+      padding: 0 0 8px;
+    }
+
+    .article-section ul {
+      color: #c7cbd2;
+      font-size: 0.95rem;
+      padding-left: 20px;
+      margin: 12px 0;
+    }
+
+    .article-section ul li {
+      margin-bottom: 6px;
+    }
+
     @media (max-width: 600px) {
       .duration-row {
         grid-template-columns: 1fr;
       }
-
       .result-grid {
         grid-template-columns: 1fr;
       }
-
       .result-details {
         grid-template-columns: 1fr;
       }
     }
   </style>
+
+  <script>
+    type Unit = 'lb' | 'kg';
+
+    let unit: Unit = 'lb';
+
+    // Canonical metric value — preserved across unit toggles to avoid
+    // cumulative rounding loss from repeated conversions.
+    let preservedKg: number | null = null;
+
+    const LB_PER_KG = 2.2046226218;
+
+    const unitLb = document.getElementById('unit-lb');
+    const unitKg = document.getElementById('unit-kg');
+
+    const weightInput = document.getElementById('weight') as HTMLInputElement | null;
+    const weightLabel = document.getElementById('weight-label');
+    const weightHelp = document.getElementById('weight-help');
+
+    const activityInput = document.getElementById('activity') as HTMLSelectElement | null;
+    const durationInput = document.getElementById('duration') as HTMLInputElement | null;
+    const durationUnitInput = document.getElementById('duration-unit') as HTMLSelectElement | null;
+
+    const calcBtn = document.getElementById('calc-btn');
+    const calcError = document.getElementById('calc-error');
+
+    const resultBox = document.getElementById('result-box');
+    const resultTotal = document.getElementById('result-total');
+    const resultActive = document.getElementById('result-active');
+    const resultKcalMinute = document.getElementById('result-kcal-minute');
+    const resultMet = document.getElementById('result-met');
+    const resultFatLoss = document.getElementById('result-fat-loss');
+    const realityText = document.getElementById('reality-text');
+    const resultAnnouncement = document.getElementById('result-announcement');
+
+    const round = (value: number, decimals = 1) => {
+      const factor = Math.pow(10, decimals);
+      return Math.round(value * factor) / factor;
+    };
+
+    // ---------- Preserved value sync ----------
+
+    function syncPreservedWeight() {
+      if (!weightInput) return;
+      const raw = weightInput.value.trim();
+      if (raw === '') { preservedKg = null; return; }
+      const value = Number(raw);
+      if (!Number.isFinite(value) || value <= 0) { preservedKg = null; return; }
+      preservedKg = unit === 'lb' ? value / LB_PER_KG : value;
+    }
+
+    // ---------- UI state ----------
+
+    function resetResult() {
+      clearError();
+      if (resultBox) {
+        resultBox.hidden = true;
+        resultBox.classList.remove('show');
+      }
+      if (resultAnnouncement) resultAnnouncement.textContent = '';
+    }
+
+    function setUnit(next: Unit) {
+      if (next === unit) return;
+
+      if (preservedKg !== null && preservedKg > 0 && weightInput) {
+        weightInput.value = next === 'lb'
+          ? (preservedKg * LB_PER_KG).toFixed(1)
+          : preservedKg.toFixed(1);
+      }
+
+      unit = next;
+      updateUnitUI();
+      resetResult();
+    }
+
+    function updateUnitUI() {
+      if (unitLb) {
+        unitLb.classList.toggle('active', unit === 'lb');
+        unitLb.setAttribute('aria-pressed', String(unit === 'lb'));
+      }
+      if (unitKg) {
+        unitKg.classList.toggle('active', unit === 'kg');
+        unitKg.setAttribute('aria-pressed', String(unit === 'kg'));
+      }
+
+      if (weightLabel) {
+        weightLabel.textContent = unit === 'lb' ? 'Body weight (lb)' : 'Body weight (kg)';
+      }
+
+      if (weightInput) {
+        weightInput.placeholder = unit === 'lb' ? 'e.g. 180' : 'e.g. 82';
+        weightInput.min = unit === 'lb' ? '44' : '20';
+        weightInput.max = unit === 'lb' ? '772' : '350';
+      }
+
+      if (weightHelp) {
+        weightHelp.textContent = unit === 'lb'
+          ? 'Between 44 lb and 772 lb (approximately 20–350 kg).'
+          : 'Between 20 kg and 350 kg (approximately 44–772 lb).';
+      }
+    }
+
+    function showError(message: string) {
+      if (!calcError) return;
+      calcError.textContent = message;
+      calcError.hidden = false;
+      if (resultBox) {
+        resultBox.hidden = true;
+        resultBox.classList.remove('show');
+      }
+    }
+
+    function clearError() {
+      if (!calcError) return;
+      calcError.textContent = '';
+      calcError.hidden = true;
+    }
+
+    function formatNumber(value: number, decimals = 0): string {
+      return value.toLocaleString('en-US', {
+        minimumFractionDigits: decimals,
+        maximumFractionDigits: decimals,
+      });
+    }
+
+    // ---------- Event listeners ----------
+
+    unitLb?.addEventListener('click', () => setUnit('lb'));
+    unitKg?.addEventListener('click', () => setUnit('kg'));
+
+    weightInput?.addEventListener('input', () => {
+      syncPreservedWeight();
+      resetResult();
+    });
+
+    activityInput?.addEventListener('change', resetResult);
+    durationInput?.addEventListener('input', resetResult);
+    durationUnitInput?.addEventListener('change', resetResult);
+
+    // ---------- Calculate ----------
+
+    calcBtn?.addEventListener('click', () => {
+      clearError();
+
+      if (preservedKg === null) syncPreservedWeight();
+
+      if (!weightInput || !activityInput || !durationInput || !durationUnitInput) {
+        return;
+      }
+
+      if (preservedKg === null || preservedKg < 20 || preservedKg > 350) {
+        showError('Please enter a body weight between 20 and 350 kg (44 and 772 lb).');
+        return;
+      }
+
+      const met = Number(activityInput.value);
+      const durationValue = Number(durationInput.value);
+      const durationUnit = durationUnitInput.value;
+
+      if (!Number.isFinite(met) || met <= 0) {
+        showError('Please select a valid activity.');
+        return;
+      }
+
+      if (!Number.isFinite(durationValue) || durationValue <= 0) {
+        showError('Please enter a valid workout duration.');
+        return;
+      }
+
+      const durationMinutes = durationUnit === 'hours' ? durationValue * 60 : durationValue;
+
+      if (!Number.isFinite(durationMinutes) || durationMinutes < 1 || durationMinutes > 1440) {
+  showError('Please enter a workout duration between 1 minute and 24 hours.');
+  return;
+}
+
+      const weightKg = preservedKg;
+
+      const caloriesPerMinute = (met * 3.5 * weightKg) / 200;
+      const totalCalories = caloriesPerMinute * durationMinutes;
+
+      const activeCaloriesPerMinute = (Math.max(met - 1, 0) * 3.5 * weightKg) / 200;
+      const totalActiveCalories = activeCaloriesPerMinute * durationMinutes;
+
+      if (!Number.isFinite(totalCalories) || totalCalories <= 0) {
+        showError('This combination of inputs did not produce a valid estimate. Please try different values.');
+        return;
+      }
+
+      // Fat loss equivalent — based on exercise-attributable (active) calories,
+// not total calories including resting metabolism.
+// 1 kg body fat ≈ 7,700 kcal; 1 lb body fat ≈ 3,500 kcal
+const fatLossKg = totalActiveCalories / 7700;
+const fatLossLb = totalActiveCalories / 3500;
+const fatLossGrams = (totalActiveCalories / 7700) * 1000;
+
+if (resultTotal) {
+        resultTotal.textContent = `${formatNumber(Math.round(totalCalories))} kcal`;
+      }
+      if (resultActive) {
+        resultActive.textContent = `${formatNumber(Math.round(totalActiveCalories))} kcal`;
+      }
+      if (resultKcalMinute) {
+        resultKcalMinute.textContent = formatNumber(caloriesPerMinute, 2);
+      }
+      if (resultMet) {
+        resultMet.textContent = formatNumber(met, 1);
+      }
+
+      if (resultFatLoss) {
+        if (unit === 'lb') {
+          resultFatLoss.textContent = `≈ ${round(fatLossGrams, 1)} g fat (≈ ${round(fatLossLb, 3)} lb)`;
+        } else {
+          resultFatLoss.textContent = `≈ ${round(fatLossGrams, 1)} g fat (≈ ${round(fatLossKg, 3)} kg)`;
+        }
+      }
+
+      if (realityText) {
+        const selectedActivity =
+          activityInput.options[activityInput.selectedIndex]?.text || 'this activity';
+
+        if (met >= 5.8) {
+          realityText.textContent = `For ${selectedActivity.toLowerCase()}, the selected MET represents a relatively vigorous activity level. If your session contains long rest periods or substantial setup time, your actual average energy expenditure across the full gym visit may be lower than this continuous-activity estimate.`;
+        } else {
+          realityText.textContent = 'This estimate assumes the selected activity is performed at approximately the selected intensity for the full duration. During a real gym session, rest periods, setup time, changing weights, walking between equipment, and conversation can reduce continuous exercise time.';
+        }
+      }
+
+      if (resultBox) {
+        resultBox.hidden = false;
+        resultBox.classList.add('show');
+      }
+
+      if (resultAnnouncement) {
+        resultAnnouncement.textContent = `Estimated total calories: ${formatNumber(Math.round(totalCalories))} kcal. Active calories: ${formatNumber(Math.round(totalActiveCalories))} kcal. Rate: ${formatNumber(caloriesPerMinute, 2)} kcal per minute at ${formatNumber(met, 1)} MET. Equivalent fat loss: approximately ${round(fatLossGrams, 1)} grams.`;
+      }
+    });
+
+    // ---------- Initialize ----------
+
+    updateUnitUI();
+  </script>
 </Base>
