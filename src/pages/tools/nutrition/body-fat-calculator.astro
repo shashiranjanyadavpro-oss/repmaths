@@ -10,9 +10,13 @@ const breadcrumbs = [
 ];
 
 /*
- * NOTE: FAQ answers may include HTML links for the visible page (rendered via
- * set:html). Base.astro strips HTML before injecting into FAQPage JSON-LD.
- * Keep links to internal tools/authoritative sources only — no inline styles.
+ * FAQ answers are passed to Base.astro's `faqs` prop.
+ * HTML <a> tags inside answers render on the visible page via set:html and
+ * also flow into the FAQPage JSON-LD schema. Per Google's structured data
+ * documentation, <a> tags are explicitly allowed inside acceptedAnswer.text.
+ * Bing also supports FAQ rich results with HTML links. Keep links limited to
+ * internal tools and authoritative sources — no inline styles, no promotional
+ * copy.
  */
 const faqs = [
   {
@@ -81,11 +85,11 @@ const appSchema = {
   '@context': 'https://schema.org',
   '@type': 'WebApplication',
   '@id': 'https://repmaths.com/tools/nutrition/body-fat-calculator/#calculator',
-  name: 'Body Fat Calculator (US Navy Method)',
+  name: 'Body Fat Calculator (US Navy & BMI Method)',
   alternateName: 'Body Fat Percentage Calculator',
   url: 'https://repmaths.com/tools/nutrition/body-fat-calculator/',
   description:
-    'Free body fat percentage calculator using the US Navy tape-measure method. Enter neck, waist, and height (plus hip for women) in inches or cm for an instant estimate.',
+    'Free body fat percentage calculator using the US Navy tape-measure method or BMI estimate. Enter neck, waist, height, and optional weight in inches or cm.',
   applicationCategory: 'HealthApplication',
   operatingSystem: 'Any',
   browserRequirements: 'Requires JavaScript',
@@ -109,8 +113,8 @@ const jsonLdSafe = (value: unknown) =>
 ---
 
 <Base
-  title="Body Fat Calculator (US Navy Method) — Men & Women"
-  description="Free body fat percentage calculator using the US Navy tape-measure method. Enter neck, waist, and height (plus hip for women) in inches or cm for an instant estimate."
+  title="Body Fat Calculator (Navy & BMI Method) — Men & Women"
+  description="Free body fat percentage calculator using the US Navy tape-measure method or BMI estimate. Enter neck, waist, height, and optional weight in inches or cm."
   breadcrumbs={breadcrumbs}
   faqs={faqs}
 >
@@ -122,12 +126,12 @@ const jsonLdSafe = (value: unknown) =>
   <div class="tool-page">
     <header class="tool-header">
       <p class="eyebrow">Nutrition &amp; Body Composition</p>
-      <h1>Body Fat Calculator (US Navy Method)</h1>
+      <h1>Body Fat Calculator (US Navy &amp; BMI Method)</h1>
 
       <p class="intro">
         Estimate your body fat percentage from height and tape-measure readings
-        using the U.S. Navy circumference method. You can also use the BMI-based
-        estimate if you don't have a tape measure.
+        using the U.S. Navy circumference method, or use the BMI-based estimate
+        if you don't have a tape measure.
       </p>
     </header>
 
@@ -415,16 +419,24 @@ const jsonLdSafe = (value: unknown) =>
 
       <p>
         Body-fat percentage categories vary by organization, age, sex, and
-        population. The following age-adjusted ranges are based on
-        <a href="https://pubmed.ncbi.nlm.nih.gov/10966886/" target="_blank" rel="noopener noreferrer">Gallagher et al. (2000)</a>,
-        a peer-reviewed analysis published in the <em>American Journal of
-        Clinical Nutrition</em> that proposed healthy body fat ranges based on
-        BMI cutoffs using the four-compartment model.
+        population. The two tables below come from different reference
+        sources, so they should be read together rather than treated as one
+        single standard.
+      </p>
+
+      <h3>Common Category Reference Ranges</h3>
+
+      <p>
+        The first table reflects commonly cited fitness-industry category
+        labels. Different organizations (such as the American Council on
+        Exercise and the American College of Sports Medicine) draw the
+        boundaries slightly differently. These are descriptive categories
+        rather than strict medical thresholds.
       </p>
 
       <div class="comparison-table-wrap">
         <table>
-          <caption>Category reference ranges for non-athlete adults</caption>
+          <caption>Commonly cited category ranges for non-athlete adults</caption>
           <thead>
             <tr>
               <th scope="col">Category</th>
@@ -462,12 +474,14 @@ const jsonLdSafe = (value: unknown) =>
         </table>
       </div>
 
-      <h3>Age-Adjusted Healthy Ranges</h3>
+      <h3>Age-Adjusted Healthy Ranges (Gallagher et al., 2000)</h3>
 
       <p>
-        Gallagher et al. (2000) proposed the following provisional healthy
-        body fat ranges for white adults, derived from BMI-based predictions
-        using a four-compartment model.
+        The second table comes from
+        <a href="https://pubmed.ncbi.nlm.nih.gov/10966886/" target="_blank" rel="noopener noreferrer">Gallagher et al. (2000)</a>,
+        a peer-reviewed analysis published in the <em>American Journal of
+        Clinical Nutrition</em> that proposed healthy body fat ranges based on
+        BMI cutoffs using the four-compartment model.
       </p>
 
       <div class="comparison-table-wrap">
@@ -657,11 +671,11 @@ const jsonLdSafe = (value: unknown) =>
         </li>
         <li>
           <strong>Step 3 — Solve:</strong>
-          <code>log₁₀(19) ≈ 1.279; log₁₀(70) ≈ 1.845</code>
+          <code>log₁₀(19) ≈ 1.27875; log₁₀(70) ≈ 1.84510</code>
           <br />
-          <code>BF% ≈ 86.010 × 1.279 − 70.041 × 1.845 + 36.76</code>
+          <code>BF% ≈ 86.010 × 1.27875 − 70.041 × 1.84510 + 36.76</code>
           <br />
-          <code>BF% ≈ 110.0 − 129.2 + 36.76 ≈ 17.6%</code>
+          <code>BF% ≈ 109.99 − 129.23 + 36.76 ≈ 17.5%</code>
         </li>
       </ol>
 
@@ -1180,8 +1194,22 @@ const jsonLdSafe = (value: unknown) =>
     let preservedHipIn: number | null = null;
     let preservedWeightLb: number | null = null;
 
+    // Errors are only shown when user explicitly triggers calculation
+    // (Enter key or blur). Silent mode avoids red-flash while typing.
+    let showErrors = false;
+
+    // Debounce timer for smooth auto-calculation while typing
+    let calculateTimeout: number | null = null;
+    const DEBOUNCE_MS = 300;
+
     const IN_TO_CM = 2.54;
     const LB_TO_KG = 0.45359237;
+
+    // Navy-method optional weight: uses the same numeric range as the
+    // imperial HTML limits (66–660 lb). The metric HTML max is set to 299 kg
+    // (≈ 659.15 lb) so metric inputs also fall within this range.
+    const OPTIONAL_WEIGHT_MIN_LB = 66;
+    const OPTIONAL_WEIGHT_MAX_LB = 660;
 
     const toInches = (v: number, u: UnitSystem) => (u === "metric" ? v / IN_TO_CM : v);
     const fromInches = (v: number, u: UnitSystem) => (u === "metric" ? v * IN_TO_CM : v);
@@ -1209,6 +1237,18 @@ const jsonLdSafe = (value: unknown) =>
       if (resultAnnouncement) resultAnnouncement.textContent = "";
     }
 
+    function silentFail() {
+      hideResults();
+      errorEl.setAttribute("hidden", "");
+      warningEl.setAttribute("hidden", "");
+      if (resultAnnouncement) resultAnnouncement.textContent = "";
+    }
+
+    function fail(msg: string) {
+      if (showErrors) setError(msg);
+      else silentFail();
+    }
+
     function clearMessages() {
       errorEl.setAttribute("hidden", "");
       warningEl.setAttribute("hidden", "");
@@ -1219,11 +1259,59 @@ const jsonLdSafe = (value: unknown) =>
       clearMessages();
     }
 
+    // ---------- Debounce helpers ----------
+    function cancelScheduledCalculate() {
+      if (calculateTimeout !== null) {
+        clearTimeout(calculateTimeout);
+        calculateTimeout = null;
+      }
+    }
+
+    function scheduleCalculate() {
+      cancelScheduledCalculate();
+      calculateTimeout = window.setTimeout(() => {
+        calculateTimeout = null;
+        if (areRequiredFieldsFilled()) calculate();
+      }, DEBOUNCE_MS);
+    }
+
+    function immediateCalculate() {
+      cancelScheduledCalculate();
+      if (areRequiredFieldsFilled()) calculate();
+    }
+
+    // Only calculate when all required fields have values
+    function areRequiredFieldsFilled(): boolean {
+      if (method === "navy") {
+        if (
+          heightEl.value.trim() === "" ||
+          neckEl.value.trim() === "" ||
+          waistEl.value.trim() === ""
+        ) return false;
+        if (sex === "female" && hipEl.value.trim() === "") return false;
+        return true;
+      } else {
+        if (
+          heightEl.value.trim() === "" ||
+          weightEl.value.trim() === "" ||
+          ageEl.value.trim() === ""
+        ) return false;
+        return true;
+      }
+    }
+
     // ---------- Preserved-value sync ----------
+    // NOTE: Only called from user input listeners, never from calculate() or
+    // unit toggle. This prevents precision loss from repeated round-trips.
+    //
+    // Scientific notation (e.g., "1e2") is rejected here so that a subsequent
+    // unit toggle cannot silently convert it into a plain number and bypass
+    // the scientific-notation validation in calculate().
     function syncPreservedNavy() {
       const read = (el: HTMLInputElement): number | null => {
         const raw = el.value.trim();
         if (raw === "") return null;
+        if (raw.toLowerCase().includes("e")) return null;
         const v = Number(raw);
         if (!Number.isFinite(v) || v <= 0) return null;
         return toInches(v, unitSystem);
@@ -1241,6 +1329,11 @@ const jsonLdSafe = (value: unknown) =>
         preservedWeightLb = null;
         return;
       }
+      // Reject scientific notation — see note above syncPreservedNavy().
+      if (raw.toLowerCase().includes("e")) {
+        preservedWeightLb = null;
+        return;
+      }
       const v = Number(raw);
       if (!Number.isFinite(v) || v <= 0) {
         preservedWeightLb = null;
@@ -1253,8 +1346,14 @@ const jsonLdSafe = (value: unknown) =>
     function setUnitSystem(next: UnitSystem) {
       if (next === unitSystem) return;
 
+      // Convert displayed values using preserved canonical values. If the
+      // field had an invalid value (preserved === null), clear it instead
+      // of leaving a stale number next to the new unit label.
       const convertField = (el: HTMLInputElement, preserved: number | null) => {
-        if (preserved === null || preserved <= 0) return;
+        if (preserved === null || preserved <= 0) {
+          el.value = "";
+          return;
+        }
         el.value = fromInches(preserved, next).toFixed(1);
       };
 
@@ -1265,6 +1364,8 @@ const jsonLdSafe = (value: unknown) =>
 
       if (preservedWeightLb !== null && preservedWeightLb > 0) {
         weightEl.value = fromLb(preservedWeightLb, next).toFixed(1);
+      } else {
+        if (weightEl.value.trim() !== "") weightEl.value = "";
       }
 
       unitSystem = next;
@@ -1275,8 +1376,9 @@ const jsonLdSafe = (value: unknown) =>
 
       updateLabels();
       updateInputRanges();
+      showErrors = false;
       resetResult();
-      calculate();
+      immediateCalculate();
     }
 
     // ---------- Sex toggle ----------
@@ -1293,8 +1395,9 @@ const jsonLdSafe = (value: unknown) =>
       }
 
       updateLabels();
+      showErrors = false;
       resetResult();
-      calculate();
+      immediateCalculate();
     }
 
     // ---------- Method toggle ----------
@@ -1314,8 +1417,9 @@ const jsonLdSafe = (value: unknown) =>
 
       updateLabels();
       updateInputRanges();
+      showErrors = false;
       resetResult();
-      calculate();
+      immediateCalculate();
     }
 
     // ---------- Labels ----------
@@ -1351,6 +1455,9 @@ const jsonLdSafe = (value: unknown) =>
     }
 
     // ---------- Input ranges per unit system ----------
+    // Metric weight max is 299 kg (≈659.15 lb) so both HTML ranges fall inside
+    // the JS validation range of 66–660 lb, keeping displayed limits and
+    // internal validation consistent.
     function updateInputRanges() {
       if (unitSystem === "imperial") {
         heightEl.min = "48";
@@ -1373,11 +1480,12 @@ const jsonLdSafe = (value: unknown) =>
         hipEl.min = "51";
         hipEl.max = "229";
         weightEl.min = "30";
-        weightEl.max = "300";
+        weightEl.max = "299";
       }
     }
 
     // ---------- Category classification ----------
+    // Uses raw bf value (not rounded) to avoid boundary misclassification.
     function getCategory(bf: number, s: Sex): string {
       if (s === "male") {
         if (bf < 6) return "Essential fat range";
@@ -1394,13 +1502,31 @@ const jsonLdSafe = (value: unknown) =>
       }
     }
 
+    // Navy-mode optional weight — must be within expected range for mass calc
+    function isOptionalWeightValid(): boolean {
+      if (preservedWeightLb === null) return false;
+      return (
+        preservedWeightLb >= OPTIONAL_WEIGHT_MIN_LB &&
+        preservedWeightLb <= OPTIONAL_WEIGHT_MAX_LB
+      );
+    }
+
     // ---------- Calculate ----------
     function calculate() {
       clearMessages();
 
-      const visibleNumericInputs = [heightEl, neckEl, waistEl, hipEl, weightEl, ageEl];
-      if (visibleNumericInputs.some(hasScientificNotation)) {
-        setError("Please enter numbers without scientific notation.");
+      // Only validate inputs relevant to the current method/sex.
+      const relevantInputs: HTMLInputElement[] = method === "navy"
+        ? [heightEl, neckEl, waistEl, ...(sex === "female" ? [hipEl] : [])]
+        : [heightEl, weightEl, ageEl];
+
+      // Weight is optional in Navy mode — check for scientific notation if filled
+      if (method === "navy" && weightEl.value.trim() !== "") {
+        relevantInputs.push(weightEl);
+      }
+
+      if (relevantInputs.some(hasScientificNotation)) {
+        fail("Please enter numbers without scientific notation.");
         return;
       }
 
@@ -1411,13 +1537,12 @@ const jsonLdSafe = (value: unknown) =>
           waistEl.value.trim() === "" ||
           (sex === "female" && hipEl.value.trim() === "")
         ) {
-          setError("Please fill in height, neck, waist" +
-            (sex === "female" ? ", and hip." : "."));
+          fail(
+            "Please fill in height, neck, waist" +
+              (sex === "female" ? ", and hip." : ".")
+          );
           return;
         }
-
-        syncPreservedNavy();
-        syncPreservedWeight();
 
         if (
           preservedHeightIn === null ||
@@ -1425,7 +1550,7 @@ const jsonLdSafe = (value: unknown) =>
           preservedWaistIn === null ||
           (sex === "female" && preservedHipIn === null)
         ) {
-          setError("Please enter valid measurements.");
+          fail("Please enter valid measurements.");
           return;
         }
 
@@ -1435,19 +1560,19 @@ const jsonLdSafe = (value: unknown) =>
         const hp = preservedHipIn ?? 0;
 
         if (h < 48 || h > 96) {
-          setError("Height is outside the calculator's expected adult range (4 ft – 8 ft / 122–244 cm).");
+          fail("Height is outside the calculator's expected adult range (4 ft – 8 ft / 122–244 cm).");
           return;
         }
         if (n < 8 || n > 30) {
-          setError("Neck measurement is outside the expected adult range.");
+          fail("Neck measurement is outside the expected adult range.");
           return;
         }
         if (w < 15 || w > 80) {
-          setError("Waist measurement is outside the expected adult range.");
+          fail("Waist measurement is outside the expected adult range.");
           return;
         }
         if (sex === "female" && (hp < 20 || hp > 90)) {
-          setError("Hip measurement is outside the expected adult range.");
+          fail("Hip measurement is outside the expected adult range.");
           return;
         }
 
@@ -1455,21 +1580,21 @@ const jsonLdSafe = (value: unknown) =>
         if (sex === "male") {
           const circ = w - n;
           if (circ <= 0) {
-            setError("Waist must be greater than neck measurement.");
+            fail("Waist must be greater than neck measurement.");
             return;
           }
           bf = 86.01 * Math.log10(circ) - 70.041 * Math.log10(h) + 36.76;
         } else {
           const circ = w + hp - n;
           if (circ <= 0) {
-            setError("Combined waist and hip must exceed neck measurement.");
+            fail("Combined waist and hip must exceed neck measurement.");
             return;
           }
           bf = 163.205 * Math.log10(circ) - 97.684 * Math.log10(h) - 78.387;
         }
 
         if (!Number.isFinite(bf) || bf < 0 || bf > 75) {
-          setError(
+          fail(
             "The measurements entered produced an unrealistic result. Please double-check your inputs."
           );
           return;
@@ -1482,21 +1607,18 @@ const jsonLdSafe = (value: unknown) =>
           weightEl.value.trim() === "" ||
           ageEl.value.trim() === ""
         ) {
-          setError("Please fill in height, weight, and age.");
+          fail("Please fill in height, weight, and age.");
           return;
         }
 
-        syncPreservedNavy();
-        syncPreservedWeight();
-
         if (preservedHeightIn === null || preservedWeightLb === null) {
-          setError("Please enter valid height and weight.");
+          fail("Please enter valid height and weight.");
           return;
         }
 
         const age = Number(ageEl.value);
         if (!Number.isFinite(age) || !Number.isInteger(age) || age < 18 || age > 90) {
-          setError("Enter a whole-number age between 18 and 90.");
+          fail("Enter a whole-number age between 18 and 90.");
           return;
         }
 
@@ -1504,11 +1626,11 @@ const jsonLdSafe = (value: unknown) =>
         const wLb = preservedWeightLb;
 
         if (hIn < 48 || hIn > 96) {
-          setError("Height is outside the calculator's expected adult range (4 ft – 8 ft / 122–244 cm).");
+          fail("Height is outside the calculator's expected adult range (4 ft – 8 ft / 122–244 cm).");
           return;
         }
         if (wLb < 66 || wLb > 660) {
-          setError("Weight is outside the calculator's expected adult range (66–660 lb / 30–300 kg).");
+          fail("Weight is outside the calculator's expected adult range (66–660 lb / 30–299 kg).");
           return;
         }
 
@@ -1517,7 +1639,7 @@ const jsonLdSafe = (value: unknown) =>
         const bf = 1.2 * bmi + 0.23 * age - 10.8 * sexFactor - 5.4;
 
         if (!Number.isFinite(bf) || bf < 0 || bf > 75) {
-          setError("The values entered produced an unrealistic result.");
+          fail("The values entered produced an unrealistic result.");
           return;
         }
 
@@ -1528,9 +1650,15 @@ const jsonLdSafe = (value: unknown) =>
     function displayResult(bf: number, s: Sex) {
       const rounded = round1(bf);
       resultBfEl.textContent = `${rounded}%`;
-      resultCategoryEl.textContent = getCategory(rounded, s);
+      // Use raw bf for category to avoid boundary misclassification
+      resultCategoryEl.textContent = getCategory(bf, s);
 
-      if (preservedWeightLb !== null && preservedWeightLb > 0) {
+      // Fat / lean mass breakdown — only when weight is present AND in range.
+      // Navy mode's weight is optional, so an out-of-range value silently
+      // disables the mass breakdown (no misleading numbers).
+      const weightUsable = isOptionalWeightValid();
+
+      if (weightUsable && preservedWeightLb !== null) {
         const fatLb = (bf / 100) * preservedWeightLb;
         const leanLb = preservedWeightLb - fatLb;
 
@@ -1553,11 +1681,11 @@ const jsonLdSafe = (value: unknown) =>
         massGrid.hidden = true;
       }
 
-      if (rounded < (s === "male" ? 5 : 13)) {
+      if (bf < (s === "male" ? 5 : 13)) {
         warningEl.textContent =
           "Your estimate is in or below the essential fat range. Very low body fat can carry health risks. This is not a recommended target without professional guidance.";
         warningEl.removeAttribute("hidden");
-      } else if (rounded >= (s === "male" ? 25 : 32)) {
+      } else if (bf >= (s === "male" ? 25 : 32)) {
         warningEl.textContent =
           "Your estimate falls in the obese range. Body fat percentage is an estimate, but if the result is consistent across methods, consider discussing health risks with a qualified professional.";
         warningEl.removeAttribute("hidden");
@@ -1565,11 +1693,11 @@ const jsonLdSafe = (value: unknown) =>
 
       if (resultAnnouncement) {
         const massLine =
-          preservedWeightLb !== null
+          weightUsable
             ? ` Fat mass: ${fatMassEl.textContent} ${fatMassUnitEl.textContent}. Lean mass: ${leanMassEl.textContent} ${leanMassUnitEl.textContent}.`
             : "";
         resultAnnouncement.textContent =
-          `Estimated body fat: ${rounded} percent. Category: ${getCategory(rounded, s)}.${massLine}`;
+          `Estimated body fat: ${rounded} percent. Category: ${getCategory(bf, s)}.${massLine}`;
       }
     }
 
@@ -1590,39 +1718,60 @@ const jsonLdSafe = (value: unknown) =>
       );
     });
 
+    // Input listeners — silent typing + debounced auto-calculation.
+    // Blur triggers immediate calculation with visible errors.
     [heightEl, neckEl, waistEl, hipEl].forEach((el) => {
       el.addEventListener("input", () => {
         syncPreservedNavy();
+        showErrors = false;
         resetResult();
-        calculate();
+        scheduleCalculate();
+      });
+      el.addEventListener("blur", () => {
+        showErrors = true;
+        immediateCalculate();
       });
     });
 
     weightEl.addEventListener("input", () => {
       syncPreservedWeight();
+      showErrors = false;
       resetResult();
-      calculate();
+      scheduleCalculate();
+    });
+    weightEl.addEventListener("blur", () => {
+      showErrors = true;
+      immediateCalculate();
     });
 
     ageEl.addEventListener("input", () => {
+      showErrors = false;
       resetResult();
-      calculate();
+      scheduleCalculate();
+    });
+    ageEl.addEventListener("blur", () => {
+      showErrors = true;
+      immediateCalculate();
     });
 
+    // Enter key → explicit calculation with errors
     document.querySelectorAll<HTMLInputElement>("input").forEach((el) => {
       el.addEventListener("keydown", (e) => {
         if (e.key === "Enter") {
           e.preventDefault();
-          calculate();
+          showErrors = true;
+          if (method === "navy") syncPreservedNavy();
+          syncPreservedWeight();
+          immediateCalculate();
         }
       });
     });
 
     // ---------- Init ----------
+    // Do NOT call calculate() on page load. Show blank state.
     updateLabels();
     updateInputRanges();
     syncPreservedNavy();
     syncPreservedWeight();
-    calculate();
   </script>
 </Base>
