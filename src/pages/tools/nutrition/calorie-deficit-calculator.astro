@@ -48,7 +48,7 @@ const faqs = [
   {
     question: 'Do you always lose a pound a week with a 500-calorie deficit?',
     answer:
-      '<strong>On paper, yes</strong> — 500 kcal × 7 days = 3,500 kcal, which is the traditional estimate for 1 lb of fat. <strong>In practice, no.</strong> Weight loss tends to slow as your body becomes lighter, because a smaller body burns fewer calories. This is called adaptive thermogenesis, and it is one of the main reasons real-world weight loss rarely follows a straight line.',
+      '<strong>On paper, yes</strong> — 500 kcal × 7 days = 3,500 kcal, which is the traditional estimate for 1 lb of fat. <strong>In practice, no.</strong> Weight loss tends to slow as your body becomes lighter, because a smaller body burns fewer calories. Some of this reduction is expected from having a lighter body, while additional reductions beyond those predicted by body-size changes are known as <strong>adaptive thermogenesis</strong>. This is one of the main reasons real-world weight loss rarely follows a straight line.',
   },
   {
     question: 'Should I eat back the calories I burn from exercise?',
@@ -143,7 +143,7 @@ const jsonLdSafe = (value: unknown) =>
       <div class="form-grid">
         <div class="field">
           <label for="sex">Sex</label>
-          <select id="sex">
+          <select id="sex" aria-describedby="error">
             <option value="male">Male</option>
             <option value="female">Female</option>
           </select>
@@ -152,25 +152,25 @@ const jsonLdSafe = (value: unknown) =>
         <div class="field">
           <label for="age">Age</label>
           <div class="input-with-unit">
-            <input id="age" type="number" min="18" max="90" value="30" step="1" inputmode="numeric" />
+            <input id="age" type="number" min="18" max="90" value="30" step="1" inputmode="numeric" aria-describedby="error" />
             <span>years</span>
           </div>
         </div>
 
         <div class="field">
-          <label>Weight</label>
+          <label for="weight">Weight</label>
           <div class="unit-toggle" role="group" aria-label="Weight unit">
             <button type="button" class="unit-btn active" data-weight-unit="lb">lb</button>
             <button type="button" class="unit-btn" data-weight-unit="kg">kg</button>
           </div>
           <div class="input-with-unit">
-            <input id="weight" type="number" min="66" max="660" value="180" step="0.1" inputmode="decimal" />
+            <input id="weight" type="number" min="66" max="660" value="180" step="0.1" inputmode="decimal" aria-describedby="error" />
             <span id="weight-unit-label">lb</span>
           </div>
         </div>
 
         <div class="field">
-          <label>Height</label>
+          <span class="field-label">Height</span>
           <div class="unit-toggle" role="group" aria-label="Height unit">
             <button type="button" class="unit-btn active" data-height-unit="ft">ft/in</button>
             <button type="button" class="unit-btn" data-height-unit="cm">cm</button>
@@ -178,24 +178,27 @@ const jsonLdSafe = (value: unknown) =>
 
           <div id="imperial-height" class="height-row">
             <div class="input-with-unit">
-              <input id="height-ft" type="number" min="4" max="8" value="5" step="1" inputmode="numeric" />
+              <label for="height-ft" class="sr-only">Height (feet)</label>
+              <input id="height-ft" type="number" min="4" max="8" value="5" step="1" inputmode="numeric" aria-describedby="error" />
               <span>ft</span>
             </div>
             <div class="input-with-unit">
-              <input id="height-in" type="number" min="0" max="11" value="10" step="1" inputmode="numeric" />
+              <label for="height-in" class="sr-only">Height (inches)</label>
+              <input id="height-in" type="number" min="0" max="11.9" value="10" step="0.1" inputmode="decimal" aria-describedby="error" />
               <span>in</span>
             </div>
           </div>
 
           <div id="metric-height" class="input-with-unit hidden">
-            <input id="height-cm" type="number" min="122" max="244" value="178" step="0.1" inputmode="decimal" />
+            <label for="height-cm" class="sr-only">Height (centimeters)</label>
+            <input id="height-cm" type="number" min="122" max="244" value="178" step="0.1" inputmode="decimal" aria-describedby="error" />
             <span>cm</span>
           </div>
         </div>
 
         <div class="field full">
           <label for="activity">Activity level</label>
-          <select id="activity">
+          <select id="activity" aria-describedby="error">
             <option value="1.2">Sedentary — little or no exercise</option>
             <option value="1.375">Lightly active — exercise 1–3 days/week</option>
             <option value="1.55" selected>Moderately active — exercise 3–5 days/week</option>
@@ -207,14 +210,14 @@ const jsonLdSafe = (value: unknown) =>
         <div class="field">
           <label for="goal-weight">Goal weight</label>
           <div class="input-with-unit">
-            <input id="goal-weight" type="number" min="66" max="660" value="160" step="0.1" inputmode="decimal" />
+            <input id="goal-weight" type="number" min="66" max="660" value="160" step="0.1" inputmode="decimal" aria-describedby="error" />
             <span id="goal-unit-label">lb</span>
           </div>
         </div>
 
         <div class="field">
           <label for="loss-rate">Weight-loss rate</label>
-          <select id="loss-rate">
+          <select id="loss-rate" aria-describedby="error">
             <option value="0.5">0.5 lb / week (0.23 kg)</option>
             <option value="1" selected>1 lb / week (0.45 kg)</option>
             <option value="1.5">1.5 lb / week (0.68 kg)</option>
@@ -630,20 +633,20 @@ const jsonLdSafe = (value: unknown) =>
       </p>
 
       <p>
-  Part of this reduction is expected: a lighter body naturally burns fewer
-  calories at rest and during movement. Beyond that, some people also
-  experience an additional metabolic adaptation — often called
-  <strong>adaptive thermogenesis</strong> — where energy expenditure drops
-  slightly more than predicted by changes in body weight alone.
-</p>
+        Part of this reduction is expected: a lighter body naturally burns fewer
+        calories at rest and during movement. Beyond that, some people also
+        experience an additional metabolic adaptation — often called
+        <strong>adaptive thermogenesis</strong> — where energy expenditure drops
+        slightly more than predicted by changes in body weight alone.
+      </p>
 
-<p>
-  Research on weight-loss programs, including work cited by the
-  <a href="https://www.niddk.nih.gov/health-information/weight-management/body-weight-planner" target="_blank" rel="noopener noreferrer">NIDDK Body Weight Planner</a>,
-  has shown that real-world weight loss tends to slow over time even when
-  calorie intake stays consistent. Recalculating periodically helps keep your
-  target aligned with your current body weight.
-</p>
+      <p>
+        Research on weight-loss programs, including work cited by the
+        <a href="https://www.niddk.nih.gov/health-information/weight-management/body-weight-planner" target="_blank" rel="noopener noreferrer">NIDDK Body Weight Planner</a>,
+        has shown that real-world weight loss tends to slow over time even when
+        calorie intake stays consistent. Recalculating periodically helps keep your
+        target aligned with your current body weight.
+      </p>
 
       <h3>When recalculating tends to help</h3>
       <ul>
@@ -825,7 +828,8 @@ const jsonLdSafe = (value: unknown) =>
     .field { min-width: 0; }
     .field.full { grid-column: 1 / -1; }
 
-    label {
+    label,
+    .field-label {
       display: block;
       margin-bottom: 8px;
       font-size: 0.9rem;
@@ -1196,6 +1200,10 @@ const jsonLdSafe = (value: unknown) =>
     const kgToLb = (kg: number) => kg * 2.2046226218;
     const lbToKg = (lb: number) => lb / 2.2046226218;
 
+    // Weight input range per unit (kg equivalent of 66–660 lb)
+    const WEIGHT_RANGE_LB = { min: 66, max: 660 };
+    const WEIGHT_RANGE_KG = { min: 30, max: 300 };
+
     function hideResults() {
       calorieTargetEl.textContent = "—";
       bmrEl.textContent = "—";
@@ -1233,30 +1241,40 @@ const jsonLdSafe = (value: unknown) =>
       return v.includes("e");
     }
 
+    // Allow decimal inches (0–11.9) so cm→ft/in conversion round-trips cleanly.
     function getHeightCm(): number | null {
-  if (heightUnit === "cm") {
-    if (heightCmEl.value.trim() === "") return null;
-    const cm = Number(heightCmEl.value);
-    return Number.isFinite(cm) && cm > 0 ? cm : null;
-  }
+      if (heightUnit === "cm") {
+        if (heightCmEl.value.trim() === "") return null;
+        const cm = Number(heightCmEl.value);
+        return Number.isFinite(cm) && cm > 0 ? cm : null;
+      }
 
-  const ftRaw = heightFtEl.value.trim();
-  const inRaw = heightInEl.value.trim();
+      const ftRaw = heightFtEl.value.trim();
+      const inRaw = heightInEl.value.trim();
 
-  // Both fields must be non-empty
-  if (ftRaw === "" || inRaw === "") return null;
+      // Both fields must be non-empty
+      if (ftRaw === "" || inRaw === "") return null;
 
-  const ft = Number(ftRaw);
-  const inches = Number(inRaw);
+      const ft = Number(ftRaw);
+      const inches = Number(inRaw);
 
-  if (!Number.isFinite(ft) || !Number.isFinite(inches)) return null;
+      if (!Number.isFinite(ft) || !Number.isFinite(inches)) return null;
 
-  // Individual validation: feet must be whole number 4-8, inches must be whole number 0-11
-  if (!Number.isInteger(ft) || ft < 4 || ft > 8) return null;
-  if (!Number.isInteger(inches) || inches < 0 || inches > 11) return null;
+      // Feet must be whole number 4–8; inches can be decimal 0–11.9
+      if (!Number.isInteger(ft) || ft < 4 || ft > 8) return null;
+      if (inches < 0 || inches >= 12) return null;
 
-  return ((ft * 12) + inches) * 2.54;
-}
+      return ((ft * 12) + inches) * 2.54;
+    }
+
+    // Keep HTML min/max attributes in sync with the active weight unit.
+    function updateWeightRangeAttributes() {
+      const range = weightUnit === "kg" ? WEIGHT_RANGE_KG : WEIGHT_RANGE_LB;
+      [weightEl, goalWeightEl].forEach((el) => {
+        el.min = String(range.min);
+        el.max = String(range.max);
+      });
+    }
 
     function syncPreservedWeight() {
       const rawWeight = Number(weightEl.value);
@@ -1283,10 +1301,10 @@ const jsonLdSafe = (value: unknown) =>
       }
     }
 
-    // Initialize preserved values from HTML defaults on page load.
     function initializePreservedValues() {
       syncPreservedWeight();
       syncPreservedHeight();
+      updateWeightRangeAttributes();
     }
 
     function calculate() {
@@ -1335,9 +1353,9 @@ const jsonLdSafe = (value: unknown) =>
       const weeklyLossLb = Number(lossRateEl.value);
 
       if (!Number.isFinite(age) || !Number.isInteger(age) || age < 18 || age > 90) {
-  setError("Enter a whole-number age between 18 and 90.");
-  return;
-}
+        setError("Enter a whole-number age between 18 and 90.");
+        return;
+      }
 
       if (!Number.isFinite(rawWeight) || rawWeight <= 0) {
         setError("Enter a valid current weight.");
@@ -1396,41 +1414,42 @@ const jsonLdSafe = (value: unknown) =>
       });
 
       // Only display calorie target as a number when it is a usable value (> 0)
-if (calorieTarget > 0) {
-  calorieTargetEl.textContent = `${round(calorieTarget).toLocaleString()}`;
-} else {
-  calorieTargetEl.textContent = "—";
-}
+      if (calorieTarget > 0) {
+        calorieTargetEl.textContent = `${round(calorieTarget).toLocaleString()}`;
+      } else {
+        calorieTargetEl.textContent = "—";
+      }
 
-bmrEl.textContent = `${round(bmr).toLocaleString()}`;
-tdeeEl.textContent = `${round(tdee).toLocaleString()}`;
-deficitEl.textContent = `${round(dailyDeficit).toLocaleString()}`;
-weeklyLossEl.textContent = `${weeklyLossLb.toFixed(1)}`;
+      bmrEl.textContent = `${round(bmr).toLocaleString()}`;
+      tdeeEl.textContent = `${round(tdee).toLocaleString()}`;
+      deficitEl.textContent = `${round(dailyDeficit).toLocaleString()}`;
+      weeklyLossEl.textContent = `${weeklyLossLb.toFixed(1)}`;
 
-if (calorieTarget > 0 && weeks > 0 && Number.isFinite(weeks)) {
-  timelineEl.textContent = `${weeks.toFixed(1)} weeks`;
-  timelineDetailEl.textContent =
-    `About ${Math.ceil(weeks)} weeks to lose approximately ${weightToLoseLb.toFixed(1)} lb (${(weightToLoseLb / 2.2046226218).toFixed(1)} kg) at the selected planning rate.`;
+      if (calorieTarget > 0 && weeks > 0 && Number.isFinite(weeks)) {
+        timelineEl.textContent = `${weeks.toFixed(1)} weeks`;
+        timelineDetailEl.textContent =
+          `About ${Math.ceil(weeks)} weeks to lose approximately ${weightToLoseLb.toFixed(1)} lb (${(weightToLoseLb / 2.2046226218).toFixed(1)} kg) at the selected planning rate.`;
 
-  if (timelineStartEl) {
-    timelineStartEl.textContent = `${rawWeight.toFixed(1)} ${weightUnit}`;
-  }
-  if (timelineGoalEl) {
-    timelineGoalEl.textContent = `${rawGoalWeight.toFixed(1)} ${weightUnit}`;
-  }
-  if (timelineEtaEl) {
-    timelineEtaEl.textContent = `~${goalDateStr}`;
-  }
-} else {
-  timelineEl.textContent = "—";
-  timelineDetailEl.textContent = "";
-  if (timelineStartEl) timelineStartEl.textContent = "—";
-  if (timelineGoalEl) timelineGoalEl.textContent = "—";
-  if (timelineEtaEl) timelineEtaEl.textContent = "—";
-}
+        if (timelineStartEl) {
+          timelineStartEl.textContent = `${rawWeight.toFixed(1)} ${weightUnit}`;
+        }
+        if (timelineGoalEl) {
+          timelineGoalEl.textContent = `${rawGoalWeight.toFixed(1)} ${weightUnit}`;
+        }
+        if (timelineEtaEl) {
+          timelineEtaEl.textContent = `~${goalDateStr}`;
+        }
+      } else {
+        timelineEl.textContent = "—";
+        timelineDetailEl.textContent = "";
+        if (timelineStartEl) timelineStartEl.textContent = "—";
+        if (timelineGoalEl) timelineGoalEl.textContent = "—";
+        if (timelineEtaEl) timelineEtaEl.textContent = "—";
+      }
 
-      // Macro teaser (example 40/30/30 split) — only when target is positive
-      if (calorieTarget > 0 && macroTeaser) {
+      // Macro teaser (example 40/30/30 split) — only when the target is a
+      // usable, non-clinical-low value. Skip for < 1,200 kcal/day.
+      if (calorieTarget >= 1200 && macroTeaser) {
         const proteinCal = calorieTarget * 0.40;
         const carbsCal = calorieTarget * 0.30;
         const fatCal = calorieTarget * 0.30;
@@ -1454,31 +1473,30 @@ if (calorieTarget > 0 && weeks > 0 && Number.isFinite(weeks)) {
       }
 
       // Warning priority order (most critical first):
-// 1. Zero/negative target — not usable at all
-// 2. Very low target (< 1,200 kcal) — clinical guideline threshold
-// 3. Sex-specific low target — contextual caution
-// 4. Sub-BMR caution — informational, not a universal minimum
-
-if (calorieTarget <= 0) {
-  warningEl.textContent =
-    "This selected weight-loss rate would require a calorie target at or below zero, which is not a usable plan. Choose a slower rate.";
-  warningEl.removeAttribute("hidden");
-} else if (calorieTarget < 1200) {
-  warningEl.textContent =
-    `Your calculated target is below 1,200 kcal/day. This is a very low calorie intake for most adults. Treat this as a warning to reconsider the selected weight-loss rate rather than a recommended intake. Very low calorie targets may not provide enough energy or nutrients without professional supervision.`;
-  warningEl.removeAttribute("hidden");
-} else if (
-  (sexEl.value === "male" && calorieTarget < 1500) ||
-  (sexEl.value === "female" && calorieTarget < 1200)
-) {
-  warningEl.textContent =
-    `Your calculated calorie target is relatively low. Consider a slower weight-loss rate and seek professional guidance if you are unsure whether this intake is appropriate for you.`;
-  warningEl.removeAttribute("hidden");
-} else if (calorieTarget < bmr) {
-  warningEl.textContent =
-    `Your daily calorie target is below your estimated BMR of ${round(bmr).toLocaleString()} kcal. Sustained intake below BMR is uncommon as a routine approach and is often accompanied by closer professional guidance. Consider a slower weight-loss rate unless you are working with a qualified healthcare professional.`;
-  warningEl.removeAttribute("hidden");
-}
+      // 1. Zero/negative target — not usable at all
+      // 2. Very low target (< 1,200 kcal) — clinical guideline threshold
+      // 3. Sex-specific low target — contextual caution
+      // 4. Sub-BMR caution — informational, not a universal minimum
+      if (calorieTarget <= 0) {
+        warningEl.textContent =
+          "This selected weight-loss rate would require a calorie target at or below zero, which is not a usable plan. Choose a slower rate.";
+        warningEl.removeAttribute("hidden");
+      } else if (calorieTarget < 1200) {
+        warningEl.textContent =
+          `Your calculated target is below 1,200 kcal/day. This is a very low calorie intake for most adults. Treat this as a warning to reconsider the selected weight-loss rate rather than a recommended intake. Very low calorie targets may not provide enough energy or nutrients without professional supervision.`;
+        warningEl.removeAttribute("hidden");
+      } else if (
+        (sexEl.value === "male" && calorieTarget < 1500) ||
+        (sexEl.value === "female" && calorieTarget < 1200)
+      ) {
+        warningEl.textContent =
+          `Your calculated calorie target is relatively low. Consider a slower weight-loss rate and seek professional guidance if you are unsure whether this intake is appropriate for you.`;
+        warningEl.removeAttribute("hidden");
+      } else if (calorieTarget < bmr) {
+        warningEl.textContent =
+          `Your daily calorie target is below your estimated BMR of ${round(bmr).toLocaleString()} kcal. Sustained intake below BMR is uncommon as a routine approach and is often accompanied by closer professional guidance. Consider a slower weight-loss rate unless you are working with a qualified healthcare professional.`;
+        warningEl.removeAttribute("hidden");
+      }
 
       if (weeks < 8) {
         goalMessageEl.textContent =
@@ -1492,9 +1510,15 @@ if (calorieTarget <= 0) {
         goalMessageEl.removeAttribute("hidden");
       }
 
+      // Screen-reader announcement must not read a negative/non-usable target.
       if (resultAnnouncement) {
-        resultAnnouncement.textContent =
-          `Estimated daily calorie target: ${round(calorieTarget).toLocaleString()} kcal. BMR: ${round(bmr).toLocaleString()} kcal. TDEE: ${round(tdee).toLocaleString()} kcal. Daily deficit: ${round(dailyDeficit).toLocaleString()} kcal. Estimated time to goal: ${weeks.toFixed(1)} weeks.`;
+        if (calorieTarget > 0 && Number.isFinite(weeks) && weeks > 0) {
+          resultAnnouncement.textContent =
+            `Estimated daily calorie target: ${round(calorieTarget).toLocaleString()} kcal. BMR: ${round(bmr).toLocaleString()} kcal. TDEE: ${round(tdee).toLocaleString()} kcal. Daily deficit: ${round(dailyDeficit).toLocaleString()} kcal. Estimated time to goal: ${weeks.toFixed(1)} weeks.`;
+        } else {
+          resultAnnouncement.textContent =
+            "The selected weight-loss rate would require a calorie target at or below zero, which is not a usable plan. Please choose a slower rate.";
+        }
       }
     }
 
@@ -1525,6 +1549,9 @@ if (calorieTarget <= 0) {
         weightUnitLabel.textContent = nextUnit;
         goalUnitLabel.textContent = nextUnit;
 
+        // Keep HTML input range in sync with the active unit
+        updateWeightRangeAttributes();
+
         document.querySelectorAll("[data-weight-unit]").forEach((item) => {
           item.classList.toggle("active", (item as HTMLElement).dataset.weightUnit === nextUnit);
         });
@@ -1554,11 +1581,17 @@ if (calorieTarget <= 0) {
           metricHeight.classList.remove("hidden");
         } else {
           const totalInches = sourceCm / 2.54;
-          const ft = Math.floor(totalInches / 12);
-          const inches = totalInches - (ft * 12);
+          let ft = Math.floor(totalInches / 12);
+          let roundedInches = Number((totalInches - ft * 12).toFixed(1));
+
+          // Rounding can push inches to 12.0 — roll over to next foot.
+          if (roundedInches >= 12) {
+            ft += 1;
+            roundedInches = 0;
+          }
 
           heightFtEl.value = String(ft);
-          heightInEl.value = inches.toFixed(1);
+          heightInEl.value = roundedInches.toFixed(1);
           metricHeight.classList.add("hidden");
           imperialHeight.classList.remove("hidden");
         }
