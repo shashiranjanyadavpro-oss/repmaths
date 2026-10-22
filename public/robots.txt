@@ -43,5 +43,8 @@ Allow: /
 User-agent: meta-externalagent
 Allow: /
 
+# Google AdSense crawler
+User-agent: Mediapartners-Google
+Allow: /
 # --- Sitemaps ---
 Sitemap: https://repmaths.com/sitemap.xml
