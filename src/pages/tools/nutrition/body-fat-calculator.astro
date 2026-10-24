@@ -20,14 +20,24 @@ const breadcrumbs = [
  */
 const faqs = [
   {
-    question: 'How accurate is the Navy body fat calculator compared with DEXA?',
+    question: 'How accurate is the US Navy body fat calculator?',
     answer:
-      'The Navy circumference method is a field estimate, not a laboratory measurement. A 2022 study of physically fit U.S. Marines found average underestimation of about 2.5–2.6 percentage points in men and overestimation of about 1.3–2.3 percentage points in women, with individual variability of roughly 3.7–4.8 percentage points. DEXA is often used as a reference standard in research, but its own accuracy also depends on the device, software version, and population studied.',
+      'The US Navy tape method provides an estimate of body fat percentage, not a direct laboratory measurement. Accuracy varies depending on tape placement, technique, and individual body composition. For progress tracking, take measurements consistently under similar conditions.',
+  },
+  {
+    question: 'What body fat percentage is required to see abs?',
+    answer:
+      'For most men, abdominal muscles become visible around 10–14% body fat. For women, this typically occurs around 18–22%. Individual genetics, muscle size, and fat distribution can shift these numbers, but these ranges are widely used as fitness targets.',
+  },
+  {
+    question: 'Why do men and women measure their waists differently for body fat?',
+    answer:
+      'Men and women store body fat in different distributions. The Navy formula requires men to measure at the navel level, while women measure at the narrowest point of the natural waist, alongside a hip measurement. These formulas were derived from U.S. Department of Defense (DoD) research to best estimate body composition for each sex.',
   },
   {
     question: 'What is a healthy body fat percentage?',
     answer:
-      'Body fat ranges vary by sex, age, population, and reference source. Common fitness references often describe approximately 18–24% for men and 25–31% for women as typical non-athlete ranges. These are not universal medical thresholds, and healthy ranges tend to shift upward with age as muscle mass naturally declines.',
+      'Body fat ranges vary by sex, age, population, and reference source. Common fitness references (like the American Council on Exercise) often describe approximately 18–24% for men and 25–31% for women as typical non-athlete ranges. These are not universal medical thresholds, and healthy ranges tend to shift upward with age as muscle mass naturally declines.',
   },
   {
     question: 'Why is body fat percentage different from BMI?',
@@ -35,24 +45,9 @@ const faqs = [
       'BMI uses only height and body weight and cannot distinguish fat mass from muscle mass. Body fat percentage attempts to estimate the proportion of body weight that is fat, although the Navy method is itself an estimate. A person with high muscle mass can have a high BMI but low body fat, while someone with low muscle mass can have a normal BMI but high body fat ("skinny fat").',
   },
   {
-    question: 'Where should I measure my waist, neck, and hips?',
-    answer:
-      'For the Navy-style circumference method, men measure the abdomen at the navel and the neck below the larynx. Women measure the natural waist at its smallest point, the hips at the greatest protrusion, and the neck below the larynx. Keep the tape level and snug without compressing the skin. Use a flexible tape measure rather than a rigid metal one.',
-  },
-  {
-    question: 'Can I use this body fat calculator for men and women?',
-    answer:
-      'Yes. The calculator uses separate Navy circumference equations for males and females. Women also enter a hip measurement because the female equation uses waist, hip, and neck circumferences. The BMI-based estimate uses sex as one of its variables.',
-  },
-  {
     question: 'Is the Navy body fat method better than a smart scale?',
     answer:
       'Neither method should automatically be treated as a precise measurement for an individual. Bioelectrical impedance (BIA) smart scales can be affected significantly by hydration, recent meals, and sweat. The Navy tape method depends on tape placement and technique. For tracking progress, using the same method and conditions over time tends to be more useful than comparing absolute numbers across different methods.',
-  },
-  {
-    question: 'Why does my smart scale show a different body fat % than this calculator?',
-    answer:
-      'Smart scales use Bioelectrical Impedance Analysis (BIA), which sends a small current through your body. BIA is highly sensitive to hydration, recent meals, and sweat, and consumer devices can vary meaningfully from one measurement to the next. The Navy method relies on physical circumferences, so the two methods can naturally produce different estimates on the same person.',
   },
   {
     question: 'Can I have a normal BMI but still have too much body fat?',
@@ -63,11 +58,6 @@ const faqs = [
     question: 'What is the difference between subcutaneous and visceral fat?',
     answer:
       'Subcutaneous fat sits just under your skin and is the fat you can pinch. Visceral fat sits deeper in the abdomen surrounding your internal organs and has been linked to higher metabolic health risks, including high blood pressure, high cholesterol, and high blood sugar. A waist over 40 inches (101.6 cm) for men or 35 inches (88.9 cm) for non-pregnant women is often used as a signal of elevated risk.',
-  },
-  {
-    question: 'Is body fat percentage better than BMI?',
-    answer:
-      'For assessing body composition, body fat percentage is generally more informative than BMI alone. BMI only looks at height and weight and cannot distinguish between muscle and fat. Body fat percentage estimates your fat-to-lean mass ratio, which is more useful for fitness and metabolic health tracking. However, both are estimates when measured outside a clinical setting.',
   },
   {
     question: 'How can I lower my body fat percentage?',
@@ -113,7 +103,7 @@ const jsonLdSafe = (value: unknown) =>
 ---
 
 <Base
-  title="Body Fat Calculator (Navy & BMI Method) — Men & Women"
+  title="Body Fat Calculator (US Navy & BMI Method) — Men & Women"
   description="Free body fat percentage calculator using the US Navy tape-measure method or BMI estimate. Enter neck, waist, height, and optional weight in inches or cm."
   breadcrumbs={breadcrumbs}
   faqs={faqs}
@@ -129,20 +119,20 @@ const jsonLdSafe = (value: unknown) =>
       <h1>Body Fat Calculator (US Navy &amp; BMI Method)</h1>
 
       <p class="intro">
-        Estimate your body fat percentage from height and tape-measure readings
-        using the U.S. Navy circumference method, or use the BMI-based estimate
-        if you don't have a tape measure.
+        Estimate your body fat percentage using the U.S. Navy circumference method, 
+        or use the BMI-based estimate if you don't have a tape measure. The Navy 
+        method uses standard U.S. Department of Defense (DoD) equations alongside 
+        American Council on Exercise (ACE) classification ranges.
       </p>
     </header>
 
     <aside class="quick-answer" aria-label="Body fat quick answer">
       <p>
-        <strong>What is a healthy body fat percentage?</strong> Common fitness
-        references describe roughly <strong>18–24% for men</strong> and
-        <strong>25–31% for women</strong> as typical non-athlete ranges. The
-        U.S. Navy tape method estimates body fat from neck, waist, and height
-        (plus hip for women) and is a field estimate — individual accuracy
-        varies by technique and population.
+        <strong>How accurate is this calculator?</strong> The US Navy tape method 
+        provides an <strong>estimate</strong> of body fat percentage, not a direct 
+        measurement. Accuracy varies depending on measurement technique and individual 
+        body composition. For progress tracking, take measurements consistently 
+        under similar conditions.
       </p>
     </aside>
 
@@ -255,10 +245,24 @@ const jsonLdSafe = (value: unknown) =>
           </div>
         </div>
 
+        <!-- Fat Loss Target -->
+        <div class="target-goal-box" id="target-goal-box" hidden>
+          <h3>Fat Loss Target</h3>
+          <div class="target-select-row">
+            <label for="target-bf-select">Target Body Fat %:</label>
+            <select id="target-bf-select">
+              <!-- Options dynamically generated by JS based on sex -->
+            </select>
+          </div>
+          <p id="target-goal-text">—</p>
+          <p class="target-disclaimer">Assumes lean body mass remains constant during fat loss.</p>
+          <a href="/tools/nutrition/calorie-deficit-calculator/" class="target-cta">
+            Plan your calorie deficit →
+          </a>
+        </div>
+
         <p id="result-note" class="calculator-note">
-          This is an estimate, not a direct measurement of body fat. Individual
-          accuracy varies with measurement technique, population, and the
-          reference method used.
+          This is an estimate, not a direct measurement of body fat. Individual accuracy varies.
         </p>
       </div>
 
@@ -341,102 +345,26 @@ const jsonLdSafe = (value: unknown) =>
     </section>
 
     <section class="content-section">
-      <h2>The BMI-Based Body Fat Formula (Deurenberg Equation)</h2>
-
-      <p>
-        The BMI Estimate method uses the Deurenberg equation, a widely cited
-        adult-population formula that estimates body fat percentage from body
-        mass index, age, and sex.
-      </p>
-
-      <div class="formula-box">
-        <strong>BF%</strong> = 1.2 × BMI + 0.23 × Age − 10.8 × Sex − 5.4
-        <br />
-        <small>Sex: male = 1, female = 0</small>
-      </div>
-
-      <p>
-        The formula was derived from adult population data, so it may be less
-        accurate for athletes, very lean individuals, people with high muscle
-        mass, and some ethnic populations. It is best treated as a quick
-        fallback estimate when circumference measurements are not available.
-      </p>
-    </section>
-
-    <section class="content-section">
-      <h2>Navy Tape Method vs. BMI Estimate</h2>
-
-      <p>
-        Both methods on this page provide estimates, but they are suited to
-        different situations.
-      </p>
-
-      <div class="comparison-table-wrap">
-        <table>
-          <caption>Choosing between the Navy tape method and the BMI estimate</caption>
-          <thead>
-            <tr>
-              <th scope="col">Factor</th>
-              <th scope="col">Navy Tape Method</th>
-              <th scope="col">BMI Estimate</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>What you need</td>
-              <td>Tape measure, height</td>
-              <td>Scale, height, age</td>
-            </tr>
-            <tr>
-              <td>Where it works best</td>
-              <td>Most non-athlete adults</td>
-              <td>Quick estimate without a tape</td>
-            </tr>
-            <tr>
-              <td>Main limitation</td>
-              <td>Technique-sensitive; can misclassify very muscular or very lean individuals</td>
-              <td>Does not distinguish muscle from fat; less accurate for athletes and very muscular people</td>
-            </tr>
-            <tr>
-              <td>Typical use case</td>
-              <td>Progress tracking when a tape is available</td>
-              <td>Fallback when only a scale is available</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-
-      <p>
-        If you have a tape measure, the Navy method is generally the better
-        choice for tracking body composition over time. If you don't, the BMI
-        estimate can provide a rough starting point but should not be treated
-        as a precise body-fat measurement.
-      </p>
-    </section>
-
-    <section class="content-section">
       <h2>Body Fat Percentage Ranges by Age and Sex</h2>
 
       <p>
         Body-fat percentage categories vary by organization, age, sex, and
-        population. The two tables below come from different reference
-        sources, so they should be read together rather than treated as one
-        single standard.
+        population. The first table below uses the widely cited fitness-industry
+        categories from the American Council on Exercise (ACE). The second
+        table uses age-adjusted ranges from peer-reviewed research.
       </p>
 
-      <h3>Common Category Reference Ranges</h3>
+      <h3>ACE Category Reference Ranges</h3>
 
       <p>
-        The first table reflects commonly cited fitness-industry category
-        labels. Different organizations (such as the American Council on
-        Exercise and the American College of Sports Medicine) draw the
-        boundaries slightly differently. These are descriptive categories
-        rather than strict medical thresholds.
+        The American Council on Exercise (ACE) defines the following categories
+        for men and women. These are descriptive fitness categories rather than
+        strict medical thresholds.
       </p>
 
       <div class="comparison-table-wrap">
         <table>
-          <caption>Commonly cited category ranges for non-athlete adults</caption>
+          <caption>Commonly cited category ranges (ACE)</caption>
           <thead>
             <tr>
               <th scope="col">Category</th>
@@ -461,7 +389,7 @@ const jsonLdSafe = (value: unknown) =>
               <td>21–24%</td>
             </tr>
             <tr>
-              <td>Typical Non-Athlete</td>
+              <td>Average / Acceptable</td>
               <td>18–24%</td>
               <td>25–31%</td>
             </tr>
@@ -518,30 +446,28 @@ const jsonLdSafe = (value: unknown) =>
         These ranges are reference categories, not individual medical
         diagnoses. Very low body fat can also carry health risks, and a
         single percentage should not be used to judge overall health.
-        Gallagher et al. note that their ranges are provisional and may
-        need adjustment for different ethnic populations.
       </p>
     </section>
 
     <section class="content-section">
-      <h2>Body Fat Percentage vs. BMI</h2>
+      <h2>What Body Fat Percentage Do You Need for Abs?</h2>
 
       <p>
-        BMI uses height and total body weight. It does not directly distinguish
-        muscle mass from fat mass, which can make it less informative for
-        people with substantial muscular development. Body-fat percentage
-        attempts to describe body composition more directly, although methods
-        such as the Navy calculator are still estimates.
+        For gym-goers, the most common question is: <em>"At what body fat percentage will my abs show?"</em>
       </p>
 
+      <ul>
+        <li><strong>Men:</strong> Abdominal definition typically becomes visible around <strong>10–14% body fat</strong>. A full "six-pack" usually requires the lower end of this range (10–12%).</li>
+        <li><strong>Women:</strong> Visible abdominal definition typically occurs around <strong>18–22% body fat</strong>, though a full six-pack usually requires 18–20%.</li>
+      </ul>
+
       <p>
-        For that reason, body fat percentage and BMI answer different
-        questions. BMI is useful as a population-level screening measure,
-        while body-composition estimates can provide additional context for
-        individual fitness tracking. In one widely cited study from the
-        University of Florida, a notable share of adults with a normal BMI
-        but high body fat met criteria for prediabetes or diabetes — a
-        reminder that BMI alone does not capture metabolic risk.
+        These ranges depend heavily on individual genetics, muscle size, and
+        fat distribution. Two people at 12% body fat may look very different
+        depending on how much muscle mass they carry. To build the abdominal
+        muscles themselves, resistance training and adequate protein intake
+        (which you can estimate using our <a href="/tools/nutrition/protein-calculator/">Protein Calculator</a>)
+        are essential.
       </p>
     </section>
 
@@ -598,57 +524,7 @@ const jsonLdSafe = (value: unknown) =>
       <p>
         If your calculator result shows a high body fat percentage despite a
         normal weight, resistance training and adequate protein intake are
-        commonly recommended to improve body composition. Use our
-        <a href="/tools/nutrition/protein-calculator/">Protein Calculator</a>
-        to estimate a daily protein target.
-      </p>
-    </section>
-
-    <section class="content-section">
-      <h2>Visceral vs. Subcutaneous Fat</h2>
-
-      <p>
-        Not all body fat behaves the same way. The two main types have
-        different locations and different health implications.
-      </p>
-
-      <div class="comparison-table-wrap">
-        <table>
-          <caption>Differences between visceral and subcutaneous fat</caption>
-          <thead>
-            <tr>
-              <th scope="col">Feature</th>
-              <th scope="col">Visceral Fat</th>
-              <th scope="col">Subcutaneous Fat</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>Location</td>
-              <td>Deep in the belly, surrounding organs</td>
-              <td>Just under the skin, all around the body</td>
-            </tr>
-            <tr>
-              <td>Appearance</td>
-              <td>Firm, "beer belly" or "apple shape"</td>
-              <td>Soft and squishy, "love handles"</td>
-            </tr>
-            <tr>
-              <td>Health context</td>
-              <td>Frequently linked in research to high blood pressure, high cholesterol, high blood sugar, type 2 diabetes, and heart disease</td>
-              <td>Less metabolically active; can still contribute to risk when excess</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-
-      <p>
-        According to the Cleveland Clinic, visceral fat is associated with
-        what one physician calls "the three horsemen of the apocalypse": high
-        blood pressure, high cholesterol, and high blood sugar. A waist over
-        <strong>40 inches (101.6 cm)</strong> for men or <strong>35 inches
-        (88.9 cm)</strong> for non-pregnant women is commonly used as a signal
-        of elevated risk, regardless of body fat percentage.
+        commonly recommended to improve body composition.
       </p>
     </section>
 
@@ -684,93 +560,6 @@ const jsonLdSafe = (value: unknown) =>
         rounded numbers shown here), your live result may differ slightly from
         the numbers above.
       </p>
-    </section>
-
-    <section class="content-section">
-      <h2>How Accurate Is a Navy Body Fat Calculator?</h2>
-
-      <p>
-        The Navy circumference method is convenient because it requires only
-        a tape measure, but it should not be treated as laboratory-grade
-        body-composition testing.
-      </p>
-
-      <p>
-        In a 2022 study of physically fit U.S. Marines, the circumference
-        method underestimated body fat in men by about 2.5–2.6 percentage
-        points and overestimated it in women by about 1.3–2.3 percentage
-        points. Individual variability was also several percentage points.
-      </p>
-
-      <div class="callout">
-        <strong>Reality check:</strong> Different body-composition methods
-        have different strengths, weaknesses, and error profiles. Published
-        error margins vary by study, device, population, and measurement
-        conditions. No home method is exact, and DEXA itself is not a perfect
-        reference standard. The trend over time is usually more meaningful
-        than a single reading from any method.
-      </div>
-
-      <p>
-        If you use this calculator repeatedly, keep your measurement technique,
-        time of day, tape placement, and conditions as consistent as possible
-        and watch the trend rather than overinterpreting a single reading.
-      </p>
-    </section>
-
-    <section class="content-section">
-      <h2>Body Fat Measurement Methods Compared</h2>
-
-      <p>
-        Each body-composition method has different strengths and limitations.
-        The table below summarizes commonly cited characteristics — actual
-        error margins vary by study, device, and population.
-      </p>
-
-      <div class="comparison-table-wrap">
-        <table>
-          <caption>Common body fat measurement methods</caption>
-          <thead>
-            <tr>
-              <th scope="col">Method</th>
-              <th scope="col">Typical accuracy context</th>
-              <th scope="col">Best for</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>DEXA scan</td>
-              <td>Often used as a reference in research; accuracy varies by device and software</td>
-              <td>Clinical or research-grade assessment</td>
-            </tr>
-            <tr>
-              <td>Hydrostatic weighing</td>
-              <td>Historically accurate but technique-dependent</td>
-              <td>Research settings</td>
-            </tr>
-            <tr>
-              <td>Skinfold calipers</td>
-              <td>Depends heavily on tester skill</td>
-              <td>Home tracking with a trained tester</td>
-            </tr>
-            <tr>
-              <td>Navy tape method</td>
-              <td>Field estimate; accurate for many non-athlete adults</td>
-              <td>Free, equipment-free estimates</td>
-            </tr>
-            <tr>
-              <td>BIA smart scale</td>
-              <td>Affected by hydration and other factors; varies by device</td>
-              <td>Trend tracking, not absolute values</td>
-            </tr>
-            <tr>
-              <td>BMI-based estimate</td>
-              <td>Population-level formula; less accurate for athletes</td>
-              <td>Quick screening without measurements</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
     </section>
 
     <section class="content-section">
@@ -827,18 +616,13 @@ const jsonLdSafe = (value: unknown) =>
           </a>
         </li>
         <li>
-          <a href="https://pubmed.ncbi.nlm.nih.gov/20435969/" target="_blank" rel="noopener noreferrer">
-            Deurenberg et al. (1991) — Body mass index as a measure of body fatness
-          </a>
-        </li>
-        <li>
           <a href="https://www.mynavyhr.navy.mil/Portals/55/Support/Culture%20Resilience/Physical/Guide%204%20-%20Body%20Composition%20Assessment.pdf" target="_blank" rel="noopener noreferrer">
             U.S. Navy Body Composition Assessment measurement guidance
           </a>
         </li>
         <li>
-          <a href="https://health.clevelandclinic.org/visceral-fat-vs-subcutaneous-fat" target="_blank" rel="noopener noreferrer">
-            Cleveland Clinic — Visceral Fat vs. Subcutaneous Fat
+          <a href="https://www.acefitness.org/resources/everyone/tools-calculators/percent-body-fat-calculator/" target="_blank" rel="noopener noreferrer">
+            American Council on Exercise (ACE) — Body Fat Categories
           </a>
         </li>
       </ul>
@@ -1034,6 +818,55 @@ const jsonLdSafe = (value: unknown) =>
     }
     .result-box strong { display: block; margin: 5px 0; font-size: 1.18rem; }
 
+    /* Fat Loss Target Box */
+    .target-goal-box {
+      margin-top: 14px;
+      padding: 16px 18px;
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+    }
+    .target-goal-box[hidden] { display: none !important; }
+    .target-goal-box h3 {
+      margin: 0 0 8px;
+      font-size: 0.98rem;
+      color: var(--accent);
+    }
+    .target-select-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 12px;
+    }
+    .target-select-row label {
+      margin: 0;
+      font-size: 0.88rem;
+    }
+    .target-select-row select {
+      width: auto;
+      min-height: 36px;
+      padding: 4px 28px 4px 10px;
+      font-size: 0.88rem;
+    }
+    .target-goal-box p {
+      margin: 0 0 12px;
+      font-size: 0.9rem;
+      line-height: 1.5;
+      color: var(--text);
+    }
+    .target-disclaimer {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+    }
+    .target-cta {
+      display: inline-block;
+      color: var(--accent);
+      font-size: 0.86rem;
+      font-weight: 700;
+      text-decoration: none;
+    }
+    .target-cta:hover { color: var(--accent-hover); }
+
     .message {
       margin-top: 14px;
       padding: 13px 14px;
@@ -1139,6 +972,7 @@ const jsonLdSafe = (value: unknown) =>
       .result-grid { grid-template-columns: 1fr; }
       .field.full { grid-column: auto; }
       .result-primary { padding: 19px 12px; }
+      .target-select-row { flex-direction: column; align-items: flex-start; gap: 4px; }
     }
   </style>
 
@@ -1177,6 +1011,11 @@ const jsonLdSafe = (value: unknown) =>
     const fatMassUnitEl = document.querySelector("#fat-mass-unit")!;
     const leanMassUnitEl = document.querySelector("#lean-mass-unit")!;
     const resultAnnouncement = document.querySelector("#result-announcement")!;
+    const resultNoteEl = document.querySelector("#result-note")!;
+
+    const targetGoalBox = document.querySelector("#target-goal-box") as HTMLElement;
+    const targetGoalText = document.querySelector("#target-goal-text")!;
+    const targetBfSelect = document.querySelector("#target-bf-select") as HTMLSelectElement;
 
     // ---------- State ----------
     type UnitSystem = "imperial" | "metric";
@@ -1194,20 +1033,12 @@ const jsonLdSafe = (value: unknown) =>
     let preservedHipIn: number | null = null;
     let preservedWeightLb: number | null = null;
 
-    // Errors are only shown when user explicitly triggers calculation
-    // (Enter key or blur). Silent mode avoids red-flash while typing.
     let showErrors = false;
-
-    // Debounce timer for smooth auto-calculation while typing
     let calculateTimeout: number | null = null;
     const DEBOUNCE_MS = 300;
 
     const IN_TO_CM = 2.54;
     const LB_TO_KG = 0.45359237;
-
-    // Navy-method optional weight: uses the same numeric range as the
-    // imperial HTML limits (66–660 lb). The metric HTML max is set to 299 kg
-    // (≈ 659.15 lb) so metric inputs also fall within this range.
     const OPTIONAL_WEIGHT_MIN_LB = 66;
     const OPTIONAL_WEIGHT_MAX_LB = 660;
 
@@ -1227,6 +1058,7 @@ const jsonLdSafe = (value: unknown) =>
       fatMassEl.textContent = "—";
       leanMassEl.textContent = "—";
       massGrid.hidden = true;
+      targetGoalBox.hidden = true;
     }
 
     function setError(msg: string) {
@@ -1280,7 +1112,11 @@ const jsonLdSafe = (value: unknown) =>
       if (areRequiredFieldsFilled()) calculate();
     }
 
-    // Only calculate when all required fields have values
+    function forceCalculate() {
+      cancelScheduledCalculate();
+      calculate();
+    }
+
     function areRequiredFieldsFilled(): boolean {
       if (method === "navy") {
         if (
@@ -1301,12 +1137,6 @@ const jsonLdSafe = (value: unknown) =>
     }
 
     // ---------- Preserved-value sync ----------
-    // NOTE: Only called from user input listeners, never from calculate() or
-    // unit toggle. This prevents precision loss from repeated round-trips.
-    //
-    // Scientific notation (e.g., "1e2") is rejected here so that a subsequent
-    // unit toggle cannot silently convert it into a plain number and bypass
-    // the scientific-notation validation in calculate().
     function syncPreservedNavy() {
       const read = (el: HTMLInputElement): number | null => {
         const raw = el.value.trim();
@@ -1329,7 +1159,6 @@ const jsonLdSafe = (value: unknown) =>
         preservedWeightLb = null;
         return;
       }
-      // Reject scientific notation — see note above syncPreservedNavy().
       if (raw.toLowerCase().includes("e")) {
         preservedWeightLb = null;
         return;
@@ -1346,9 +1175,10 @@ const jsonLdSafe = (value: unknown) =>
     function setUnitSystem(next: UnitSystem) {
       if (next === unitSystem) return;
 
-      // Convert displayed values using preserved canonical values. If the
-      // field had an invalid value (preserved === null), clear it instead
-      // of leaving a stale number next to the new unit label.
+      // Sync BEFORE conversion to capture exact current precision
+      syncPreservedNavy();
+      syncPreservedWeight();
+
       const convertField = (el: HTMLInputElement, preserved: number | null) => {
         if (preserved === null || preserved <= 0) {
           el.value = "";
@@ -1393,6 +1223,8 @@ const jsonLdSafe = (value: unknown) =>
       if (method === "navy") {
         hipField.hidden = next !== "female";
       }
+      
+      updateTargetOptions();
 
       updateLabels();
       showErrors = false;
@@ -1420,6 +1252,37 @@ const jsonLdSafe = (value: unknown) =>
       showErrors = false;
       resetResult();
       immediateCalculate();
+    }
+
+    // ---------- Dynamic Target Options ----------
+    function updateTargetOptions() {
+      const isMale = sex === "male";
+      
+      // Safety: Removed extreme low targets (6% for men, 14% for women)
+      const options = isMale
+        ? [
+            { v: 8, t: "8% (Competition)" },
+            { v: 10, t: "10% (Very Lean)" },
+            { v: 12, t: "12% (Athletic)" },
+            { v: 15, t: "15% (Fit)" },
+            { v: 18, t: "18% (Average)" },
+            { v: 20, t: "20% (Maintenance)" }
+          ]
+        : [
+            { v: 16, t: "16% (Competition)" },
+            { v: 18, t: "18% (Very Lean)" },
+            { v: 20, t: "20% (Athletic)" },
+            { v: 22, t: "22% (Fit)" },
+            { v: 25, t: "25% (Average)" },
+            { v: 28, t: "28% (Maintenance)" }
+          ];
+
+      targetBfSelect.innerHTML = options
+        .map(opt => `<option value="${opt.v}">${opt.t}</option>`)
+        .join("");
+
+      // Default selection
+      targetBfSelect.value = isMale ? "12" : "20";
     }
 
     // ---------- Labels ----------
@@ -1455,9 +1318,6 @@ const jsonLdSafe = (value: unknown) =>
     }
 
     // ---------- Input ranges per unit system ----------
-    // Metric weight max is 299 kg (≈659.15 lb) so both HTML ranges fall inside
-    // the JS validation range of 66–660 lb, keeping displayed limits and
-    // internal validation consistent.
     function updateInputRanges() {
       if (unitSystem === "imperial") {
         heightEl.min = "48";
@@ -1485,7 +1345,6 @@ const jsonLdSafe = (value: unknown) =>
     }
 
     // ---------- Category classification ----------
-    // Uses raw bf value (not rounded) to avoid boundary misclassification.
     function getCategory(bf: number, s: Sex): string {
       if (s === "male") {
         if (bf < 6) return "Essential fat range";
@@ -1502,7 +1361,6 @@ const jsonLdSafe = (value: unknown) =>
       }
     }
 
-    // Navy-mode optional weight — must be within expected range for mass calc
     function isOptionalWeightValid(): boolean {
       if (preservedWeightLb === null) return false;
       return (
@@ -1515,12 +1373,10 @@ const jsonLdSafe = (value: unknown) =>
     function calculate() {
       clearMessages();
 
-      // Only validate inputs relevant to the current method/sex.
       const relevantInputs: HTMLInputElement[] = method === "navy"
         ? [heightEl, neckEl, waistEl, ...(sex === "female" ? [hipEl] : [])]
         : [heightEl, weightEl, ageEl];
 
-      // Weight is optional in Navy mode — check for scientific notation if filled
       if (method === "navy" && weightEl.value.trim() !== "") {
         relevantInputs.push(weightEl);
       }
@@ -1537,10 +1393,7 @@ const jsonLdSafe = (value: unknown) =>
           waistEl.value.trim() === "" ||
           (sex === "female" && hipEl.value.trim() === "")
         ) {
-          fail(
-            "Please fill in height, neck, waist" +
-              (sex === "female" ? ", and hip." : ".")
-          );
+          fail("Please fill in height, neck, waist" + (sex === "female" ? ", and hip." : "."));
           return;
         }
 
@@ -1594,9 +1447,7 @@ const jsonLdSafe = (value: unknown) =>
         }
 
         if (!Number.isFinite(bf) || bf < 0 || bf > 75) {
-          fail(
-            "The measurements entered produced an unrealistic result. Please double-check your inputs."
-          );
+          fail("The measurements entered produced an unrealistic result. Please double-check your inputs.");
           return;
         }
 
@@ -1634,7 +1485,11 @@ const jsonLdSafe = (value: unknown) =>
           return;
         }
 
-        const bmi = (703 * wLb) / (hIn * hIn);
+        // Exact metric conversion for BMI to avoid the 703 approximation
+        const heightM = hIn * 0.0254;
+        const weightKg = wLb * LB_TO_KG;
+        const bmi = weightKg / (heightM * heightM);
+        
         const sexFactor = sex === "male" ? 1 : 0;
         const bf = 1.2 * bmi + 0.23 * age - 10.8 * sexFactor - 5.4;
 
@@ -1650,24 +1505,22 @@ const jsonLdSafe = (value: unknown) =>
     function displayResult(bf: number, s: Sex) {
       const rounded = round1(bf);
       resultBfEl.textContent = `${rounded}%`;
-      // Use raw bf for category to avoid boundary misclassification
       resultCategoryEl.textContent = getCategory(bf, s);
 
-      // Fat / lean mass breakdown — only when weight is present AND in range.
-      // Navy mode's weight is optional, so an out-of-range value silently
-      // disables the mass breakdown (no misleading numbers).
+      if (method === "navy") {
+        resultNoteEl.textContent = "This is a circumference-based estimate, not a direct measurement of body fat. Individual accuracy varies.";
+      } else {
+        resultNoteEl.textContent = "This is a BMI-based estimate, which does not distinguish muscle from fat. It may be less accurate for athletes.";
+      }
+
       const weightUsable = isOptionalWeightValid();
 
       if (weightUsable && preservedWeightLb !== null) {
         const fatLb = (bf / 100) * preservedWeightLb;
         const leanLb = preservedWeightLb - fatLb;
 
-        const fatDisplay = unitSystem === "imperial"
-          ? fatLb
-          : fatLb * LB_TO_KG;
-        const leanDisplay = unitSystem === "imperial"
-          ? leanLb
-          : leanLb * LB_TO_KG;
+        const fatDisplay = unitSystem === "imperial" ? fatLb : fatLb * LB_TO_KG;
+        const leanDisplay = unitSystem === "imperial" ? leanLb : leanLb * LB_TO_KG;
         const wUnit = unitSystem === "imperial" ? "lb" : "kg";
 
         fatMassEl.textContent = round1(fatDisplay).toFixed(1);
@@ -1675,10 +1528,27 @@ const jsonLdSafe = (value: unknown) =>
         fatMassUnitEl.textContent = wUnit;
         leanMassUnitEl.textContent = wUnit;
         massGrid.hidden = false;
+
+        const targetBf = Number(targetBfSelect.value);
+        
+        if (bf > targetBf) {
+          const leanMassRaw = preservedWeightLb * (1 - bf / 100);
+          const targetWeightLb = leanMassRaw / (1 - targetBf / 100);
+          const fatToLoseLb = preservedWeightLb - targetWeightLb;
+
+          const fatToLoseDisplay = unitSystem === "imperial" ? fatToLoseLb : fatToLoseLb * LB_TO_KG;
+          
+          targetGoalText.innerHTML = `To reach <strong>${targetBf}% body fat</strong>, the estimated fat loss would be approximately <strong>${round1(fatToLoseDisplay).toFixed(1)} ${wUnit}</strong>.`;
+          targetGoalBox.hidden = false;
+        } else {
+          targetGoalText.innerHTML = `You are already at or below your <strong>${targetBf}%</strong> target.`;
+          targetGoalBox.hidden = false;
+        }
       } else {
         fatMassEl.textContent = "—";
         leanMassEl.textContent = "—";
         massGrid.hidden = true;
+        targetGoalBox.hidden = true;
       }
 
       if (bf < (s === "male" ? 5 : 13)) {
@@ -1691,13 +1561,17 @@ const jsonLdSafe = (value: unknown) =>
         warningEl.removeAttribute("hidden");
       }
 
+      // FIX: Include the target goal text in the screen reader announcement
       if (resultAnnouncement) {
         const massLine =
           weightUsable
             ? ` Fat mass: ${fatMassEl.textContent} ${fatMassUnitEl.textContent}. Lean mass: ${leanMassEl.textContent} ${leanMassUnitEl.textContent}.`
             : "";
+        
+        const targetLine = !targetGoalBox.hidden ? ` ${targetGoalText.textContent}` : "";
+
         resultAnnouncement.textContent =
-          `Estimated body fat: ${rounded} percent. Category: ${getCategory(bf, s)}.${massLine}`;
+          `Estimated body fat: ${rounded} percent. Category: ${getCategory(bf, s)}.${massLine}${targetLine}`;
       }
     }
 
@@ -1718,8 +1592,11 @@ const jsonLdSafe = (value: unknown) =>
       );
     });
 
-    // Input listeners — silent typing + debounced auto-calculation.
-    // Blur triggers immediate calculation with visible errors.
+    targetBfSelect.addEventListener("change", () => {
+      resetResult();
+      immediateCalculate();
+    });
+
     [heightEl, neckEl, waistEl, hipEl].forEach((el) => {
       el.addEventListener("input", () => {
         syncPreservedNavy();
@@ -1728,8 +1605,9 @@ const jsonLdSafe = (value: unknown) =>
         scheduleCalculate();
       });
       el.addEventListener("blur", () => {
+        syncPreservedNavy();
         showErrors = true;
-        immediateCalculate();
+        forceCalculate();
       });
     });
 
@@ -1740,8 +1618,9 @@ const jsonLdSafe = (value: unknown) =>
       scheduleCalculate();
     });
     weightEl.addEventListener("blur", () => {
+      syncPreservedWeight();
       showErrors = true;
-      immediateCalculate();
+      forceCalculate();
     });
 
     ageEl.addEventListener("input", () => {
@@ -1751,10 +1630,9 @@ const jsonLdSafe = (value: unknown) =>
     });
     ageEl.addEventListener("blur", () => {
       showErrors = true;
-      immediateCalculate();
+      forceCalculate();
     });
 
-    // Enter key → explicit calculation with errors
     document.querySelectorAll<HTMLInputElement>("input").forEach((el) => {
       el.addEventListener("keydown", (e) => {
         if (e.key === "Enter") {
@@ -1762,15 +1640,15 @@ const jsonLdSafe = (value: unknown) =>
           showErrors = true;
           if (method === "navy") syncPreservedNavy();
           syncPreservedWeight();
-          immediateCalculate();
+          forceCalculate();
         }
       });
     });
 
     // ---------- Init ----------
-    // Do NOT call calculate() on page load. Show blank state.
     updateLabels();
     updateInputRanges();
+    updateTargetOptions(); // Populate dropdown & set default based on sex
     syncPreservedNavy();
     syncPreservedWeight();
   </script>
