@@ -20,9 +20,9 @@ const breadcrumbs = [
  */
 const faqs = [
   {
-    question: 'How accurate is the US Navy body fat calculator?',
+    question: 'How accurate is the US Navy tape test?',
     answer:
-      'The US Navy tape method provides an estimate of body fat percentage, not a direct laboratory measurement. Accuracy varies depending on tape placement, technique, and individual body composition. For progress tracking, take measurements consistently under similar conditions.',
+      'The US Navy tape test provides an estimate of body fat percentage, not a direct laboratory measurement. Accuracy varies depending on tape placement, technique, and individual body composition. For progress tracking, take measurements consistently under similar conditions.',
   },
   {
     question: 'What body fat percentage is required to see abs?',
@@ -30,9 +30,9 @@ const faqs = [
       'For most men, abdominal muscles become visible around 10–14% body fat. For women, this typically occurs around 18–22%. Individual genetics, muscle size, and fat distribution can shift these numbers, but these ranges are widely used as fitness targets.',
   },
   {
-    question: 'Why do men and women measure their waists differently for body fat?',
+    question: 'Why do men and women measure their waists differently for the Navy method?',
     answer:
-      'Men and women store body fat in different distributions. The Navy formula requires men to measure at the navel level, while women measure at the narrowest point of the natural waist, alongside a hip measurement. These formulas were derived from U.S. Department of Defense (DoD) research to best estimate body composition for each sex.',
+      'Men and women store body fat in different distributions. The Navy tape measure method requires men to measure at the navel level, while women measure at the narrowest point of the natural waist, alongside a hip measurement. These formulas were derived from U.S. Department of Defense (DoD) research to best estimate body composition for each sex.',
   },
   {
     question: 'What is a healthy body fat percentage?',
@@ -103,8 +103,8 @@ const jsonLdSafe = (value: unknown) =>
 ---
 
 <Base
-  title="Body Fat Calculator (US Navy & BMI Method) — Men & Women"
-  description="Free body fat percentage calculator using the US Navy tape-measure method or BMI estimate. Enter neck, waist, height, and optional weight in inches or cm."
+  title="Body Fat Calculator (US Navy Tape Test & BMI) — Men & Women"
+  description="Free body fat percentage calculator using the US Navy tape measure method or BMI estimate. Enter neck, waist, height, and optional weight in inches or cm."
   breadcrumbs={breadcrumbs}
   faqs={faqs}
 >
@@ -116,20 +116,20 @@ const jsonLdSafe = (value: unknown) =>
   <div class="tool-page">
     <header class="tool-header">
       <p class="eyebrow">Nutrition &amp; Body Composition</p>
-      <h1>Body Fat Calculator (US Navy &amp; BMI Method)</h1>
+      <h1>Body Fat Calculator (US Navy Tape Test &amp; BMI)</h1>
 
       <p class="intro">
-        Estimate your body fat percentage using the U.S. Navy circumference method, 
+        Estimate your body fat percentage using the <strong>US Navy tape measure method</strong>, 
         or use the BMI-based estimate if you don't have a tape measure. The Navy 
-        method uses standard U.S. Department of Defense (DoD) equations alongside 
+        test uses standard U.S. Department of Defense (DoD) equations alongside 
         American Council on Exercise (ACE) classification ranges.
       </p>
     </header>
 
     <aside class="quick-answer" aria-label="Body fat quick answer">
       <p>
-        <strong>How accurate is this calculator?</strong> The US Navy tape method 
-        provides an <strong>estimate</strong> of body fat percentage, not a direct 
+        <strong>How accurate is the Navy tape test?</strong> The US Navy tape measure 
+        method provides an <strong>estimate</strong> of body fat percentage, not a direct 
         measurement. Accuracy varies depending on measurement technique and individual 
         body composition. For progress tracking, take measurements consistently 
         under similar conditions.
@@ -255,7 +255,7 @@ const jsonLdSafe = (value: unknown) =>
             </select>
           </div>
           <p id="target-goal-text">—</p>
-          <p class="target-disclaimer">Assumes lean body mass remains constant during fat loss.</p>
+          <p class="target-disclaimer">Assumes lean body mass remains constant. A moderate, sustainable calorie deficit is recommended for this estimate.</p>
           <a href="/tools/nutrition/calorie-deficit-calculator/" class="target-cta">
             Plan your calorie deficit →
           </a>
@@ -270,7 +270,7 @@ const jsonLdSafe = (value: unknown) =>
     </section>
 
     <section class="content-section">
-      <h2>How to Measure for the Navy Body Fat Calculator</h2>
+      <h2>How to Measure for the Navy Tape Test</h2>
 
       <p>
         Measurement technique matters because small differences in tape
@@ -316,7 +316,7 @@ const jsonLdSafe = (value: unknown) =>
     </section>
 
     <section class="content-section">
-      <h2>The U.S. Navy Body Fat Formula</h2>
+      <h2>The U.S. Navy Tape Measure Method Formula</h2>
 
       <p>
         This calculator uses the circumference-based equations associated with
@@ -1235,6 +1235,11 @@ const jsonLdSafe = (value: unknown) =>
     // ---------- Method toggle ----------
     function setMethod(next: Method) {
       if (next === method) return;
+      
+      // FIX: Sync values before toggling method to prevent stale data
+      syncPreservedNavy();
+      syncPreservedWeight();
+
       method = next;
 
       document.querySelectorAll("[data-method]").forEach((btn) => {
@@ -1561,7 +1566,6 @@ const jsonLdSafe = (value: unknown) =>
         warningEl.removeAttribute("hidden");
       }
 
-      // FIX: Include the target goal text in the screen reader announcement
       if (resultAnnouncement) {
         const massLine =
           weightUsable
