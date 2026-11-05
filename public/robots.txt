@@ -1,40 +1,69 @@
-# ============================================
 # RepMaths.com — robots.txt
-# Last updated: 2026
-# ============================================
+# Search engine and AI search crawler access
 
-# --- Default: allow all standard crawlers ---
+# Default: all standard crawlers
 User-agent: *
 Allow: /
 Disallow: /api/
 Disallow: /admin/
 
-# --- AI / LLM Crawlers (explicitly allowed for AI search visibility) ---
+# Apple Search
+User-agent: Applebot
+Allow: /
+
+# OpenAI
+User-agent: OAI-SearchBot
+Allow: /
+
 User-agent: GPTBot
 Allow: /
 
 User-agent: ChatGPT-User
 Allow: /
 
-User-agent: OAI-SearchBot
+# Anthropic — Claude
+User-agent: Claude-SearchBot
 Allow: /
 
 User-agent: ClaudeBot
 Allow: /
 
-User-agent: Claude-Web
+User-agent: Claude-User
 Allow: /
 
+# Perplexity
 User-agent: PerplexityBot
 Allow: /
 
+User-agent: Perplexity-User
+Allow: /
+
+# Google AI
 User-agent: Google-Extended
 Allow: /
 
-User-agent: CCBot
+# Apple AI
+User-agent: Applebot-Extended
 Allow: /
 
-User-agent: Applebot-Extended
+# Microsoft Bing and Copilot
+User-agent: Bingbot
+Allow: /
+
+# Yahoo Search
+User-agent: Slurp
+Allow: /
+
+# Yandex Search
+User-agent: YandexBot
+Allow: /
+
+# Baidu Search — China
+User-agent: Baiduspider
+Allow: /
+
+# Other AI crawlers
+User-agent: CCBot
 Allow: /
 
 User-agent: Bytespider
@@ -43,8 +72,10 @@ Allow: /
 User-agent: meta-externalagent
 Allow: /
 
-# Google AdSense crawler
+# Google AdSense
 User-agent: Mediapartners-Google
 Allow: /
-# --- Sitemaps ---
+
+# Sitemap and AI discovery
 Sitemap: https://repmaths.com/sitemap.xml
+Agentmap: https://repmaths.com/.well-known/ard.json
