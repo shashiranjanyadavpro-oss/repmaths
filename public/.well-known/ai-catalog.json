@@ -4,27 +4,49 @@
     {
       "identifier": "urn:air:repmaths.com:fitness:calculator-suite",
       "displayName": "RepMaths Fitness Calculator Suite",
-      "type": "application/ai-skill+md",
+      "type": "text/markdown",
       "url": "https://repmaths.com/.well-known/repmaths-calculators.md",
-      "description": "Machine-readable guide to RepMaths fitness calculators covering 1RM estimation, training programming, nutrition, body composition, and gym equipment math.",
+      "description": "Guide to 25 fitness calculators on RepMaths for strength training, 5/3/1 programming, RPE and RIR, barbell plate loading, nutrition, and body composition. Covers 1RM estimation (Epley, Brzycki, Lander, Lombardi), TDEE and BMR (Mifflin-St Jeor, Harris-Benedict), body fat (US Navy method), BMI, lean body mass, FFMI, ideal weight, protein intake, water intake, and calories burned.",
       "tags": [
         "fitness",
         "calculators",
-        "strength",
-        "training",
-        "nutrition",
-        "body-composition",
-        "water-intake",
+        "1rm",
+        "one-rep-max",
+        "bench-press",
+        "squat",
+        "deadlift",
+        "overhead-press",
+        "strength-standards",
+        "training-max",
+        "5-3-1",
+        "wendler",
+        "rpe",
+        "rir",
+        "warm-up",
+        "barbell-plates",
+        "tdee",
+        "bmr",
+        "macros",
+        "protein",
         "protein-intake",
-        "gym-tools"
+        "water-intake",
+        "calorie-deficit",
+        "body-fat",
+        "bmi",
+        "lean-body-mass",
+        "ffmi",
+        "ideal-weight",
+        "calories-burned"
       ],
       "representativeQueries": [
-        "find a fitness calculator for strength or nutrition",
-        "calculate 1RM, BMI, BMR, TDEE, body fat, or protein needs",
-        "find a calculator for gym training and body composition"
+        "1RM calculator for squat, bench press, or deadlift",
+        "5/3/1 calculator with training max",
+        "barbell plate calculator for a target weight",
+        "TDEE calculator for maintenance calories",
+        "body composition calculator for body fat, BMI, or FFMI"
       ],
-      "version": "1.0",
-      "updatedAt": "2026-10-11T00:00:00Z"
+      "version": "1.1",
+      "updatedAt": "2026-11-05T00:00:00Z"
     }
   ]
 }
