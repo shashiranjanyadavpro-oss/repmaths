@@ -1,11 +1,15 @@
 {
-  "name": "RepMaths",
+  "id": "/",
+  "name": "RepMaths: Fitness Calculators",
   "short_name": "RepMaths",
-  "description": "Free strength, fitness, training and nutrition calculators with clear formulas and practical results.",
+  "description": "Strength, fitness, training, and nutrition calculators. Each calculator shows the formula it uses.",
+  "lang": "en",
   "start_url": "/",
+  "scope": "/",
   "display": "standalone",
   "background_color": "#0f1115",
   "theme_color": "#0f1115",
+  "categories": ["health", "fitness", "sports"],
   "icons": [
     {
       "src": "/icon-192.png",
