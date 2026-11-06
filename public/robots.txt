@@ -78,4 +78,3 @@ Allow: /
 
 # Sitemap and AI discovery
 Sitemap: https://repmaths.com/sitemap.xml
-Agentmap: https://repmaths.com/.well-known/ard.json
