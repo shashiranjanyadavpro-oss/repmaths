@@ -1,8 +1,19 @@
 # RepMaths
 
-> RepMaths is a free collection of fitness calculators and tools for strength training, workout programming, barbell plate loading, nutrition, and body composition. The tools help users estimate fitness metrics, plan training, and understand calculation methods, without creating an account.
+> RepMaths is a free online collection of fitness calculators and gym tools for strength training, weightlifting, workout programming, barbell plate loading, sports nutrition, and body composition. Users can calculate fitness metrics, estimate lifting performance, plan training workloads, and understand common fitness and nutrition equations without creating an account.
 
-RepMaths is built for powerlifters, bodybuilders, athletes, gym users, and anyone interested in fitness and nutrition. Calculators run in the browser. Results are estimates for general fitness planning and education, not medical advice.
+RepMaths is designed for powerlifters, bodybuilders, athletes, strength trainees, gym users, and people interested in fitness and nutrition. Calculators run in the browser. Results are estimates for general fitness planning and education, not medical advice.
+
+## Main Calculator Directory
+
+- [All Fitness Calculators](https://repmaths.com/tools/): Browse the complete collection of gym calculators, workout tools, strength calculators, and nutrition calculators.
+
+## Calculator Categories
+
+- [Strength Calculators](https://repmaths.com/tools/strength/): One-rep max, bench press, squat, deadlift, overhead press, rep max, and strength standards.
+- [Training and Programming Calculators](https://repmaths.com/tools/training/): Training max, 5/3/1 programming, warm-up sets, and RPE/RIR calculations.
+- [Equipment Calculators](https://repmaths.com/tools/equipment/): Barbell plate loading and weight setup.
+- [Nutrition and Body Composition Calculators](https://repmaths.com/tools/nutrition/): Calories, TDEE, BMR, macros, protein, hydration, body fat, BMI, and body composition.
 
 ## Strength Calculators
 
@@ -41,7 +52,7 @@ RepMaths is built for powerlifters, bodybuilders, athletes, gym users, and anyon
 - [Ideal Weight Calculator](https://repmaths.com/tools/nutrition/ideal-weight-calculator/): Compare ideal body weight estimates from Devine, Robinson, Miller, and Hamwi.
 - [Calories Burned Calculator](https://repmaths.com/tools/nutrition/calories-burned-calculator/): Estimate calories burned during activities using MET values.
 
-## Methodology
+## Calculation Methods and Methodology
 
 RepMaths calculators use established equations and reference methods, including:
 
@@ -54,7 +65,7 @@ RepMaths calculators use established equations and reference methods, including:
 - Calories burned: Metabolic Equivalent of Task (MET) values.
 - Ideal body weight: Devine, Robinson, Miller, and Hamwi equations.
 
-Each calculator page explains its specific formula, assumptions, and limitations. Consult those pages before relying on a result.
+Each calculator page explains its specific formula, assumptions, and limitations. Refer to the relevant calculator page for details before relying on a result.
 
 ## Important Pages
 
@@ -63,15 +74,15 @@ Each calculator page explains its specific formula, assumptions, and limitations
 - [Privacy Policy](https://repmaths.com/privacy-policy/): Privacy, analytics, and advertising information.
 - [Contact](https://repmaths.com/contact/): How to get in touch.
 
-## Optional
+## Machine-Readable Resources and Discovery
 
-- [All Calculators](https://repmaths.com/): Browse all calculators by category.
-- [Calculator Index](https://repmaths.com/.well-known/repmaths-calculators.md): Machine-readable directory of all calculators, formulas, and methodology.
-- [XML Sitemap](https://repmaths.com/sitemap.xml): Full list of site URLs.
+- [Calculator Index](https://repmaths.com/.well-known/repmaths-calculators.md): Machine-readable directory of calculators, formulas, and methodology.
 - [AI Catalog](https://repmaths.com/.well-known/ai-catalog.json): Machine-readable catalog of site resources.
+- [XML Sitemap](https://repmaths.com/sitemap.xml): Site URL discovery.
+- [Robots.txt](https://repmaths.com/robots.txt): Crawler access preferences.
 
 ## Usage and Disclaimer
 
 RepMaths provides estimates for informational and educational purposes. Results are not medical advice, diagnosis, or a substitute for professional fitness, nutrition, or healthcare guidance. Accuracy depends on the inputs, the selected method, and the assumptions. Consult a qualified professional before making significant training, dietary, or health decisions.
 
-Last updated: 2026-11-05
+Last updated: 2026-11-14
