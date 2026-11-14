@@ -65,7 +65,7 @@ RepMaths calculators use established equations and reference methods, including:
 - Calories burned: Metabolic Equivalent of Task (MET) values.
 - Ideal body weight: Devine, Robinson, Miller, and Hamwi equations.
 
-Each calculator page explains its specific formula, assumptions, and limitations. Refer to the relevant calculator page for details before relying on a result.
+Calculator pages list the formula or reference method they use, where applicable. Refer to the relevant calculator page for details before relying on a result.
 
 ## Important Pages
 
@@ -78,6 +78,7 @@ Each calculator page explains its specific formula, assumptions, and limitations
 
 - [Calculator Index](https://repmaths.com/.well-known/repmaths-calculators.md): Machine-readable directory of calculators, formulas, and methodology.
 - [AI Catalog](https://repmaths.com/.well-known/ai-catalog.json): Machine-readable catalog of site resources.
+- [AI Resource Directory (ARD)](https://repmaths.com/.well-known/ard.json): Machine-readable resource directory.
 - [XML Sitemap](https://repmaths.com/sitemap.xml): Site URL discovery.
 - [Robots.txt](https://repmaths.com/robots.txt): Crawler access preferences.
 
