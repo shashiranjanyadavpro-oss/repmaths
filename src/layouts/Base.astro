@@ -16,6 +16,7 @@ export interface Props {
   noindex?: boolean;
   ogType?: "website" | "article";
   faqs?: FaqItem[];
+  pageType?: "WebPage" | "CollectionPage";
 }
 
 const {
@@ -25,6 +26,7 @@ const {
   noindex = false,
   ogType = "website",
   faqs = [],
+  pageType = "WebPage",
 } = Astro.props;
 
 // Always use the production domain so preview hosts never become canonical.
@@ -91,7 +93,7 @@ const organizationSchema = {
 
 const webPageSchema = {
   "@context": "https://schema.org",
-  "@type": "WebPage",
+  "@type": pageType,
   "@id": `${canonicalUrl.href}#webpage`,
   url: canonicalUrl.href,
   name: title,
