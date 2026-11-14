@@ -54,18 +54,11 @@ const quickStart = [
   .map((q) => ({ ...q, tool: toolsData.find((t) => t.id === q.id) }))
   .filter((q) => q.tool);
 
+// Base.astro generates the CollectionPage schema.
+// This page adds the two separate ItemList schemas.
 const pageSchema = {
   '@context': 'https://schema.org',
   '@graph': [
-    {
-      '@type': 'CollectionPage',
-      '@id': `${siteUrl}/tools/#webpage`,
-      url: `${siteUrl}/tools/`,
-      name: 'Free Fitness Calculators by Category',
-      description: `Browse ${totalCount} free RepMaths fitness calculators by category: strength, training, equipment, and nutrition.`,
-      numberOfItems: totalCount,
-      isPartOf: { '@id': `${siteUrl}/#website` },
-    },
     {
       '@type': 'ItemList',
       '@id': `${siteUrl}/tools/#categories`,
@@ -95,6 +88,7 @@ const pageSchema = {
 <Base
   title="Free Fitness Calculators by Category | RepMaths"
   description={`Browse ${totalCount} free fitness calculators by category: 1RM and strength, training programming, barbell plates, and nutrition.`}
+  pageType="CollectionPage"
   breadcrumbs={[
     { name: 'Home', href: '/' },
     { name: 'Tools' },
