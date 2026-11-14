@@ -1,64 +1,91 @@
 ---
 import Base from '../../layouts/Base.astro';
+import toolsData from '../../data/tools.json';
 
-const categories = [
+const siteUrl = 'https://repmaths.com';
+
+// Category text stays hand-written; counts come from tools.json automatically.
+const categoryMeta = [
   {
-    id: "strength",
-    label: "1RM & Strength Calculators",
-    url: "/tools/strength/",
+    id: 'strength',
+    label: '1RM & Strength Calculators',
+    url: '/tools/strength/',
     description:
-      "Estimate one rep max for bench press, squat, deadlift, and overhead press. Includes 1RM percentages, rep max conversion, and strength standards.",
-    count: 8,
+      'Estimate one rep max for bench press, squat, deadlift, and overhead press. Includes 1RM percentages, rep max conversion, and strength standards.',
   },
   {
-    id: "training",
-    label: "Training & Programming",
-    url: "/tools/training/",
+    id: 'training',
+    label: 'Training & Programming',
+    url: '/tools/training/',
     description:
-      "Convert 1RM into a training max, generate a 5/3/1 cycle, build warm-up ramps, and convert RPE or RIR to estimated max.",
-    count: 4,
+      'Convert 1RM into a training max, generate a 5/3/1 cycle, build warm-up ramps, and convert RPE or RIR to estimated max.',
   },
   {
-    id: "equipment",
-    label: "Plate & Equipment",
-    url: "/tools/equipment/",
+    id: 'equipment',
+    label: 'Plate & Equipment',
+    url: '/tools/equipment/',
     description:
-      "Work out barbell plate loading per side for any target weight in kilograms or pounds.",
-    count: 1,
+      'Work out barbell plate loading per side for any target weight in kilograms or pounds.',
   },
   {
-    id: "nutrition",
-    label: "Nutrition & Body Composition",
-    url: "/tools/nutrition/",
+    id: 'nutrition',
+    label: 'Nutrition & Body Composition',
+    url: '/tools/nutrition/',
     description:
-      "Calculate TDEE, BMR, macros, protein, body fat, BMI, FFMI, lean body mass, ideal weight, water intake, and calories burned.",
-    count: 12,
+      'Calculate TDEE, BMR, macros, protein, calorie deficit, body fat, BMI, FFMI, lean body mass, ideal weight, water intake, and calories burned.',
   },
 ];
 
+const categories = categoryMeta.map((cat) => ({
+  ...cat,
+  count: toolsData.filter((t) => t.cluster === cat.id).length,
+}));
+
+const totalCount = toolsData.length;
+
+// Popular tools, looked up by id from tools.json so URLs never drift.
+const quickStart = [
+  { id: '1rm-calculator', purpose: 'Estimate your one-rep max from any set' },
+  { id: '1rm-percentage-calculator', purpose: 'Find training weights from a 1RM' },
+  { id: '531-calculator', purpose: 'Build a Wendler 5/3/1 four-week cycle' },
+  { id: 'tdee-calculator', purpose: 'Estimate your maintenance calories' },
+  { id: 'calorie-deficit-calculator', purpose: 'Plan a daily calorie deficit' },
+]
+  .map((q) => ({ ...q, tool: toolsData.find((t) => t.id === q.id) }))
+  .filter((q) => q.tool);
+
 const pageSchema = {
-  "@context": "https://schema.org",
-  "@graph": [
+  '@context': 'https://schema.org',
+  '@graph': [
     {
-      "@type": "CollectionPage",
-      "@id": "https://repmaths.com/tools/#webpage",
-      "url": "https://repmaths.com/tools/",
-      "name": "Fitness Calculator Categories",
-      "description":
-        "Browse RepMaths fitness calculators by category: strength, training, equipment, and nutrition.",
-      "isPartOf": {
-        "@id": "https://repmaths.com/#website",
-      },
+      '@type': 'CollectionPage',
+      '@id': `${siteUrl}/tools/#webpage`,
+      url: `${siteUrl}/tools/`,
+      name: 'Free Fitness Calculators by Category',
+      description: `Browse ${totalCount} free RepMaths fitness calculators by category: strength, training, equipment, and nutrition.`,
+      numberOfItems: totalCount,
+      isPartOf: { '@id': `${siteUrl}/#website` },
     },
     {
-      "@type": "ItemList",
-      "@id": "https://repmaths.com/tools/#itemlist",
-      "name": "Calculator Categories",
-      "itemListElement": categories.map((cat, index) => ({
-        "@type": "ListItem",
-        "position": index + 1,
-        "name": cat.label,
-        "url": `https://repmaths.com${cat.url}`,
+      '@type': 'ItemList',
+      '@id': `${siteUrl}/tools/#categories`,
+      name: 'Calculator Categories',
+      itemListElement: categories.map((cat, index) => ({
+        '@type': 'ListItem',
+        position: index + 1,
+        name: cat.label,
+        url: `${siteUrl}${cat.url}`,
+      })),
+    },
+    {
+      '@type': 'ItemList',
+      '@id': `${siteUrl}/tools/#calculators`,
+      name: 'All RepMaths Calculators',
+      itemListElement: toolsData.map((t, index) => ({
+        '@type': 'ListItem',
+        position: index + 1,
+        name: t.name,
+        url: `${siteUrl}${t.url}`,
       })),
     },
   ],
@@ -66,11 +93,11 @@ const pageSchema = {
 ---
 
 <Base
-  title="Fitness Calculator Categories | RepMaths"
-  description="Browse RepMaths fitness calculators by category: strength, training, equipment, and nutrition & body composition."
+  title="Free Fitness Calculators by Category | RepMaths"
+  description={`Browse ${totalCount} free fitness calculators by category: 1RM and strength, training programming, barbell plates, and nutrition.`}
   breadcrumbs={[
-    { name: "Home", href: "/" },
-    { name: "Tools" },
+    { name: 'Home', href: '/' },
+    { name: 'Tools' },
   ]}
 >
   <script
@@ -81,9 +108,20 @@ const pageSchema = {
   <section class="hero">
     <h1>Browse Fitness Calculators by Category</h1>
     <p>
-      RepMaths organizes its calculators into four categories. Pick a
-      category to see the individual tools.
+      RepMaths has {totalCount} free calculators in four categories. Pick a
+      category below, or start with one of the popular tools.
     </p>
+  </section>
+
+  <section class="quick-start">
+    <h2>Start with the right calculator</h2>
+    <ul class="quick-list">
+      {quickStart.map((q) => (
+        <li>
+          <a href={q.tool.url}>{q.tool.name}</a>: {q.purpose}.
+        </li>
+      ))}
+    </ul>
   </section>
 
   <div class="category-grid">
@@ -92,7 +130,7 @@ const pageSchema = {
         <span class="cat-label">{cat.label}</span>
         <span class="cat-desc">{cat.description}</span>
         <span class="cat-count">
-          {cat.count} {cat.count === 1 ? "calculator" : "calculators"}
+          {cat.count} {cat.count === 1 ? 'calculator' : 'calculators'}
         </span>
       </a>
     ))}
@@ -102,15 +140,14 @@ const pageSchema = {
     <h2>How RepMaths Is Organized</h2>
 
     <p>
-      The <strong>strength</strong> category covers one rep max
-      estimation for the four main barbell lifts, along with 1RM
-      percentages, rep max conversion, and bodyweight-based strength
-      standards.
+      The <strong>strength</strong> category covers one rep max estimation for
+      the four main barbell lifts, along with 1RM percentages, rep max
+      conversion, and bodyweight-based strength standards.
     </p>
 
     <p>
-      The <strong>training</strong> category handles programming —
-      training max, 5/3/1 cycles, warm-up ramps, and RPE/RIR conversion.
+      The <strong>training</strong> category handles programming: training max,
+      5/3/1 cycles, warm-up ramps, and RPE/RIR conversion.
     </p>
 
     <p>
@@ -119,10 +156,9 @@ const pageSchema = {
     </p>
 
     <p>
-      The <strong>nutrition</strong> category includes energy balance and
-      body composition tools: TDEE, BMR, macros, protein, body fat, BMI,
-      FFMI, lean body mass, ideal weight, water intake, and calories
-      burned.
+      The <strong>nutrition</strong> category covers energy balance and body
+      composition: TDEE, BMR, macros, protein, calorie deficit, body fat, BMI,
+      FFMI, lean body mass, ideal weight, water intake, and calories burned.
     </p>
   </section>
 
@@ -135,6 +171,28 @@ const pageSchema = {
       color: var(--text-muted);
       font-size: 1.05rem;
       max-width: 600px;
+    }
+
+    .quick-start {
+      margin: 0 0 32px;
+    }
+
+    .quick-start h2 {
+      font-size: 1.2rem;
+      margin-bottom: 10px;
+    }
+
+    .quick-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      color: #c7cbd2;
+      font-size: 0.95rem;
+    }
+
+    .quick-list li {
+      padding: 10px 0;
+      border-bottom: 1px solid var(--border);
     }
 
     .category-grid {
@@ -159,14 +217,12 @@ const pageSchema = {
       text-decoration: none;
       transition:
         border-color 0.15s ease,
-        transform 0.15s ease,
-        box-shadow 0.15s ease;
+        transform 0.15s ease;
     }
 
     .category-card:hover {
       border-color: var(--accent);
       transform: translateY(-2px);
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
     }
 
     .cat-label {
