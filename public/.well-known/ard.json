@@ -6,7 +6,7 @@
       "displayName": "RepMaths Fitness Calculator Suite",
       "type": "text/markdown",
       "url": "https://repmaths.com/.well-known/repmaths-calculators.md",
-      "description": "Guide to 25 fitness calculators on RepMaths for strength training, 5/3/1 programming, RPE and RIR, barbell plate loading, nutrition, and body composition. Covers 1RM estimation (Epley, Brzycki, Lander, Lombardi), TDEE and BMR (Mifflin-St Jeor, Harris-Benedict), body fat (US Navy method), BMI, lean body mass, FFMI, ideal weight, protein intake, water intake, and calories burned.",
+      "description": "Guide to the RepMaths fitness calculators for strength training, 5/3/1 programming, RPE and RIR, barbell plate loading, nutrition, and body composition. Covers 1RM estimation (Epley, Brzycki, Lander, Lombardi), TDEE and BMR (Mifflin-St Jeor, Harris-Benedict), body fat (US Navy method), BMI, lean body mass, FFMI, ideal weight, protein intake, water intake, and calories burned.",
       "tags": [
         "fitness",
         "calculators",
@@ -46,7 +46,7 @@
         "body composition calculator for body fat, BMI, or FFMI"
       ],
       "version": "1.1",
-      "updatedAt": "2026-11-05T00:00:00Z"
+      "updatedAt": "2026-11-14T00:00:00Z"
     }
   ]
 }
