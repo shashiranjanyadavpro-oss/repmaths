@@ -1,6 +1,6 @@
 # RepMaths Fitness Calculator Suite
 
-> RepMaths is a fitness calculator suite with 25 tools covering strength training, gym programming, nutrition, body composition, and equipment loading. All calculators run entirely in the browser.
+> RepMaths is a free fitness calculator suite covering strength training, gym programming, nutrition, body composition, and equipment loading. All calculators run entirely in the browser.
 
 ## How RepMaths is organized
 
@@ -72,7 +72,8 @@ RepMaths calculators are informational fitness and nutrition tools. They are not
 
 ## Related machine-readable resources
 
-- AI catalog: https://repmaths.com/.well-known/ard.json
+- AI Catalog: https://repmaths.com/.well-known/ai-catalog.json
+- AI Resource Directory (ARD): https://repmaths.com/.well-known/ard.json
 - Site-wide AI guide: https://repmaths.com/llms.txt
 
-Last updated: 2026-11-05
+Last updated: 2026-11-14
