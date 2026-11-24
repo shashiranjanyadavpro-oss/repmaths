@@ -168,7 +168,7 @@ const jsonLdSafe = (value: unknown) =>
             <span id="weight-unit-span">lb</span>
           </div>
           <p id="weight-help" class="field-help">
-            Enter your body weight in pounds. Designed for healthy adults weighing 25–250 kg (approximately 55–551 lb).
+            Enter your body weight in pounds. Designed for healthy adults weighing 35–250 kg (approximately 77–551 lb).
           </p>
         </div>
 
@@ -825,7 +825,7 @@ const jsonLdSafe = (value: unknown) =>
     const DEBOUNCE_MS = 300;
 
     const LB_PER_KG = 2.2046226218;
-    const MIN_WEIGHT_KG = 25;
+    const MIN_WEIGHT_KG = 35;
     const MAX_WEIGHT_KG = 250;
 
     const factorRanges: Record<ProteinGoal, [number, number]> = {
@@ -948,8 +948,8 @@ const jsonLdSafe = (value: unknown) =>
       weightEl.placeholder = next === "lb" ? "e.g. 180" : "e.g. 82";
       weightHelp.textContent =
         next === "lb"
-          ? "Enter your body weight in pounds. Designed for healthy adults weighing 25–250 kg (approximately 55–551 lb)."
-          : "Enter your body weight in kilograms. Designed for healthy adults weighing 25–250 kg.";
+          ? "Enter your body weight in pounds. Designed for healthy adults weighing 35–250 kg (approximately 77–551 lb)."
+          : "Enter your body weight in kilograms. Designed for healthy adults weighing 35–250 kg.";
 
       // FIX: Only show error if there is text but it's invalid
       showErrors = weightEl.value.trim() !== "";
@@ -1001,8 +1001,8 @@ const jsonLdSafe = (value: unknown) =>
       if (weightKg < MIN_WEIGHT_KG || weightKg > MAX_WEIGHT_KG) {
         fail(
           unit === "lb"
-            ? "Enter a body weight between approximately 55 and 551 lb."
-            : "Enter a body weight between 25 and 250 kg."
+            ? "Enter a body weight between approximately 77 and 551 lb."
+            : "Enter a body weight between 35 and 250 kg."
         );
         return;
       }
